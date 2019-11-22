@@ -111,9 +111,10 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
     }
 };
 
-CoSEPPortConstraint.prototype.getRelativePositiontoNodeCenter = function(){
-    let nodePos = this.node.getCenter();
-    return new PointD( this.portLocation.x - nodePos.x, this.portLocation.y - nodePos.y );
+CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
+    let node = this.node;
+    return new PointD( (this.portLocation.x - node.getCenter().x) / node.getWidth() * 100,
+                       (this.portLocation.y -  node.getCenter().y) / node.getHeight() * 100);
 };
 
 

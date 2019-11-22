@@ -652,9 +652,9 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
     }
 };
 
-CoSEPPortConstraint.prototype.getRelativePositiontoNodeCenter = function () {
-    var nodePos = this.node.getCenter();
-    return new PointD(this.portLocation.x - nodePos.x, this.portLocation.y - nodePos.y);
+CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
+    var node = this.node;
+    return new PointD((this.portLocation.x - node.getCenter().x) / node.getWidth() * 100, (this.portLocation.y - node.getCenter().y) / node.getHeight() * 100);
 };
 
 module.exports = CoSEPPortConstraint;
@@ -1140,14 +1140,14 @@ var Layout = function (_ContinuousLayout) {
 
         var sourceConstraint = lEdge.getSourceConstraint();
         if (sourceConstraint) {
-          var relativePos = sourceConstraint.getRelativePositiontoNodeCenter();
-          cytoEdge.style({ 'source-endpoint': +relativePos.x + " " + +relativePos.y });
+          var relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'source-endpoint': +relativePos.x + "% " + +relativePos.y + '%' });
         }
 
         var targetConstraint = lEdge.getTargetConstraint();
         if (targetConstraint) {
-          var _relativePos = targetConstraint.getRelativePositiontoNodeCenter();
-          cytoEdge.style({ 'target-endpoint': +_relativePos.x + " " + +_relativePos.y });
+          var _relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
         }
       });
     }

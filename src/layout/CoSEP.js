@@ -448,14 +448,14 @@ class Layout extends ContinuousLayout {
 
       let sourceConstraint = lEdge.getSourceConstraint();
       if( sourceConstraint ){
-        let relativePos = sourceConstraint.getRelativePositiontoNodeCenter();
-        cytoEdge.style({ 'source-endpoint': +relativePos.x + " "+ +relativePos.y })
+        let relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
+        cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' })
       }
 
       let targetConstraint = lEdge.getTargetConstraint();
       if( targetConstraint ){
-        let relativePos = targetConstraint.getRelativePositiontoNodeCenter();
-        cytoEdge.style({ 'target-endpoint': +relativePos.x + " "+ +relativePos.y })
+        let relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
+        cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' })
       }
     });
   }
