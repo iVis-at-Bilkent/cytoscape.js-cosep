@@ -13,8 +13,6 @@ let tick = function( state ){
     s.firstUpdate = false;
   }
 
-  s.tickIndex++;
-
   let duration = Date.now() - s.startTime;
 
   return !s.infinite && ( tickIndicatesDone ) // || s.tickIndex >= s.maxIterations || duration >= s.maxSimulationTime );

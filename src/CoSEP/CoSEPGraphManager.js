@@ -15,6 +15,9 @@ function CoSEPGraphManager(layout) {
 
     // All nodes incident to a port constrained edge.
     this.nodesWithPorts = [];
+
+    // All port constraint endpoints
+    this.portConstraints = [];
 }
 
 CoSEPGraphManager.prototype = Object.create(CoSEGraphManager.prototype);
@@ -22,5 +25,16 @@ CoSEPGraphManager.prototype = Object.create(CoSEGraphManager.prototype);
 for (let prop in CoSEGraphManager) {
     CoSEPGraphManager[prop] = CoSEGraphManager[prop];
 }
+
+/**
+ * This function needs to update port locations as well.
+ */
+CoSEPGraphManager.prototype.updateBounds = function () {
+    this.rootGraph.updateBounds(true);
+
+    for( let i = 0; i < this.nodesWithPorts.length; i++){
+        this.nodesWithPorts[i].updatePortLocations();
+    }
+};
 
 module.exports = CoSEPGraphManager;

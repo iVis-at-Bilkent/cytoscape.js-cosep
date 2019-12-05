@@ -24,6 +24,7 @@ function CoSEPLayout() {
 
     // Current phase of the algorithm
     this.phase = CoSEPLayout.PHASE_CORE;
+
 }
 
 CoSEPLayout.prototype = Object.create(CoSELayout.prototype);
@@ -76,33 +77,105 @@ CoSEPLayout.prototype.initialPortConfiguration = function(){
     }
 };
 
+/**
+ * Initialize or reset variables related to the spring embedder
+ */
 CoSEPLayout.prototype.secondPhaseInit = function(){
     this.phase = CoSEPLayout.PHASE_SECOND;
 
     this.totalIterations = 0;
 
-    // variables for cooling
+    // Reset variables for cooling
     this.coolingCycle = 0;
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+
+    // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
+    this.calcSpringForce = function(edge, idealLength){
+        let sourceNode = edge.getSource();
+        let targetNode = edge.getTarget();
+
+        // Update edge length
+        if ( edge.isPortConstrainedEdge() )
+            edge.updateLengthWithPorts();
+        else
+            edge.updateLength();
+
+        if ( edge.isOverlapingSourceAndTarget )
+            return;
+
+        let length = edge.getLength();
+
+        if(length == 0)
+            return;
+
+        // Calculate spring forces
+        let springForce = this.springConstant * (length - idealLength);
+
+        // Project force onto x and y axes
+        let springForceX = springForce * (edge.lengthX / length);
+        let springForceY = springForce * (edge.lengthY / length);
+
+        // Apply forces on the end nodes
+        sourceNode.springForceX += springForceX;
+        sourceNode.springForceY += springForceY;
+        targetNode.springForceX -= springForceX;
+        targetNode.springForceY -= springForceY;
+
+        // Store the forces to be used in edge shifting and rotation
+        edge.storeRotationalForce( springForceX, springForceY );
+    };
 };
 
 /**
  * This method implements a spring embedder used by Phase 2 and 3 with
  * potentially different parameters.
+ *
+ * Instead of overloading important functions (e.g. movenodes) we call another fcn so that core CoSE is not affected
  */
 CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.totalIterations++;
-    console.log( this.totalIterations );
+
+    if ( (this.totalIterations % CoSEPConstants.CONVERGENCE_CHECK_PERIOD) === 0){
+        // If the system is converged
+        if ( this.isConverged() ) {
+            return true;
+        }
+
+        // Update Cooling Temp
+        this.coolingCycle++;
+        this.coolingAdjuster = this.coolingCycle / 3;
+        this.coolingFactor = Math.max(this.initialCoolingFactor -
+                    Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) /
+                    Math.log(this.maxCoolingCycle))/100 * this.coolingAdjuster, this.finalTemperature);
+
+    }
+
+    if (this.iterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
+    {
+        this.checkForEdgeShifting();
+    }
 
     this.totalDisplacement = 0;
+
+    // This updates the bounds of compound nodes along with its' ports
     this.graphManager.updateBounds();
+
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
     this.moveNodes();
 
+    // If we reached max iterations
+    return this.totalIterations >= this.maxIterations;
 };
+
+CoSEPLayout.prototype.checkForEdgeShifting = function(){
+
+};
+
+
+
 
 module.exports = CoSEPLayout;

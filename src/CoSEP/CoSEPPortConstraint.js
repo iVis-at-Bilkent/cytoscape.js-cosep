@@ -1,13 +1,16 @@
 /**
  *
+ * This object represents the port constraint related to corresponding endpoint
+ *
  * @author Alihan Okka
  *
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  *
- * This object represents the port constraint related to corresponding endpoint
  */
 
 const PointD = require('cose-base').layoutBase.PointD;
+const CoSEPRotationalForce = require('./CoSEPRotationalForce');
+const CoSEPConstants = require('./CoSEPConstants');
 
 function CoSEPPortConstraint(edge, node) {
     // Associated CoSEP Edge
@@ -39,7 +42,7 @@ function CoSEPPortConstraint(edge, node) {
     this.correspondingAngle = null;
 
     // Holds the rotational force induced to incident node
-    this.rotationalForce = null;
+    this.rotationalForce = new CoSEPRotationalForce( CoSEPConstants.EDGE_SHIFTING_PERIOD );
 }
 
 CoSEPPortConstraint.prototype = Object.create(null);
@@ -72,6 +75,8 @@ CoSEPPortConstraint.prototype.sideDirection = Object.freeze({
  * This method assigns a feasible port to this edge endpoint as follows. For each feasible node side, find the ports
  * closest to node corners. The port with the shortest distance to the other incident node's center is assigned to this
  * port. Obviously, If the port constraint is Absolute, there is nothing to find.
+ *
+ * Also, add references to CoSEPNode's.
  */
 CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
     if( this.portConstraintType == this.constraintType['Absolute'] ) {
@@ -109,15 +114,30 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
             }
         }
     }
+
+    // Adding references
+    this.node.hasPortConstrainedEdge = true;
+    this.node.associatedPortConstraints.push( this );
+    this.node.graphManager.portConstraints.push( this );
 };
 
+/**
+ * Returns the relative position of port location to related node's center
+ * @returns {PointD}
+ */
 CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
     let node = this.node;
     return new PointD( (this.portLocation.x - node.getCenter().x) / node.getWidth() * 100,
                        (this.portLocation.y -  node.getCenter().y) / node.getHeight() * 100);
 };
 
-
-
+CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, springForceY){
+    if( this.portSide == this.sideDirection['Top'] || this.portSide == this.sideDirection['Bottom'] ){
+        this.rotationalForce.add( springForceX );
+    }
+    else{
+        this.rotationalForce.add( springForceY );
+    }
+};
 
 module.exports = CoSEPPortConstraint;

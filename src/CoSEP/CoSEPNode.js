@@ -14,6 +14,12 @@ function CoSEPNode(gm, loc, size, vNode) {
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
+
+    // Indicator for having a port constrained edge which the constraint is associated with this node
+    this.hasPortConstrainedEdge = false;
+
+    // If the above is true, then this will hold the particular CoSEPPortConstraint classes
+    this.associatedPortConstraints = [];
 }
 
 CoSEPNode.prototype = Object.create(CoSENode.prototype);
@@ -83,6 +89,31 @@ CoSEPNode.prototype.getCornerPortsOfNodeSide = function( nodeSide ){
         result.set( nodeSide, this.getPortCoordinatesByIndex( nodeSide ) );
 
     return result;
+};
+
+/**
+ * This methods updates all of the associated port constraints locations around itself
+ */
+CoSEPNode.prototype.updatePortLocations = function (){
+  for( let i = 0; i < this.associatedPortConstraints.length; i++){
+      let portConst = this.associatedPortConstraints[i];
+      portConst.portLocation = this.getPortCoordinatesByIndex( portConst.portIndex )[1];
+  }
+};
+
+/**
+ * Moving a node needs to move its port constraints as well
+ * @param dx
+ * @param dy
+ */
+CoSEPNode.prototype.moveBy = function (dx, dy) {
+  this.rect.x += dx;
+  this.rect.y += dy;
+
+  this.associatedPortConstraints.forEach( function ( portConstraint ) {
+      portConstraint.portLocation.x += dx;
+      portConstraint.portLocation.y += dy;
+  });
 };
 
 module.exports = CoSEPNode;

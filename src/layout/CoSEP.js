@@ -240,7 +240,7 @@ class Layout extends ContinuousLayout {
     }
 
     // Saving the references
-    this.graphManager.nodesWithPorts = this.nodesWithPorts;
+    this.graphManager.nodesWithPorts = Object.values( this.nodesWithPorts );
 
     // First phase of the algorithm
     this.cosepLayout.runLayout();
@@ -254,15 +254,6 @@ class Layout extends ContinuousLayout {
 
     // Initialize second phase of the algorithm
     this.cosepLayout.secondPhaseInit();
-
-   // this.cosepLayout.runSpringEmbedderTick();
-
-
-
-
-
-
-
   }
 
   // Get the top most ones of a list of nodes
@@ -356,7 +347,12 @@ class Layout extends ContinuousLayout {
    //  }
     });
 
-    isDone = true;
+    isDone = this.cosepLayout.runSpringEmbedderTick();
+
+    self.updateCytoscapePortVisualization();
+
+    state.tickIndex = this.cosepLayout.totalIterations;
+
     return isDone;
   }
 
@@ -364,16 +360,16 @@ class Layout extends ContinuousLayout {
   postrun(){
     let self = this;
 
-    console.log('done');
-    console.log( 'Graph Manager' );
+    console.log('** Done in ' + this.cosepLayout.totalIterations + ' iterations');
+    console.log( '** Graph Manager' );
     console.log( this.graphManager );
-    console.log( 'idToLNode' );
+    console.log( '** idToLNode' );
     console.log( this.idToLNode );
-    console.log( 'Nodes with ports' );
+    console.log( '** Nodes with ports' );
     console.log( this.nodesWithPorts );
-    console.log( 'lEdgeToCEdge' );
+    console.log( '** lEdgeToCEdge' );
     console.log( this.lEdgeToCEdge );
-    console.log( 'portConstrainedEdges' );
+    console.log( '** portConstrainedEdges' );
     console.log( this.portConstrainedEdges );
   }
 

@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -108,10 +108,15 @@ for (var prop in CoSEConstants) {
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
 
-// Ite
+// # of iterations to check for edge shifting
 CoSEPConstants.EDGE_SHIFTING_PERIOD = 10;
 
+// # of iterations to check for node rotation
 CoSEPConstants.NODE_ROTATION_PERIOD = 50;
+
+CoSEPConstants.EDGE_SHIFTING_THRESHOLD = 3;
+
+CoSEPConstants.NODE_ROTATION_THRESHOLD = 100;
 
 module.exports = CoSEPConstants;
 
@@ -161,6 +166,12 @@ function CoSEPNode(gm, loc, size, vNode) {
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
+
+    // Indicator for having a port constrained edge which the constraint is associated with this node
+    this.hasPortConstrainedEdge = false;
+
+    // If the above is true, then this will hold the particular CoSEPPortConstraint classes
+    this.associatedPortConstraints = [];
 }
 
 CoSEPNode.prototype = Object.create(CoSENode.prototype);
@@ -224,6 +235,31 @@ CoSEPNode.prototype.getCornerPortsOfNodeSide = function (nodeSide) {
     return result;
 };
 
+/**
+ * This methods updates all of the associated port constraints locations around itself
+ */
+CoSEPNode.prototype.updatePortLocations = function () {
+    for (var i = 0; i < this.associatedPortConstraints.length; i++) {
+        var portConst = this.associatedPortConstraints[i];
+        portConst.portLocation = this.getPortCoordinatesByIndex(portConst.portIndex)[1];
+    }
+};
+
+/**
+ * Moving a node needs to move its port constraints as well
+ * @param dx
+ * @param dy
+ */
+CoSEPNode.prototype.moveBy = function (dx, dy) {
+    this.rect.x += dx;
+    this.rect.y += dy;
+
+    this.associatedPortConstraints.forEach(function (portConstraint) {
+        portConstraint.portLocation.x += dx;
+        portConstraint.portLocation.y += dy;
+    });
+};
+
 module.exports = CoSEPNode;
 
 /***/ }),
@@ -237,7 +273,7 @@ module.exports = CoSEPNode;
  * Redirection to CoSEP Algorithm
  */
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 /* 5 */
@@ -255,6 +291,8 @@ module.exports = __webpack_require__(11);
 
 var CoSEEdge = __webpack_require__(0).CoSEEdge;
 var IGeometry = __webpack_require__(0).layoutBase.IGeometry;
+var IMath = __webpack_require__(0).layoutBase.IMath;
+var RectangleD = __webpack_require__(0).layoutBase.RectangleD;
 
 function CoSEPEdge(source, target, vEdge) {
     CoSEEdge.call(this, source, target, vEdge);
@@ -311,6 +349,70 @@ CoSEPEdge.prototype.initialPortConfiguration = function () {
         this.targetConstraint.initialPortConfiguration();
     }
 };
+/**
+ * Changes the calc of edge length based on ports.
+ */
+CoSEPEdge.prototype.updateLengthWithPorts = function () {
+    // If both ends are port constrained then calculate the euler distance between ports
+    if (this.sourceConstraint && this.targetConstraint) {
+        // If nodes intersect do nothing
+        if (this.target.getRect().intersects(this.source.getRect())) {
+            this.isOverlapingSourceAndTarget = true;
+            return;
+        }
+
+        this.isOverlapingSourceAndTarget = false;
+
+        var portSourcePoint = this.sourceConstraint.portLocation;
+        var portTargetPoint = this.targetConstraint.portLocation;
+        this.lengthX = portTargetPoint.x - portSourcePoint.x;
+        this.lengthY = portTargetPoint.y - portSourcePoint.y;
+        if (Math.abs(this.lengthX) < 1.0) this.lengthX = IMath.sign(this.lengthX);
+        if (Math.abs(this.lengthY) < 1.0) this.lengthY = IMath.sign(this.lengthY);
+
+        this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+    }
+    // Otherwise, the edge is between one port to a clipping point
+    else {
+            var clipPointCoordinates = new Array(4);
+
+            if (this.sourceConstraint) {
+                this.isOverlapingSourceAndTarget = IGeometry.getIntersection(this.target.getRect(), new RectangleD(this.sourceConstraint.portLocation.x, this.sourceConstraint.portLocation.y, 0, 0), clipPointCoordinates);
+            }
+            if (this.targetConstraint) {
+                this.isOverlapingSourceAndTarget = IGeometry.getIntersection(new RectangleD(this.targetConstraint.portLocation.x, this.targetConstraint.portLocation.y, 0, 0), this.source.getRect(), clipPointCoordinates);
+            }
+
+            if (!this.isOverlapingSourceAndTarget) {
+                this.lengthX = clipPointCoordinates[0] - clipPointCoordinates[2];
+                this.lengthY = clipPointCoordinates[1] - clipPointCoordinates[3];
+
+                if (Math.abs(this.lengthX) < 1.0) {
+                    this.lengthX = IMath.sign(this.lengthX);
+                }
+
+                if (Math.abs(this.lengthY) < 1.0) {
+                    this.lengthY = IMath.sign(this.lengthY);
+                }
+
+                this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+            }
+        }
+};
+
+/**
+ * Redirects the call to its ports (if any).
+ * Note: Direction is important
+ */
+CoSEPEdge.prototype.storeRotationalForce = function (springForceX, springForceY) {
+    if (!this.isPortConstrainedEdge()) {
+        return;
+    }
+
+    if (this.sourceConstraint) this.sourceConstraint.storeRotationalForce(springForceX, springForceY);
+
+    if (this.targetConstraint) this.targetConstraint.storeRotationalForce(-springForceX, -springForceY);
+};
 
 module.exports = CoSEPEdge;
 
@@ -366,6 +468,9 @@ function CoSEPGraphManager(layout) {
 
     // All nodes incident to a port constrained edge.
     this.nodesWithPorts = [];
+
+    // All port constraint endpoints
+    this.portConstraints = [];
 }
 
 CoSEPGraphManager.prototype = Object.create(CoSEGraphManager.prototype);
@@ -373,6 +478,17 @@ CoSEPGraphManager.prototype = Object.create(CoSEGraphManager.prototype);
 for (var prop in CoSEGraphManager) {
     CoSEPGraphManager[prop] = CoSEGraphManager[prop];
 }
+
+/**
+ * This function needs to update port locations as well.
+ */
+CoSEPGraphManager.prototype.updateBounds = function () {
+    this.rootGraph.updateBounds(true);
+
+    for (var i = 0; i < this.nodesWithPorts.length; i++) {
+        this.nodesWithPorts[i].updatePortLocations();
+    }
+};
 
 module.exports = CoSEPGraphManager;
 
@@ -461,33 +577,92 @@ CoSEPLayout.prototype.initialPortConfiguration = function () {
     }
 };
 
+/**
+ * Initialize or reset variables related to the spring embedder
+ */
 CoSEPLayout.prototype.secondPhaseInit = function () {
     this.phase = CoSEPLayout.PHASE_SECOND;
 
     this.totalIterations = 0;
 
-    // variables for cooling
+    // Reset variables for cooling
     this.coolingCycle = 0;
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+
+    // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
+    this.calcSpringForce = function (edge, idealLength) {
+        var sourceNode = edge.getSource();
+        var targetNode = edge.getTarget();
+
+        // Update edge length
+        if (edge.isPortConstrainedEdge()) edge.updateLengthWithPorts();else edge.updateLength();
+
+        if (edge.isOverlapingSourceAndTarget) return;
+
+        var length = edge.getLength();
+
+        if (length == 0) return;
+
+        // Calculate spring forces
+        var springForce = this.springConstant * (length - idealLength);
+
+        // Project force onto x and y axes
+        var springForceX = springForce * (edge.lengthX / length);
+        var springForceY = springForce * (edge.lengthY / length);
+
+        // Apply forces on the end nodes
+        sourceNode.springForceX += springForceX;
+        sourceNode.springForceY += springForceY;
+        targetNode.springForceX -= springForceX;
+        targetNode.springForceY -= springForceY;
+
+        // Store the forces to be used in edge shifting and rotation
+        edge.storeRotationalForce(springForceX, springForceY);
+    };
 };
 
 /**
  * This method implements a spring embedder used by Phase 2 and 3 with
  * potentially different parameters.
+ *
+ * Instead of overloading important functions (e.g. movenodes) we call another fcn so that core CoSE is not affected
  */
 CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.totalIterations++;
-    console.log(this.totalIterations);
+
+    if (this.totalIterations % CoSEPConstants.CONVERGENCE_CHECK_PERIOD === 0) {
+        // If the system is converged
+        if (this.isConverged()) {
+            return true;
+        }
+
+        // Update Cooling Temp
+        this.coolingCycle++;
+        this.coolingAdjuster = this.coolingCycle / 3;
+        this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
+    }
+
+    if (this.iterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        this.checkForEdgeShifting();
+    }
 
     this.totalDisplacement = 0;
+
+    // This updates the bounds of compound nodes along with its' ports
     this.graphManager.updateBounds();
+
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
     this.moveNodes();
+
+    // If we reached max iterations
+    return this.totalIterations >= this.maxIterations;
 };
+
+CoSEPLayout.prototype.checkForEdgeShifting = function () {};
 
 module.exports = CoSEPLayout;
 
@@ -500,14 +675,17 @@ module.exports = CoSEPLayout;
 
 /**
  *
+ * This object represents the port constraint related to corresponding endpoint
+ *
  * @author Alihan Okka
  *
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  *
- * This object represents the port constraint related to corresponding endpoint
  */
 
 var PointD = __webpack_require__(0).layoutBase.PointD;
+var CoSEPRotationalForce = __webpack_require__(10);
+var CoSEPConstants = __webpack_require__(1);
 
 function CoSEPPortConstraint(edge, node) {
     // Associated CoSEP Edge
@@ -539,7 +717,7 @@ function CoSEPPortConstraint(edge, node) {
     this.correspondingAngle = null;
 
     // Holds the rotational force induced to incident node
-    this.rotationalForce = null;
+    this.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.EDGE_SHIFTING_PERIOD);
 }
 
 CoSEPPortConstraint.prototype = Object.create(null);
@@ -572,6 +750,8 @@ CoSEPPortConstraint.prototype.sideDirection = Object.freeze({
  * This method assigns a feasible port to this edge endpoint as follows. For each feasible node side, find the ports
  * closest to node corners. The port with the shortest distance to the other incident node's center is assigned to this
  * port. Obviously, If the port constraint is Absolute, there is nothing to find.
+ *
+ * Also, add references to CoSEPNode's.
  */
 CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
     if (this.portConstraintType == this.constraintType['Absolute']) {
@@ -650,17 +830,85 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
             }
         }
     }
+
+    // Adding references
+    this.node.hasPortConstrainedEdge = true;
+    this.node.associatedPortConstraints.push(this);
+    this.node.graphManager.portConstraints.push(this);
 };
 
+/**
+ * Returns the relative position of port location to related node's center
+ * @returns {PointD}
+ */
 CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
     var node = this.node;
     return new PointD((this.portLocation.x - node.getCenter().x) / node.getWidth() * 100, (this.portLocation.y - node.getCenter().y) / node.getHeight() * 100);
+};
+
+CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
+    if (this.portSide == this.sideDirection['Top'] || this.portSide == this.sideDirection['Bottom']) {
+        this.rotationalForce.add(springForceX);
+    } else {
+        this.rotationalForce.add(springForceY);
+    }
 };
 
 module.exports = CoSEPPortConstraint;
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ *
+ * This object is data structure holding rotational forces. The size should match the periods of phase 2 in order for
+ * this class to work properly.
+ *
+ * The stored force could be:
+ * 1) The force inflicted upon a port by the edge
+ * 2) A node's total rotational force done by all of its' edges
+ *
+ * @author Alihan Okka
+ *
+ * @copyright i-Vis Research Group, Bilkent University, 2007 - present
+ *
+ */
+function CoSEPRotationalForce(size) {
+    this.size = size;
+    this.data = new Array(this.size);
+    this.current = 0;
+}
+
+CoSEPRotationalForce.prototype = Object.create(null);
+
+/**
+ * Adds a number to the array
+ * @param number
+ */
+CoSEPRotationalForce.prototype.add = function (number) {
+    this.data[this.current] = number;
+    this.current = ++this.current % this.size;
+};
+
+/**
+ * Returns the average of the forces stored.
+ * @returns {number}
+ */
+CoSEPRotationalForce.prototype.getAverage = function () {
+    var result = 0;
+    for (var i = 0; i < this.size; i++) {
+        result += this.data[i] / this.size;
+    }return result;
+};
+
+module.exports = CoSEPRotationalForce;
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -685,7 +933,7 @@ if (typeof cytoscape !== 'undefined') {
 module.exports = register;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -719,7 +967,7 @@ var CoSEPLayout = __webpack_require__(8);
 var CoSEPNode = __webpack_require__(3);
 var CoSEPPortConstraint = __webpack_require__(9);
 
-var ContinuousLayout = __webpack_require__(12);
+var ContinuousLayout = __webpack_require__(13);
 var assign = __webpack_require__(2);
 var isFn = function isFn(fn) {
   return typeof fn === 'function';
@@ -934,7 +1182,7 @@ var Layout = function (_ContinuousLayout) {
       }
 
       // Saving the references
-      this.graphManager.nodesWithPorts = this.nodesWithPorts;
+      this.graphManager.nodesWithPorts = Object.values(this.nodesWithPorts);
 
       // First phase of the algorithm
       this.cosepLayout.runLayout();
@@ -948,9 +1196,6 @@ var Layout = function (_ContinuousLayout) {
 
       // Initialize second phase of the algorithm
       this.cosepLayout.secondPhaseInit();
-
-      // this.cosepLayout.runSpringEmbedderTick();
-
     }
 
     // Get the top most ones of a list of nodes
@@ -1050,7 +1295,12 @@ var Layout = function (_ContinuousLayout) {
         //  }
       });
 
-      isDone = true;
+      isDone = this.cosepLayout.runSpringEmbedderTick();
+
+      self.updateCytoscapePortVisualization();
+
+      state.tickIndex = this.cosepLayout.totalIterations;
+
       return isDone;
     }
 
@@ -1061,16 +1311,16 @@ var Layout = function (_ContinuousLayout) {
     value: function postrun() {
       var self = this;
 
-      console.log('done');
-      console.log('Graph Manager');
+      console.log('** Done in ' + this.cosepLayout.totalIterations + ' iterations');
+      console.log('** Graph Manager');
       console.log(this.graphManager);
-      console.log('idToLNode');
+      console.log('** idToLNode');
       console.log(this.idToLNode);
-      console.log('Nodes with ports');
+      console.log('** Nodes with ports');
       console.log(this.nodesWithPorts);
-      console.log('lEdgeToCEdge');
+      console.log('** lEdgeToCEdge');
       console.log(this.lEdgeToCEdge);
-      console.log('portConstrainedEdges');
+      console.log('** portConstrainedEdges');
       console.log(this.portConstrainedEdges);
     }
 
@@ -1169,7 +1419,7 @@ var Layout = function (_ContinuousLayout) {
 module.exports = Layout;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1184,14 +1434,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 
 var assign = __webpack_require__(2);
-var makeBoundingBox = __webpack_require__(13);
+var makeBoundingBox = __webpack_require__(14);
 
-var _require = __webpack_require__(14),
+var _require = __webpack_require__(15),
     setInitialPositionState = _require.setInitialPositionState,
     refreshPositions = _require.refreshPositions,
     getNodePositionData = _require.getNodePositionData;
 
-var _require2 = __webpack_require__(15),
+var _require2 = __webpack_require__(16),
     multitick = _require2.multitick;
 
 var Layout = function () {
@@ -1401,7 +1651,7 @@ var Layout = function () {
 module.exports = Layout;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1432,7 +1682,7 @@ module.exports = function (bb, cy) {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1474,7 +1724,7 @@ var refreshPositions = function refreshPositions(nodes, state) {
 module.exports = { setInitialPositionState: setInitialPositionState, getNodePositionData: getNodePositionData, refreshPositions: refreshPositions };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1496,7 +1746,7 @@ var tick = function tick(state) {
     s.firstUpdate = false;
   }
 
-  s.tickIndex++;
+  //s.tickIndex++;
 
   var duration = Date.now() - s.startTime;
 
