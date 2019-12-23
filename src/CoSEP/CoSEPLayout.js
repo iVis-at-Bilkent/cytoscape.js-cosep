@@ -24,7 +24,6 @@ function CoSEPLayout() {
 
     // Current phase of the algorithm
     this.phase = CoSEPLayout.PHASE_CORE;
-
 }
 
 CoSEPLayout.prototype = Object.create(CoSELayout.prototype);
@@ -86,6 +85,7 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
     this.totalIterations = 0;
 
     // Reset variables for cooling
+    this.initialCoolingFactor = 0.7;
     this.coolingCycle = 0;
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
@@ -152,11 +152,6 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
 
     }
 
-    if (this.iterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
-    {
-        this.checkForEdgeShifting();
-    }
-
     this.totalDisplacement = 0;
 
     // This updates the bounds of compound nodes along with its' ports
@@ -167,12 +162,22 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcGravitationalForces();
     this.moveNodes();
 
+    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
+    {
+        this.checkForEdgeShifting();
+    }
+
     // If we reached max iterations
     return this.totalIterations >= this.maxIterations;
 };
 
+/**
+ *  Edge shifting during phase II of the algorithm.
+ */
 CoSEPLayout.prototype.checkForEdgeShifting = function(){
-
+    for(let i = 0; i < this.graphManager.portConstraints.length; i++){
+        this.graphManager.portConstraints[i].checkForEdgeShifting();
+    }
 };
 
 

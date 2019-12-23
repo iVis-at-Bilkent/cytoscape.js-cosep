@@ -1,0 +1,120 @@
+body {
+    font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+    font-size: 15px;
+}
+
+#cy {
+    position: absolute;
+    left: 220px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+}
+
+h1 {
+    opacity: 0.5;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.checkbox {
+    margin-left: 0px;
+}
+
+#optionsPanel {
+    height: auto;
+    width: 220px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 70px;
+    left: 20px;
+    font-size: 15px;
+    background-color: #ccefc9;
+}
+
+#indicatorPanel {
+    height: auto;
+    width: 200px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 170px;
+    left: 20px;
+    font-size: 15px;
+    background-color: #ccefc9;
+    display: none;
+}
+
+#addConsPanel {
+    height: auto;
+    width: 250px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 255px;
+    left: 20px;
+    font-size: 15px;
+    background-color: #ccefc9;
+    display: none;
+}
+
+#logsPanel {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: auto;
+    width: 250px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 50%;
+    left: 20px;
+    font-size: 15px;
+    background-color: #efd610;
+    text-align: center;
+}
+
+table{
+    padding-top: 5px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/* The sidepanel links */
+table td {
+    padding: 0px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #555;
+    transition: 0.3s;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 6px 12px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+#coseButton{
+    margin-left: 17px;
+}
+
+#cosepButton{
+    margin-left: 20px;
+}
+
+#endpoint {
+    width: 100px;
+}
+
+#nodeSides {
+    width: 100px;
+}

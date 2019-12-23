@@ -24,8 +24,8 @@ CoSEPConstants.EDGE_SHIFTING_PERIOD = 10;
 // # of iterations to check for node rotation
 CoSEPConstants.NODE_ROTATION_PERIOD = 50;
 
+// Thresholds for Phase II
 CoSEPConstants.EDGE_SHIFTING_THRESHOLD = 3;
-
 CoSEPConstants.NODE_ROTATION_THRESHOLD = 100;
 
 

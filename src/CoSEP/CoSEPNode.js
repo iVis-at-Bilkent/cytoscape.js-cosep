@@ -61,7 +61,7 @@ CoSEPNode.prototype.getPortCoordinatesByIndex = function ( index ){
         break;
         case 3:
             position = new PointD( this.rect.x,
-                this.rect.y + this.rect.width * ( this.portsPerSide - remainder ) / ( this.portsPerSide + 1) );
+                this.rect.y + this.rect.height * ( this.portsPerSide - remainder ) / ( this.portsPerSide + 1) );
         break;
     }
 

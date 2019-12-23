@@ -1,0 +1,313 @@
+/**
+ * JS control file for the demo
+ *
+ * @author Alihan Okka
+ *
+ * @copyright i-Vis Research Group, Bilkent University, 2007 - present
+ */
+
+// Variables and Constants
+const indicatorTable = document.getElementById("indicTable");
+const addingConsTable = document.getElementById("consTable");
+const consSelector = document.getElementById("consType");
+const logsTable = document.getElementById("logsTable");
+let selectedEdge;
+let constraints = {};
+
+// Function to send to CoSEP Layout
+let portConstraints = function( edge ){
+    return constraints[edge.data('id')];
+};
+
+
+// Clear Selections at start
+document.getElementById("endpoint").selectedIndex = -1;
+document.getElementById("consType").selectedIndex = -1;
+document.getElementById("portsPerSide").value = 3;
+
+// Initial Layout on opening the page
+var cy = window.cy = cytoscape({
+    container: document.getElementById('cy'),
+    layout: {
+        name: 'cose-bilkent',
+        quality: 'default',
+        tiling: false,
+        nodeDimensionsIncludeLabels: false,
+        fit: true
+    },
+    style: [
+        {
+            selector: 'node',
+            style: {
+                'shape' : 'rectangle',
+                'label' : 'data(id)',
+                'text-halign': 'center',
+                'text-valign': 'center',
+                'background-color': '#3a7ecf'
+            }
+        },
+        {
+            selector: ':parent',
+            style: {
+                'background-opacity': 0.333,
+                'border-color': '#3a7ecf'
+            }
+        },
+        {
+            selector: 'node:selected',
+            style: {
+                'background-color': '#ff0000'
+            }
+        },
+        {
+            selector: 'edge',
+            style: {
+                'curve-style': 'straight',
+                'width': 2,
+                'line-color': '#3a7ecf',
+                'opacity': 0.7
+            }
+        },
+        {
+            selector: 'edge:selected',
+            style: {
+                'line-color': '#ff0000'
+            }
+        }
+    ],
+    elements: [
+        {group: 'nodes', data: {id: 'n0'}},
+        {group: 'nodes', data: {id: 'n1'}},
+        {group: 'nodes', data: {id: 'n2'}},
+        {group: 'nodes', data: {id: 'n3'}},
+        {group: 'nodes', data: {id: 'n4'}},
+        {group: 'nodes', data: {id: 'n5'}},
+        {group: 'nodes', data: {id: 'n10'}},
+        {group: 'nodes', data: {id: 'n11', parent: 'n10'}},
+        {group: 'nodes', data: {id: 'n12', parent: 'n10'}},
+        {group: 'nodes', data: {id: 'n20'}},
+        {group: 'nodes', data: {id: 'n21', parent: 'n20'}},
+        {group: 'nodes', data: {id: 'n22', parent: 'n20'}},
+        {group: 'nodes', data: {id: 'n23', parent: 'n20'}},
+        {group: 'edges', data: {id: 'e0', source: 'n1', target: 'n2'}},
+        {group: 'edges', data: {id: 'e1', source: 'n2', target: 'n3'}},
+        {group: 'edges', data: {id: 'e2', source: 'n3', target: 'n21'}},
+        {group: 'edges', data: {id: 'e3', source: 'n1', target: 'n10'}},
+        {group: 'edges', data: {id: 'e4', source: 'n4', target: 'n20'}},
+        {group: 'edges', data: {id: 'e5', source: 'n21', target: 'n23'}},
+        {group: 'edges', data: {id: 'e6', source: 'n0', target: 'n10'}},
+        {group: 'edges', data: {id: 'e7', source: 'n0', target: 'n20'}},
+        {group: 'edges', data: {id: 'e8', source: 'n2', target: 'n0'}},
+        {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n10'}}
+    ]
+});
+
+// CoSE Core Button
+document.getElementById("coseButton").addEventListener("click",function(){
+    let layout = window.cy.layout({
+        name: 'cose-bilkent',
+        refresh:1,
+        tiling:false,
+        animate: ( document.getElementById("animate").checked) ? 'during' : false,
+        randomize: !(document.getElementById("incremental").checked)
+    });
+
+    layout.run();
+});
+
+// Cosep Button
+document.getElementById("cosepButton").addEventListener("click",function(){
+    if( !Number.isInteger(+document.getElementById("portsPerSide").value) ){
+        alert( "Please enter valid ports per node side" );
+        return;
+    }
+
+    let layout = window.cy.layout({
+        name: 'cosep',
+        refresh:1,
+        tiling:false,
+        animate: ( document.getElementById("animate").checked) ? 'during' : false,
+        randomize: !(document.getElementById("incremental").checked),
+        portConstraints: portConstraints,
+        portsPerNodeSide: document.getElementById("portsPerSide").value
+    });
+
+    layout.run();
+});
+
+// Selecting stuff on the graph
+// Get only if the selected is only one edge
+cy.on('select', 'edge', function(event){
+    let selected = cy.elements(':selected');
+    if( selected.length == 1 && selected.group() == 'edges' ) {
+        selectedEdge = selected[0];
+
+        if (indicatorTable.rows.length > 1){
+            for( let i = 1; i <= indicatorTable.rows.length ; i++){
+                indicatorTable.deleteRow(1);
+            }
+        }
+
+        // Adding node id to  node id indication
+        let row = indicatorTable.insertRow();
+        let cell3 = row.insertCell(0);
+        let cell2 = row.insertCell(0);
+        let cell1 = row.insertCell(0);
+        cell1.innerHTML = selectedEdge.data('source');
+        cell2.innerHTML =  '&#10230;';
+        cell3.innerHTML = selectedEdge.data('target');
+
+        document.getElementById('addConsPanel').style.display = 'block';
+        document.getElementById('indicatorPanel').style.display = 'block';
+    }
+});
+
+// Unselecting the edge
+// Remove all displays
+cy.on('unselect', 'edge', function(event){
+    selectedEdge = null;
+    document.getElementById('addConsPanel').style.display = 'none';
+    document.getElementById('indicatorPanel').style.display = 'none';
+    document.getElementById('portIndexRow').style.display = "none";
+    document.getElementById('nodeSidesRow').style.display = "none";
+    document.getElementById("endpoint").selectedIndex = -1;
+    document.getElementById("consType").selectedIndex = -1;
+    document.getElementById("nodeSides").selectedIndex = -1;
+    document.getElementById("portIndex").value = "";
+});
+
+// Changing Constraint Table according to type selection
+consSelector.addEventListener("change", function() {
+    if( consSelector.value == "Free" ){
+        document.getElementById('portIndexRow').style.display = "none";
+        document.getElementById('nodeSidesRow').style.display = "none";
+    }else if( consSelector.value == "Sided" ){
+        document.getElementById('portIndexRow').style.display = "none";
+        document.getElementById('nodeSidesRow').style.display = "table-row";
+    } else if( consSelector.value == "Absolute" ){
+        document.getElementById('portIndexRow').style.display = "table-row";
+        document.getElementById('nodeSidesRow').style.display = "none";
+    }
+});
+
+// Adding Constraints
+document.getElementById("addConstraint").addEventListener("click",function(){
+    let endpoint;
+    let portConstraintType;
+    let portConstraintParameter;
+    let edge = window.cy.edges(':selected')[0];
+
+    switch ( document.getElementById("endpoint").selectedIndex ) {
+        case -1:
+            alert("Failed to add constraint: Endpoint is not specified ");
+            return;
+            break;
+        case 0:
+            endpoint = 'Source';
+            break;
+        case 1:
+            endpoint = 'Target';
+            break;
+    }
+
+    switch ( document.getElementById("consType").selectedIndex  ) {
+        case -1:
+            alert("Failed to add constraint: Constraint type is not specified ");
+            return;
+            break;
+        case 0:
+            portConstraintType = 'Free';
+            break;
+        case 1:
+            portConstraintType = 'Sided';
+
+            portConstraintParameter = [];
+            let nodeSides = document.getElementById("nodeSides").options;
+            for( let i = 0; i < nodeSides.length; i++ ){
+                if( nodeSides[i].selected )
+                    portConstraintParameter.push( nodeSides[i].value );
+            }
+
+            if( nodeSides.length == 0 ){
+                alert("Failed to add constraint: Node sides are not specified ");
+                return;
+            }
+            break;
+        case 2:
+            portConstraintType = 'Absolute';
+            portConstraintParameter = document.getElementById("portIndex").value;
+
+            if ( !Number.isInteger( +document.getElementById("portsPerSide").value )  ||
+                portConstraintParameter >= document.getElementById("portsPerSide").value * 4
+
+            ){
+                alert("Failed to add constraint: Given port index exceeds total port range");
+                return;
+            }
+            break;
+    }
+
+    if( constraints[ edge.data('id') ] == undefined || constraints[ edge.data('id') ] == null ){
+        constraints[ edge.data('id') ] = [{
+            endpoint: endpoint,
+            portConstraintType: portConstraintType,
+            portConstraintParameter: portConstraintParameter
+        }];
+    } else {
+        let alreadyCons =  constraints[ edge.data('id') ];
+        let bool = false;
+        alreadyCons.forEach( function (cons) {
+            if(cons.endpoint == endpoint){
+                alert("Failed to add constraint: Endpoint already has a constraint ");
+                bool = true;
+                return;
+            }
+        });
+
+        if(bool){return;}
+
+        constraints[ edge.data('id') ].push({
+            endpoint: endpoint,
+            portConstraintType: portConstraintType,
+            portConstraintParameter: portConstraintParameter
+        });
+    }
+
+    let row = logsTable.insertRow();
+    let cell = row.insertCell(0);
+    let stringRow = edge.data('id') + " = " + endpoint + "; " + portConstraintType;
+    if ( portConstraintParameter ){
+        if( Number.isInteger( +portConstraintParameter )){
+            stringRow += '; ' + portConstraintParameter;
+        }
+        else{
+            stringRow += '; ' + portConstraintParameter[0];
+
+            for(let i = 1; i < portConstraintParameter.length; i++){
+                stringRow += ', ' + portConstraintParameter[i];
+            }
+        }
+    }
+    cell.innerHTML = stringRow;
+
+    switch( portConstraintType ){
+        case 'Free':
+            if( endpoint == 'Source' )
+                edge.style({ 'source-arrow-shape': 'vee', 'source-arrow-color': '#3a7ecf' });
+            else
+                edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#3a7ecf' });
+            break;
+        case 'Sided':
+            if( endpoint == 'Source' )
+                edge.style({ 'source-arrow-shape': 'triangle-tee', 'source-arrow-color': '#3a7ecf' });
+            else
+                edge.style({ 'target-arrow-shape': 'triangle-tee', 'target-arrow-color': '#3a7ecf' });
+            break;
+        case 'Absolute':
+            if( endpoint == 'Source' )
+                edge.style({ 'source-arrow-shape': 'circle', 'source-arrow-color': '#3a7ecf' });
+            else
+                edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#3a7ecf' });
+            break;
+    }
+});

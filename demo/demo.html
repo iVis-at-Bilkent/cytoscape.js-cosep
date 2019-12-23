@@ -1,0 +1,120 @@
+<!DOCTYPE>
+
+<html>
+
+	<head>
+		<title>cytoscape-cosep.js demo</title>
+
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+		<!-- Cytoscape extention -->
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+		<!-- iVis-at-Bilkent libraries -->
+		<script src="https://unpkg.com/layout-base/layout-base.js"></script>
+		<script src="https://unpkg.com/cose-base/cose-base.js"></script>
+
+		<!-- CoSE Bilkent Layout -->
+		<script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
+
+		<!-- Demo files -->
+		<script src="demoControl.js" defer></script>
+		<link rel="stylesheet" href="demo.css">
+
+		<!-- Cosep Layout -->
+		<script src="../cytoscape-cosep.js"></script>
+	</head>
+
+	<body>
+		<h1>cytoscape-cosep demo</h1>
+
+		<div style="position: absolute;" >
+			<button id="coseButton" type="button" class="button">Core CoSE</button>
+			<button id="cosepButton" type="button" class="button">CoSEP</button>
+		</div>
+
+		<div id="optionsPanel">
+			<table>
+				<tr>
+					<td><span> Animate </span></td>
+					<td><input id="animate" class = "checkbox" type="checkbox"></td>
+				</tr>
+				<tr>
+					<td><span> Incremental </span></td>
+					<td><input id="incremental" class = "checkbox" type="checkbox"></td>
+				</tr>
+				<tr>
+					<td><span> Ports Per Node Side </span></td>
+					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="3"></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="indicatorPanel">
+			<label style="margin-left: 50px"><b> Selected Edge </b></label>
+			<table id="indicTable">
+				<tr>
+					<td><span><b> Source </b></span></td>
+					<td><span><b> &#10230;</b></span></td>
+					<td><span><b> Target </b></span></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="addConsPanel">
+			<label style="margin-left: 60px"><b> Adding Constraint </b></label>
+			<table id="consTable">
+				<tr>
+					<td><span> Endpoint </span></td>
+					<td>
+						<select id="endpoint">
+							<option value="Source">Source</option>
+							<option value="Target">Target</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><span> Type </span></td>
+					<td>
+						<select id="consType">
+							<option value="Free">Free</option>
+							<option value="Sided">Sided</option>
+							<option value="Absolute">Abs. Position</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="nodeSidesRow" style="display:none;">
+					<td><span> Node Side(s) </span></td>
+					<td>
+						<select id="nodeSides" multiple>
+							<option value="Top">Top</option>
+							<option value="Right">Right</option>
+							<option value="Bottom">Bottom</option>
+							<option value="Left">Left</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="portIndexRow" style="display:none;">
+					<td><span> Port Index </span></td>
+					<td><input id="portIndex" class="textField" type="text" maxlength=5 size="10"></td>
+				</tr>
+				<tr >
+					<td><span>  </span></td>
+					<td><button id="addConstraint" type="button" class="button">Add</button></td>
+					<td><span>  </span></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="logsPanel">
+			<label><b> History Log </b></label>
+			<table id="logsTable">
+
+			</table>
+		</div>
+
+		<div id="cy"></div>
+
+	</body>
+
+</html>

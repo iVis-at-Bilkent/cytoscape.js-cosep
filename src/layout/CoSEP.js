@@ -111,8 +111,8 @@ let getUserOptions = function (options) {
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
-  if( options.portsPerSide != null )
-    CoSEPPortConstraint.PORTS_PER_SIDE = options.portsPerSide;
+  if( options.portsPerNodeSide != null )
+    CoSEPConstants.PORTS_PER_SIDE = +options.portsPerNodeSide;
 
   CoSEPConstants.NODE_DIMENSIONS_INCLUDE_LABELS = CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS
                                                 = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
@@ -122,7 +122,7 @@ let getUserOptions = function (options) {
   CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL
                                      = FDLayoutConstants.DEFAULT_INCREMENTAL
                                      = LayoutConstants.DEFAULT_INCREMENTAL
-                                     = !(options.randomize);
+                                     = !(true); // options.randomize
 
   CoSEPConstants.TILE = CoSEConstants.TILE = options.tile;
   CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL =
@@ -243,7 +243,23 @@ class Layout extends ContinuousLayout {
     this.graphManager.nodesWithPorts = Object.values( this.nodesWithPorts );
 
     // First phase of the algorithm
-    this.cosepLayout.runLayout();
+    if ( state.randomize ) {
+      this.cosepLayout.runLayout();
+    } else{
+        this.cosepLayout.initParameters();
+        this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
+        this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
+        this.cosepLayout.calcNoOfChildrenForAllNodes();
+        this.graphManager.calcLowestCommonAncestors();
+        this.graphManager.calcInclusionTreeDepths();
+        this.graphManager.getRoot().calcEstimatedSize();
+        this.cosepLayout.calcIdealEdgeLengths();
+     //   this.graphManager.updateBounds();
+        this.cosepLayout.level = 0;
+        this.cosepLayout.initSpringEmbedder();
+
+    }
+
 
     // Initialize ports
     this.addImplicitPortConstraints();

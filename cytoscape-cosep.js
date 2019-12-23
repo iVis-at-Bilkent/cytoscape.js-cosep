@@ -114,8 +114,8 @@ CoSEPConstants.EDGE_SHIFTING_PERIOD = 10;
 // # of iterations to check for node rotation
 CoSEPConstants.NODE_ROTATION_PERIOD = 50;
 
+// Thresholds for Phase II
 CoSEPConstants.EDGE_SHIFTING_THRESHOLD = 3;
-
 CoSEPConstants.NODE_ROTATION_THRESHOLD = 100;
 
 module.exports = CoSEPConstants;
@@ -208,7 +208,7 @@ CoSEPNode.prototype.getPortCoordinatesByIndex = function (index) {
             position = new PointD(this.rect.x + this.rect.width * (this.portsPerSide - remainder) / (this.portsPerSide + 1), this.rect.y + this.rect.height);
             break;
         case 3:
-            position = new PointD(this.rect.x, this.rect.y + this.rect.width * (this.portsPerSide - remainder) / (this.portsPerSide + 1));
+            position = new PointD(this.rect.x, this.rect.y + this.rect.height * (this.portsPerSide - remainder) / (this.portsPerSide + 1));
             break;
     }
 
@@ -586,6 +586,7 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
     this.totalIterations = 0;
 
     // Reset variables for cooling
+    this.initialCoolingFactor = 0.7;
     this.coolingCycle = 0;
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
@@ -644,10 +645,6 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
         this.coolingFactor = Math.max(this.initialCoolingFactor - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) / Math.log(this.maxCoolingCycle)) / 100 * this.coolingAdjuster, this.finalTemperature);
     }
 
-    if (this.iterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
-        this.checkForEdgeShifting();
-    }
-
     this.totalDisplacement = 0;
 
     // This updates the bounds of compound nodes along with its' ports
@@ -658,11 +655,22 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcGravitationalForces();
     this.moveNodes();
 
+    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        this.checkForEdgeShifting();
+    }
+
     // If we reached max iterations
     return this.totalIterations >= this.maxIterations;
 };
 
-CoSEPLayout.prototype.checkForEdgeShifting = function () {};
+/**
+ *  Edge shifting during phase II of the algorithm.
+ */
+CoSEPLayout.prototype.checkForEdgeShifting = function () {
+    for (var i = 0; i < this.graphManager.portConstraints.length; i++) {
+        this.graphManager.portConstraints[i].checkForEdgeShifting();
+    }
+};
 
 module.exports = CoSEPLayout;
 
@@ -846,11 +854,204 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
     return new PointD((this.portLocation.x - node.getCenter().x) / node.getWidth() * 100, (this.portLocation.y - node.getCenter().y) / node.getHeight() * 100);
 };
 
+/**
+ * The component of the spring force, vertical component if the port is located at the top or bottom and horizontal
+ * component otherwise, is considered to be the rotational force.
+ *
+ *  * The sign of the force should be positive for clockwise, negative for counter-clockwise
+ *
+ * @param springForceX
+ * @param springForceY
+ */
+
 CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
-    if (this.portSide == this.sideDirection['Top'] || this.portSide == this.sideDirection['Bottom']) {
+    if (this.portSide == this.sideDirection['Top']) {
         this.rotationalForce.add(springForceX);
-    } else {
+    } else if (this.portSide == this.sideDirection['Bottom']) {
+        this.rotationalForce.add(-springForceX);
+    } else if (this.portSide == this.sideDirection['Right']) {
         this.rotationalForce.add(springForceY);
+    } else {
+        this.rotationalForce.add(-springForceY);
+    }
+};
+
+/**
+ * If the edge is 'Absolute' constrained then there is nothing to do.
+ * Otherwise check if the average rotational force inflicted upon port if above threshold.
+ * If it exceeds shift the edge (assuming constraint doesn't limit it)
+ * Note that there is an additional requirement if the port is located at the 'corner' of node
+ */
+CoSEPPortConstraint.prototype.checkForEdgeShifting = function () {
+    if (this.portConstraintParameter == this.constraintType['Absolute']) {
+        return;
+    }
+
+    // Exceeds threshold?
+    var rotationalForceAvg = this.rotationalForce.getAverage();
+    if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_SHIFTING_THRESHOLD) {
+        return;
+    }
+
+    // If the edge wants to go clockwise or counter-clockwise
+    var clockwise = Math.sign(rotationalForceAvg) == 1;
+
+    // Currently on a corner port and wants to change sides. Then we have additional requirements.
+    if (this.portIndex % this.node.portsPerSide == 0 && !clockwise) {
+        var nextSide = this.portSide;
+
+        if (--nextSide < 0) nextSide = 3;
+        if (this.portConstraintParameter.includes(nextSide)) {
+            if (this.additionalRequirementForAdjacentSideChanging(nextSide)) {
+                var nextIndex = this.portIndex - 1;
+                if (nextIndex < 0) nextIndex = 4 * this.node.portsPerSide - 1;
+                var temp = this.node.getPortCoordinatesByIndex(nextIndex);
+                this.portIndex = nextIndex;
+                this.portSide = temp[0];
+                this.portLocation = temp[1];
+            } else return;
+        }
+
+        if (--nextSide < 0) nextSide = 3;
+        if (this.portConstraintParameter.includes(nextSide)) if (this.additionalRequirementForAcrossSideChanging()) {
+            var _nextIndex = this.portIndex - (this.node.portsPerSide + 1);
+            if (_nextIndex < 0) _nextIndex = 4 * this.node.portsPerSide + _nextIndex;
+            var _temp2 = this.node.getPortCoordinatesByIndex(_nextIndex);
+            this.portIndex = _nextIndex;
+            this.portSide = _temp2[0];
+            this.portLocation = _temp2[1];
+        } else return;
+    } else if (this.portIndex % this.node.portsPerSide == this.node.portsPerSide - 1 && clockwise) {
+        var _nextSide = (this.portSide + 1) % 4;
+        if (this.portConstraintParameter.includes(_nextSide)) {
+            if (this.additionalRequirementForAdjacentSideChanging(_nextSide)) {
+                var _nextIndex2 = (this.portIndex + 1) % (4 * this.node.portsPerSide);
+                var _temp3 = this.node.getPortCoordinatesByIndex(_nextIndex2);
+                this.portIndex = _nextIndex2;
+                this.portSide = _temp3[0];
+                this.portLocation = _temp3[1];
+            } else return;
+        }
+
+        _nextSide = (_nextSide + 1) % 4;
+        if (this.portConstraintParameter.includes(_nextSide)) if (this.additionalRequirementForAcrossSideChanging()) {
+            var _nextIndex3 = (this.portIndex + this.node.portsPerSide + 1) % (4 * this.node.portsPerSide);
+            var _temp4 = this.node.getPortCoordinatesByIndex(_nextIndex3);
+            this.portIndex = _nextIndex3;
+            this.portSide = _temp4[0];
+            this.portLocation = _temp4[1];
+        } else return;
+    } else {
+        var _nextIndex4 = void 0;
+        if (clockwise) _nextIndex4 = (this.portIndex + 1) % (4 * this.node.portsPerSide);else {
+            _nextIndex4 = this.portIndex - 1;
+            if (_nextIndex4 < 0) _nextIndex4 = 4 * this.node.portsPerSide - 1;
+        }
+
+        var _temp5 = this.node.getPortCoordinatesByIndex(_nextIndex4);
+        this.portIndex = _nextIndex4;
+        this.portSide = _temp5[0];
+        this.portLocation = _temp5[1];
+    }
+};
+
+/**
+ * The node needs to be in the right quadrant. Quadrants are defined by node's corner points.
+ * Equalities are facing downwards.
+ *
+ * For line1: Top-Left to Bottom-Right
+ * For line2: Top-Right to Bottom-Left
+ *
+ * @param nextSide
+ */
+CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = function (nextSide) {
+    var nodeRect = this.node.rect;
+    var otherNodeRect = this.edge.getOtherEnd(this.node).getCenter();
+
+    switch (this.portSide) {
+        case 0:
+            if (nextSide == 1) {
+                var check = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
+                return check(otherNodeRect.x, otherNodeRect.y);
+            } else {
+                var _check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
+                return _check(otherNodeRect.x, otherNodeRect.y);
+            }
+            break;
+        case 1:
+            if (nextSide == 0) {
+                var _check2 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
+                return !_check2(otherNodeRect.x, otherNodeRect.y);
+            } else {
+                var _check3 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
+                return _check3(otherNodeRect.x, otherNodeRect.y);
+            }
+            break;
+        case 2:
+            if (nextSide == 3) {
+                var _check4 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
+                return !_check4(otherNodeRect.x, otherNodeRect.y);
+            } else {
+                var _check5 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
+                return !_check5(otherNodeRect.x, otherNodeRect.y);
+            }
+            break;
+        case 3:
+            if (nextSide == 2) {
+                var _check6 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
+                return _check6(otherNodeRect.x, otherNodeRect.y);
+            } else {
+                var _check7 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
+                return !_check7(otherNodeRect.x, otherNodeRect.y);
+            }
+            break;
+    }
+
+    function line(x1, y1, x2, y2) {
+        var slope = (y2 - y1) / (x2 - x1);
+        return function (x, y) {
+            return y - y1 > slope * (x - x1);
+        };
+    }
+};
+
+/**
+ * The node needs to be in the right quadrant. Quadrants are defined by node's center.
+ *
+ * For line1: Node Center, horizontal, equality pointing downward
+ * For line2: Node Center, vertical, equality pointing right
+ *
+ * @param nextSide
+ */
+CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = function () {
+    var nodeRect = this.node.getCenter();
+    var otherNodeRect = this.edge.getOtherEnd(this.node).getCenter();
+    var check = void 0;
+
+    switch (this.portSide) {
+        case 0:
+            check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y);
+            return check(otherNodeRect.x, otherNodeRect.y);
+            break;
+        case 1:
+            check = line(nodeRect.x, nodeRect.y, nodeRect.x, nodeRect.y, +nodeRect.height);
+            return !check(otherNodeRect.x, otherNodeRect.y);
+            break;
+        case 2:
+            check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y);
+            return !check(otherNodeRect.x, otherNodeRect.y);
+            break;
+        case 3:
+            check = line(nodeRect.x, nodeRect.y, nodeRect.x, nodeRect.y, +nodeRect.height);
+            return check(otherNodeRect.x, otherNodeRect.y);
+            break;
+    }
+
+    function line(x1, y1, x2, y2) {
+        var slope = (y2 - y1) / (x2 - x1);
+        return function (x, y) {
+            return y - y1 > slope * (x - x1);
+        };
     }
 };
 
@@ -1055,11 +1256,11 @@ var getUserOptions = function getUserOptions(options) {
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
-  if (options.portsPerSide != null) CoSEPPortConstraint.PORTS_PER_SIDE = options.portsPerSide;
+  if (options.portsPerNodeSide != null) CoSEPConstants.PORTS_PER_SIDE = +options.portsPerNodeSide;
 
   CoSEPConstants.NODE_DIMENSIONS_INCLUDE_LABELS = CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = false;
 
-  CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = !options.randomize;
+  CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = !true; // options.randomize
 
   CoSEPConstants.TILE = CoSEConstants.TILE = options.tile;
   CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL = typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
@@ -1185,7 +1386,21 @@ var Layout = function (_ContinuousLayout) {
       this.graphManager.nodesWithPorts = Object.values(this.nodesWithPorts);
 
       // First phase of the algorithm
-      this.cosepLayout.runLayout();
+      if (state.randomize) {
+        this.cosepLayout.runLayout();
+      } else {
+        this.cosepLayout.initParameters();
+        this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
+        this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
+        this.cosepLayout.calcNoOfChildrenForAllNodes();
+        this.graphManager.calcLowestCommonAncestors();
+        this.graphManager.calcInclusionTreeDepths();
+        this.graphManager.getRoot().calcEstimatedSize();
+        this.cosepLayout.calcIdealEdgeLengths();
+        //   this.graphManager.updateBounds();
+        this.cosepLayout.level = 0;
+        this.cosepLayout.initSpringEmbedder();
+      }
 
       // Initialize ports
       this.addImplicitPortConstraints();
@@ -1745,8 +1960,6 @@ var tick = function tick(state) {
     }
     s.firstUpdate = false;
   }
-
-  //s.tickIndex++;
 
   var duration = Date.now() - s.startTime;
 
