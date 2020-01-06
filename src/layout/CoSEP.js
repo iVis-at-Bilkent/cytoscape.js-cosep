@@ -108,6 +108,7 @@ let getUserOptions = function (options) {
   // Phase I of the algorithm
   LayoutConstants.QUALITY = 0;
 
+  // We don't need to animate CoSE-Bilkent part of the algorithm
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
@@ -119,6 +120,7 @@ let getUserOptions = function (options) {
                                                 = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
                                                 = false;
 
+  // Our incremental would be to skip over Phase I
   CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL
                                      = FDLayoutConstants.DEFAULT_INCREMENTAL
                                      = LayoutConstants.DEFAULT_INCREMENTAL
@@ -243,6 +245,7 @@ class Layout extends ContinuousLayout {
     this.graphManager.nodesWithPorts = Object.values( this.nodesWithPorts );
 
     // First phase of the algorithm
+    // If incremental is true, skip over Phase I
     if ( state.randomize ) {
       this.cosepLayout.runLayout();
     } else{
@@ -254,12 +257,10 @@ class Layout extends ContinuousLayout {
         this.graphManager.calcInclusionTreeDepths();
         this.graphManager.getRoot().calcEstimatedSize();
         this.cosepLayout.calcIdealEdgeLengths();
-     //   this.graphManager.updateBounds();
+        this.graphManager.updateBounds();
         this.cosepLayout.level = 0;
         this.cosepLayout.initSpringEmbedder();
-
     }
-
 
     // Initialize ports
     this.addImplicitPortConstraints();
@@ -354,18 +355,15 @@ class Layout extends ContinuousLayout {
     // TODO update state for this iteration
     this.state.nodes.forEach( n => {
       let s = this.getScratch(n);
-
-      // We let compound node's locations to be figured out by Cytoscape
-    //  if (n.not(":parent").length !== 0) {
         let location = this.idToLNode[n.data('id')];
         s.x = location.getCenterX();
         s.y = location.getCenterY();
-   //  }
     });
 
     isDone = this.cosepLayout.runSpringEmbedderTick();
 
-    self.updateCytoscapePortVisualization();
+    if( state.animate || state.animate == 'during' )
+      self.updateCytoscapePortVisualization();
 
     state.tickIndex = this.cosepLayout.totalIterations;
 

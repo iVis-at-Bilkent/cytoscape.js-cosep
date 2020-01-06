@@ -17,23 +17,29 @@
 		<!-- CoSE Bilkent Layout -->
 		<script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
 
+		<!-- Cosep Layout -->
+		<script src="../cytoscape-cosep.js"></script>
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+		<!-- JS, Popper.js, and jQuery -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 		<!-- Demo files -->
 		<script src="demoControl.js" defer></script>
 		<link rel="stylesheet" href="demo.css">
-
-		<!-- Cosep Layout -->
-		<script src="../cytoscape-cosep.js"></script>
 	</head>
 
 	<body>
 		<h1>cytoscape-cosep demo</h1>
 
-		<div style="position: absolute;" >
-			<button id="coseButton" type="button" class="button">Core CoSE</button>
-			<button id="cosepButton" type="button" class="button">CoSEP</button>
-		</div>
+		<button id="coseButton" type="button" class="btn btn-secondary btn-sm">CoSE Bilkent</button>
+		<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP</button>
 
-		<div id="optionsPanel">
+		<div id="optionsCard"  class="card">
 			<table>
 				<tr>
 					<td><span> Animate </span></td>
@@ -45,13 +51,13 @@
 				</tr>
 				<tr>
 					<td><span> Ports Per Node Side </span></td>
-					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="3"></td>
+					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="3" style="text-align: center"></td>
 				</tr>
 			</table>
 		</div>
 
-		<div id="indicatorPanel">
-			<label style="margin-left: 50px"><b> Selected Edge </b></label>
+		<div id="indicatorCard"  class="card" style="text-align: center">
+			<label><b> Selected Edge </b></label>
 			<table id="indicTable">
 				<tr>
 					<td><span><b> Source </b></span></td>
@@ -61,8 +67,8 @@
 			</table>
 		</div>
 
-		<div id="addConsPanel">
-			<label style="margin-left: 60px"><b> Adding Constraint </b></label>
+		<div id="addConsCard"  class="card" style="text-align: center">
+			<label><b> Adding Constraint </b></label>
 			<table id="consTable">
 				<tr>
 					<td><span> Endpoint </span></td>
@@ -96,25 +102,48 @@
 				</tr>
 				<tr id="portIndexRow" style="display:none;">
 					<td><span> Port Index </span></td>
-					<td><input id="portIndex" class="textField" type="text" maxlength=5 size="10"></td>
+					<td><input id="portIndex" class="textField" type="text" maxlength=5 size="10" style="text-align: center" ></td>
 				</tr>
 				<tr >
 					<td><span>  </span></td>
-					<td><button id="addConstraint" type="button" class="button">Add</button></td>
+					<td><button id="addConstraint" type="button" class="btn btn-success btn-sm">Add</button></td>
 					<td><span>  </span></td>
 				</tr>
 			</table>
 		</div>
 
-		<div id="logsPanel">
-			<label><b> History Log </b></label>
-			<table id="logsTable">
-
-			</table>
+		<div id="logsCard" class="card" style="text-align: center">
+			<div class="card-header" style="padding: 5px 0px 0px 0px;background-color: #efbdee">
+				<ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-port" role="tab" aria-controls="pills-port" aria-selected="true">Port Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false">Allowed Rotations</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content" id="pills-tabContent" style="overflow-y: auto;overflow-x:auto">
+				<div class="tab-pane fade show active" id="pills-port" role="tabpanel" aria-labelledby="pills-port-tab">
+					<table id="logsTable" class="table">
+						<tr>
+							<th>ID</th>
+							<th>Endpoint</th>
+							<th>Type</th>
+							<th>Parameter</th>
+						</tr>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="pills-rotation" role="tabpanel" aria-labelledby="pills-rotation-tab">...</div>
+			</div>
 		</div>
 
-		<div id="cy"></div>
+		<button id="importFromFile" type="button" class="btn btn-secondary btn-sm"  onclick="document.getElementById('file-input').click();">Import from File</button>
+		<input id="file-input" type="file" name="name" style="display: none;" />
 
+		<button id="exportToFile" type="button" class="btn btn-secondary btn-sm">Export to File</button>
+
+		<div id="cy"></div>
 	</body>
 
 </html>

@@ -7,20 +7,18 @@
  */
 
 // Variables and Constants
-const indicatorTable = document.getElementById("indicTable");
-const addingConsTable = document.getElementById("consTable");
-const consSelector = document.getElementById("consType");
-const logsTable = document.getElementById("logsTable");
 let selectedEdge;
 let constraints = {};
+const indicatorTable = document.getElementById("indicTable");
+const consSelector = document.getElementById("consType");
+const logsTable = document.getElementById("logsTable");
 
 // Function to send to CoSEP Layout
 let portConstraints = function( edge ){
     return constraints[edge.data('id')];
 };
 
-
-// Clear Selections at start
+// Clear Selections/Options at start
 document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
 document.getElementById("portsPerSide").value = 3;
@@ -54,6 +52,13 @@ var cy = window.cy = cytoscape({
             }
         },
         {
+            selector: ':parent:selected',
+            style: {
+                'background-opacity': 0.65,
+                'border-color': '#ff0000'
+            }
+        },
+        {
             selector: 'node:selected',
             style: {
                 'background-color': '#ff0000'
@@ -71,8 +76,17 @@ var cy = window.cy = cytoscape({
         {
             selector: 'edge:selected',
             style: {
-                'line-color': '#ff0000'
-            }
+                'line-color': '#ff0000',
+                'label' : 'data(id)',
+                'font-size' : 13,
+                'text-opacity': 1,
+                'text-rotation': 'autorotate',
+                'color' : '#ff0000',
+                'font-weight' : 'bold',
+                'text-background-shape' : 'round-rectangle',
+                'text-background-opacity' : 1,
+                'text-background-padding' : 2
+            },
         }
     ],
     elements: [
@@ -99,7 +113,8 @@ var cy = window.cy = cytoscape({
         {group: 'edges', data: {id: 'e7', source: 'n0', target: 'n20'}},
         {group: 'edges', data: {id: 'e8', source: 'n2', target: 'n0'}},
         {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n10'}}
-    ]
+    ],
+    wheelSensitivity: 0.3
 });
 
 // CoSE Core Button
@@ -135,13 +150,66 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     layout.run();
 });
 
+// Export constraints JSON
+document.getElementById("exportToFile").addEventListener("click",function(){
+    saveText( JSON.stringify(constraints), "constraints.json" );
+
+    function saveText(text, filename){
+        let a = document.createElement('a');
+        a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
+        a.setAttribute('download', filename);
+        a.click();
+    }
+});
+
+// Import JSON object to constraints
+document.getElementById('file-input').addEventListener('change', function (evt) {
+    let files = evt.target.files;
+    let reader = new FileReader();
+    let contents;
+    reader.readAsText(files[0]);
+    reader.onload = function (event) {
+        // Parse the input
+        contents = event.target.result;
+        constraints = JSON.parse( contents );
+
+        // Clear logs table and re-write it
+        if (logsTable.rows.length > 1){
+            for( let i = 0; i <= logsTable.rows.length ; i++){
+                logsTable.deleteRow(1);
+            }
+        }
+
+        // Clear arrow heads
+        window.cy.edges().style({'source-arrow-shape':'none'});
+        window.cy.edges().style({'target-arrow-shape':'none'});
+
+        Object.keys(constraints).forEach(function( key ) {
+            let edgeID = key;
+            let consInfo = constraints[edgeID];
+
+            consInfo.forEach(function (cons) {
+                addToHistory( window.cy.edges("[id = '" + edgeID + "']"),
+                              cons.endpoint,
+                              cons.portConstraintType,
+                              cons.portConstraintParameter );
+
+                changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
+            });
+        });
+
+    };
+});
+
 // Selecting stuff on the graph
 // Get only if the selected is only one edge
-cy.on('select', 'edge', function(event){
+cy.on('select', 'edge', function( event ){
     let selected = cy.elements(':selected');
     if( selected.length == 1 && selected.group() == 'edges' ) {
         selectedEdge = selected[0];
 
+        // Change indicator Table ----
+        // Delete prev info
         if (indicatorTable.rows.length > 1){
             for( let i = 1; i <= indicatorTable.rows.length ; i++){
                 indicatorTable.deleteRow(1);
@@ -157,8 +225,16 @@ cy.on('select', 'edge', function(event){
         cell2.innerHTML =  '&#10230;';
         cell3.innerHTML = selectedEdge.data('target');
 
-        document.getElementById('addConsPanel').style.display = 'block';
-        document.getElementById('indicatorPanel').style.display = 'block';
+        // Highlight history log according to id
+        for( let i = 0; i < logsTable.rows.length; i++ ){
+            if( logsTable.rows[i].cells[0].innerHTML == selectedEdge.data('id') ){
+                logsTable.rows[i].style.backgroundColor = '#fffc7f';
+            }
+        }
+
+        // Display indicator and
+        document.getElementById('addConsCard').style.display = 'block';
+        document.getElementById('indicatorCard').style.display = 'block';
     }
 });
 
@@ -166,8 +242,13 @@ cy.on('select', 'edge', function(event){
 // Remove all displays
 cy.on('unselect', 'edge', function(event){
     selectedEdge = null;
-    document.getElementById('addConsPanel').style.display = 'none';
-    document.getElementById('indicatorPanel').style.display = 'none';
+
+    // Un-highlight history
+    for( let i = 0; i < logsTable.rows.length; i++ )
+        logsTable.rows[i].style.backgroundColor = '';
+
+    document.getElementById('addConsCard').style.display = 'none';
+    document.getElementById('indicatorCard').style.display = 'none';
     document.getElementById('portIndexRow').style.display = "none";
     document.getElementById('nodeSidesRow').style.display = "none";
     document.getElementById("endpoint").selectedIndex = -1;
@@ -195,8 +276,9 @@ document.getElementById("addConstraint").addEventListener("click",function(){
     let endpoint;
     let portConstraintType;
     let portConstraintParameter;
-    let edge = window.cy.edges(':selected')[0];
+    let edge = selectedEdge;
 
+    // Endpoint selection
     switch ( document.getElementById("endpoint").selectedIndex ) {
         case -1:
             alert("Failed to add constraint: Endpoint is not specified ");
@@ -210,6 +292,7 @@ document.getElementById("addConstraint").addEventListener("click",function(){
             break;
     }
 
+    // Port constraint type selection
     switch ( document.getElementById("consType").selectedIndex  ) {
         case -1:
             alert("Failed to add constraint: Constraint type is not specified ");
@@ -220,7 +303,6 @@ document.getElementById("addConstraint").addEventListener("click",function(){
             break;
         case 1:
             portConstraintType = 'Sided';
-
             portConstraintParameter = [];
             let nodeSides = document.getElementById("nodeSides").options;
             for( let i = 0; i < nodeSides.length; i++ ){
@@ -247,49 +329,55 @@ document.getElementById("addConstraint").addEventListener("click",function(){
             break;
     }
 
+    // Does this endpoint have a constraint already defined?
     if( constraints[ edge.data('id') ] == undefined || constraints[ edge.data('id') ] == null ){
         constraints[ edge.data('id') ] = [{
             endpoint: endpoint,
             portConstraintType: portConstraintType,
             portConstraintParameter: portConstraintParameter
         }];
+
+        addToHistory( edge, endpoint, portConstraintType, portConstraintParameter );
+        addImplicitPorts( edge, edge.data( endpoint.toLowerCase() ) );
     } else {
+        // There is already a constraint defined. Then alter the constraint object
         let alreadyCons =  constraints[ edge.data('id') ];
         let bool = false;
         alreadyCons.forEach( function (cons) {
             if(cons.endpoint == endpoint){
-                alert("Failed to add constraint: Endpoint already has a constraint ");
+                cons.portConstraintType = portConstraintType;
+                cons.portConstraintParameter = portConstraintParameter;
+
+                // Change Log files
+                for( let i = 0; i < logsTable.rows.length; i++ ){
+                    if( logsTable.rows[i].cells[0].innerHTML == edge.data('id') &&
+                        logsTable.rows[i].cells[1].innerHTML == endpoint ){
+                        logsTable.rows[i].cells[2].innerHTML = portConstraintType;
+                        logsTable.rows[i].cells[3].innerHTML =  (portConstraintParameter) ? portConstraintParameter : 'N/A';
+                    }
+                }
                 bool = true;
-                return;
             }
         });
 
-        if(bool){return;}
+        // Other endpoint has a constraint
+        if(!bool){
+            constraints[ edge.data('id') ].push({
+                endpoint: endpoint,
+                portConstraintType: portConstraintType,
+                portConstraintParameter: portConstraintParameter
+            });
 
-        constraints[ edge.data('id') ].push({
-            endpoint: endpoint,
-            portConstraintType: portConstraintType,
-            portConstraintParameter: portConstraintParameter
-        });
-    }
-
-    let row = logsTable.insertRow();
-    let cell = row.insertCell(0);
-    let stringRow = edge.data('id') + " = " + endpoint + "; " + portConstraintType;
-    if ( portConstraintParameter ){
-        if( Number.isInteger( +portConstraintParameter )){
-            stringRow += '; ' + portConstraintParameter;
-        }
-        else{
-            stringRow += '; ' + portConstraintParameter[0];
-
-            for(let i = 1; i < portConstraintParameter.length; i++){
-                stringRow += ', ' + portConstraintParameter[i];
-            }
+            addToHistory( edge, endpoint, portConstraintType, portConstraintParameter );
+            addImplicitPorts( edge, edge.data( endpoint.toLowerCase() ) );
         }
     }
-    cell.innerHTML = stringRow;
 
+    changeArrowShape( edge, endpoint, portConstraintType );
+});
+
+// Changes arrow types
+function changeArrowShape( edge, endpoint, portConstraintType ) {
     switch( portConstraintType ){
         case 'Free':
             if( endpoint == 'Source' )
@@ -310,4 +398,67 @@ document.getElementById("addConstraint").addEventListener("click",function(){
                 edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#3a7ecf' });
             break;
     }
-});
+}
+
+// Add to history
+function addToHistory( edge, endpoint, portConstraintType, portConstraintParameter ) {
+    let row = logsTable.insertRow();
+    let cell4 = row.insertCell(0);
+    let cell3 = row.insertCell(0);
+    let cell2 = row.insertCell(0);
+    let cell1 = row.insertCell(0);
+    cell1.innerHTML = edge.data('id');
+    cell2.innerHTML = endpoint;
+    cell3.innerHTML = portConstraintType;
+    cell4.innerHTML = (portConstraintParameter) ? portConstraintParameter : 'N/A';
+}
+
+// Add ports that should be free
+function addImplicitPorts( cytoEdge, nodeID ) {
+    let node = cy.nodes().filter( "[id = '" + nodeID + "']" );
+    let edges = node.connectedEdges();
+    for(let i = 0; i < edges.length; i++){
+        let edge = edges[i];
+        if(edge == cytoEdge){
+            continue;
+        }
+
+        let endpoint;
+        if( edge.source().data('id') == node.data('id'))
+            endpoint = 'Source';
+        else
+            endpoint = 'Target';
+
+        // Does this endpoint have a constraint already defined?
+        if( constraints[ edge.data('id') ] == undefined || constraints[ edge.data('id') ] == null ){
+            constraints[ edge.data('id') ] = [{
+                endpoint: endpoint,
+                portConstraintType: 'Free',
+                portConstraintParameter: 'N/A'
+            }];
+
+            addToHistory( edge, endpoint, 'Free', 'N/A' );
+            changeArrowShape( edge, endpoint, 'Free' );
+        } else {
+            let alreadyCons =  constraints[ edge.data('id') ];
+            let bool = false;
+            alreadyCons.forEach( function (cons) {
+                if(cons.endpoint == endpoint){
+                    bool = true;
+                }
+            });
+
+            // Other endpoint has a constraint
+            if(!bool){
+                constraints[ edge.data('id') ].push({
+                    endpoint: endpoint,
+                    portConstraintType: 'Free',
+                    portConstraintParameter: 'N/A'
+                });
+
+                addToHistory( edge, endpoint, 'Free', 'N/A' );
+                changeArrowShape( edge, endpoint, 'Free' );
+            }
+        }
+    }
+}

@@ -5,82 +5,37 @@ body {
 
 #cy {
     position: absolute;
-    left: 220px;
+    left: 320px;
     top: 0;
     bottom: 0;
     right: 0;
-    z-index: 999;
+    z-index: 800;
+    border-left: 1px solid green;
 }
 
 h1 {
-    opacity: 0.5;
+    opacity: 1;
     font-size: 1em;
     font-weight: bold;
     margin-top: 10px;
     margin-left: 10px;
 }
 
-.checkbox {
-    margin-left: 0px;
+#coseButton{
+    position: relative;
+    left: 38px;
 }
 
-#optionsPanel {
-    height: auto;
-    width: 220px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 70px;
-    left: 20px;
-    font-size: 15px;
-    background-color: #ccefc9;
-}
-
-#indicatorPanel {
-    height: auto;
-    width: 200px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 170px;
-    left: 20px;
-    font-size: 15px;
-    background-color: #ccefc9;
-    display: none;
-}
-
-#addConsPanel {
-    height: auto;
-    width: 250px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 255px;
-    left: 20px;
-    font-size: 15px;
-    background-color: #ccefc9;
-    display: none;
-}
-
-#logsPanel {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    height: auto;
-    width: 250px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 50%;
-    left: 20px;
-    font-size: 15px;
-    background-color: #efd610;
-    text-align: center;
+#cosepButton{
+    position: relative;
+    left: 112px;
 }
 
 table{
     padding-top: 5px;
     margin-left:auto;
     margin-right:auto;
+    border-collapse:collapse;
 }
 
 /* The sidepanel links */
@@ -92,29 +47,83 @@ table td {
     transition: 0.3s;
 }
 
-.button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
+#optionsCard{
+    padding-top: 5px;
+    height: 90px;
+    width: 245px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 75px;
+    left: 37px;
+    font-size: 15px;
+    background-color: #dadfef;
+}
+
+#indicatorCard{
+    padding-top: 5px;
+    height: auto;
+    width: 200px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 180px;
+    left: 60px;
+    font-size: 15px;
+    background-color: #ccefc9;
+    display: none;
+}
+
+#addConsCard{
+    padding-top: 5px;
+    height: auto;
+    width: 245px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 275px;
+    left: 37px;
+    font-size: 15px;
+    background-color: #ccefc9;
+    display: none;
+}
+
+#logsCard {
+    height: 450px;
+    width: 320px;
+    position: absolute; /* Stay in place */
+    z-index: 1000; /* Stay on top */
+    float: left;
+    top: 500px;
+    left: 0px;
+    font-size: 15px;
+    padding-bottom: 0;
+}
+
+#logsTable{
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 0;
+}
+
+#logsTable td{
+    padding: 2px 2px 2px 2px;
     text-align: center;
-    padding: 6px 12px;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
 }
 
-#coseButton{
-    margin-left: 17px;
+.nav-pills {
+    display: flex;
+    justify-content: center;
 }
 
-#cosepButton{
-    margin-left: 20px;
+#exportToFile{
+    position: absolute;
+    left: 180px;
+    top: 960px;
 }
 
-#endpoint {
-    width: 100px;
-}
-
-#nodeSides {
-    width: 100px;
+#importFromFile{
+    position: absolute;
+    left: 30px;
+    top: 960px;
 }
