@@ -116,6 +116,11 @@ class Layout {
         requestAnimationFrame( frame );
       };
 
+      // SLOWING DOWN ANIMATE
+      s.fpsInterval = 1000 / s.fps;
+      s.then = Date.now();
+      s.startTime = s.then;
+
       let frame = function(){
         multitick( s, onNotDone, onDone );
       };

@@ -1188,6 +1188,7 @@ var optFn = function optFn(opt, ele) {
 var defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
   refresh: 10, // number of ticks per frame; higher is faster but more jerky
+  fps: 24,
   //maxIterations: 2500, // max iterations before the layout will bail out
   //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
@@ -1217,8 +1218,6 @@ var defaults = {
   nestingFactor: 0.1,
   // Gravity force (constant)
   gravity: 0.25,
-  // For enabling tiling
-  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -1230,7 +1229,11 @@ var defaults = {
   // Gravity range (constant)
   gravityRange: 3.8,
   // Initial cooling factor for incremental layout
-  initialEnergyOnIncremental: 0.5
+  initialEnergyOnIncremental: 0.5,
+  // Force threshold
+  edgeShiftingThreshold: 3
+  // For enabling tiling
+  // tile: true,
 };
 
 /**
@@ -1250,6 +1253,11 @@ var getUserOptions = function getUserOptions(options) {
   if (options.gravityRangeCompound != null) CoSEPConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = CoSEConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = options.gravityRangeCompound;
   if (options.initialEnergyOnIncremental != null) CoSEPConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = CoSEConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = options.initialEnergyOnIncremental;
 
+  CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL = typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
+  CoSEPConstants.TILING_PADDING_HORIZONTAL = CoSEConstants.TILING_PADDING_HORIZONTAL = typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+
+  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+
   // Phase I of the algorithm
   LayoutConstants.QUALITY = 0;
 
@@ -1259,16 +1267,17 @@ var getUserOptions = function getUserOptions(options) {
   // # of ports on a node's side
   if (options.portsPerNodeSide != null) CoSEPConstants.PORTS_PER_SIDE = +options.portsPerNodeSide;
 
+  // Labels are ignored
   CoSEPConstants.NODE_DIMENSIONS_INCLUDE_LABELS = CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS = false;
 
   // Our incremental would be to skip over Phase I
   CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = !true; // options.randomize
 
-  CoSEPConstants.TILE = CoSEConstants.TILE = options.tile;
-  CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL = typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
-  CoSEPConstants.TILING_PADDING_HORIZONTAL = CoSEConstants.TILING_PADDING_HORIZONTAL = typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+  // Tiling is disabled
+  CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
-  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+  // Thresholds for force in Phase II
+  if (options.edgeShiftingThreshold != null) CoSEPConstants.EDGE_SHIFTING_THRESHOLD = options.edgeShiftingThreshold;
 };
 
 var Layout = function (_ContinuousLayout) {
@@ -1524,8 +1533,8 @@ var Layout = function (_ContinuousLayout) {
     key: 'postrun',
     value: function postrun() {
       var self = this;
-
-      console.log('** Done in ' + this.cosepLayout.totalIterations + ' iterations');
+      console.log('***************************************************************************************');
+      console.log('** Done in ' + JSON.stringify(this.cosepLayout.totalIterations) + ' iterations');
       console.log('** Graph Manager');
       console.log(this.graphManager);
       console.log('** idToLNode');
@@ -1788,6 +1797,11 @@ var Layout = function () {
           requestAnimationFrame(_frame);
         };
 
+        // SLOWING DOWN ANIMATE
+        s.fpsInterval = 1000 / s.fps;
+        s.then = Date.now();
+        s.startTime = s.then;
+
         var _frame = function _frame() {
           multitick(s, onNotDone, _onDone);
         };
@@ -1972,11 +1986,31 @@ var multitick = function multitick(state) {
   var done = false;
   var s = state;
 
-  for (var i = 0; i < s.refresh; i++) {
-    done = !s.running || tick(s);
+  // SLOWING DOWN ANIMATE
+  if (s.animateContinuously) {
+    s.now = Date.now();
+    s.elapsed = s.now - s.then;
+    if (s.elapsed > s.fpsInterval) {
+      // Get ready for next frame by setting then=now, but also adjust for your
+      // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+      s.then = s.now - s.elapsed % s.fpsInterval;
 
-    if (done) {
-      break;
+      // Put your drawing code here
+      for (var i = 0; i < s.refresh; i++) {
+        done = !s.running || tick(s);
+
+        if (done) {
+          break;
+        }
+      }
+    }
+  } else {
+    for (var _i = 0; _i < s.refresh; _i++) {
+      done = !s.running || tick(s);
+
+      if (done) {
+        break;
+      }
     }
   }
 

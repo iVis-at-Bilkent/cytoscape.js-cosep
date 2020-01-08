@@ -21,15 +21,18 @@ let portConstraints = function( edge ){
 // Clear Selections/Options at start
 document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
-document.getElementById("portsPerSide").value = 3;
+document.getElementById("portsPerSide").value = 5;
+document.getElementById("FPS").value = 24;
+document.getElementById("FPS").disabled = true;
+document.getElementById("edgeShiftingThreshold").value = 3;
 
 // Initial Layout on opening the page
+
 var cy = window.cy = cytoscape({
     container: document.getElementById('cy'),
     layout: {
         name: 'cose-bilkent',
         quality: 'default',
-        tiling: false,
         nodeDimensionsIncludeLabels: false,
         fit: true
     },
@@ -41,7 +44,39 @@ var cy = window.cy = cytoscape({
                 'label' : 'data(id)',
                 'text-halign': 'center',
                 'text-valign': 'center',
-                'background-color': '#3a7ecf'
+                'background-color': '#3a7ecf',
+                'width': function (node) {
+                    switch (node.data('id')) {
+                        case 'n0':
+                            return 40;
+                        case 'n1':
+                            return 100;
+                        case 'n3':
+                            return 70;
+                        case 'n4':
+                            return 100;
+                        case 'n21':
+                            return 50;
+                        default:
+                            return 30;
+                    }
+                },
+                'height': function (node) {
+                    switch (node.data('id')) {
+                        case 'n0':
+                            return 60;
+                        case 'n3':
+                            return 70;
+                        case 'n4:':
+                            return 150;
+                        case 'n21':
+                            return 50;
+                        default:
+                            return 30;
+                    }
+                }
+
+
             }
         },
         {
@@ -90,7 +125,7 @@ var cy = window.cy = cytoscape({
         }
     ],
     elements: [
-        {group: 'nodes', data: {id: 'n0'}},
+        {group: 'nodes', data: {id: 'n0'}, width: 200},
         {group: 'nodes', data: {id: 'n1'}},
         {group: 'nodes', data: {id: 'n2'}},
         {group: 'nodes', data: {id: 'n3'}},
@@ -117,12 +152,16 @@ var cy = window.cy = cytoscape({
     wheelSensitivity: 0.3
 });
 
+document.getElementById("animate").addEventListener( 'change', function() {
+    document.getElementById("FPS").disabled = !this.checked;
+});
+
 // CoSE Core Button
 document.getElementById("coseButton").addEventListener("click",function(){
     let layout = window.cy.layout({
         name: 'cose-bilkent',
         refresh:1,
-        tiling:false,
+        tile:false,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked)
     });
@@ -140,12 +179,16 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     let layout = window.cy.layout({
         name: 'cosep',
         refresh:1,
-        tiling:false,
+        fps: +document.getElementById("FPS").value,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked),
         portConstraints: portConstraints,
-        portsPerNodeSide: document.getElementById("portsPerSide").value
+        portsPerNodeSide: document.getElementById("portsPerSide").value,
+        edgeShiftingThreshold: +document.getElementById("edgeShiftingThreshold").value,
     });
+
+    if ( document.getElementById("animate").checked )
+        layout.promiseOn('layoutstop').then(function( event ){ alert('CoSEP Layout is done!'); });
 
     layout.run();
 });

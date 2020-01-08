@@ -49,7 +49,7 @@ table td {
 
 #optionsCard{
     padding-top: 5px;
-    height: 90px;
+    height: 150px;
     width: 245px;
     position: absolute; /* Stay in place */
     z-index: 1000; /* Stay on top */
@@ -67,10 +67,10 @@ table td {
     position: absolute; /* Stay in place */
     z-index: 1000; /* Stay on top */
     float: left;
-    top: 180px;
-    left: 60px;
+    top: 10px;
+    left: 330px;
     font-size: 15px;
-    background-color: #ccefc9;
+    background-color: rgba(255, 247, 12, 0.79);
     display: none;
 }
 
@@ -81,10 +81,10 @@ table td {
     position: absolute; /* Stay in place */
     z-index: 1000; /* Stay on top */
     float: left;
-    top: 275px;
+    top: 250px;
     left: 37px;
     font-size: 15px;
-    background-color: #ccefc9;
+    background-color: rgba(205, 236, 202, 0.76);
     display: none;
 }
 

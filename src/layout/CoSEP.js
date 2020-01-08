@@ -34,6 +34,7 @@ const optFn = ( opt, ele ) => {
 let defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
   refresh: 10, // number of ticks per frame; higher is faster but more jerky
+  fps: 24,
   //maxIterations: 2500, // max iterations before the layout will bail out
   //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
@@ -63,8 +64,6 @@ let defaults = {
   nestingFactor: 0.1,
   // Gravity force (constant)
   gravity: 0.25,
-  // For enabling tiling
-  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -76,7 +75,11 @@ let defaults = {
   // Gravity range (constant)
   gravityRange: 3.8,
   // Initial cooling factor for incremental layout
-  initialEnergyOnIncremental: 0.5
+  initialEnergyOnIncremental: 0.5,
+  // Force threshold
+  edgeShiftingThreshold: 3
+  // For enabling tiling
+  // tile: true,
 };
 
 /**
@@ -105,6 +108,13 @@ let getUserOptions = function (options) {
   if (options.initialEnergyOnIncremental != null)
     CoSEPConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = CoSEConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = options.initialEnergyOnIncremental;
 
+  CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL =
+      typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
+  CoSEPConstants.TILING_PADDING_HORIZONTAL = CoSEConstants.TILING_PADDING_HORIZONTAL =
+      typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+
+  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+
   // Phase I of the algorithm
   LayoutConstants.QUALITY = 0;
 
@@ -115,6 +125,7 @@ let getUserOptions = function (options) {
   if( options.portsPerNodeSide != null )
     CoSEPConstants.PORTS_PER_SIDE = +options.portsPerNodeSide;
 
+  // Labels are ignored
   CoSEPConstants.NODE_DIMENSIONS_INCLUDE_LABELS = CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS
                                                 = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
                                                 = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
@@ -126,13 +137,12 @@ let getUserOptions = function (options) {
                                      = LayoutConstants.DEFAULT_INCREMENTAL
                                      = !(true); // options.randomize
 
-  CoSEPConstants.TILE = CoSEConstants.TILE = options.tile;
-  CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL =
-      typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
-  CoSEPConstants.TILING_PADDING_HORIZONTAL = CoSEConstants.TILING_PADDING_HORIZONTAL =
-      typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
+  // Tiling is disabled
+  CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
-  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+  // Thresholds for force in Phase II
+  if (options.edgeShiftingThreshold != null)
+    CoSEPConstants.EDGE_SHIFTING_THRESHOLD = options.edgeShiftingThreshold;
 };
 
 class Layout extends ContinuousLayout {
@@ -373,8 +383,8 @@ class Layout extends ContinuousLayout {
   // run this function after the layout is done ticking
   postrun(){
     let self = this;
-
-    console.log('** Done in ' + this.cosepLayout.totalIterations + ' iterations');
+    console.log('***************************************************************************************');
+    console.log('** Done in ' + JSON.stringify(this.cosepLayout.totalIterations) + ' iterations');
     console.log( '** Graph Manager' );
     console.log( this.graphManager );
     console.log( '** idToLNode' );

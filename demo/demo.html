@@ -46,12 +46,20 @@
 					<td><input id="animate" class = "checkbox" type="checkbox"></td>
 				</tr>
 				<tr>
+					<td><span> FPS </span></td>
+					<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
 					<td><span> Incremental </span></td>
 					<td><input id="incremental" class = "checkbox" type="checkbox"></td>
 				</tr>
 				<tr>
 					<td><span> Ports Per Node Side </span></td>
-					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="3" style="text-align: center"></td>
+					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Edge Shifting Threshold</span></td>
+					<td><input id="edgeShiftingThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
 				</tr>
 			</table>
 		</div>
@@ -68,7 +76,7 @@
 		</div>
 
 		<div id="addConsCard"  class="card" style="text-align: center">
-			<label><b> Adding Constraint </b></label>
+			<label><b> Add Port Constraint </b></label>
 			<table id="consTable">
 				<tr>
 					<td><span> Endpoint </span></td>
