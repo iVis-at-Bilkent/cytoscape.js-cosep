@@ -163,9 +163,7 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.moveNodes();
 
     if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
-    {
         this.checkForEdgeShifting();
-    }
 
     // If we reached max iterations
     return this.totalIterations >= this.maxIterations;
@@ -175,12 +173,8 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
  *  Edge shifting during phase II of the algorithm.
  */
 CoSEPLayout.prototype.checkForEdgeShifting = function(){
-    for(let i = 0; i < this.graphManager.portConstraints.length; i++){
+    for(let i = 0; i < this.graphManager.portConstraints.length; i++)
         this.graphManager.portConstraints[i].checkForEdgeShifting();
-    }
 };
-
-
-
 
 module.exports = CoSEPLayout;

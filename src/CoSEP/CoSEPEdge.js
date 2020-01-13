@@ -53,17 +53,14 @@ CoSEPEdge.prototype.isPortConstrainedEdge = function(){
  * Redirects the call to its ports (if any)
  */
 CoSEPEdge.prototype.initialPortConfiguration = function(){
-    if( !this.isPortConstrainedEdge() ){
+    if( !this.isPortConstrainedEdge() )
         return;
-    }
 
-    if( this.sourceConstraint ){
+    if( this.sourceConstraint )
         this.sourceConstraint.initialPortConfiguration();
-    }
 
-    if( this.targetConstraint ){
+    if( this.targetConstraint )
         this.targetConstraint.initialPortConfiguration();
-    }
 };
 /**
  * Changes the calc of edge length based on ports.
@@ -112,18 +109,11 @@ CoSEPEdge.prototype.updateLengthWithPorts = function () {
             this.lengthX = clipPointCoordinates[0] - clipPointCoordinates[2];
             this.lengthY = clipPointCoordinates[1] - clipPointCoordinates[3];
 
-            if (Math.abs(this.lengthX) < 1.0)
-            {
-                this.lengthX = IMath.sign(this.lengthX);
-            }
+            if (Math.abs(this.lengthX) < 1.0)  this.lengthX = IMath.sign(this.lengthX);
 
-            if (Math.abs(this.lengthY) < 1.0)
-            {
-                this.lengthY = IMath.sign(this.lengthY);
-            }
+            if (Math.abs(this.lengthY) < 1.0)  this.lengthY = IMath.sign(this.lengthY);
 
-            this.length = Math.sqrt(
-                this.lengthX * this.lengthX + this.lengthY * this.lengthY);
+            this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
         }
     }
 };
@@ -143,6 +133,5 @@ CoSEPEdge.prototype.storeRotationalForce = function( springForceX, springForceY 
     if( this.targetConstraint )
         this.targetConstraint.storeRotationalForce( -springForceX, -springForceY );
 };
-
 
 module.exports = CoSEPEdge;

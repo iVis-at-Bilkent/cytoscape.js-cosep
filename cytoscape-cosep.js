@@ -247,6 +247,8 @@ CoSEPNode.prototype.updatePortLocations = function () {
 
 /**
  * Moving a node needs to move its port constraints as well
+ *
+ * @override
  * @param dx
  * @param dy
  */
@@ -337,17 +339,11 @@ CoSEPEdge.prototype.isPortConstrainedEdge = function () {
  * Redirects the call to its ports (if any)
  */
 CoSEPEdge.prototype.initialPortConfiguration = function () {
-    if (!this.isPortConstrainedEdge()) {
-        return;
-    }
+    if (!this.isPortConstrainedEdge()) return;
 
-    if (this.sourceConstraint) {
-        this.sourceConstraint.initialPortConfiguration();
-    }
+    if (this.sourceConstraint) this.sourceConstraint.initialPortConfiguration();
 
-    if (this.targetConstraint) {
-        this.targetConstraint.initialPortConfiguration();
-    }
+    if (this.targetConstraint) this.targetConstraint.initialPortConfiguration();
 };
 /**
  * Changes the calc of edge length based on ports.
@@ -387,13 +383,9 @@ CoSEPEdge.prototype.updateLengthWithPorts = function () {
                 this.lengthX = clipPointCoordinates[0] - clipPointCoordinates[2];
                 this.lengthY = clipPointCoordinates[1] - clipPointCoordinates[3];
 
-                if (Math.abs(this.lengthX) < 1.0) {
-                    this.lengthX = IMath.sign(this.lengthX);
-                }
+                if (Math.abs(this.lengthX) < 1.0) this.lengthX = IMath.sign(this.lengthX);
 
-                if (Math.abs(this.lengthY) < 1.0) {
-                    this.lengthY = IMath.sign(this.lengthY);
-                }
+                if (Math.abs(this.lengthY) < 1.0) this.lengthY = IMath.sign(this.lengthY);
 
                 this.length = Math.sqrt(this.lengthX * this.lengthX + this.lengthY * this.lengthY);
             }
@@ -655,9 +647,7 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcGravitationalForces();
     this.moveNodes();
 
-    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
-        this.checkForEdgeShifting();
-    }
+    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) this.checkForEdgeShifting();
 
     // If we reached max iterations
     return this.totalIterations >= this.maxIterations;
@@ -726,6 +716,9 @@ function CoSEPPortConstraint(edge, node) {
 
     // Holds the rotational force induced to incident node
     this.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.EDGE_SHIFTING_PERIOD);
+
+    // Hold how many ports are available to one side
+    this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
 }
 
 CoSEPPortConstraint.prototype = Object.create(null);
@@ -751,6 +744,32 @@ CoSEPPortConstraint.prototype.sideDirection = Object.freeze({
 });
 
 // -----------------------------------------------------------------------------
+// Section: Index Iterators
+// -----------------------------------------------------------------------------
+
+CoSEPPortConstraint.prototype.nextAdjacentIndex = function () {
+    return (this.portIndex + 1) % (4 * this.portsPerSide);
+};
+
+CoSEPPortConstraint.prototype.prevAdjacentIndex = function () {
+    var temp = this.portIndex - 1;
+    if (temp < 0) temp = 4 * this.portsPerSide - 1;
+
+    return temp;
+};
+
+CoSEPPortConstraint.prototype.nextAcrossSideIndex = function () {
+    return (this.portIndex + 1 + this.portsPerSide) % (4 * this.portsPerSide);
+};
+
+CoSEPPortConstraint.prototype.prevAcrossSideIndex = function () {
+    var temp = this.portIndex - 1 - this.portsPerSide;
+    if (temp < 0) temp = 4 * this.portsPerSide + temp;
+
+    return temp;
+};
+
+// -----------------------------------------------------------------------------
 // Section: Methods
 // -----------------------------------------------------------------------------
 
@@ -762,7 +781,7 @@ CoSEPPortConstraint.prototype.sideDirection = Object.freeze({
  * Also, add references to CoSEPNode's.
  */
 CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
-    if (this.portConstraintType == this.constraintType['Absolute']) {
+    if (this.portConstraintType === this.constraintType['Absolute']) {
         this.portIndex = this.portConstraintParameter;
 
         var temp = this.node.getPortCoordinatesByIndex(this.portIndex);
@@ -863,7 +882,6 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
  * @param springForceX
  * @param springForceY
  */
-
 CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
     if (this.portSide == this.sideDirection['Top']) {
         this.rotationalForce.add(springForceX);
@@ -880,78 +898,51 @@ CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, spr
  * If the edge is 'Absolute' constrained then there is nothing to do.
  * Otherwise check if the average rotational force inflicted upon port if above threshold.
  * If it exceeds shift the edge (assuming constraint doesn't limit it)
- * Note that there is an additional requirement if the port is located at the 'corner' of node
+ * Note that there is an additional requirement if the port is located at the 'corner' of node side
  */
 CoSEPPortConstraint.prototype.checkForEdgeShifting = function () {
-    if (this.portConstraintParameter == this.constraintType['Absolute']) {
-        return;
-    }
+    if (this.portConstraintType == this.constraintType['Absolute']) return;
 
     // Exceeds threshold?
     var rotationalForceAvg = this.rotationalForce.getAverage();
-    if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_SHIFTING_THRESHOLD) {
-        return;
+    if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_SHIFTING_THRESHOLD) return;
+
+    var newIndex = null;
+    // If the edge wants to go clockwise or counter-clockwise
+    if (Math.sign(rotationalForceAvg) == 1) {
+        // Currently on a corner port and wants to change node sides. Then check for additional requirements.
+        if (this.portIndex % this.portsPerSide == this.portsPerSide - 1) {
+            var nextSide = (this.portSide + 1) % 4;
+            if (this.portConstraintParameter.includes(nextSide) && this.additionalRequirementForAdjacentSideChanging(nextSide)) {
+                newIndex = this.nextAdjacentIndex();
+            } else if (this.portConstraintParameter.includes((nextSide + 1) % 4) && this.additionalRequirementForAcrossSideChanging()) {
+                newIndex = this.nextAcrossSideIndex();
+            }
+        } else {
+            newIndex = this.nextAdjacentIndex();
+        }
+    } else {
+        if (this.portIndex % this.node.portsPerSide == 0) {
+            var _nextSide = this.portSide;
+            if (--_nextSide < 0) _nextSide = 3;
+            if (this.portConstraintParameter.includes(_nextSide) && this.additionalRequirementForAdjacentSideChanging(_nextSide)) {
+                newIndex = this.prevAdjacentIndex();
+            } else {
+                if (--_nextSide < 0) _nextSide = 3;
+                if (this.portConstraintParameter.includes(_nextSide) && this.additionalRequirementForAcrossSideChanging()) {
+                    newIndex = this.prevAcrossSideIndex();
+                }
+            }
+        } else {
+            newIndex = this.prevAdjacentIndex();
+        }
     }
 
-    // If the edge wants to go clockwise or counter-clockwise
-    var clockwise = Math.sign(rotationalForceAvg) == 1;
-
-    // Currently on a corner port and wants to change sides. Then we have additional requirements.
-    if (this.portIndex % this.node.portsPerSide == 0 && !clockwise) {
-        var nextSide = this.portSide;
-
-        if (--nextSide < 0) nextSide = 3;
-        if (this.portConstraintParameter.includes(nextSide)) {
-            if (this.additionalRequirementForAdjacentSideChanging(nextSide)) {
-                var nextIndex = this.portIndex - 1;
-                if (nextIndex < 0) nextIndex = 4 * this.node.portsPerSide - 1;
-                var temp = this.node.getPortCoordinatesByIndex(nextIndex);
-                this.portIndex = nextIndex;
-                this.portSide = temp[0];
-                this.portLocation = temp[1];
-            } else return;
-        }
-
-        if (--nextSide < 0) nextSide = 3;
-        if (this.portConstraintParameter.includes(nextSide)) if (this.additionalRequirementForAcrossSideChanging()) {
-            var _nextIndex = this.portIndex - (this.node.portsPerSide + 1);
-            if (_nextIndex < 0) _nextIndex = 4 * this.node.portsPerSide + _nextIndex;
-            var _temp2 = this.node.getPortCoordinatesByIndex(_nextIndex);
-            this.portIndex = _nextIndex;
-            this.portSide = _temp2[0];
-            this.portLocation = _temp2[1];
-        } else return;
-    } else if (this.portIndex % this.node.portsPerSide == this.node.portsPerSide - 1 && clockwise) {
-        var _nextSide = (this.portSide + 1) % 4;
-        if (this.portConstraintParameter.includes(_nextSide)) {
-            if (this.additionalRequirementForAdjacentSideChanging(_nextSide)) {
-                var _nextIndex2 = (this.portIndex + 1) % (4 * this.node.portsPerSide);
-                var _temp3 = this.node.getPortCoordinatesByIndex(_nextIndex2);
-                this.portIndex = _nextIndex2;
-                this.portSide = _temp3[0];
-                this.portLocation = _temp3[1];
-            } else return;
-        }
-
-        _nextSide = (_nextSide + 1) % 4;
-        if (this.portConstraintParameter.includes(_nextSide)) if (this.additionalRequirementForAcrossSideChanging()) {
-            var _nextIndex3 = (this.portIndex + this.node.portsPerSide + 1) % (4 * this.node.portsPerSide);
-            var _temp4 = this.node.getPortCoordinatesByIndex(_nextIndex3);
-            this.portIndex = _nextIndex3;
-            this.portSide = _temp4[0];
-            this.portLocation = _temp4[1];
-        } else return;
-    } else {
-        var _nextIndex4 = void 0;
-        if (clockwise) _nextIndex4 = (this.portIndex + 1) % (4 * this.node.portsPerSide);else {
-            _nextIndex4 = this.portIndex - 1;
-            if (_nextIndex4 < 0) _nextIndex4 = 4 * this.node.portsPerSide - 1;
-        }
-
-        var _temp5 = this.node.getPortCoordinatesByIndex(_nextIndex4);
-        this.portIndex = _nextIndex4;
-        this.portSide = _temp5[0];
-        this.portLocation = _temp5[1];
+    if (newIndex) {
+        var temp = this.node.getPortCoordinatesByIndex(newIndex);
+        this.portIndex = newIndex;
+        this.portSide = temp[0];
+        this.portLocation = temp[1];
     }
 };
 
@@ -977,7 +968,6 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
                 var _check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
                 return _check(otherNodeRect.x, otherNodeRect.y);
             }
-            break;
         case 1:
             if (nextSide == 0) {
                 var _check2 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
@@ -986,7 +976,6 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
                 var _check3 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
                 return _check3(otherNodeRect.x, otherNodeRect.y);
             }
-            break;
         case 2:
             if (nextSide == 3) {
                 var _check4 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
@@ -995,7 +984,6 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
                 var _check5 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
                 return !_check5(otherNodeRect.x, otherNodeRect.y);
             }
-            break;
         case 3:
             if (nextSide == 2) {
                 var _check6 = line(nodeRect.x + nodeRect.width, nodeRect.y, nodeRect.x, nodeRect.y + nodeRect.height);
@@ -1004,7 +992,6 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
                 var _check7 = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y + nodeRect.height);
                 return !_check7(otherNodeRect.x, otherNodeRect.y);
             }
-            break;
     }
 
     function line(x1, y1, x2, y2) {
@@ -1021,37 +1008,20 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
  * For line1: Node Center, horizontal, equality pointing downward
  * For line2: Node Center, vertical, equality pointing right
  *
- * @param nextSide
  */
 CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = function () {
     var nodeRect = this.node.getCenter();
     var otherNodeRect = this.edge.getOtherEnd(this.node).getCenter();
-    var check = void 0;
 
     switch (this.portSide) {
         case 0:
-            check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y);
-            return check(otherNodeRect.x, otherNodeRect.y);
-            break;
+            return otherNodeRect.y >= nodeRect.y;
         case 1:
-            check = line(nodeRect.x, nodeRect.y, nodeRect.x, nodeRect.y, +nodeRect.height);
-            return !check(otherNodeRect.x, otherNodeRect.y);
-            break;
+            return otherNodeRect.x <= nodeRect.x;
         case 2:
-            check = line(nodeRect.x, nodeRect.y, nodeRect.x + nodeRect.width, nodeRect.y);
-            return !check(otherNodeRect.x, otherNodeRect.y);
-            break;
+            return otherNodeRect.y <= nodeRect.y;
         case 3:
-            check = line(nodeRect.x, nodeRect.y, nodeRect.x, nodeRect.y, +nodeRect.height);
-            return check(otherNodeRect.x, otherNodeRect.y);
-            break;
-    }
-
-    function line(x1, y1, x2, y2) {
-        var slope = (y2 - y1) / (x2 - x1);
-        return function (x, y) {
-            return y - y1 > slope * (x - x1);
-        };
+            return otherNodeRect.x >= nodeRect.x;
     }
 };
 

@@ -28,10 +28,4 @@ CoSEPConstants.NODE_ROTATION_PERIOD = 50;
 CoSEPConstants.EDGE_SHIFTING_THRESHOLD = 3;
 CoSEPConstants.NODE_ROTATION_THRESHOLD = 100;
 
-
-
-
-
-
-
 module.exports = CoSEPConstants;

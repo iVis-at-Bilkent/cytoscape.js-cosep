@@ -103,6 +103,8 @@ CoSEPNode.prototype.updatePortLocations = function (){
 
 /**
  * Moving a node needs to move its port constraints as well
+ *
+ * @override
  * @param dx
  * @param dy
  */
