@@ -5,30 +5,29 @@ body {
 
 #cy {
     position: absolute;
-    left: 320px;
+    left: 340px;
     top: 0;
     bottom: 0;
     right: 0;
-    z-index: 800;
-    border-left: 1px solid green;
+    z-index: 200;
 }
 
-h1 {
-    opacity: 1;
-    font-size: 1em;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-left: 10px;
+.leftOfCytoscape{
+    width: 340px;
+    height: 100%;
+    z-index: 100;
 }
 
 #coseButton{
     position: relative;
-    left: 38px;
+    top: 10px;
+    left: 10px;
 }
 
 #cosepButton{
     position: relative;
-    left: 112px;
+    top: 10px;
+    left: 70px;
 }
 
 table{
@@ -48,54 +47,46 @@ table td {
 }
 
 #optionsCard{
+    margin-top: 15px;
     padding-top: 5px;
-    height: 150px;
-    width: 245px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 75px;
-    left: 37px;
+    padding-bottom: 10px;
+    width: inherit;
+    height: auto;
     font-size: 15px;
     background-color: #dadfef;
 }
 
 #indicatorCard{
     padding-top: 5px;
-    height: auto;
+    height: 90px;
     width: 200px;
     position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
     float: left;
     top: 10px;
-    left: 330px;
+    left: 350px;
     font-size: 15px;
     background-color: rgba(255, 247, 12, 0.79);
     display: none;
 }
 
 #addConsCard{
-    padding-top: 5px;
-    height: auto;
-    width: 245px;
     position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 250px;
-    left: 37px;
-    font-size: 15px;
+    top: 110px;
+    left: 350px;
+    padding-top: 5px;
+    width: 200px;
+    height: auto;
+    font-size: 12px;
     background-color: rgba(205, 236, 202, 0.76);
-    display: none;
+    opacity: 1;
+    z-index: 999;
 }
 
 #logsCard {
-    height: 450px;
-    width: 320px;
-    position: absolute; /* Stay in place */
-    z-index: 1000; /* Stay on top */
-    float: left;
-    top: 500px;
-    left: 0px;
+    margin-top: 30px;
+    padding-top: 5px;
+    width: inherit;
+    height: 385px;
     font-size: 15px;
     padding-bottom: 0;
 }
@@ -111,19 +102,31 @@ table td {
     text-align: center;
 }
 
+#nodeRotationTable{
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 0;
+}
+
+#nodeRotationTable td{
+    padding: 2px 2px 2px 2px;
+    text-align: center;
+}
+
 .nav-pills {
     display: flex;
     justify-content: center;
 }
 
 #exportToFile{
-    position: absolute;
-    left: 180px;
-    top: 960px;
+    margin-top: 4px;
+    font-size: 0.8em;
+    width: 167px;
 }
 
 #importFromFile{
-    position: absolute;
-    left: 30px;
-    top: 960px;
+    margin-top: 4px;
+    font-size: 0.8em;
+    width: 167px;
 }
+

@@ -135,7 +135,7 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
         let shortestDistance = Number.MAX_SAFE_INTEGER;
         for( let entry of allFeasibleCornerPorts ){
             let distance = Math.hypot( entry[1][1].getX() - otherNodeCenter.getX(),
-                                              entry[1][1].getY() - otherNodeCenter.getY() );
+                entry[1][1].getY() - otherNodeCenter.getY() );
 
             if( distance < shortestDistance ){
                 shortestDistance = distance;
@@ -159,7 +159,7 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
 CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
     let node = this.node;
     return new PointD( (this.portLocation.x - node.getCenter().x) / node.getWidth() * 100,
-                       (this.portLocation.y -  node.getCenter().y) / node.getHeight() * 100);
+        (this.portLocation.y -  node.getCenter().y) / node.getHeight() * 100);
 };
 
 /**
@@ -174,12 +174,16 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
 CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, springForceY){
     if( this.portSide == this.sideDirection['Top'] ) {
         this.rotationalForce.add( springForceX );
+        if(this.node.canBeRotated) this.node.rotationalForce.add( springForceX );
     } else if( this.portSide == this.sideDirection['Bottom'] ){
         this.rotationalForce.add( -springForceX );
+        if(this.node.canBeRotated) this.node.rotationalForce.add( -springForceX );
     } else if( this.portSide == this.sideDirection['Right'] ){
         this.rotationalForce.add( springForceY );
+        if(this.node.canBeRotated) this.node.rotationalForce.add( springForceY );
     } else {
         this.rotationalForce.add( -springForceY );
+        if(this.node.canBeRotated) this.node.rotationalForce.add( -springForceY );
     }
 };
 
@@ -195,7 +199,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
 
     // Exceeds threshold?
     let rotationalForceAvg = this.rotationalForce.getAverage();
-    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.EDGE_SHIFTING_THRESHOLD )
+    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD )
         return;
 
     let newIndex = null;
@@ -209,7 +213,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
                 newIndex = this.nextAdjacentIndex();
             }
             else if ( this.portConstraintParameter.includes( (nextSide + 1) % 4 )  &&
-                      this.additionalRequirementForAcrossSideChanging() ){
+                this.additionalRequirementForAcrossSideChanging() ){
                 newIndex = this.nextAcrossSideIndex();
             }
         }else{

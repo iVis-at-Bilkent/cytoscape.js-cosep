@@ -9,25 +9,37 @@
 // Variables and Constants
 let selectedEdge;
 let constraints = {};
+let rotations = {};
 const indicatorTable = document.getElementById("indicTable");
 const consSelector = document.getElementById("consType");
 const logsTable = document.getElementById("logsTable");
+const nodeRotationTable = document.getElementById("nodeRotationTable");
 
 // Function to send to CoSEP Layout
-let portConstraints = function( edge ){
+let portConstraintsFunc = function( edge ){
     return constraints[edge.data('id')];
+};
+
+let nodeRotationsFunc = function( node ){
+    return rotations[node.data('id')];
 };
 
 // Clear Selections/Options at start
 document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
 document.getElementById("portsPerSide").value = 5;
-document.getElementById("FPS").value = 24;
+document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
-document.getElementById("edgeShiftingThreshold").value = 3;
+document.getElementById("edgeShiftingPeriod").value = 5;
+document.getElementById("edgeShiftingForceThreshold").value = 1;
+document.getElementById("nodeRotationPeriod").value = 15;
+document.getElementById("nodeRotationForceThreshold").value = 2;
+
+document.addEventListener('DOMContentLoaded', function(){
+    fillNodeRotationTable();
+});
 
 // Initial Layout on opening the page
-
 var cy = window.cy = cytoscape({
     container: document.getElementById('cy'),
     layout: {
@@ -45,6 +57,7 @@ var cy = window.cy = cytoscape({
                 'text-halign': 'center',
                 'text-valign': 'center',
                 'background-color': '#3a7ecf',
+                'opacity': 0.8,
                 'width': function (node) {
                     switch (node.data('id')) {
                         case 'n0':
@@ -75,8 +88,6 @@ var cy = window.cy = cytoscape({
                             return 30;
                     }
                 }
-
-
             }
         },
         {
@@ -176,15 +187,24 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         return;
     }
 
+    cy.edges().forEach(function ( edge ) {
+        edge.style({'source-endpoint': 'outside-to-node'});
+        edge.style({'target-endpoint': 'outside-to-node'});
+    });
+
     let layout = window.cy.layout({
         name: 'cosep',
         refresh:1,
         fps: +document.getElementById("FPS").value,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked),
-        portConstraints: portConstraints,
+        portConstraints: portConstraintsFunc,
         portsPerNodeSide: document.getElementById("portsPerSide").value,
-        edgeShiftingThreshold: +document.getElementById("edgeShiftingThreshold").value,
+        edgeShiftingPeriod: +document.getElementById("edgeShiftingPeriod").value,
+        edgeShiftingForceThreshold: +document.getElementById("edgeShiftingForceThreshold").value,
+        nodeRotationPeriod: +document.getElementById("nodeRotationPeriod").value,
+        nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
+        nodeRotations: nodeRotationsFunc
     });
 
     if ( document.getElementById("animate").checked )
@@ -195,7 +215,7 @@ document.getElementById("cosepButton").addEventListener("click",function(){
 
 // Export constraints JSON
 document.getElementById("exportToFile").addEventListener("click",function(){
-    saveText( JSON.stringify(constraints), "constraints.json" );
+    saveText( JSON.stringify(constraints, null, "\t"), "constraints.json" );
 
     function saveText(text, filename){
         let a = document.createElement('a');
@@ -218,7 +238,8 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
 
         // Clear logs table and re-write it
         if (logsTable.rows.length > 1){
-            for( let i = 0; i <= logsTable.rows.length ; i++){
+            let length = logsTable.rows.length;
+            for( let i = 0; i < length-1 ; i++){
                 logsTable.deleteRow(1);
             }
         }
@@ -233,14 +254,23 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
 
             consInfo.forEach(function (cons) {
                 addToHistory( window.cy.edges("[id = '" + edgeID + "']"),
-                              cons.endpoint,
-                              cons.portConstraintType,
-                              cons.portConstraintParameter );
+                    cons.endpoint,
+                    cons.portConstraintType,
+                    cons.portConstraintParameter );
 
                 changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
             });
         });
 
+        // Clear node rotations
+        rotations = {};
+        if (nodeRotationTable.rows.length > 1) {
+            let length = nodeRotationTable.rows.length;
+            for (let i = 0; i < length-1; i++) {
+                nodeRotationTable.deleteRow(1);
+            }
+        }
+        fillNodeRotationTable();
     };
 });
 
@@ -275,21 +305,33 @@ cy.on('select', 'edge', function( event ){
             }
         }
 
-        // Display indicator and
+        // Display indicator and add constraint cards
+        document.getElementById('addConsCard').style.opacity = 1;
         document.getElementById('addConsCard').style.display = 'block';
         document.getElementById('indicatorCard').style.display = 'block';
-    }
+    }else
+        unselect();
+});
+
+// No Need to select nodes
+cy.on('select', 'node', function( event ){
+    unselect();
 });
 
 // Unselecting the edge
 // Remove all displays
 cy.on('unselect', 'edge', function(event){
+    unselect();
+});
+
+function unselect(){
     selectedEdge = null;
 
     // Un-highlight history
     for( let i = 0; i < logsTable.rows.length; i++ )
         logsTable.rows[i].style.backgroundColor = '';
 
+    document.getElementById('addConsCard').style.opacity = 0;
     document.getElementById('addConsCard').style.display = 'none';
     document.getElementById('indicatorCard').style.display = 'none';
     document.getElementById('portIndexRow').style.display = "none";
@@ -298,7 +340,7 @@ cy.on('unselect', 'edge', function(event){
     document.getElementById("consType").selectedIndex = -1;
     document.getElementById("nodeSides").selectedIndex = -1;
     document.getElementById("portIndex").value = "";
-});
+}
 
 // Changing Constraint Table according to type selection
 consSelector.addEventListener("change", function() {
@@ -424,21 +466,21 @@ function changeArrowShape( edge, endpoint, portConstraintType ) {
     switch( portConstraintType ){
         case 'Free':
             if( endpoint == 'Source' )
-                edge.style({ 'source-arrow-shape': 'vee', 'source-arrow-color': '#3a7ecf' });
+                edge.style({ 'source-arrow-shape': 'vee', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#3a7ecf' });
+                edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#00c6cf' });
             break;
         case 'Sided':
             if( endpoint == 'Source' )
-                edge.style({ 'source-arrow-shape': 'triangle-tee', 'source-arrow-color': '#3a7ecf' });
+                edge.style({ 'source-arrow-shape': 'triangle-tee', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'triangle-tee', 'target-arrow-color': '#3a7ecf' });
+                edge.style({ 'target-arrow-shape': 'triangle-tee', 'target-arrow-color': '#00c6cf' });
             break;
         case 'Absolute':
             if( endpoint == 'Source' )
-                edge.style({ 'source-arrow-shape': 'circle', 'source-arrow-color': '#3a7ecf' });
+                edge.style({ 'source-arrow-shape': 'circle', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#3a7ecf' });
+                edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#00c6cf' });
             break;
     }
 }
@@ -446,6 +488,7 @@ function changeArrowShape( edge, endpoint, portConstraintType ) {
 // Add to history
 function addToHistory( edge, endpoint, portConstraintType, portConstraintParameter ) {
     let row = logsTable.insertRow();
+    row.onclick = function(event){ if(event.ctrlKey) deleteRowElements(row); };
     let cell4 = row.insertCell(0);
     let cell3 = row.insertCell(0);
     let cell2 = row.insertCell(0);
@@ -503,5 +546,51 @@ function addImplicitPorts( cytoEdge, nodeID ) {
                 changeArrowShape( edge, endpoint, 'Free' );
             }
         }
+    }
+}
+
+// Delete Row Elements
+function deleteRowElements ( row ){
+    let edge =  cy.edges().filter( "[id = '" + row.cells[0].innerHTML + "']" );
+    let endpoint = row.cells[1].innerHTML;
+
+    if(endpoint == 'Source') {
+        edge.style({'source-arrow-shape': 'none'});
+        edge.style({'source-endpoint': 'outside-to-node'});
+    }else{
+        edge.style({'target-arrow-shape': 'none'});
+        edge.style({'target-endpoint': 'outside-to-node'});
+    }
+
+    delete constraints[row.cells[0].innerHTML];
+    logsTable.deleteRow(row.rowIndex);
+}
+
+// Node Rotation Table filler
+function fillNodeRotationTable() {
+    if( nodeRotationTable.rows.length == 1){
+        cy.nodes().forEach(function ( node ) {
+            let row = nodeRotationTable.insertRow();
+            row.onclick = function(event){ changeNodeRotation(row); };
+            let cell2 = row.insertCell(0);
+            let cell1 = row.insertCell(0);
+            cell1.innerHTML = node.data('id');
+            cell2.innerHTML = 'Yes';
+
+            rotations[node.data('id')] = true;
+        });
+    }
+}
+
+// Change Node Rotation 
+function changeNodeRotation( row ) {
+    let nodeId = row.cells[0].innerHTML;
+
+    if( rotations[nodeId] ){
+        row.cells[1].innerHTML = 'No';
+        rotations[nodeId] = false;
+    }else{
+        row.cells[1].innerHTML = 'Yes';
+        rotations[nodeId] = true;
     }
 }

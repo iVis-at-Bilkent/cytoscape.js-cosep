@@ -14,6 +14,7 @@ const CoSEPGraphManager = require('./CoSEPGraphManager');
 const CoSEPGraph = require('./CoSEPGraph');
 const CoSEPNode = require('./CoSEPNode');
 const CoSEPEdge = require('./CoSEPEdge');
+const CoSEPRotationalForce = require('./CoSEPRotationalForce');
 
 // Constructor
 function CoSEPLayout() {
@@ -85,11 +86,18 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
     this.totalIterations = 0;
 
     // Reset variables for cooling
-    this.initialCoolingFactor = 0.7;
+    this.initialCoolingFactor = CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR;
     this.coolingCycle = 0;
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+
+    // Node Rotation Related Stuff
+    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
+        let node = this.graphManager.nodesWithPorts[i];
+        if(node.canBeRotated)
+            node.rotationalForce = new CoSEPRotationalForce( CoSEPConstants.NODE_ROTATION_PERIOD );
+    }
 
     // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
     this.calcSpringForce = function(edge, idealLength){
@@ -147,8 +155,8 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
         this.coolingCycle++;
         this.coolingAdjuster = this.coolingCycle / 3;
         this.coolingFactor = Math.max(this.initialCoolingFactor -
-                    Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) /
-                    Math.log(this.maxCoolingCycle))/100 * this.coolingAdjuster, this.finalTemperature);
+            Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) /
+                Math.log(this.maxCoolingCycle))/100 * this.coolingAdjuster, this.finalTemperature);
 
     }
 
@@ -165,6 +173,10 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
         this.checkForEdgeShifting();
 
+    if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0){
+        this.checkForNodeRotation();
+    }
+
     // If we reached max iterations
     return this.totalIterations >= this.maxIterations;
 };
@@ -175,6 +187,14 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
 CoSEPLayout.prototype.checkForEdgeShifting = function(){
     for(let i = 0; i < this.graphManager.portConstraints.length; i++)
         this.graphManager.portConstraints[i].checkForEdgeShifting();
+};
+
+/**
+ * Node Rotation during phase II of the algorithm.
+ */
+CoSEPLayout.prototype.checkForNodeRotation = function(){
+    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++)
+        this.graphManager.nodesWithPorts[i].checkForNodeRotation();
 };
 
 module.exports = CoSEPLayout;

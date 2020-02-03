@@ -34,7 +34,7 @@ const optFn = ( opt, ele ) => {
 let defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
   refresh: 10, // number of ticks per frame; higher is faster but more jerky
-  fps: 24,
+  fps: 24, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
   //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
@@ -52,8 +52,6 @@ let defaults = {
   randomize: true, // use random node positions at beginning of layout
   // Include labels in node dimensions
   nodeDimensionsIncludeLabels: false,
-  // Whether or not simple nodes (non-compound nodes) are of uniform dimensions
-  uniformNodeDimensions: false,
   // Node repulsion (non overlapping) multiplier
   nodeRepulsion: 4500,
   // Ideal edge (non nested) length
@@ -73,13 +71,7 @@ let defaults = {
   // Gravity force (constant) for compounds
   gravityCompound: 1.0,
   // Gravity range (constant)
-  gravityRange: 3.8,
-  // Initial cooling factor for incremental layout
-  initialEnergyOnIncremental: 0.5,
-  // Force threshold
-  edgeShiftingThreshold: 3
-  // For enabling tiling
-  // tile: true,
+  gravityRange: 3.8
 };
 
 /**
@@ -101,19 +93,17 @@ let getUserOptions = function (options) {
     CoSEPConstants.DEFAULT_GRAVITY_STRENGTH = CoSEConstants.DEFAULT_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = options.gravity;
   if (options.gravityRange != null)
     CoSEPConstants.DEFAULT_GRAVITY_RANGE_FACTOR = CoSEConstants.DEFAULT_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = options.gravityRange;
-  if(options.gravityCompound != null)
+  if (options.gravityCompound != null)
     CoSEPConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = CoSEConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_STRENGTH = options.gravityCompound;
-  if(options.gravityRangeCompound != null)
+  if (options.gravityRangeCompound != null)
     CoSEPConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = CoSEConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_COMPOUND_GRAVITY_RANGE_FACTOR = options.gravityRangeCompound;
-  if (options.initialEnergyOnIncremental != null)
-    CoSEPConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = CoSEConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = FDLayoutConstants.DEFAULT_COOLING_FACTOR_INCREMENTAL = options.initialEnergyOnIncremental;
 
   CoSEPConstants.TILING_PADDING_VERTICAL = CoSEConstants.TILING_PADDING_VERTICAL =
       typeof options.tilingPaddingVertical === 'function' ? options.tilingPaddingVertical.call() : options.tilingPaddingVertical;
   CoSEPConstants.TILING_PADDING_HORIZONTAL = CoSEConstants.TILING_PADDING_HORIZONTAL =
       typeof options.tilingPaddingHorizontal === 'function' ? options.tilingPaddingHorizontal.call() : options.tilingPaddingHorizontal;
 
-  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = options.uniformNodeDimensions;
+  LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = false;
 
   // Phase I of the algorithm
   LayoutConstants.QUALITY = 0;
@@ -127,22 +117,32 @@ let getUserOptions = function (options) {
 
   // Labels are ignored
   CoSEPConstants.NODE_DIMENSIONS_INCLUDE_LABELS = CoSEConstants.NODE_DIMENSIONS_INCLUDE_LABELS
-                                                = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
-                                                = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
-                                                = false;
+      = FDLayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
+      = LayoutConstants.NODE_DIMENSIONS_INCLUDE_LABELS
+      = false;
 
   // Our incremental would be to skip over Phase I
   CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL
-                                     = FDLayoutConstants.DEFAULT_INCREMENTAL
-                                     = LayoutConstants.DEFAULT_INCREMENTAL
-                                     = !(true); // options.randomize
+      = FDLayoutConstants.DEFAULT_INCREMENTAL
+      = LayoutConstants.DEFAULT_INCREMENTAL
+      = false;
 
   // Tiling is disabled
   CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
   // Thresholds for force in Phase II
-  if (options.edgeShiftingThreshold != null)
-    CoSEPConstants.EDGE_SHIFTING_THRESHOLD = options.edgeShiftingThreshold;
+  if (options.edgeShiftingForceThreshold != null)
+    CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = options.edgeShiftingForceThreshold;
+  if (options.nodeRotationForceThreshold != null)
+    CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = options.nodeRotationForceThreshold;
+  if (options.rotation180RatioThreshold != null)
+    CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = options.rotation180RatioThreshold;
+
+  // Periods for Phase II
+  if (options.edgeShiftingPeriod)
+    CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
+  if (options.nodeRotationPeriod)
+    CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
 };
 
 class Layout extends ContinuousLayout {
@@ -229,12 +229,12 @@ class Layout extends ContinuousLayout {
 
             switch( constraint.portConstraintType ){
               case 0: // Free, add all directions via enum
-                  constraint.portConstraintParameter = [
-                      constraint.sideDirection[ 'Top' ],
-                      constraint.sideDirection[ 'Right' ],
-                      constraint.sideDirection[ 'Bottom' ],
-                      constraint.sideDirection[ 'Left' ]
-                  ];
+                constraint.portConstraintParameter = [
+                  constraint.sideDirection[ 'Top' ],
+                  constraint.sideDirection[ 'Right' ],
+                  constraint.sideDirection[ 'Bottom' ],
+                  constraint.sideDirection[ 'Left' ]
+                ];
                 break;
               case 1: // Need to enum directions
                 constraint.portConstraintParameter = [];
@@ -243,7 +243,7 @@ class Layout extends ContinuousLayout {
                 });
                 break;
               case 2: // Getting absolute position
-                constraint.portConstraintParameter =+ portInfo.portConstraintParameter; // if '5' -> 5
+                constraint.portConstraintParameter = +portInfo.portConstraintParameter; // if '5' -> 5
                 break;
             }
           });
@@ -259,22 +259,31 @@ class Layout extends ContinuousLayout {
     if ( state.randomize ) {
       this.cosepLayout.runLayout();
     } else{
-        this.cosepLayout.initParameters();
-        this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
-        this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
-        this.cosepLayout.calcNoOfChildrenForAllNodes();
-        this.graphManager.calcLowestCommonAncestors();
-        this.graphManager.calcInclusionTreeDepths();
-        this.graphManager.getRoot().calcEstimatedSize();
-        this.cosepLayout.calcIdealEdgeLengths();
-        this.graphManager.updateBounds();
-        this.cosepLayout.level = 0;
-        this.cosepLayout.initSpringEmbedder();
+      this.cosepLayout.initParameters();
+      this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
+      this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
+      this.cosepLayout.calcNoOfChildrenForAllNodes();
+      this.graphManager.calcLowestCommonAncestors();
+      this.graphManager.calcInclusionTreeDepths();
+      this.graphManager.getRoot().calcEstimatedSize();
+      this.cosepLayout.calcIdealEdgeLengths();
+      this.graphManager.updateBounds();
+      this.cosepLayout.level = 0;
+      this.cosepLayout.initSpringEmbedder();
     }
 
     // Initialize ports
     this.addImplicitPortConstraints();
     cosepLayout.initialPortConfiguration();
+
+    // Initialize node rotations
+    if(this.options.nodeRotations !== null && this.options.nodeRotations !== undefined && typeof this.options.nodeRotations === 'function'){
+      for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
+        let node = cosepLayout.graphManager.nodesWithPorts[i];
+        let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
+        if( !this.options.nodeRotations( cyNode ) ) node.canBeRotated = false;
+      }
+    }
 
     // Update Cytoscape Port Visualizations
     this.updateCytoscapePortVisualization();
@@ -360,29 +369,26 @@ class Layout extends ContinuousLayout {
   tick(){
     let state = this.state;
     let self = this;
-    let isDone;
+    let isDone = this.cosepLayout.runSpringEmbedderTick();
 
-    // TODO update state for this iteration
+    state.tickIndex = this.cosepLayout.totalIterations;
+
     this.state.nodes.forEach( n => {
       let s = this.getScratch(n);
-        let location = this.idToLNode[n.data('id')];
-        s.x = location.getCenterX();
-        s.y = location.getCenterY();
+      let location = this.idToLNode[n.data('id')];
+      s.x = location.getCenterX();
+      s.y = location.getCenterY();
     });
-
-    isDone = this.cosepLayout.runSpringEmbedderTick();
 
     if( state.animate || state.animate == 'during' )
       self.updateCytoscapePortVisualization();
-
-    state.tickIndex = this.cosepLayout.totalIterations;
 
     return isDone;
   }
 
   // run this function after the layout is done ticking
   postrun(){
-    let self = this;
+    this.updateCytoscapePortVisualization();
     console.log('***************************************************************************************');
     console.log('** Done in ' + JSON.stringify(this.cosepLayout.totalIterations) + ' iterations');
     console.log( '** Graph Manager' );
@@ -469,13 +475,13 @@ class Layout extends ContinuousLayout {
       let sourceConstraint = lEdge.getSourceConstraint();
       if( sourceConstraint ){
         let relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
-        cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' })
+        cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
       }
 
       let targetConstraint = lEdge.getTargetConstraint();
       if( targetConstraint ){
         let relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
-        cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' })
+        cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
       }
     });
   }

@@ -2,81 +2,103 @@
 
 <html>
 
-	<head>
-		<title>cytoscape-cosep.js demo</title>
+<head>
+	<title>cytoscape-cosep.js demo</title>
 
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
-		<!-- Cytoscape extention -->
-		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+	<!-- Cytoscape extention -->
+	<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 
-		<!-- iVis-at-Bilkent libraries -->
-		<script src="https://unpkg.com/layout-base/layout-base.js"></script>
-		<script src="https://unpkg.com/cose-base/cose-base.js"></script>
+	<!-- iVis-at-Bilkent libraries -->
+	<script src="https://unpkg.com/layout-base/layout-base.js"></script>
+	<script src="https://unpkg.com/cose-base/cose-base.js"></script>
 
-		<!-- CoSE Bilkent Layout -->
-		<script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
+	<!-- CoSE Bilkent Layout -->
+	<script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
 
-		<!-- Cosep Layout -->
-		<script src="../cytoscape-cosep.js"></script>
+	<!-- Cosep Layout -->
+	<script src="../cytoscape-cosep.js"></script>
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-		<!-- JS, Popper.js, and jQuery -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-		<!-- Demo files -->
-		<script src="demoControl.js" defer></script>
-		<link rel="stylesheet" href="demo.css">
-	</head>
+	<!-- Demo files -->
+	<script src="demoControl.js" defer></script>
+	<link rel="stylesheet" href="demo.css">
+</head>
 
-	<body>
-		<h1>cytoscape-cosep demo</h1>
+<body>
+<div class="leftOfCytoscape">
+	<button id="coseButton" type="button" class="btn btn-secondary btn-sm">CoSE Bilkent Layout</button>
+	<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
 
-		<button id="coseButton" type="button" class="btn btn-secondary btn-sm">CoSE Bilkent</button>
-		<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP</button>
+	<div id="optionsCard"  class="card" style="text-align: center">
+		<label><b>Layout Options</b></label>
+		<table>
+			<tr>
+				<td><span>Animate</span></td>
+				<td style="text-align: center"><input id="animate" class = "checkbox" type="checkbox"></td>
+			</tr>
+			<tr>
+				<td><span>FPS</span></td>
+				<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+			<tr>
+				<td><span>Incremental</span></td>
+				<td style="text-align: center"><input id="incremental" class = "checkbox" type="checkbox" ></td>
+			</tr>
+			<tr>
+				<td><span>Ports Per Node Side</span></td>
+				<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+			<tr>
+				<td><span>Edge Shifting Period</span></td>
+				<td><input id="edgeShiftingPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+			<tr>
+				<td><span>Edge Shifting Force Threshold</span></td>
+				<td><input id="edgeShiftingForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+			<tr>
+				<td><span>Node Rotation Period</span></td>
+				<td><input id="nodeRotationPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+			<tr>
+				<td><span>Node Rotation Force Threshold</span></td>
+				<td><input id="nodeRotationForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+		</table>
+	</div>
 
-		<div id="optionsCard"  class="card">
-			<table>
-				<tr>
-					<td><span> Animate </span></td>
-					<td><input id="animate" class = "checkbox" type="checkbox"></td>
-				</tr>
-				<tr>
-					<td><span> FPS </span></td>
-					<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-				</tr>
-				<tr>
-					<td><span> Incremental </span></td>
-					<td><input id="incremental" class = "checkbox" type="checkbox"></td>
-				</tr>
-				<tr>
-					<td><span> Ports Per Node Side </span></td>
-					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-				</tr>
-				<tr>
-					<td><span>Edge Shifting Threshold</span></td>
-					<td><input id="edgeShiftingThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-				</tr>
-			</table>
-		</div>
+	<button id="importFromFile" type="button" class="btn btn-dark btn-sm py-0" onclick="document.getElementById('file-input').click();">Import constraint from file</button>
+	<input id="file-input" type="file" name="name" style="display: none;" />
 
-		<div id="indicatorCard"  class="card" style="text-align: center">
-			<label><b> Selected Edge </b></label>
-			<table id="indicTable">
-				<tr>
-					<td><span><b> Source </b></span></td>
-					<td><span><b> &#10230;</b></span></td>
-					<td><span><b> Target </b></span></td>
-				</tr>
-			</table>
-		</div>
+	<button id="exportToFile" type="button" class="btn btn-dark btn-sm py-0">Export constraint from file</button>
 
-		<div id="addConsCard"  class="card" style="text-align: center">
-			<label><b> Add Port Constraint </b></label>
+	<div id="indicatorCard"  class="card" style="text-align: center">
+		<label><b> Selected Edge </b></label>
+		<table id="indicTable">
+			<tr>
+				<td><span><b style="color:#930fcf;"> Source </b></span></td>
+				<td><span><b> &#10230;</b></span></td>
+				<td><span><b style="color:#00c6cf;"> Target </b></span></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="addConsCard"  class="card" style="text-align: center;opacity: 0;display: none">
+		<button class="btn btn-link py-0" type="button" style="font-size: 1em;"
+				data-toggle="collapse" data-target="#collapseExample"
+				aria-expanded="false" aria-controls="collapseExample">
+			Add Port Constraint
+		</button>
+		<div class="collapse" id="collapseExample">
 			<table id="consTable">
 				<tr>
 					<td><span> Endpoint </span></td>
@@ -119,39 +141,42 @@
 				</tr>
 			</table>
 		</div>
+	</div>
 
-		<div id="logsCard" class="card" style="text-align: center">
-			<div class="card-header" style="padding: 5px 0px 0px 0px;background-color: #efbdee">
-				<ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-port" role="tab" aria-controls="pills-port" aria-selected="true">Port Info</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false">Allowed Rotations</a>
-					</li>
-				</ul>
+	<div id="logsCard" class="card bg-light" style="text-align: center;">
+		<ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+			<li class="nav-item ">
+				<a class="nav-link active py-0" id="pills-home-tab" data-toggle="pill" href="#pills-port" role="tab" aria-controls="pills-port" aria-selected="true">Port Info</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link py-0" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false" onclick="fillNodeRotationTable()">Node Rotations</a>
+			</li>
+		</ul>
+
+		<div class="tab-content" id="pills-tabContent" style="overflow-y: auto; overflow-x:auto">
+			<div class="tab-pane fade show active" id="pills-port" role="tabpanel" aria-labelledby="pills-port-tab">
+				<table id="logsTable" class="table">
+					<tr>
+						<th style="font-size: 0.9em;text-align: center">ID</th>
+						<th style="font-size: 0.9em;text-align: center">Endpoint</th>
+						<th style="font-size: 0.9em;text-align: center">Type</th>
+						<th style="font-size: 0.9em;text-align: center">Parameter</th>
+					</tr>
+				</table>
 			</div>
-			<div class="tab-content" id="pills-tabContent" style="overflow-y: auto;overflow-x:auto">
-				<div class="tab-pane fade show active" id="pills-port" role="tabpanel" aria-labelledby="pills-port-tab">
-					<table id="logsTable" class="table">
-						<tr>
-							<th>ID</th>
-							<th>Endpoint</th>
-							<th>Type</th>
-							<th>Parameter</th>
-						</tr>
-					</table>
-				</div>
-				<div class="tab-pane fade" id="pills-rotation" role="tabpanel" aria-labelledby="pills-rotation-tab">...</div>
+			<div class="tab-pane fade" id="pills-rotation" role="tabpanel" aria-labelledby="pills-rotation-tab">
+				<table id="nodeRotationTable" class="table">
+					<tr>
+						<th style="font-size: 0.9em;text-align: center">Node ID</th>
+						<th style="font-size: 0.9em;text-align: center">Rotation Allowed</th>
+					</tr>
+				</table>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<button id="importFromFile" type="button" class="btn btn-secondary btn-sm"  onclick="document.getElementById('file-input').click();">Import from File</button>
-		<input id="file-input" type="file" name="name" style="display: none;" />
-
-		<button id="exportToFile" type="button" class="btn btn-secondary btn-sm">Export to File</button>
-
-		<div id="cy"></div>
-	</body>
+<div id="cy"></div>
+</body>
 
 </html>
