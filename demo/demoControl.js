@@ -8,12 +8,14 @@
 
 // Variables and Constants
 let selectedEdge;
+let idealEdgeLength = 50;
 let constraints = {};
 let rotations = {};
 const indicatorTable = document.getElementById("indicTable");
 const consSelector = document.getElementById("consType");
 const logsTable = document.getElementById("logsTable");
 const nodeRotationTable = document.getElementById("nodeRotationTable");
+const sampleGraphs = document.getElementById("sampleGraphs");
 
 // Function to send to CoSEP Layout
 let portConstraintsFunc = function( edge ){
@@ -27,13 +29,15 @@ let nodeRotationsFunc = function( node ){
 // Clear Selections/Options at start
 document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
+document.getElementById("sampleGraphs").selectedIndex = -1;
 document.getElementById("portsPerSide").value = 5;
 document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
 document.getElementById("edgeShiftingPeriod").value = 5;
 document.getElementById("edgeShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
-document.getElementById("nodeRotationForceThreshold").value = 2;
+document.getElementById("nodeRotationForceThreshold").value = 10;
+document.getElementById("nodeRotationAngleThreshold").value = 90;
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -136,7 +140,7 @@ var cy = window.cy = cytoscape({
         }
     ],
     elements: [
-        {group: 'nodes', data: {id: 'n0'}, width: 200},
+        {group: 'nodes', data: {id: 'n0'}},
         {group: 'nodes', data: {id: 'n1'}},
         {group: 'nodes', data: {id: 'n2'}},
         {group: 'nodes', data: {id: 'n3'}},
@@ -195,6 +199,7 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     let layout = window.cy.layout({
         name: 'cosep',
         refresh:1,
+        idealEdgeLength: idealEdgeLength,
         fps: +document.getElementById("FPS").value,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked),
@@ -204,6 +209,7 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         edgeShiftingForceThreshold: +document.getElementById("edgeShiftingForceThreshold").value,
         nodeRotationPeriod: +document.getElementById("nodeRotationPeriod").value,
         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
+        nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
         nodeRotations: nodeRotationsFunc
     });
 
@@ -237,42 +243,55 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
         constraints = JSON.parse( contents );
 
         // Clear logs table and re-write it
-        if (logsTable.rows.length > 1){
-            let length = logsTable.rows.length;
-            for( let i = 0; i < length-1 ; i++){
-                logsTable.deleteRow(1);
-            }
-        }
+        clearLogsTable();
 
         // Clear arrow heads
         window.cy.edges().style({'source-arrow-shape':'none'});
         window.cy.edges().style({'target-arrow-shape':'none'});
 
-        Object.keys(constraints).forEach(function( key ) {
-            let edgeID = key;
-            let consInfo = constraints[edgeID];
-
-            consInfo.forEach(function (cons) {
-                addToHistory( window.cy.edges("[id = '" + edgeID + "']"),
-                    cons.endpoint,
-                    cons.portConstraintType,
-                    cons.portConstraintParameter );
-
-                changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
-            });
-        });
+        fillLogsTableFromConstraints();
 
         // Clear node rotations
         rotations = {};
-        if (nodeRotationTable.rows.length > 1) {
-            let length = nodeRotationTable.rows.length;
-            for (let i = 0; i < length-1; i++) {
-                nodeRotationTable.deleteRow(1);
-            }
-        }
+        clearNodeRotations();
         fillNodeRotationTable();
     };
 });
+
+function fillLogsTableFromConstraints() {
+    Object.keys(constraints).forEach(function( key ) {
+        let edgeID = key;
+        let consInfo = constraints[edgeID];
+
+        consInfo.forEach(function (cons) {
+            addToHistory( window.cy.edges("[id = '" + edgeID + "']"),
+                cons.endpoint,
+                cons.portConstraintType,
+                cons.portConstraintParameter );
+
+            changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
+        });
+    });
+}
+
+// Clear logs table
+function clearLogsTable(){
+    if (logsTable.rows.length > 1){
+        let length = logsTable.rows.length;
+        for( let i = 0; i < length-1 ; i++){
+            logsTable.deleteRow(1);
+        }
+    }
+}
+
+function clearNodeRotations(){
+    if (nodeRotationTable.rows.length > 1) {
+        let length = nodeRotationTable.rows.length;
+        for (let i = 0; i < length-1; i++) {
+            nodeRotationTable.deleteRow(1);
+        }
+    }
+}
 
 // Selecting stuff on the graph
 // Get only if the selected is only one edge
@@ -459,6 +478,126 @@ document.getElementById("addConstraint").addEventListener("click",function(){
     }
 
     changeArrowShape( edge, endpoint, portConstraintType );
+});
+
+// Sample File Changer
+document.getElementById("sampleGraphs").addEventListener("change",function(){
+    window.cy.startBatch();
+    window.cy.style().clear();
+    window.cy.remove('edges');
+    window.cy.remove('nodes');
+
+    constraints = {};
+    rotations = {};
+    clearLogsTable();
+    clearNodeRotations();
+
+    if( sampleGraphs.value == "sample1" ) {
+        fetch("samples/sample1.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                cy.nodes().style(
+                    {'width': function (node) {
+                        switch (node.data('id')) {
+                            case 'n0':
+                                return 40;
+                            case 'n1':
+                                return 100;
+                            case 'n3':
+                                return 70;
+                            case 'n4':
+                                return 100;
+                            case 'n21':
+                                return 50;
+                            default:
+                                return 30;
+                        }
+                    }, 'height': function (node) {
+                            switch (node.data('id')) {
+                                case 'n0':
+                                    return 60;
+                                case 'n3':
+                                    return 70;
+                                case 'n4:':
+                                    return 150;
+                                case 'n21':
+                                    return 50;
+                                default:
+                                    return 30;
+                            }
+                    }});
+            });
+    } else if(sampleGraphs.value == "sample2" ) {
+        fetch("samples/sample2.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                cy.nodes().style(
+                    {
+                        'width': function (node) {
+                            switch (node.data('id')) {
+                                case 'n0':
+                                    return 230;
+                                case 'n1':
+                                    return 100;
+                                case 'n2':
+                                    return 140;
+                                case 'n3':
+                                    return 130;
+                                case 'n4':
+                                    return 145;
+                                case 'n5':
+                                    return 106;
+                                case 'n6':
+                                    return 130;
+                                case 'n7':
+                                    return 160;
+                                case 'n8':
+                                    return 125;
+                                case 'n9':
+                                    return 94;
+                                case 'n10':
+                                    return 110;
+                                default:
+                                    return 30;
+                            }
+                        }, 'height': function (node) {
+                            switch (node.data('id')) {
+                                case 'n0':
+                                    return 120;
+                                case 'n1':
+                                    return 45;
+                                case 'n2':
+                                    return 60;
+                                case 'n3':
+                                    return 45;
+                                case 'n4':
+                                    return 30;
+                                case 'n5':
+                                    return 45;
+                                case 'n6':
+                                    return 80;
+                                case 'n7':
+                                    return 65;
+                                case 'n10':
+                                    return 85;
+                                default:
+                                    return 30;
+                            }
+                        }
+                    });
+                fetch("samples/sample1_constraints.json")
+                    .then(response => response.json())
+                    .then(json => {
+                        constraints = json;
+                        fillLogsTableFromConstraints();
+                    });
+                document.getElementById("portsPerSide").value = 7;
+            });
+    }
+
+    window.cy.endBatch();
 });
 
 // Changes arrow types

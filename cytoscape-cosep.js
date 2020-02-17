@@ -120,6 +120,7 @@ CoSEPConstants.NODE_ROTATION_PERIOD = 15;
 CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 3;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
+CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
 
 module.exports = CoSEPConstants;
 
@@ -181,6 +182,9 @@ function CoSEPNode(gm, loc, size, vNode) {
 
     // If the above remains true. CoSEPLayout will assign a CoSEPRotationalForce to this variable
     this.rotationalForce = null;
+
+    // Stores rotational forces for one iteration. This contributes to above variable.
+    this.oneIterationRotForce = [];
 }
 
 CoSEPNode.prototype = Object.create(CoSENode.prototype);
@@ -274,40 +278,146 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
 };
 
 /**
+ * Used by ports to add their respective rotational force. Once all edges are done, the sum is added to local storage
+ */
+CoSEPNode.prototype.addRotationalForce = function (rotationalForce) {
+    this.oneIterationRotForce.push(rotationalForce);
+
+    if (this.oneIterationRotForce.length == this.associatedPortConstraints.length) {
+        var temp = 0;
+        while (this.oneIterationRotForce.length != 0) {
+            temp = temp + this.oneIterationRotForce.pop();
+        }this.rotationalForce.add(temp);
+    }
+};
+
+/**
  * Rotating the node if rotational force inflicted upon is greater than threshold.
  * Sometimes a 180 degree rotation is needed when the above metric does not detect a needed rotation.
  */
-CoSENode.prototype.checkForNodeRotation = function () {
+CoSEPNode.prototype.checkForNodeRotation = function () {
     if (!this.canBeRotated) return;
 
-    // Exceeds threshold?
+    // Exceeds threshold? If not then how about 180 degree check
     var rotationalForceAvg = this.rotationalForce.getAverage();
-    if (Math.abs(rotationalForceAvg) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD) return;
+    if (Math.abs(rotationalForceAvg) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD) {
+        var topBottomRotation = false;
+        var rightLeftRotation = false;
+        var topBottomPorts = 0;
+        var topBottomObstruceAngles = 0;
+        var rightLeftPorts = 0;
+        var rightLeftObstruceAngles = 0;
+
+        for (var i = 0; i < this.associatedPortConstraints.length; i++) {
+            var portConst = this.associatedPortConstraints[i];
+
+            if (portConst.portSide == portConst.sideDirection['Top'] || portConst.portSide == portConst.sideDirection['Bottom']) {
+                topBottomPorts++;
+                if (portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
+                    topBottomObstruceAngles++;
+                }
+            } else {
+                rightLeftPorts++;
+                if (portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
+                    rightLeftObstruceAngles++;
+                }
+            }
+        }
+
+        if (topBottomObstruceAngles / topBottomPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) topBottomRotation = true;
+
+        if (rightLeftObstruceAngles / rightLeftPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) rightLeftRotation = true;
+
+        if (topBottomRotation) {
+            for (var _i = 0; _i < this.associatedPortConstraints.length; _i++) {
+                var _portConst = this.associatedPortConstraints[_i];
+
+                if (_portConst.portSide == _portConst.sideDirection['Top']) {
+                    _portConst.portIndex = this.portsPerSide - 1 - _portConst.portIndex;
+                    _portConst.portIndex = _portConst.portIndex + this.portsPerSide * 2;
+                    var temp = this.getPortCoordinatesByIndex(_portConst.portIndex);
+                    _portConst.portSide = temp[0];
+                    _portConst.portLocation = temp[1];
+
+                    if (_portConst.portConstraintType === _portConst.constraintType['Sided']) for (var _i2 = 0; _i2 < _portConst.portConstraintParameter.length; _i2++) {
+                        if (_portConst.portConstraintParameter[_i2] == 0) _portConst.portConstraintParameter[_i2] = 2;
+                    }
+                } else if (_portConst.portSide == _portConst.sideDirection['Bottom']) {
+                    _portConst.portIndex = _portConst.portIndex % this.portsPerSide;
+                    _portConst.portIndex = this.portsPerSide - 1 - _portConst.portIndex;
+                    var _temp = this.getPortCoordinatesByIndex(_portConst.portIndex);
+                    _portConst.portSide = _temp[0];
+                    _portConst.portLocation = _temp[1];
+
+                    if (_portConst.portConstraintType === _portConst.constraintType['Sided']) for (var _i3 = 0; _i3 < _portConst.portConstraintParameter.length; _i3++) {
+                        if (_portConst.portConstraintParameter[_i3] == 2) _portConst.portConstraintParameter[_i3] = 0;
+                    }
+                }
+            }
+        } else if (rightLeftRotation) {
+            for (var _i4 = 0; _i4 < this.associatedPortConstraints.length; _i4++) {
+                var _portConst2 = this.associatedPortConstraints[_i4];
+
+                if (_portConst2.portSide == _portConst2.sideDirection['Right']) {
+                    _portConst2.portIndex = _portConst2.portIndex % this.portsPerSide;
+                    _portConst2.portIndex = this.portsPerSide - 1 - _portConst2.portIndex;
+                    _portConst2.portIndex = _portConst2.portIndex + this.portsPerSide * 3;
+                    var _temp2 = this.getPortCoordinatesByIndex(_portConst2.portIndex);
+                    _portConst2.portSide = _temp2[0];
+                    _portConst2.portLocation = _temp2[1];
+
+                    if (_portConst2.portConstraintType === _portConst2.constraintType['Sided']) for (var _i5 = 0; _i5 < _portConst2.portConstraintParameter.length; _i5++) {
+                        if (_portConst2.portConstraintParameter[_i5] == 1) _portConst2.portConstraintParameter[_i5] = 3;
+                    }
+                } else if (_portConst2.portSide == _portConst2.sideDirection['Left']) {
+                    _portConst2.portIndex = _portConst2.portIndex % this.portsPerSide;
+                    _portConst2.portIndex = this.portsPerSide - 1 - _portConst2.portIndex;
+                    _portConst2.portIndex = _portConst2.portIndex + this.portsPerSide;
+                    var _temp3 = this.getPortCoordinatesByIndex(_portConst2.portIndex);
+                    _portConst2.portSide = _temp3[0];
+                    _portConst2.portLocation = _temp3[1];
+
+                    if (_portConst2.portConstraintType === _portConst2.constraintType['Sided']) for (var _i6 = 0; _i6 < _portConst2.portConstraintParameter.length; _i6++) {
+                        if (_portConst2.portConstraintParameter[_i6] == 3) _portConst2.portConstraintParameter[_i6] = 1;
+                    }
+                }
+            }
+        }
+
+        return;
+    }
 
     // If this is to be rotated clockwise or counter-clockwise
     var clockwise = Math.sign(rotationalForceAvg) == 1;
 
-    for (var i = 0; i < this.associatedPortConstraints.length; i++) {
-        var portConst = this.associatedPortConstraints[i];
+    // Change dimension of the node
+    var width = this.getWidth();
+    var height = this.getHeight();
+    this.setWidth(height);
+    this.setHeight(width);
+
+    // Change port locations
+    for (var _i7 = 0; _i7 < this.associatedPortConstraints.length; _i7++) {
+        var _portConst3 = this.associatedPortConstraints[_i7];
 
         if (clockwise) {
-            portConst.portIndex = (portConst.portIndex + this.portsPerSide) % (4 * this.portsPerSide);
+            _portConst3.portIndex = (_portConst3.portIndex + this.portsPerSide) % (4 * this.portsPerSide);
 
-            if (portConst.portConstraintType === portConst.constraintType['Sided']) for (var _i = 0; _i < portConst.portConstraintParameter.length; _i++) {
-                portConst.portConstraintParameter[_i] = (portConst.portConstraintParameter[_i] + 1) % 4;
+            if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i8 = 0; _i8 < _portConst3.portConstraintParameter.length; _i8++) {
+                _portConst3.portConstraintParameter[_i8] = (_portConst3.portConstraintParameter[_i8] + 1) % 4;
             }
         } else {
-            portConst.portIndex = portConst.portIndex - this.portsPerSide;
-            if (portConst.portIndex < 0) portConst.portIndex = 4 * this.portsPerSide + portConst.portIndex;
+            _portConst3.portIndex = _portConst3.portIndex - this.portsPerSide;
+            if (_portConst3.portIndex < 0) _portConst3.portIndex = 4 * this.portsPerSide + _portConst3.portIndex;
 
-            if (portConst.portConstraintType === portConst.constraintType['Sided']) for (var _i2 = 0; _i2 < portConst.portConstraintParameter.length; _i2++) {
-                if (--portConst.portConstraintParameter[_i2] < 0) portConst.portConstraintParameter[_i2] = 3;
+            if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i9 = 0; _i9 < _portConst3.portConstraintParameter.length; _i9++) {
+                if (--_portConst3.portConstraintParameter[_i9] < 0) _portConst3.portConstraintParameter[_i9] = 3;
             }
         }
 
-        var temp = this.getPortCoordinatesByIndex(portConst.portIndex);
-        portConst.portSide = temp[0];
-        portConst.portLocation = temp[1];
+        var _temp4 = this.getPortCoordinatesByIndex(_portConst3.portIndex);
+        _portConst3.portSide = _temp4[0];
+        _portConst3.portLocation = _temp4[1];
     }
 };
 
@@ -444,6 +554,11 @@ CoSEPEdge.prototype.initialPortConfiguration = function () {
     if (this.sourceConstraint) this.sourceConstraint.initialPortConfiguration();
 
     if (this.targetConstraint) this.targetConstraint.initialPortConfiguration();
+
+    if (this.targetConstraint && this.sourceConstraint) {
+        this.targetConstraint.otherPortConstraint = this.sourceConstraint;
+        this.sourceConstraint.otherPortConstraint = this.targetConstraint;
+    }
 };
 /**
  * Changes the calc of edge length based on ports.
@@ -632,7 +747,7 @@ for (var property in CoSELayout) {
 
 CoSEPLayout.PHASE_CORE = 1;
 CoSEPLayout.PHASE_SECOND = 2;
-CoSEPLayout.PHASE_THIRD = 3;
+CoSEPLayout.PHASE_POLISHING = 3;
 
 // -----------------------------------------------------------------------------
 // Section: Class methods related to Graph Manager
@@ -675,7 +790,6 @@ CoSEPLayout.prototype.initialPortConfiguration = function () {
  */
 CoSEPLayout.prototype.secondPhaseInit = function () {
     this.phase = CoSEPLayout.PHASE_SECOND;
-
     this.totalIterations = 0;
 
     // Reset variables for cooling
@@ -685,10 +799,15 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
 
-    // Node Rotation Related Stuff
+    // Node Rotation Related Variables
     for (var i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         var node = this.graphManager.nodesWithPorts[i];
-        if (node.canBeRotated) node.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
+        if (node.canBeRotated) {
+            node.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
+            node.associatedPortConstraints.forEach(function (port) {
+                port.correspondingAngle = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
+            });
+        }
     }
 
     // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
@@ -724,7 +843,7 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
 };
 
 /**
- * This method implements a spring embedder used by Phase 2 and 3 with
+ * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
  * potentially different parameters.
  *
  * Instead of overloading important functions (e.g. movenodes) we call another fcn so that core CoSE is not affected
@@ -754,10 +873,10 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcGravitationalForces();
     this.moveNodes();
 
-    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) this.checkForEdgeShifting();
-
     if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
         this.checkForNodeRotation();
+    } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        this.checkForEdgeShifting();
     }
 
     // If we reached max iterations
@@ -831,11 +950,14 @@ function CoSEPPortConstraint(edge, node) {
     // Holds the direction of the side the port is on
     this.portSide = null;
 
-    // Holds the angle
-    this.correspondingAngle = null;
-
     // Holds the rotational force induced to incident node
     this.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.EDGE_SHIFTING_PERIOD);
+
+    // Holds this edges other port constraint (if any)
+    this.otherPortConstraint = null;
+
+    // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
+    this.correspondingAngle = null;
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
@@ -1005,16 +1127,28 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
 CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
     if (this.portSide == this.sideDirection['Top']) {
         this.rotationalForce.add(springForceX);
-        if (this.node.canBeRotated) this.node.rotationalForce.add(springForceX);
+        if (this.node.canBeRotated) {
+            this.correspondingAngle.add(this.calcAngle());
+            this.node.addRotationalForce(springForceX);
+        }
     } else if (this.portSide == this.sideDirection['Bottom']) {
         this.rotationalForce.add(-springForceX);
-        if (this.node.canBeRotated) this.node.rotationalForce.add(-springForceX);
+        if (this.node.canBeRotated) {
+            this.correspondingAngle.add(this.calcAngle());
+            this.node.addRotationalForce(-springForceX);
+        }
     } else if (this.portSide == this.sideDirection['Right']) {
         this.rotationalForce.add(springForceY);
-        if (this.node.canBeRotated) this.node.rotationalForce.add(springForceY);
+        if (this.node.canBeRotated) {
+            this.correspondingAngle.add(this.calcAngle());
+            this.node.addRotationalForce(springForceY);
+        }
     } else {
         this.rotationalForce.add(-springForceY);
-        if (this.node.canBeRotated) this.node.rotationalForce.add(-springForceY);
+        if (this.node.canBeRotated) {
+            this.correspondingAngle.add(this.calcAngle());
+            this.node.addRotationalForce(-springForceY);
+        }
     }
 };
 
@@ -1147,6 +1281,52 @@ CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = funct
         case 3:
             return otherNodeRect.x >= nodeRect.x;
     }
+};
+
+/**
+ * Returns the desired location of the other node/port. It is one idealLength away from this port.
+ *
+ * @returns {PointD}
+ */
+CoSEPPortConstraint.prototype.getPointOfDesiredLocation = function () {
+    switch (this.portSide) {
+        case 0:
+            return new PointD(this.portLocation.x, this.portLocation.y - this.edge.idealLength);
+        case 1:
+            return new PointD(this.portLocation.x + this.edge.idealLength, this.portLocation.y);
+        case 2:
+            return new PointD(this.portLocation.x, this.portLocation.y + this.edge.idealLength);
+        case 3:
+            return new PointD(this.portLocation.x - this.edge.idealLength, this.portLocation.y);
+    }
+};
+
+/**
+ * Calculates the angle between other node/port, this port and desired location of other node/port
+ *
+ * @returns {number}
+ */
+CoSEPPortConstraint.prototype.calcAngle = function () {
+    var otherPoint = void 0;
+    if (this.otherPortConstraint) otherPoint = this.otherPortConstraint.portLocation;else otherPoint = this.edge.getOtherEnd(this.node).getCenter();
+
+    var desired = this.getPointOfDesiredLocation();
+
+    var point1 = new PointD(desired.x - this.portLocation.x, desired.y - this.portLocation.y);
+    var point2 = new PointD(otherPoint.x - this.portLocation.x, otherPoint.y - this.portLocation.y);
+
+    if (Math.abs(point1.x) < 0) point1.x = 0.0001;
+    if (Math.abs(point1.y) < 0) point1.y = 0.0001;
+
+    var angleValue = (point1.x * point2.x + point1.y * point2.y) / (Math.sqrt(point1.x * point1.x + point1.y * point1.y) * Math.sqrt(point2.x * point2.x + point2.y * point2.y));
+
+    // let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
+    // (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
+
+    var absAngle = Math.abs(Math.acos(angleValue) * 180 / Math.PI);
+
+    return absAngle;
+    //return ( leftTest > 0 ) ? -absAngle : absAngle;
 };
 
 module.exports = CoSEPPortConstraint;
@@ -1314,6 +1494,7 @@ var getUserOptions = function getUserOptions(options) {
   if (options.edgeShiftingForceThreshold != null) CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = options.edgeShiftingForceThreshold;
   if (options.nodeRotationForceThreshold != null) CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = options.nodeRotationForceThreshold;
   if (options.rotation180RatioThreshold != null) CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = options.rotation180RatioThreshold;
+  if (options.rotation180AngleThreshold != null) CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
   if (options.edgeShiftingPeriod) CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
@@ -1459,13 +1640,19 @@ var Layout = function (_ContinuousLayout) {
       cosepLayout.initialPortConfiguration();
 
       // Initialize node rotations
+      this.rotatableNodes = new HashMap();
       if (this.options.nodeRotations !== null && this.options.nodeRotations !== undefined && typeof this.options.nodeRotations === 'function') {
         var _loop = function _loop(_i) {
           var node = cosepLayout.graphManager.nodesWithPorts[_i];
           var cyNode = _this2.state.nodes.filter(function (n) {
             return n.data('id') == node.id;
           });
-          if (!_this2.options.nodeRotations(cyNode)) node.canBeRotated = false;
+          if (_this2.options.nodeRotations(cyNode)) {
+            node.canBeRotated = true;
+            _this2.rotatableNodes.put(node, cyNode);
+          } else {
+            node.canBeRotated = false;
+          }
         };
 
         for (var _i = 0; _i < cosepLayout.graphManager.nodesWithPorts.length; _i++) {
@@ -1659,6 +1846,21 @@ var Layout = function (_ContinuousLayout) {
     value: function updateCytoscapePortVisualization() {
       var self = this;
 
+      // Update Nodes
+      var nodeWPorts = Object.values(this.nodesWithPorts);
+      for (var i = 0; i < nodeWPorts.length; i++) {
+        var _node = nodeWPorts[i];
+
+        if (_node.canBeRotated) {
+          var w = _node.getWidth();
+          var h = _node.getHeight();
+          var _cyNode = this.rotatableNodes.get(_node);
+          _cyNode.style({ 'width': w });
+          _cyNode.style({ 'height': h });
+        }
+      }
+
+      // Update Edges
       Object.keys(this.portConstrainedEdges).forEach(function (key) {
         var lEdge = self.portConstrainedEdges[key];
         var cytoEdge = self.lEdgeToCEdge.get(lEdge);

@@ -137,6 +137,8 @@ let getUserOptions = function (options) {
     CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = options.nodeRotationForceThreshold;
   if (options.rotation180RatioThreshold != null)
     CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = options.rotation180RatioThreshold;
+  if (options.rotation180AngleThreshold != null)
+    CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
   if (options.edgeShiftingPeriod)
@@ -277,11 +279,18 @@ class Layout extends ContinuousLayout {
     cosepLayout.initialPortConfiguration();
 
     // Initialize node rotations
+    this.rotatableNodes = new HashMap();
     if(this.options.nodeRotations !== null && this.options.nodeRotations !== undefined && typeof this.options.nodeRotations === 'function'){
       for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
         let node = cosepLayout.graphManager.nodesWithPorts[i];
         let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
-        if( !this.options.nodeRotations( cyNode ) ) node.canBeRotated = false;
+        if( this.options.nodeRotations( cyNode ) ) {
+          node.canBeRotated = true;
+          this.rotatableNodes.put(node, cyNode);
+        }
+        else{
+          node.canBeRotated = false;
+        }
       }
     }
 
@@ -363,7 +372,6 @@ class Layout extends ContinuousLayout {
       }
     }
   }
-
 
   // run this each iteraction
   tick(){
@@ -468,6 +476,21 @@ class Layout extends ContinuousLayout {
   updateCytoscapePortVisualization(){
     let self = this;
 
+    // Update Nodes
+    let nodeWPorts = Object.values( this.nodesWithPorts );
+    for (let i = 0; i < nodeWPorts.length; i++ ){
+      let node = nodeWPorts[i];
+
+      if(node.canBeRotated) {
+        let w = node.getWidth();
+        let h = node.getHeight();
+        let cyNode = this.rotatableNodes.get(node);
+        cyNode.style({'width' : w });
+        cyNode.style({'height' : h });
+      }
+    }
+
+    // Update Edges
     Object.keys(this.portConstrainedEdges).forEach(function( key ) {
       let lEdge = self.portConstrainedEdges[key];
       let cytoEdge = self.lEdgeToCEdge.get( lEdge );

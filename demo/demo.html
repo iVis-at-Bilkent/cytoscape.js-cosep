@@ -73,6 +73,22 @@
 				<td><span>Node Rotation Force Threshold</span></td>
 				<td><input id="nodeRotationForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
 			</tr>
+			<tr>
+				<td><span>Node Rotation(180&#176;) Angle Threshold</span></td>
+				<td><input id="nodeRotationAngleThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+			</tr>
+		</table>
+
+		<table>
+			<tr>
+				<td style="color:#000"><span><b>Load Sample Graphs:</b></span></td>
+				<td>
+					<select id="sampleGraphs">
+						<option value="sample1">Sample 1</option>
+						<option value="sample2">Sample 2</option>
+					</select>
+				</td>
+			</tr>
 		</table>
 	</div>
 
@@ -80,6 +96,8 @@
 	<input id="file-input" type="file" name="name" style="display: none;" />
 
 	<button id="exportToFile" type="button" class="btn btn-dark btn-sm py-0">Export constraint from file</button>
+
+
 
 	<div id="indicatorCard"  class="card" style="text-align: center">
 		<label><b> Selected Edge </b></label>

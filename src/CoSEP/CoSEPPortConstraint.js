@@ -38,11 +38,14 @@ function CoSEPPortConstraint(edge, node) {
     // Holds the direction of the side the port is on
     this.portSide = null;
 
-    // Holds the angle
-    this.correspondingAngle = null;
-
     // Holds the rotational force induced to incident node
     this.rotationalForce = new CoSEPRotationalForce( CoSEPConstants.EDGE_SHIFTING_PERIOD );
+
+    // Holds this edges other port constraint (if any)
+    this.otherPortConstraint = null;
+
+    // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
+    this.correspondingAngle = null;
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
@@ -174,16 +177,28 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
 CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, springForceY){
     if( this.portSide == this.sideDirection['Top'] ) {
         this.rotationalForce.add( springForceX );
-        if(this.node.canBeRotated) this.node.rotationalForce.add( springForceX );
+        if(this.node.canBeRotated) {
+            this.correspondingAngle.add( this.calcAngle() );
+            this.node.addRotationalForce(springForceX);
+        }
     } else if( this.portSide == this.sideDirection['Bottom'] ){
         this.rotationalForce.add( -springForceX );
-        if(this.node.canBeRotated) this.node.rotationalForce.add( -springForceX );
+        if(this.node.canBeRotated) {
+            this.correspondingAngle.add( this.calcAngle() );
+            this.node.addRotationalForce(-springForceX);
+        }
     } else if( this.portSide == this.sideDirection['Right'] ){
         this.rotationalForce.add( springForceY );
-        if(this.node.canBeRotated) this.node.rotationalForce.add( springForceY );
+        if(this.node.canBeRotated) {
+            this.correspondingAngle.add( this.calcAngle() );
+            this.node.addRotationalForce(springForceY);
+        }
     } else {
         this.rotationalForce.add( -springForceY );
-        if(this.node.canBeRotated) this.node.rotationalForce.add( -springForceY );
+        if(this.node.canBeRotated) {
+            this.correspondingAngle.add( this.calcAngle() );
+            this.node.addRotationalForce(-springForceY);
+        }
     }
 };
 
@@ -216,7 +231,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
                 this.additionalRequirementForAcrossSideChanging() ){
                 newIndex = this.nextAcrossSideIndex();
             }
-        }else{
+        } else{
             newIndex = this.nextAdjacentIndex();
         }
     } else{
@@ -234,7 +249,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
                     newIndex = this.prevAcrossSideIndex();
                 }
             }
-        }else{
+        } else{
             newIndex = this.prevAdjacentIndex();
         }
     }
@@ -328,6 +343,59 @@ CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = funct
         case 3:
             return otherNodeRect.x >= nodeRect.x;
     }
+};
+
+/**
+ * Returns the desired location of the other node/port. It is one idealLength away from this port.
+ *
+ * @returns {PointD}
+ */
+CoSEPPortConstraint.prototype.getPointOfDesiredLocation = function(){
+    switch ( this.portSide ) {
+        case 0:
+            return new PointD( this.portLocation.x, this.portLocation.y - this.edge.idealLength );
+        case 1:
+            return new PointD( this.portLocation.x + this.edge.idealLength, this.portLocation.y );
+        case 2:
+            return new PointD( this.portLocation.x, this.portLocation.y + this.edge.idealLength );
+        case 3:
+            return new PointD( this.portLocation.x - this.edge.idealLength, this.portLocation.y );
+    }
+};
+
+/**
+ * Calculates the angle between other node/port, this port and desired location of other node/port
+ *
+ * @returns {number}
+ */
+CoSEPPortConstraint.prototype.calcAngle = function(){
+    let otherPoint;
+    if( this.otherPortConstraint )
+        otherPoint = this.otherPortConstraint.portLocation;
+    else
+        otherPoint = this.edge.getOtherEnd( this.node ).getCenter();
+
+    let desired = this.getPointOfDesiredLocation();
+
+    let point1 = new PointD( desired.x - this.portLocation.x, desired.y - this.portLocation.y);
+    let point2 = new PointD( otherPoint.x - this.portLocation.x, otherPoint.y - this.portLocation.y );
+
+    if (Math.abs(point1.x) < 0)
+        point1.x = 0.0001;
+    if (Math.abs(point1.y) < 0)
+        point1.y = 0.0001;
+
+    let angleValue = (point1.x * point2.x + point1.y * point2.y)
+        / (Math.sqrt(point1.x * point1.x + point1.y * point1.y)
+            * Math.sqrt(point2.x * point2.x + point2.y * point2.y));
+
+    // let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
+    // (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
+
+    let absAngle = Math.abs(Math.acos(angleValue)* 180 / Math.PI);
+
+    return absAngle;
+    //return ( leftTest > 0 ) ? -absAngle : absAngle;
 };
 
 module.exports = CoSEPPortConstraint;

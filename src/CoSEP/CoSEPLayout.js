@@ -39,7 +39,7 @@ for (let property in CoSELayout) {
 
 CoSEPLayout.PHASE_CORE = 1;
 CoSEPLayout.PHASE_SECOND = 2;
-CoSEPLayout.PHASE_THIRD = 3;
+CoSEPLayout.PHASE_POLISHING = 3;
 
 // -----------------------------------------------------------------------------
 // Section: Class methods related to Graph Manager
@@ -82,7 +82,6 @@ CoSEPLayout.prototype.initialPortConfiguration = function(){
  */
 CoSEPLayout.prototype.secondPhaseInit = function(){
     this.phase = CoSEPLayout.PHASE_SECOND;
-
     this.totalIterations = 0;
 
     // Reset variables for cooling
@@ -92,11 +91,15 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
 
-    // Node Rotation Related Stuff
+    // Node Rotation Related Variables
     for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         let node = this.graphManager.nodesWithPorts[i];
-        if(node.canBeRotated)
-            node.rotationalForce = new CoSEPRotationalForce( CoSEPConstants.NODE_ROTATION_PERIOD );
+        if(node.canBeRotated) {
+            node.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
+            node.associatedPortConstraints.forEach(function ( port ) {
+                port.correspondingAngle = new CoSEPRotationalForce( CoSEPConstants.NODE_ROTATION_PERIOD );
+            });
+        }
     }
 
     // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
@@ -137,7 +140,7 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
 };
 
 /**
- * This method implements a spring embedder used by Phase 2 and 3 with
+ * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
  * potentially different parameters.
  *
  * Instead of overloading important functions (e.g. movenodes) we call another fcn so that core CoSE is not affected
@@ -154,10 +157,9 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
         // Update Cooling Temp
         this.coolingCycle++;
         this.coolingAdjuster = this.coolingCycle / 3;
-        this.coolingFactor = Math.max(this.initialCoolingFactor -
-            Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature)) /
-                Math.log(this.maxCoolingCycle))/100 * this.coolingAdjuster, this.finalTemperature);
-
+        this.coolingFactor = Math.max(this.initialCoolingFactor
+            - Math.pow(this.coolingCycle, Math.log(100 * (this.initialCoolingFactor - this.finalTemperature))
+                / Math.log(this.maxCoolingCycle))/100 * this.coolingAdjuster, this.finalTemperature);
     }
 
     this.totalDisplacement = 0;
@@ -170,11 +172,10 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcGravitationalForces();
     this.moveNodes();
 
-    if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0)
-        this.checkForEdgeShifting();
-
     if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0){
         this.checkForNodeRotation();
+    } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        this.checkForEdgeShifting();
     }
 
     // If we reached max iterations
@@ -185,16 +186,18 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
  *  Edge shifting during phase II of the algorithm.
  */
 CoSEPLayout.prototype.checkForEdgeShifting = function(){
-    for(let i = 0; i < this.graphManager.portConstraints.length; i++)
+    for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
         this.graphManager.portConstraints[i].checkForEdgeShifting();
+    }
 };
 
 /**
  * Node Rotation during phase II of the algorithm.
  */
 CoSEPLayout.prototype.checkForNodeRotation = function(){
-    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++)
+    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         this.graphManager.nodesWithPorts[i].checkForNodeRotation();
+    }
 };
 
 module.exports = CoSEPLayout;
