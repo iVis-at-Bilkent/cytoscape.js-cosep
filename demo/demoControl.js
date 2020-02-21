@@ -33,11 +33,11 @@ document.getElementById("sampleGraphs").selectedIndex = -1;
 document.getElementById("portsPerSide").value = 5;
 document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
-document.getElementById("edgeShiftingPeriod").value = 5;
+document.getElementById("edgeShiftingPeriod").value = 3;
 document.getElementById("edgeShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
-document.getElementById("nodeRotationForceThreshold").value = 10;
-document.getElementById("nodeRotationAngleThreshold").value = 90;
+document.getElementById("nodeRotationForceThreshold").value = 20;
+document.getElementById("nodeRotationAngleThreshold").value = 130;
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -84,8 +84,6 @@ var cy = window.cy = cytoscape({
                             return 60;
                         case 'n3':
                             return 70;
-                        case 'n4:':
-                            return 150;
                         case 'n21':
                             return 50;
                         default:
@@ -98,7 +96,9 @@ var cy = window.cy = cytoscape({
             selector: ':parent',
             style: {
                 'background-opacity': 0.333,
-                'border-color': '#3a7ecf'
+                'border-color': '#3a7ecf',
+                'text-halign': 'center',
+                'text-valign': 'center'
             }
         },
         {
@@ -231,7 +231,7 @@ document.getElementById("exportToFile").addEventListener("click",function(){
     }
 });
 
-// Import JSON object to constraints
+// Import constraints JSON object
 document.getElementById('file-input').addEventListener('change', function (evt) {
     let files = evt.target.files;
     let reader = new FileReader();
@@ -249,7 +249,7 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
         window.cy.edges().style({'source-arrow-shape':'none'});
         window.cy.edges().style({'target-arrow-shape':'none'});
 
-        fillLogsTableFromConstraints();
+        fillLogsTableFromConstraints( true );
 
         // Clear node rotations
         rotations = {};
@@ -258,7 +258,7 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
     };
 });
 
-function fillLogsTableFromConstraints() {
+function fillLogsTableFromConstraints( arrowShape ) {
     Object.keys(constraints).forEach(function( key ) {
         let edgeID = key;
         let consInfo = constraints[edgeID];
@@ -269,6 +269,7 @@ function fillLogsTableFromConstraints() {
                 cons.portConstraintType,
                 cons.portConstraintParameter );
 
+            if( arrowShape )
             changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
         });
     });
@@ -497,103 +498,74 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             .then(response => response.json())
             .then(json => {
                 window.cy.json(json);
-                cy.nodes().style(
-                    {'width': function (node) {
-                        switch (node.data('id')) {
-                            case 'n0':
-                                return 40;
-                            case 'n1':
-                                return 100;
-                            case 'n3':
-                                return 70;
-                            case 'n4':
-                                return 100;
-                            case 'n21':
-                                return 50;
-                            default:
-                                return 30;
-                        }
-                    }, 'height': function (node) {
-                            switch (node.data('id')) {
-                                case 'n0':
-                                    return 60;
-                                case 'n3':
-                                    return 70;
-                                case 'n4:':
-                                    return 150;
-                                case 'n21':
-                                    return 50;
-                                default:
-                                    return 30;
-                            }
-                    }});
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'width': node.data('width'),
+                        'height': node.data('height')
+                    });
+                });
+
+                fillNodeRotationTable();
             });
     } else if(sampleGraphs.value == "sample2" ) {
         fetch("samples/sample2.json")
             .then(response => response.json())
             .then(json => {
                 window.cy.json(json);
-                cy.nodes().style(
-                    {
-                        'width': function (node) {
-                            switch (node.data('id')) {
-                                case 'n0':
-                                    return 230;
-                                case 'n1':
-                                    return 100;
-                                case 'n2':
-                                    return 140;
-                                case 'n3':
-                                    return 130;
-                                case 'n4':
-                                    return 145;
-                                case 'n5':
-                                    return 106;
-                                case 'n6':
-                                    return 130;
-                                case 'n7':
-                                    return 160;
-                                case 'n8':
-                                    return 125;
-                                case 'n9':
-                                    return 94;
-                                case 'n10':
-                                    return 110;
-                                default:
-                                    return 30;
-                            }
-                        }, 'height': function (node) {
-                            switch (node.data('id')) {
-                                case 'n0':
-                                    return 120;
-                                case 'n1':
-                                    return 45;
-                                case 'n2':
-                                    return 60;
-                                case 'n3':
-                                    return 45;
-                                case 'n4':
-                                    return 30;
-                                case 'n5':
-                                    return 45;
-                                case 'n6':
-                                    return 80;
-                                case 'n7':
-                                    return 65;
-                                case 'n10':
-                                    return 85;
-                                default:
-                                    return 30;
-                            }
-                        }
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'width': node.data('width'),
+                        'height': node.data('height')
                     });
-                fetch("samples/sample1_constraints.json")
+                });
+
+                window.cy.edges().forEach( function ( edge ) {
+                    edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#555555' });
+                });
+
+                fetch("samples/sample2_constraints.json")
                     .then(response => response.json())
                     .then(json => {
                         constraints = json;
-                        fillLogsTableFromConstraints();
+                        fillLogsTableFromConstraints( false );
+                        fillNodeRotationTable();
                     });
                 document.getElementById("portsPerSide").value = 7;
+            });
+    } else if( sampleGraphs.value == "sample3"){
+        fetch("samples/sample3.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'background-image' : node.data('background-image'),
+                        'width' : node.data('bbox').w,
+                        'height' : node.data('bbox').h,
+                        "border-width": node.data('border-width'),
+                        "border-color": node.data('border-color'),
+                        "background-color": node.data('background-color'),
+                        "background-opacity": node.data('background-opacity'),
+                        "text-wrap": "wrap",
+                        "font-size": node.data('font-size'),
+                        "color" : node.data('color')
+                    });
+
+                    if( node.data('label') ){
+                        node.style({
+                            'label' : node.data('label')
+                        });
+                    }
+                });
+
+                fetch("samples/sample3_constraints.json")
+                    .then(response => response.json())
+                    .then(json => {
+                        constraints = json;
+                        fillLogsTableFromConstraints( true );
+                        fillNodeRotationTable();
+                    });
+                document.getElementById("portsPerSide").value = 1;
             });
     }
 

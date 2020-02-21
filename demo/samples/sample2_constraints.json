@@ -142,37 +142,5 @@
 				"Left"
 			]
 		}
-	],
-	"e10": [
-		{
-			"endpoint": "Source",
-			"portConstraintType": "Sided",
-			"portConstraintParameter": [
-				"Right"
-			]
-		},
-		{
-			"endpoint": "Target",
-			"portConstraintType": "Sided",
-			"portConstraintParameter": [
-				"Left"
-			]
-		}
-	],
-	"e9": [
-		{
-			"endpoint": "Target",
-			"portConstraintType": "Sided",
-			"portConstraintParameter": [
-				"Left"
-			]
-		},
-		{
-			"endpoint": "Source",
-			"portConstraintType": "Sided",
-			"portConstraintParameter": [
-				"Right"
-			]
-		}
 	]
 }

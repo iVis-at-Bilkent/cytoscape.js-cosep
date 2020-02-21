@@ -3,7 +3,9 @@
     "nodes": [
       {
         "data": {
-          "id": "n0"
+          "id": "n0",
+          "width": 115,
+          "height": 50
         },
         "position": {
           "x": 130,
@@ -20,7 +22,9 @@
       },
       {
         "data": {
-          "id": "n1"
+          "id": "n1",
+          "width": 50,
+          "height": 22
         },
         "position": {
           "x": 342.0212173283353,
@@ -37,7 +41,9 @@
       },
       {
         "data": {
-          "id": "n2"
+          "id": "n2",
+          "width": 70,
+          "height": 30
         },
         "position": {
           "x": 171.9791894731518,
@@ -54,7 +60,9 @@
       },
       {
         "data": {
-          "id": "n3"
+          "id": "n3",
+          "width": 60,
+          "height": 27
         },
         "position": {
           "x": 604.8734542065181,
@@ -71,7 +79,9 @@
       },
       {
         "data": {
-          "id": "n4"
+          "id": "n4",
+          "width": 72,
+          "height": 15
         },
         "position": {
           "x": 253.49528266484003,
@@ -88,7 +98,9 @@
       },
       {
         "data": {
-          "id": "n5"
+          "id": "n5",
+          "width": 53,
+          "height": 27
         },
         "position": {
           "x": 432.7607370547503,
@@ -105,7 +117,9 @@
       },
       {
         "data": {
-          "id": "n6"
+          "id": "n6",
+          "width": 65,
+          "height": 40
         },
         "position": {
           "x": 496.8851073838157,
@@ -122,62 +136,13 @@
       },
       {
         "data": {
-          "id": "n7"
+          "id": "n7",
+          "width": 80,
+          "height": 33
         },
         "position": {
           "x": 518.3524402003352,
           "y": 579.4866770845115
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "pannable": false,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "n8"
-        },
-        "position": {
-          "x": 842.6286769948233,
-          "y": 59.273276877232206
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "pannable": false,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "n9"
-        },
-        "position": {
-          "x": 672.736476275014,
-          "y": 168.66607221813297
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "pannable": false,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "n10"
-        },
-        "position": {
-          "x": 671.3998495183573,
-          "y": 57.5
         },
         "group": "nodes",
         "removed": false,
@@ -269,8 +234,8 @@
       {
         "data": {
           "id": "e4",
-          "source": "n3",
-          "target": "n5"
+          "source": "n5",
+          "target": "n3"
         },
         "position": {
           "x": 0,
@@ -360,44 +325,6 @@
         "grabbable": true,
         "pannable": true,
         "classes": ""
-      },
-      {
-        "data": {
-          "id": "e9",
-          "source": "n8",
-          "target": "n10"
-        },
-        "position": {
-          "x": 0,
-          "y": 0
-        },
-        "group": "edges",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "pannable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "e10",
-          "source": "n9",
-          "target": "n10"
-        },
-        "position": {
-          "x": 0,
-          "y": 0
-        },
-        "group": "edges",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "pannable": true,
-        "classes": ""
       }
     ]
   },
@@ -410,7 +337,8 @@
         "text-halign": "center",
         "text-valign": "center",
         "background-color": "rgb(58,126,207)",
-        "opacity": "0.8"
+        "opacity": "0.8",
+        "padding": "0px"
       }
     },
     {
@@ -437,9 +365,10 @@
       "selector": "edge",
       "style": {
         "curve-style": "straight",
-        "width": "2px",
-        "line-color": "rgb(58,126,207)",
-        "opacity": "0.7"
+        "width": "1.25px",
+        "line-color": "#555555",
+        "opacity": "1",
+        "font-size": 10
       }
     },
     {
@@ -467,8 +396,8 @@
   "panningEnabled": true,
   "userPanningEnabled": true,
   "pan": {
-    "x": 62.16410989717542,
-    "y": -12.148429271261307
+    "x": 226.16410989717548,
+    "y": -274.148429271261
   },
   "boxSelectionEnabled": true,
   "renderer": {

@@ -1,0 +1,3505 @@
+{
+  "elements": {
+    "nodes": [
+      {
+        "data": {
+          "id": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "bbox": {
+            "x": 176.2704300738066,
+            "y": 288.2548570393354,
+            "w": 302.3938386692404,
+            "h": 284.0351830586877
+          },
+          "minWidth": 302.3938386692404,
+          "minWidthBiasLeft": 50.00000000000022,
+          "minWidthBiasRight": 49.99999999999978,
+          "minHeight": 284.0351830586877,
+          "minHeightBiasTop": 50,
+          "minHeightBiasBottom": 50,
+          "class": "compartment",
+          "label": "synaptic button",
+          "statesandinfos": [],
+          "language": "PD",
+          "border-width": 0.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 14,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 176.2704300738066,
+          "y": 288.2548570393354
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_66737d5c-5193-43a2-baa6-094aa1c21654",
+          "bbox": {
+            "x": 295.8423494084268,
+            "y": 413.64744856867924,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "CHT1",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 295.8423494084268,
+          "y": 413.64744856867924
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "be08c23c-dca4-43cd-b8a6-06f6ebdaf710",
+          "bbox": {
+            "x": 258.049992895414,
+            "y": 283.62883651233903,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "SNARE",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 258.049992895414,
+          "y": 283.62883651233903
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_96b935d7-083c-468d-8607-d3b70fff10a7",
+          "bbox": {
+            "x": 262.3398081738084,
+            "y": 358.1128562700198,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_96b935d7-083c-468d-8607-d3b70fff10a7.1",
+              "x": 70,
+              "y": 0
+            },
+            {
+              "id": "_96b935d7-083c-468d-8607-d3b70fff10a7.2",
+              "x": -70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 262.3398081738084,
+          "y": 358.1128562700198
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9007194d-c2e6-4939-a795-be71ae35a60d",
+          "bbox": {
+            "x": 259.3544767769191,
+            "y": 187.2729215786033,
+            "w": 33.25,
+            "h": 33.25
+          },
+          "minWidth": 33.25,
+          "minWidthBiasLeft": 50,
+          "minWidthBiasRight": 50,
+          "minHeight": 33.25,
+          "minHeightBiasTop": 50,
+          "minHeightBiasBottom": 50,
+          "class": "compartment",
+          "label": "synaptic vesicle",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 0.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 14,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 259.3544767769191,
+          "y": 187.2729215786033
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a083be43-422d-9067-c688-661cec17e472",
+          "bbox": {
+            "x": 259.3544767769191,
+            "y": 187.2729215786033,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ACh",
+          "statesandinfos": [],
+          "parent": "_9007194d-c2e6-4939-a795-be71ae35a60d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 259.3544767769191,
+          "y": 187.2729215786033
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d2531344-d005-4b92-afd2-14dcb7d40965",
+          "bbox": {
+            "x": 149.25832614086298,
+            "y": 257.66449925685174,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ACh",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 149.25832614086298,
+          "y": 257.66449925685174
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
+          "bbox": {
+            "x": 197.77223568907257,
+            "y": 349.67400172377114,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "choline",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 197.77223568907257,
+          "y": 349.67400172377114
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ed79ab12-7b79-4a8a-80b3-c65181c076e4",
+          "bbox": {
+            "x": 110.58909814567396,
+            "y": 379.64613921842954,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "acetyl\nCoA",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 110.58909814567396,
+          "y": 379.64613921842954
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "bbox": {
+            "x": 137.1095615801151,
+            "y": 320.5607908442611,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_2bdf0056-96f6-4184-a214-8c7cc7da6214.1",
+              "x": 0,
+              "y": 70
+            },
+            {
+              "id": "_2bdf0056-96f6-4184-a214-8c7cc7da6214.2",
+              "x": 0,
+              "y": -70
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 137.1095615801151,
+          "y": 320.5607908442611
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ce103257-dbf5-430f-9e6c-1745990341de",
+          "bbox": {
+            "x": 56.69851073918643,
+            "y": 308.31342071036784,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "ChAT",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 56.69851073918643,
+          "y": 308.31342071036784
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9886817c-7043-4de9-9895-0cd247f47190",
+          "bbox": {
+            "x": 127.16204703876046,
+            "y": 162.86226550999152,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "vAChT",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 127.16204703876046,
+          "y": 162.86226550999152
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "bbox": {
+            "x": 198.50005162039452,
+            "y": 203.44623572385493,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d.1",
+              "x": -70,
+              "y": 0
+            },
+            {
+              "id": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d.2",
+              "x": 70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 198.50005162039452,
+          "y": 203.44623572385493
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "bbox": {
+            "x": 530.1806185729938,
+            "y": 298.5854962913073,
+            "w": 193.8683290421913,
+            "h": 167.4032801212396
+          },
+          "minWidth": 193.8683290421913,
+          "minWidthBiasLeft": 50.000000000000874,
+          "minWidthBiasRight": 49.999999999999126,
+          "minHeight": 167.4032801212396,
+          "minHeightBiasTop": 73.3918128654979,
+          "minHeightBiasBottom": 26.608187134502103,
+          "class": "compartment",
+          "label": "synaptic cleft",
+          "statesandinfos": [],
+          "language": "PD",
+          "border-width": 0.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 14,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {},
+          "expandcollapseRenderedStartX": 442.17741405489244,
+          "expandcollapseRenderedStartY": 353.7327998369549,
+          "expandcollapseRenderedCueSize": 12
+        },
+        "position": {
+          "x": 530.1806185729938,
+          "y": 298.5854962913073
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "b88b6460-4172-427f-abbe-d7c0f0a174ce",
+          "bbox": {
+            "x": 595.4897830940895,
+            "y": 297.0118666119137,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "AChE",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 595.4897830940895,
+          "y": 297.0118666119137
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
+          "bbox": {
+            "x": 449.8714540518982,
+            "y": 323.55063779267874,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "choline",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 449.8714540518982,
+          "y": 323.55063779267874
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_8ba53135-01b4-4a4b-b87d-a5971850cb39",
+          "bbox": {
+            "x": 539.4179859887548,
+            "y": 365.66213635192713,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "acetate",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 539.4179859887548,
+          "y": 365.66213635192713
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "bbox": {
+            "x": 514.2533529078593,
+            "y": 306.015269604664,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.1",
+              "x": 0,
+              "y": -70
+            },
+            {
+              "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.2",
+              "x": 0,
+              "y": 70
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 514.2533529078593,
+          "y": 306.015269604664
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "bbox": {
+            "x": 452.3149643795609,
+            "y": 226.50885623068754,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "d9e08f4b-94b8-4285-af36-f4159b56a2fc.1",
+              "x": -70,
+              "y": 0
+            },
+            {
+              "id": "d9e08f4b-94b8-4285-af36-f4159b56a2fc.2",
+              "x": 70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 452.3149643795609,
+          "y": 226.50885623068754
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "bbox": {
+            "x": 517.7666115503043,
+            "y": 242.46765782236366,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ACh",
+          "statesandinfos": [],
+          "parent": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 517.7666115503043,
+          "y": 242.46765782236366
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "bbox": {
+            "x": 1114.9302457863675,
+            "y": 284.5609951073539,
+            "w": 725.3810398535437,
+            "h": 425.23497814496966
+          },
+          "minWidth": 725.3810398535437,
+          "minWidthBiasLeft": 50.000000000001755,
+          "minWidthBiasRight": 49.999999999998245,
+          "minHeight": 425.23497814496966,
+          "minHeightBiasTop": 50,
+          "minHeightBiasBottom": 50,
+          "class": "compartment",
+          "label": "muscle cytosol",
+          "statesandinfos": [],
+          "language": "PD",
+          "border-width": 0.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 14,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {},
+          "expandcollapseRenderedStartX": 746.8968956068019,
+          "expandcollapseRenderedStartY": 221.6947634625373,
+          "expandcollapseRenderedCueSize": 12
+        },
+        "position": {
+          "x": 1114.9302457863675,
+          "y": 284.5609951073539
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8",
+          "bbox": {
+            "x": 783.8647258595958,
+            "y": 297.7012585846991,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "nAChR",
+          "statesandinfos": [
+            {
+              "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8_0",
+              "bbox": {
+                "x": 24.453125,
+                "y": -50,
+                "w": 28.90625,
+                "h": 12
+              },
+              "coordType": "relativeToSide",
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 2.25,
+                "border-color": "#555555",
+                "background-color": "#ffffff",
+                "shape-name": "rectangle"
+              },
+              "label": {
+                "text": "closed"
+              },
+              "clazz": "unit of information",
+              "parent": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8"
+            }
+          ],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8_0",
+                  "bbox": {
+                    "x": 24.453125,
+                    "y": -50,
+                    "w": 28.90625,
+                    "h": 12
+                  },
+                  "coordType": "relativeToSide",
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 2.25,
+                    "border-color": "#555555",
+                    "background-color": "#ffffff",
+                    "shape-name": "rectangle"
+                  },
+                  "label": {
+                    "text": "closed"
+                  },
+                  "clazz": "unit of information",
+                  "parent": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 783.8647258595958,
+          "y": 297.7012585846991
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+          "bbox": {
+            "x": 885.2766403936383,
+            "y": 231.556150753623,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "nAChR",
+          "statesandinfos": [
+            {
+              "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0_0",
+              "bbox": {
+                "x": 21.123046875,
+                "y": -50,
+                "w": 22.24609375,
+                "h": 12
+              },
+              "coordType": "relativeToSide",
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 2.25,
+                "border-color": "#555555",
+                "background-color": "#ffffff",
+                "shape-name": "rectangle"
+              },
+              "label": {
+                "text": "open"
+              },
+              "clazz": "unit of information",
+              "parent": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0"
+            }
+          ],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0_0",
+                  "bbox": {
+                    "x": 21.123046875,
+                    "y": -50,
+                    "w": 22.24609375,
+                    "h": 12
+                  },
+                  "coordType": "relativeToSide",
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 2.25,
+                    "border-color": "#555555",
+                    "background-color": "#ffffff",
+                    "shape-name": "rectangle"
+                  },
+                  "label": {
+                    "text": "open"
+                  },
+                  "clazz": "unit of information",
+                  "parent": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 885.2766403936383,
+          "y": 231.556150753623
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
+          "bbox": {
+            "x": 1042.3686264385096,
+            "y": 225.90187243064213,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "Ca2+",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1042.3686264385096,
+          "y": 225.90187243064213
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_264a7088-e810-4679-9c92-f06886510f98",
+          "bbox": {
+            "x": 799.0843203454035,
+            "y": 238.0076764963991,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_264a7088-e810-4679-9c92-f06886510f98.1",
+              "x": -70,
+              "y": 0
+            },
+            {
+              "id": "_264a7088-e810-4679-9c92-f06886510f98.2",
+              "x": 70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 799.0843203454035,
+          "y": 238.0076764963991
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "bbox": {
+            "x": 972.324772946819,
+            "y": 211.46355524652063,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "d756f4ab-9813-4d55-aa86-c37dc7f3b286.1",
+              "x": -70,
+              "y": 0
+            },
+            {
+              "id": "d756f4ab-9813-4d55-aa86-c37dc7f3b286.2",
+              "x": 70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 972.324772946819,
+          "y": 211.46355524652063
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "bbox": {
+            "x": 1153.7355112995508,
+            "y": 124.45247044730837,
+            "w": 65.75,
+            "h": 76.7
+          },
+          "minWidth": 65.75,
+          "minWidthBiasLeft": 50,
+          "minWidthBiasRight": 50,
+          "minHeight": 76.7,
+          "minHeightBiasTop": 49.999999999999346,
+          "minHeightBiasBottom": 50.000000000000654,
+          "class": "complex",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb4_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {},
+          "expandcollapseRenderedStartX": 1108.5757761368957,
+          "expandcollapseRenderedStartY": 231.51855782126574,
+          "expandcollapseRenderedCueSize": 12
+        },
+        "position": {
+          "x": 1153.7355112995508,
+          "y": 124.45247044730837
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_26a815b4-64c3-4797-9bfd-7dceafb3345d",
+          "bbox": {
+            "x": 1154.9855112995508,
+            "y": 102.72747044730836,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1154.9855112995508,
+          "y": 102.72747044730836
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_5fcbfc9c-92a0-45b2-834b-ad8866d4008b",
+          "bbox": {
+            "x": 1137.4855112995508,
+            "y": 146.17747044730837,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ATP",
+          "statesandinfos": [],
+          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1137.4855112995508,
+          "y": 146.17747044730837
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "bbox": {
+            "x": 1195.7708374990975,
+            "y": 242.64263443384425,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1195.7708374990975,
+          "y": 242.64263443384425
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "bbox": {
+            "x": 1112.4173672645989,
+            "y": 237.6887897753443,
+            "w": 20,
+            "h": 20
+          },
+          "class": "association",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.1",
+              "x": 0,
+              "y": -70.00000000000105
+            },
+            {
+              "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.2",
+              "x": 0,
+              "y": 70.00000000000105
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1112.4173672645989,
+          "y": 237.6887897753443
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08",
+          "bbox": {
+            "x": 1276.843536769925,
+            "y": 241.82576244730166,
+            "w": 20,
+            "h": 20
+          },
+          "class": "dissociation",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08.1",
+              "x": 0,
+              "y": -70
+            },
+            {
+              "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08.2",
+              "x": 0,
+              "y": 70
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1276.843536769925,
+          "y": 241.82576244730166
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a0a8dd07-644b-4646-a305-ef249fa67752",
+          "bbox": {
+            "x": 1317.540192356423,
+            "y": 187.23589536456083,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1317.540192356423,
+          "y": 187.23589536456083
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_20e434c6-e738-4ae5-8a8a-e49f53fe85fb",
+          "bbox": {
+            "x": 1316.6393787238735,
+            "y": 88.56850603486907,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ATP",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1316.6393787238735,
+          "y": 88.56850603486907
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "bbox": {
+            "x": 1330.2903764007108,
+            "y": 329.2625643462867,
+            "w": 63.25,
+            "h": 76.69999999999999
+          },
+          "minWidth": 63.25,
+          "minWidthBiasLeft": 50,
+          "minWidthBiasRight": 50,
+          "minHeight": 76.69999999999999,
+          "minHeightBiasTop": 50,
+          "minHeightBiasBottom": 50,
+          "class": "complex",
+          "label": "tense",
+          "statesandinfos": [
+            {
+              "id": "_85682413-94f7-8b3c-e052-59a72cd48e12_0",
+              "bbox": {
+                "x": 22.23144531250007,
+                "y": -50.000000000000036,
+                "w": 24.462890625,
+                "h": 12
+              },
+              "coordType": "relativeToSide",
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 2.25,
+                "border-color": "#555555",
+                "background-color": "#ffffff",
+                "shape-name": "rectangle"
+              },
+              "label": {
+                "text": "tense"
+              },
+              "clazz": "unit of information",
+              "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12"
+            }
+          ],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb4_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "_85682413-94f7-8b3c-e052-59a72cd48e12_0",
+                  "bbox": {
+                    "x": 22.23144531250007,
+                    "y": -50.000000000000036,
+                    "w": 24.462890625,
+                    "h": 12
+                  },
+                  "coordType": "relativeToSide",
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 2.25,
+                    "border-color": "#555555",
+                    "background-color": "#ffffff",
+                    "shape-name": "rectangle"
+                  },
+                  "label": {
+                    "text": "tense"
+                  },
+                  "clazz": "unit of information",
+                  "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 1330.2903764007108,
+          "y": 329.2625643462867
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1ce3ffae-f9a7-09a1-c91f-bf176708c1d2",
+          "bbox": {
+            "x": 1330.2903764007108,
+            "y": 307.5375643462867,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1330.2903764007108,
+          "y": 307.5375643462867
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_0fbd0d13-c59b-48ab-240d-c262dd1bc480",
+          "bbox": {
+            "x": 1330.2903764007108,
+            "y": 350.98756434628666,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1330.2903764007108,
+          "y": 350.98756434628666
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "e889d01c-1eb1-4c83-8bd9-0160e9c2abcb",
+          "bbox": {
+            "x": 1445.9957657131395,
+            "y": 422.6732533795157,
+            "w": 60,
+            "h": 30
+          },
+          "class": "phenotype",
+          "label": "muscle\ncontraction",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1445.9957657131395,
+          "y": 422.6732533795157
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "bbox": {
+            "x": 1125.0784373310353,
+            "y": 335.5943664531708,
+            "w": 109.20000000000005,
+            "h": 76.69999999999999
+          },
+          "minWidth": 109.20000000000005,
+          "minWidthBiasLeft": 49.99999999999301,
+          "minWidthBiasRight": 50.00000000000699,
+          "minHeight": 76.69999999999999,
+          "minHeightBiasTop": 50.000000000001755,
+          "minHeightBiasBottom": 49.999999999998245,
+          "class": "complex",
+          "label": "relaxed",
+          "statesandinfos": [
+            {
+              "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27_0",
+              "bbox": {
+                "x": 26.398925781249982,
+                "y": -50.000000000000036,
+                "w": 32.7978515625,
+                "h": 12
+              },
+              "coordType": "relativeToSide",
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 2.25,
+                "border-color": "#555555",
+                "background-color": "#ffffff",
+                "shape-name": "rectangle"
+              },
+              "label": {
+                "text": "relaxed"
+              },
+              "clazz": "unit of information",
+              "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27"
+            }
+          ],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb4_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27_0",
+                  "bbox": {
+                    "x": 26.398925781249982,
+                    "y": -50.000000000000036,
+                    "w": 32.7978515625,
+                    "h": 12
+                  },
+                  "coordType": "relativeToSide",
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 2.25,
+                    "border-color": "#555555",
+                    "background-color": "#ffffff",
+                    "shape-name": "rectangle"
+                  },
+                  "label": {
+                    "text": "relaxed"
+                  },
+                  "clazz": "unit of information",
+                  "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 1125.0784373310353,
+          "y": 335.5943664531708
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_343e0d0d-eeac-5cf5-acec-bc15975650a3",
+          "bbox": {
+            "x": 1102.1034373310351,
+            "y": 313.8693664531708,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1102.1034373310351,
+          "y": 313.8693664531708
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_96e17352-dd50-0332-a224-954cd97fc3c2",
+          "bbox": {
+            "x": 1102.1034373310351,
+            "y": 357.3193664531708,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1102.1034373310351,
+          "y": 357.3193664531708
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a3f830ac-34e3-466a-62ac-642bc3e51777",
+          "bbox": {
+            "x": 1163.0534373310352,
+            "y": 313.8693664531708,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ATP",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1163.0534373310352,
+          "y": 313.8693664531708
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "bbox": {
+            "x": 1250.5550896273567,
+            "y": 423.58652636587937,
+            "w": 20,
+            "h": 20
+          },
+          "class": "process",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.1",
+              "x": -70,
+              "y": 0
+            },
+            {
+              "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.2",
+              "x": 70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1250.5550896273567,
+          "y": 423.58652636587937
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_6259ebd3-e879-4c70-b442-a602e5408989",
+          "bbox": {
+            "x": 1218.398156504148,
+            "y": 480.55348417983873,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "Pi",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1218.398156504148,
+          "y": 480.55348417983873
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "fb04887c-b0a0-4a2d-8cdd-a70826c659ee",
+          "bbox": {
+            "x": 1303.8843823208715,
+            "y": 471.1206679799028,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ADP",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1303.8843823208715,
+          "y": 471.1206679799028
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "nwtN_d1535aaf-5d91-4108-9331-852d6acb876e",
+          "bbox": {
+            "x": 955.9815797057314,
+            "y": 151.5621348675121,
+            "w": 33.25,
+            "h": 33.25
+          },
+          "minWidth": 33.25,
+          "minWidthBiasLeft": 50,
+          "minWidthBiasRight": 50,
+          "minHeight": 33.25,
+          "minHeightBiasTop": 50,
+          "minHeightBiasBottom": 50,
+          "class": "compartment",
+          "label": "ER",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 0.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 0.5,
+          "text-wrap": "wrap",
+          "font-size": 14,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb3_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 955.9815797057314,
+          "y": 151.5621348675121
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_8c083cee-7025-4035-9201-1319da22340b",
+          "bbox": {
+            "x": 955.9815797057314,
+            "y": 151.5621348675121,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "Ca2+",
+          "statesandinfos": [],
+          "parent": "nwtN_d1535aaf-5d91-4108-9331-852d6acb876e",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 955.9815797057314,
+          "y": 151.5621348675121
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "bbox": {
+            "x": 1264.9926864846466,
+            "y": 137.3471821540386,
+            "w": 20,
+            "h": 20
+          },
+          "class": "association",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-color": "#ffffff",
+          "background-opacity": 1,
+          "text-wrap": "wrap",
+          "ports": [
+            {
+              "id": "_00ac7e0a-288f-42e0-b252-9bcb59027572.1",
+              "x": 70,
+              "y": 0
+            },
+            {
+              "id": "_00ac7e0a-288f-42e0-b252-9bcb59027572.2",
+              "x": -70,
+              "y": 0
+            }
+          ],
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1264.9926864846466,
+          "y": 137.3471821540386
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      }
+    ],
+    "edges": [
+      {
+        "data": {
+          "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27-1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "target": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "portsource": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "porttarget": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8-fb04887c-b0a0-4a2d-8cdd-a70826c659ee",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "target": "fb04887c-b0a0-4a2d-8cdd-a70826c659ee",
+          "portsource": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.2",
+          "porttarget": "fb04887c-b0a0-4a2d-8cdd-a70826c659ee"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d-a083be43-422d-9067-c688-661cec17e472",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "target": "a083be43-422d-9067-c688-661cec17e472",
+          "portsource": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d.2",
+          "porttarget": "a083be43-422d-9067-c688-661cec17e472"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d2531344-d005-4b92-afd2-14dcb7d40965-3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "d2531344-d005-4b92-afd2-14dcb7d40965",
+          "target": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "portsource": "d2531344-d005-4b92-afd2-14dcb7d40965",
+          "porttarget": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9886817c-7043-4de9-9895-0cd247f47190-3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "class": "necessary stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_9886817c-7043-4de9-9895-0cd247f47190",
+          "target": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
+          "portsource": "_9886817c-7043-4de9-9895-0cd247f47190",
+          "porttarget": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ce103257-dbf5-430f-9e6c-1745990341de-2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "class": "catalysis",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "ce103257-dbf5-430f-9e6c-1745990341de",
+          "target": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "portsource": "ce103257-dbf5-430f-9e6c-1745990341de",
+          "porttarget": "_2bdf0056-96f6-4184-a214-8c7cc7da6214"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ed79ab12-7b79-4a8a-80b3-c65181c076e4-2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "ed79ab12-7b79-4a8a-80b3-c65181c076e4",
+          "target": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "portsource": "ed79ab12-7b79-4a8a-80b3-c65181c076e4",
+          "porttarget": "_2bdf0056-96f6-4184-a214-8c7cc7da6214.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9-2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
+          "target": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "portsource": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
+          "porttarget": "_2bdf0056-96f6-4184-a214-8c7cc7da6214.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_2bdf0056-96f6-4184-a214-8c7cc7da6214-d2531344-d005-4b92-afd2-14dcb7d40965",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
+          "target": "d2531344-d005-4b92-afd2-14dcb7d40965",
+          "portsource": "_2bdf0056-96f6-4184-a214-8c7cc7da6214.2",
+          "porttarget": "d2531344-d005-4b92-afd2-14dcb7d40965"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_96b935d7-083c-468d-8607-d3b70fff10a7-135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_96b935d7-083c-468d-8607-d3b70fff10a7",
+          "target": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
+          "portsource": "_96b935d7-083c-468d-8607-d3b70fff10a7.2",
+          "porttarget": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a083be43-422d-9067-c688-661cec17e472-d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "a083be43-422d-9067-c688-661cec17e472",
+          "target": "d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "portsource": "a083be43-422d-9067-c688-661cec17e472",
+          "porttarget": "d9e08f4b-94b8-4285-af36-f4159b56a2fc.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_66737d5c-5193-43a2-baa6-094aa1c21654-96b935d7-083c-468d-8607-d3b70fff10a7",
+          "class": "necessary stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_66737d5c-5193-43a2-baa6-094aa1c21654",
+          "target": "_96b935d7-083c-468d-8607-d3b70fff10a7",
+          "portsource": "_66737d5c-5193-43a2-baa6-094aa1c21654",
+          "porttarget": "_96b935d7-083c-468d-8607-d3b70fff10a7"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9-96b935d7-083c-468d-8607-d3b70fff10a7",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
+          "target": "_96b935d7-083c-468d-8607-d3b70fff10a7",
+          "portsource": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
+          "porttarget": "_96b935d7-083c-468d-8607-d3b70fff10a7.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "be08c23c-dca4-43cd-b8a6-06f6ebdaf710-d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "class": "necessary stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "be08c23c-dca4-43cd-b8a6-06f6ebdaf710",
+          "target": "d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "portsource": "be08c23c-dca4-43cd-b8a6-06f6ebdaf710",
+          "porttarget": "d9e08f4b-94b8-4285-af36-f4159b56a2fc"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d9e08f4b-94b8-4285-af36-f4159b56a2fc-06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "d9e08f4b-94b8-4285-af36-f4159b56a2fc",
+          "target": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "portsource": "d9e08f4b-94b8-4285-af36-f4159b56a2fc.2",
+          "porttarget": "_06e41c55-1352-407e-9c4b-604d3f5f616b"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_06e41c55-1352-407e-9c4b-604d3f5f616b-6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "target": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "portsource": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "porttarget": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "b88b6460-4172-427f-abbe-d7c0f0a174ce-6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "class": "catalysis",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "b88b6460-4172-427f-abbe-d7c0f0a174ce",
+          "target": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "portsource": "b88b6460-4172-427f-abbe-d7c0f0a174ce",
+          "porttarget": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8-fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "target": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
+          "portsource": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.2",
+          "porttarget": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8-8ba53135-01b4-4a4b-b87d-a5971850cb39",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
+          "target": "_8ba53135-01b4-4a4b-b87d-a5971850cb39",
+          "portsource": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.2",
+          "porttarget": "_8ba53135-01b4-4a4b-b87d-a5971850cb39"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8-264a7088-e810-4679-9c92-f06886510f98",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8",
+          "target": "_264a7088-e810-4679-9c92-f06886510f98",
+          "portsource": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8",
+          "porttarget": "_264a7088-e810-4679-9c92-f06886510f98.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_264a7088-e810-4679-9c92-f06886510f98-4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_264a7088-e810-4679-9c92-f06886510f98",
+          "target": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+          "portsource": "_264a7088-e810-4679-9c92-f06886510f98.2",
+          "porttarget": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0-d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "class": "necessary stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+          "target": "d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "portsource": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
+          "porttarget": "d756f4ab-9813-4d55-aa86-c37dc7f3b286"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "d756f4ab-9813-4d55-aa86-c37dc7f3b286-ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "target": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
+          "portsource": "d756f4ab-9813-4d55-aa86-c37dc7f3b286.2",
+          "porttarget": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85-3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "class": "stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
+          "target": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "portsource": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
+          "porttarget": "_3a96c155-e828-4038-8384-4c25f4f1aaf6"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_06e41c55-1352-407e-9c4b-604d3f5f616b-264a7088-e810-4679-9c92-f06886510f98",
+          "class": "necessary stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "target": "_264a7088-e810-4679-9c92-f06886510f98",
+          "portsource": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
+          "porttarget": "_264a7088-e810-4679-9c92-f06886510f98"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c-3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "target": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "portsource": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "porttarget": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8-6259ebd3-e879-4c70-b442-a602e5408989",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "target": "_6259ebd3-e879-4c70-b442-a602e5408989",
+          "portsource": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.2",
+          "porttarget": "_6259ebd3-e879-4c70-b442-a602e5408989"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9b7f467a-30eb-4b8e-a966-43692648a46e-3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "target": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "portsource": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "porttarget": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08-9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08",
+          "target": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "portsource": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08.1",
+          "porttarget": "_9b7f467a-30eb-4b8e-a966-43692648a46e"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6-04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
+          "target": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "portsource": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.2",
+          "porttarget": "_04ea25d8-dfaa-7912-303f-be00b342fc27"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08-a0a8dd07-644b-4646-a305-ef249fa67752",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08",
+          "target": "a0a8dd07-644b-4646-a305-ef249fa67752",
+          "portsource": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08.1",
+          "porttarget": "a0a8dd07-644b-4646-a305-ef249fa67752"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_85682413-94f7-8b3c-e052-59a72cd48e12-97c2c87b-c5d2-41fb-97f6-a1001075cf08",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "target": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08",
+          "portsource": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "porttarget": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08.2"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_8c083cee-7025-4035-9201-1319da22340b-d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_8c083cee-7025-4035-9201-1319da22340b",
+          "target": "d756f4ab-9813-4d55-aa86-c37dc7f3b286",
+          "portsource": "_8c083cee-7025-4035-9201-1319da22340b",
+          "porttarget": "d756f4ab-9813-4d55-aa86-c37dc7f3b286.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8-85682413-94f7-8b3c-e052-59a72cd48e12",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
+          "target": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "portsource": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8.2",
+          "porttarget": "_85682413-94f7-8b3c-e052-59a72cd48e12"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_85682413-94f7-8b3c-e052-59a72cd48e12-e889d01c-1eb1-4c83-8bd9-0160e9c2abcb",
+          "class": "stimulation",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "target": "e889d01c-1eb1-4c83-8bd9-0160e9c2abcb",
+          "portsource": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "porttarget": "e889d01c-1eb1-4c83-8bd9-0160e9c2abcb"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_00ac7e0a-288f-42e0-b252-9bcb59027572-1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "class": "production",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "target": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "portsource": "_00ac7e0a-288f-42e0-b252-9bcb59027572.2",
+          "porttarget": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_20e434c6-e738-4ae5-8a8a-e49f53fe85fb-00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "_20e434c6-e738-4ae5-8a8a-e49f53fe85fb",
+          "target": "_00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "portsource": "_20e434c6-e738-4ae5-8a8a-e49f53fe85fb",
+          "porttarget": "_00ac7e0a-288f-42e0-b252-9bcb59027572.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a0a8dd07-644b-4646-a305-ef249fa67752-00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "class": "consumption",
+          "bendPointPositions": [],
+          "language": "PD",
+          "line-color": "#555555",
+          "width": 1.25,
+          "cardinality": 0,
+          "source": "a0a8dd07-644b-4646-a305-ef249fa67752",
+          "target": "_00ac7e0a-288f-42e0-b252-9bcb59027572",
+          "portsource": "a0a8dd07-644b-4646-a305-ef249fa67752",
+          "porttarget": "_00ac7e0a-288f-42e0-b252-9bcb59027572.1"
+        },
+        "position": {},
+        "group": "edges",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      }
+    ]
+  },
+  "style": [
+    {
+      "selector": "node",
+      "style": {
+        "shape": "rectangle",
+        "text-halign": "center",
+        "text-valign": "center",
+        "background-color": "rgb(58,126,207)",
+        "opacity": "1"
+      }
+    },
+    {
+      "selector": "node[class = 'simple chemical']",
+      "style": {
+        "shape": "ellipse"
+      }
+    },
+    {
+      "selector": "node[class = 'macromolecule']",
+      "style": {
+        "shape": "round-rectangle"
+      }
+    },
+    {
+      "selector": ":parent",
+      "style": {
+        "background-opacity": "0.333",
+        "border-color": "rgb(58,126,207)",
+        "text-valign": "bottom"
+      }
+    },
+    {
+      "selector": ":parent:selected",
+      "style": {
+        "background-opacity": "0.65",
+        "border-color": "rgb(255,0,0)"
+      }
+    },
+    {
+      "selector": "node:selected",
+      "style": {
+        "background-color": "rgb(255,0,0)"
+      }
+    },
+    {
+      "selector": "edge",
+      "style": {
+        "curve-style": "straight",
+        "width": "2px",
+        "line-color": "rgb(58,126,207)",
+        "opacity": "0.7"
+      }
+    },
+    {
+      "selector": "edge:selected",
+      "style": {
+        "line-color": "rgb(255,0,0)",
+        "label": "data(id)",
+        "font-size": "13px",
+        "text-opacity": "1",
+        "text-rotation": "autorotate",
+        "color": "rgb(255,0,0)",
+        "font-weight": "bold",
+        "text-background-shape": "round-rectangle",
+        "text-background-opacity": "1",
+        "text-background-padding": "2px"
+      }
+    }
+  ],
+  "data": {},
+  "zoomingEnabled": true,
+  "userZoomingEnabled": true,
+  "zoom": 0.88,
+  "minZoom": 1e-50,
+  "maxZoom": 1e+50,
+  "panningEnabled": true,
+  "userPanningEnabled": true,
+  "pan": {
+    "x": 128,
+    "y": 174
+  },
+  "boxSelectionEnabled": true,
+  "renderer": {
+    "name": "canvas"
+  },
+  "wheelSensitivity": 0.3
+}
