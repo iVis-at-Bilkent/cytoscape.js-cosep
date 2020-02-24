@@ -178,10 +178,10 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
             }
         }
 
-        if( (topBottomObstruceAngles / topBottomPorts) >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
+        if( (topBottomObstruceAngles / topBottomPorts) > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
             topBottomRotation = true;
 
-        if( (rightLeftObstruceAngles / rightLeftPorts) >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
+        if( (rightLeftObstruceAngles / rightLeftPorts) > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
             rightLeftRotation = true;
 
         if( topBottomRotation ){

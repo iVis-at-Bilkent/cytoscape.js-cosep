@@ -1,0 +1,255 @@
+{
+	"nwtE_bc4239e4-7e0c-41ad-8556-fa994251bbe4": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_9ba5e16e-98ca-4066-be1a-cc272f59a28f": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"arc3": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc4": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"arc5": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc6": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc9": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc8": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc10": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc32": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"arc31": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc30": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"arc12": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc13": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Free",
+			"portConstraintParameter": "N/A"
+		}
+	],
+	"arc11": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc14": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc15": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"arc16": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc17": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc18": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc20": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc19": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc21": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc23": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc22": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"arc24": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"arc33": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"arc34": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc25": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_ebc64e3c-e4b6-4858-8a73-ce7c423e835d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_2228e5b5-771e-402b-b16e-85358c7b9999": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_eef9ec0e-9cf7-4257-88c3-58bfd65ef170": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"arc7": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	]
+}

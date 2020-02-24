@@ -324,9 +324,9 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
             }
         }
 
-        if (topBottomObstruceAngles / topBottomPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) topBottomRotation = true;
+        if (topBottomObstruceAngles / topBottomPorts > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) topBottomRotation = true;
 
-        if (rightLeftObstruceAngles / rightLeftPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) rightLeftRotation = true;
+        if (rightLeftObstruceAngles / rightLeftPorts > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) rightLeftRotation = true;
 
         if (topBottomRotation) {
             for (var _i = 0; _i < this.associatedPortConstraints.length; _i++) {
