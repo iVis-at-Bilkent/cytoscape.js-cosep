@@ -8,6 +8,7 @@
 const CoSEPConstants = require('./CoSEPConstants');
 const CoSENode = require('cose-base').CoSENode;
 const PointD = require('cose-base').layoutBase.PointD;
+const IMath = require('cose-base').layoutBase.IMath;
 
 function CoSEPNode(gm, loc, size, vNode) {
     CoSENode.call(this, gm, loc, size, vNode);
@@ -29,6 +30,10 @@ function CoSEPNode(gm, loc, size, vNode) {
 
     // Stores rotational forces for one iteration. This contributes to above variable.
     this.oneIterationRotForce = [];
+
+    // This holds the additional force introduced in polishing phase
+    this.polishingForceX = 0;
+    this.polishingForceY = 0;
 }
 
 CoSEPNode.prototype = Object.create(CoSENode.prototype);
@@ -135,9 +140,9 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
 CoSEPNode.prototype.addRotationalForce = function( rotationalForce ){
     this.oneIterationRotForce.push(rotationalForce);
 
-    if( this.oneIterationRotForce.length == this.associatedPortConstraints.length ){
+    if( this.oneIterationRotForce.length === this.associatedPortConstraints.length ){
         let temp = 0;
-        while( this.oneIterationRotForce.length != 0 )
+        while( this.oneIterationRotForce.length !== 0 )
             temp = temp + this.oneIterationRotForce.pop();
 
         this.rotationalForce.add(temp);
@@ -279,6 +284,61 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
         portConst.portSide = temp[0];
         portConst.portLocation = temp[1];
     }
+};
+
+/**
+ * Modified version of cose to include polishing force
+ */
+CoSEPNode.prototype.move = function(){
+    var layout = this.graphManager.getLayout();
+    this.displacementX = layout.coolingFactor *
+        (this.springForceX + this.repulsionForceX + this.gravitationForceX + this.polishingForceX) / this.noOfChildren;
+
+    this.displacementY = layout.coolingFactor *
+        (this.springForceY + this.repulsionForceY + this.gravitationForceY + this.polishingForceY) / this.noOfChildren;
+
+    if (Math.abs(this.displacementX) > layout.coolingFactor * layout.maxNodeDisplacement)
+    {
+        this.displacementX = layout.coolingFactor * layout.maxNodeDisplacement *
+            IMath.sign(this.displacementX);
+    }
+
+    if (Math.abs(this.displacementY) > layout.coolingFactor * layout.maxNodeDisplacement)
+    {
+        this.displacementY = layout.coolingFactor * layout.maxNodeDisplacement *
+            IMath.sign(this.displacementY);
+    }
+
+    // a simple node, just move it
+    if (this.child == null)
+    {
+        this.moveBy(this.displacementX, this.displacementY);
+    }
+    // an empty compound node, again just move it
+    else if (this.child.getNodes().length == 0)
+    {
+        this.moveBy(this.displacementX, this.displacementY);
+    }
+    // non-empty compound node, propogate movement to children as well
+    else
+    {
+        this.propogateDisplacementToChildren(this.displacementX,
+            this.displacementY);
+    }
+
+    layout.totalDisplacement +=
+        Math.abs(this.displacementX) + Math.abs(this.displacementY);
+
+    this.springForceX = 0;
+    this.springForceY = 0;
+    this.repulsionForceX = 0;
+    this.repulsionForceY = 0;
+    this.gravitationForceX = 0;
+    this.gravitationForceY = 0;
+    this.polishingForceX = 0;
+    this.polishingForceY = 0;
+    this.displacementX = 0;
+    this.displacementY = 0;
 };
 
 module.exports = CoSEPNode;

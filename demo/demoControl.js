@@ -38,6 +38,7 @@ document.getElementById("edgeShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
 document.getElementById("nodeRotationForceThreshold").value = 20;
 document.getElementById("nodeRotationAngleThreshold").value = 130;
+document.getElementById("polishingForce").value = 0.3;
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -199,6 +200,7 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     let layout = window.cy.layout({
         name: 'cosep',
         refresh:1,
+        fit: true,
         idealEdgeLength: idealEdgeLength,
         fps: +document.getElementById("FPS").value,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
@@ -210,7 +212,8 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         nodeRotationPeriod: +document.getElementById("nodeRotationPeriod").value,
         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
-        nodeRotations: nodeRotationsFunc
+        nodeRotations: nodeRotationsFunc,
+        polishingForce: document.getElementById("polishingForce").value
     });
 
     if ( document.getElementById("animate").checked )
@@ -546,6 +549,9 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         "border-color": node.data('border-color'),
                         "background-color": node.data('background-color'),
                         "background-opacity": node.data('background-opacity'),
+                        "background-fit": "cover",
+                        "background-position-x": "50%",
+                        "background-position-y": "50%",
                         "text-wrap": "wrap",
                         "font-size": node.data('font-size'),
                         "color" : node.data('color')
@@ -581,6 +587,9 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         "border-color": node.data('border-color'),
                         "background-color": node.data('background-color'),
                         "background-opacity": node.data('background-opacity'),
+                        "background-fit": "cover",
+                        "background-position-x": "50%",
+                        "background-position-y": "50%",
                         "text-wrap": "wrap",
                         "font-size": node.data('font-size'),
                         "color" : node.data('color')
@@ -616,6 +625,9 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                     "border-color": node.data('border-color'),
                     "background-color": node.data('background-color'),
                     "background-opacity": node.data('background-opacity'),
+                    "background-fit": "cover",
+                    "background-position-x": "50%",
+                    "background-position-y": "50%",
                     "text-wrap": "wrap",
                     "font-size": node.data('font-size'),
                     "color" : node.data('color')

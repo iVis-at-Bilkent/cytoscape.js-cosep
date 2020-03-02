@@ -145,6 +145,10 @@ let getUserOptions = function (options) {
     CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
   if (options.nodeRotationPeriod)
     CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
+
+  // Polishing Force
+  if (options.polishingForce)
+    CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 };
 
 class Layout extends ContinuousLayout {
@@ -391,6 +395,11 @@ class Layout extends ContinuousLayout {
     if( state.animate || state.animate == 'during' )
       self.updateCytoscapePortVisualization();
 
+    if(isDone && this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND){
+      isDone = false;
+      this.cosepLayout.polishingPhaseInit();
+    }
+
     return isDone;
   }
 
@@ -482,11 +491,13 @@ class Layout extends ContinuousLayout {
       let node = nodeWPorts[i];
 
       if(node.canBeRotated) {
-        let w = node.getWidth();
-        let h = node.getHeight();
         let cyNode = this.rotatableNodes.get(node);
-        cyNode.style({'width' : w });
-        cyNode.style({'height' : h });
+        if(cyNode.layoutDimensions().w !== node.rect.width) {
+          let w = cyNode.height();
+          let h = cyNode.width();
+          cyNode.style({'width': w});
+          cyNode.style({'height': h});
+        }
       }
     }
 

@@ -16,6 +16,7 @@ for (let prop in CoSEConstants) {
 }
 
 CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR = 0.7;
+CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR = 0.5;
 
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
@@ -31,5 +32,8 @@ CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 3;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
 CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
+
+// Polishing Force Constant
+CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.2;
 
 module.exports = CoSEPConstants;

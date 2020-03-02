@@ -140,6 +140,28 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
 };
 
 /**
+ * Initialize or reset variables related to the spring embedder
+ */
+CoSEPLayout.prototype.polishingPhaseInit = function(){
+    this.phase = CoSEPLayout.PHASE_POLISHING;
+    this.totalIterations = 0;
+
+    // Node Rotation Related Variables -- No need for rotations
+    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
+        let node = this.graphManager.nodesWithPorts[i];
+        node.canBeRotated = false;
+    }
+
+    // Reset variables for cooling
+    this.initialCoolingFactor = CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR;
+    this.coolingCycle = 0;
+    this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
+    this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
+    this.coolingAdjuster = 1;
+};
+
+
+/**
  * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
  * potentially different parameters.
  *
@@ -170,12 +192,15 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
+    if(this.phase === CoSEPLayout.PHASE_POLISHING) this.calcPolishingForces();
     this.moveNodes();
 
-    if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0){
-        this.checkForNodeRotation();
-    } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
-        this.checkForEdgeShifting();
+    if (this.phase === CoSEPLayout.PHASE_SECOND ) {
+        if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
+            this.checkForNodeRotation();
+        } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+            this.checkForEdgeShifting();
+        }
     }
 
     // If we reached max iterations
@@ -197,6 +222,15 @@ CoSEPLayout.prototype.checkForEdgeShifting = function(){
 CoSEPLayout.prototype.checkForNodeRotation = function(){
     for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         this.graphManager.nodesWithPorts[i].checkForNodeRotation();
+    }
+};
+
+/**
+ * Calc polishing forces for ports
+ */
+CoSEPLayout.prototype.calcPolishingForces = function(){
+    for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
+        this.graphManager.portConstraints[i].calcPolishingForces();
     }
 };
 

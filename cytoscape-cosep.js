@@ -106,6 +106,7 @@ for (var prop in CoSEConstants) {
 }
 
 CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR = 0.7;
+CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR = 0.5;
 
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
@@ -121,6 +122,9 @@ CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 3;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
 CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
+
+// Polishing Force Constant
+CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.1;
 
 module.exports = CoSEPConstants;
 
@@ -164,6 +168,7 @@ module.exports = Object.assign != null ? Object.assign.bind(Object) : function (
 var CoSEPConstants = __webpack_require__(1);
 var CoSENode = __webpack_require__(0).CoSENode;
 var PointD = __webpack_require__(0).layoutBase.PointD;
+var IMath = __webpack_require__(0).layoutBase.IMath;
 
 function CoSEPNode(gm, loc, size, vNode) {
     CoSENode.call(this, gm, loc, size, vNode);
@@ -185,6 +190,10 @@ function CoSEPNode(gm, loc, size, vNode) {
 
     // Stores rotational forces for one iteration. This contributes to above variable.
     this.oneIterationRotForce = [];
+
+    // This holds the additional force introduced in polishing phase
+    this.polishingForceX = 0;
+    this.polishingForceY = 0;
 }
 
 CoSEPNode.prototype = Object.create(CoSENode.prototype);
@@ -283,9 +292,9 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
 CoSEPNode.prototype.addRotationalForce = function (rotationalForce) {
     this.oneIterationRotForce.push(rotationalForce);
 
-    if (this.oneIterationRotForce.length == this.associatedPortConstraints.length) {
+    if (this.oneIterationRotForce.length === this.associatedPortConstraints.length) {
         var temp = 0;
-        while (this.oneIterationRotForce.length != 0) {
+        while (this.oneIterationRotForce.length !== 0) {
             temp = temp + this.oneIterationRotForce.pop();
         }this.rotationalForce.add(temp);
     }
@@ -419,6 +428,50 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
         _portConst3.portSide = _temp4[0];
         _portConst3.portLocation = _temp4[1];
     }
+};
+
+/**
+ * Modified version of cose to include polishing force
+ */
+CoSEPNode.prototype.move = function () {
+    var layout = this.graphManager.getLayout();
+    this.displacementX = layout.coolingFactor * (this.springForceX + this.repulsionForceX + this.gravitationForceX + this.polishingForceX) / this.noOfChildren;
+
+    this.displacementY = layout.coolingFactor * (this.springForceY + this.repulsionForceY + this.gravitationForceY + this.polishingForceY) / this.noOfChildren;
+
+    if (Math.abs(this.displacementX) > layout.coolingFactor * layout.maxNodeDisplacement) {
+        this.displacementX = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementX);
+    }
+
+    if (Math.abs(this.displacementY) > layout.coolingFactor * layout.maxNodeDisplacement) {
+        this.displacementY = layout.coolingFactor * layout.maxNodeDisplacement * IMath.sign(this.displacementY);
+    }
+
+    // a simple node, just move it
+    if (this.child == null) {
+        this.moveBy(this.displacementX, this.displacementY);
+    }
+    // an empty compound node, again just move it
+    else if (this.child.getNodes().length == 0) {
+            this.moveBy(this.displacementX, this.displacementY);
+        }
+        // non-empty compound node, propogate movement to children as well
+        else {
+                this.propogateDisplacementToChildren(this.displacementX, this.displacementY);
+            }
+
+    layout.totalDisplacement += Math.abs(this.displacementX) + Math.abs(this.displacementY);
+
+    this.springForceX = 0;
+    this.springForceY = 0;
+    this.repulsionForceX = 0;
+    this.repulsionForceY = 0;
+    this.gravitationForceX = 0;
+    this.gravitationForceY = 0;
+    this.polishingForceX = 0;
+    this.polishingForceY = 0;
+    this.displacementX = 0;
+    this.displacementY = 0;
 };
 
 module.exports = CoSEPNode;
@@ -843,6 +896,27 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
 };
 
 /**
+ * Initialize or reset variables related to the spring embedder
+ */
+CoSEPLayout.prototype.polishingPhaseInit = function () {
+    this.phase = CoSEPLayout.PHASE_POLISHING;
+    this.totalIterations = 0;
+
+    // Node Rotation Related Variables -- No need for rotations
+    for (var i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
+        var node = this.graphManager.nodesWithPorts[i];
+        node.canBeRotated = false;
+    }
+
+    // Reset variables for cooling
+    this.initialCoolingFactor = CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR;
+    this.coolingCycle = 0;
+    this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
+    this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
+    this.coolingAdjuster = 1;
+};
+
+/**
  * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
  * potentially different parameters.
  *
@@ -871,12 +945,15 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
+    if (this.phase === CoSEPLayout.PHASE_POLISHING) this.calcPolishingForces();
     this.moveNodes();
 
-    if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
-        this.checkForNodeRotation();
-    } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
-        this.checkForEdgeShifting();
+    if (this.phase === CoSEPLayout.PHASE_SECOND) {
+        if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
+            this.checkForNodeRotation();
+        } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+            this.checkForEdgeShifting();
+        }
     }
 
     // If we reached max iterations
@@ -898,6 +975,15 @@ CoSEPLayout.prototype.checkForEdgeShifting = function () {
 CoSEPLayout.prototype.checkForNodeRotation = function () {
     for (var i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         this.graphManager.nodesWithPorts[i].checkForNodeRotation();
+    }
+};
+
+/**
+ * Calc polishing forces for ports
+ */
+CoSEPLayout.prototype.calcPolishingForces = function () {
+    for (var i = 0; i < this.graphManager.portConstraints.length; i++) {
+        this.graphManager.portConstraints[i].calcPolishingForces();
     }
 };
 
@@ -1327,6 +1413,29 @@ CoSEPPortConstraint.prototype.calcAngle = function () {
 
     return absAngle;
     //return ( leftTest > 0 ) ? -absAngle : absAngle;
+};
+
+/**
+ * Calculates the polishing force
+ */
+CoSEPPortConstraint.prototype.calcPolishingForces = function () {
+    var desired = this.getPointOfDesiredLocation();
+    var otherNode = this.edge.getOtherEnd(this.node);
+    var otherLocation = void 0;
+
+    if (this.otherPortConstraint) {
+        otherLocation = this.otherPortConstraint.portLocation;
+    } else {
+        otherLocation = otherNode.getCenter();
+    }
+
+    var polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.x - otherLocation.x);
+    var polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.y - otherLocation.y);
+
+    otherNode.polishingForceX += polishingForceX;
+    otherNode.polishingForceY += polishingForceY;
+    this.node.polishingForceX -= polishingForceX;
+    this.node.polishingForceY -= polishingForceY;
 };
 
 module.exports = CoSEPPortConstraint;
@@ -1763,6 +1872,11 @@ var Layout = function (_ContinuousLayout) {
 
       if (state.animate || state.animate == 'during') self.updateCytoscapePortVisualization();
 
+      if (isDone && this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND) {
+        isDone = false;
+        this.cosepLayout.polishingPhaseInit();
+      }
+
       return isDone;
     }
 
@@ -1852,11 +1966,13 @@ var Layout = function (_ContinuousLayout) {
         var _node = nodeWPorts[i];
 
         if (_node.canBeRotated) {
-          var w = _node.getWidth();
-          var h = _node.getHeight();
           var _cyNode = this.rotatableNodes.get(_node);
-          _cyNode.style({ 'width': w });
-          _cyNode.style({ 'height': h });
+          if (_cyNode.layoutDimensions().w !== _node.rect.width) {
+            var w = _cyNode.height();
+            var h = _cyNode.width();
+            _cyNode.style({ 'width': w });
+            _cyNode.style({ 'height': h });
+          }
         }
       }
 

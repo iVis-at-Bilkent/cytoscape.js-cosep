@@ -398,4 +398,27 @@ CoSEPPortConstraint.prototype.calcAngle = function(){
     //return ( leftTest > 0 ) ? -absAngle : absAngle;
 };
 
+/**
+ * Calculates the polishing force
+ */
+CoSEPPortConstraint.prototype.calcPolishingForces = function(){
+    let desired = this.getPointOfDesiredLocation();
+    let otherNode = this.edge.getOtherEnd(this.node);
+    let otherLocation;
+
+    if(this.otherPortConstraint) {
+        otherLocation = this.otherPortConstraint.portLocation;
+    } else {
+        otherLocation = otherNode.getCenter();
+    }
+
+    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.x - otherLocation.x);
+    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.y - otherLocation.y);
+
+    otherNode.polishingForceX += polishingForceX;
+    otherNode.polishingForceY += polishingForceY;
+    this.node.polishingForceX -= polishingForceX;
+    this.node.polishingForceY -= polishingForceY;
+};
+
 module.exports = CoSEPPortConstraint;
