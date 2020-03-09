@@ -1373,8 +1373,8 @@
           "bbox": {
             "x": 1153.7355112995508,
             "y": 124.45247044730837,
-            "w": 65.75,
-            "h": 76.7
+            "w": 87,
+            "h": 98
           },
           "minWidth": 65.75,
           "minWidthBiasLeft": 50,
@@ -1412,96 +1412,6 @@
         "position": {
           "x": 1153.7355112995508,
           "y": 124.45247044730837
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "_26a815b4-64c3-4797-9bfd-7dceafb3345d",
-          "bbox": {
-            "x": 1154.9855112995508,
-            "y": 102.72747044730836,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "myosin",
-          "statesandinfos": [],
-          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1154.9855112995508,
-          "y": 102.72747044730836
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "_5fcbfc9c-92a0-45b2-834b-ad8866d4008b",
-          "bbox": {
-            "x": 1137.4855112995508,
-            "y": 146.17747044730837,
-            "w": 30,
-            "h": 30
-          },
-          "class": "simple chemical",
-          "label": "ATP",
-          "statesandinfos": [],
-          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1137.4855112995508,
-          "y": 146.17747044730837
         },
         "group": "nodes",
         "removed": false,
@@ -1752,8 +1662,8 @@
           "bbox": {
             "x": 1330.2903764007108,
             "y": 329.2625643462867,
-            "w": 63.25,
-            "h": 76.69999999999999
+            "w": 85,
+            "h": 98
           },
           "minWidth": 63.25,
           "minWidthBiasLeft": 50,
@@ -1866,96 +1776,6 @@
       },
       {
         "data": {
-          "id": "_1ce3ffae-f9a7-09a1-c91f-bf176708c1d2",
-          "bbox": {
-            "x": 1330.2903764007108,
-            "y": 307.5375643462867,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "myosin",
-          "statesandinfos": [],
-          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1330.2903764007108,
-          "y": 307.5375643462867
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "_0fbd0d13-c59b-48ab-240d-c262dd1bc480",
-          "bbox": {
-            "x": 1330.2903764007108,
-            "y": 350.98756434628666,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "actin",
-          "statesandinfos": [],
-          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1330.2903764007108,
-          "y": 350.98756434628666
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
           "id": "e889d01c-1eb1-4c83-8bd9-0160e9c2abcb",
           "bbox": {
             "x": 1445.9957657131395,
@@ -2005,8 +1825,8 @@
           "bbox": {
             "x": 1125.0784373310353,
             "y": 335.5943664531708,
-            "w": 109.20000000000005,
-            "h": 76.69999999999999
+            "w": 130,
+            "h": 98
           },
           "minWidth": 109.20000000000005,
           "minWidthBiasLeft": 49.99999999999301,
@@ -2108,141 +1928,6 @@
         "position": {
           "x": 1125.0784373310353,
           "y": 335.5943664531708
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "_343e0d0d-eeac-5cf5-acec-bc15975650a3",
-          "bbox": {
-            "x": 1102.1034373310351,
-            "y": 313.8693664531708,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "myosin",
-          "statesandinfos": [],
-          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1102.1034373310351,
-          "y": 313.8693664531708
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "_96e17352-dd50-0332-a224-954cd97fc3c2",
-          "bbox": {
-            "x": 1102.1034373310351,
-            "y": 357.3193664531708,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "actin",
-          "statesandinfos": [],
-          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1102.1034373310351,
-          "y": 357.3193664531708
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "a3f830ac-34e3-466a-62ac-642bc3e51777",
-          "bbox": {
-            "x": 1163.0534373310352,
-            "y": 313.8693664531708,
-            "w": 30,
-            "h": 30
-          },
-          "class": "simple chemical",
-          "label": "ATP",
-          "statesandinfos": [],
-          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-width": "100%",
-          "background-height": "100%",
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 1163.0534373310352,
-          "y": 313.8693664531708
         },
         "group": "nodes",
         "removed": false,

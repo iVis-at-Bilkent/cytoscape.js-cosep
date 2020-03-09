@@ -47,7 +47,6 @@ table td {
 }
 
 #optionsCard{
-    margin-top: 15px;
     padding-top: 5px;
     padding-bottom: 10px;
     width: inherit;
@@ -130,3 +129,10 @@ table td {
     width: 167px;
 }
 
+#house-container {
+    background-color:#eee;
+    border: 1px solid #888;
+    border-radius:3px;
+    margin-top: 20px;
+    width: inherit;
+}

@@ -124,7 +124,8 @@ CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
 CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
 
 // Polishing Force Constant
-CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.1;
+CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 5;
+CoSEPConstants.GROUP_ONE_DEGREE_NODES = true;
 
 module.exports = CoSEPConstants;
 
@@ -945,11 +946,13 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
-    if (this.phase === CoSEPLayout.PHASE_POLISHING) this.calcPolishingForces();
+    if (this.phase === CoSEPLayout.PHASE_POLISHING) {
+        this.calcPolishingForces();
+    }
     this.moveNodes();
 
     if (this.phase === CoSEPLayout.PHASE_SECOND) {
-        if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
+        if (this.totalIterations === 50 && CoSEPConstants.GROUP_ONE_DEGREE_NODES) this.groupOneDegreeNodesAcrossPorts();else if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
         } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
             this.checkForEdgeShifting();
@@ -984,6 +987,16 @@ CoSEPLayout.prototype.checkForNodeRotation = function () {
 CoSEPLayout.prototype.calcPolishingForces = function () {
     for (var i = 0; i < this.graphManager.portConstraints.length; i++) {
         this.graphManager.portConstraints[i].calcPolishingForces();
+    }
+};
+
+CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function () {
+    for (var i = 0; i < this.graphManager.portConstraints.length; i++) {
+        var portConst = this.graphManager.portConstraints[i];
+        if (portConst.otherNode.getEdges().length === 1 && portConst.otherNode.getChild() == null) {
+            var desiredLocation = portConst.getPointOfDesiredLocation();
+            portConst.otherNode.setLocation(desiredLocation.getX(), desiredLocation.getY());
+        }
     }
 };
 
@@ -1041,6 +1054,9 @@ function CoSEPPortConstraint(edge, node) {
 
     // Holds this edges other port constraint (if any)
     this.otherPortConstraint = null;
+
+    // Hold the other node
+    this.otherNode = this.edge.getOtherEnd(this.node);
 
     // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
     this.correspondingAngle = null;
@@ -1151,7 +1167,7 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
         }
 
         // Find min short distance between ports and other nodes center and assign the port
-        var otherNodeCenter = this.edge.getOtherEnd(this.node).getCenter();
+        var otherNodeCenter = this.otherNode.getCenter();
         var shortestDistance = Number.MAX_SAFE_INTEGER;
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
@@ -1214,25 +1230,25 @@ CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, spr
     if (this.portSide == this.sideDirection['Top']) {
         this.rotationalForce.add(springForceX);
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(this.calcAngle());
+            this.correspondingAngle.add(Math.abs(this.calcAngle()));
             this.node.addRotationalForce(springForceX);
         }
     } else if (this.portSide == this.sideDirection['Bottom']) {
         this.rotationalForce.add(-springForceX);
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(this.calcAngle());
+            this.correspondingAngle.add(Math.abs(this.calcAngle()));
             this.node.addRotationalForce(-springForceX);
         }
     } else if (this.portSide == this.sideDirection['Right']) {
         this.rotationalForce.add(springForceY);
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(this.calcAngle());
+            this.correspondingAngle.add(Math.abs(this.calcAngle()));
             this.node.addRotationalForce(springForceY);
         }
     } else {
         this.rotationalForce.add(-springForceY);
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(this.calcAngle());
+            this.correspondingAngle.add(Math.abs(this.calcAngle()));
             this.node.addRotationalForce(-springForceY);
         }
     }
@@ -1301,7 +1317,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function () {
  */
 CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = function (nextSide) {
     var nodeRect = this.node.rect;
-    var otherNodeRect = this.edge.getOtherEnd(this.node).getCenter();
+    var otherNodeRect = this.otherNode.getCenter();
 
     switch (this.portSide) {
         case 0:
@@ -1355,7 +1371,7 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
  */
 CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = function () {
     var nodeRect = this.node.getCenter();
-    var otherNodeRect = this.edge.getOtherEnd(this.node).getCenter();
+    var otherNodeRect = this.otherNode.getCenter();
 
     switch (this.portSide) {
         case 0:
@@ -1394,7 +1410,7 @@ CoSEPPortConstraint.prototype.getPointOfDesiredLocation = function () {
  */
 CoSEPPortConstraint.prototype.calcAngle = function () {
     var otherPoint = void 0;
-    if (this.otherPortConstraint) otherPoint = this.otherPortConstraint.portLocation;else otherPoint = this.edge.getOtherEnd(this.node).getCenter();
+    if (this.otherPortConstraint) otherPoint = this.otherPortConstraint.portLocation;else otherPoint = this.otherNode.getCenter();
 
     var desired = this.getPointOfDesiredLocation();
 
@@ -1406,34 +1422,47 @@ CoSEPPortConstraint.prototype.calcAngle = function () {
 
     var angleValue = (point1.x * point2.x + point1.y * point2.y) / (Math.sqrt(point1.x * point1.x + point1.y * point1.y) * Math.sqrt(point2.x * point2.x + point2.y * point2.y));
 
-    // let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
-    // (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
+    var leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) - (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
 
     var absAngle = Math.abs(Math.acos(angleValue) * 180 / Math.PI);
 
-    return absAngle;
-    //return ( leftTest > 0 ) ? -absAngle : absAngle;
+    return leftTest > 0 ? -absAngle : absAngle;
 };
 
 /**
  * Calculates the polishing force
  */
 CoSEPPortConstraint.prototype.calcPolishingForces = function () {
-    var desired = this.getPointOfDesiredLocation();
-    var otherNode = this.edge.getOtherEnd(this.node);
-    var otherLocation = void 0;
+    var edgeVector = new PointD();
+    var polishingForceVector = new PointD();
+    var angle = this.calcAngle();
+    var constant = 1;
 
-    if (this.otherPortConstraint) {
-        otherLocation = this.otherPortConstraint.portLocation;
+    if (this.edge.getSource() === this.node) {
+        edgeVector.setX(this.edge.lengthX / this.edge.length);
+        edgeVector.setY(this.edge.lengthY / this.edge.length);
     } else {
-        otherLocation = otherNode.getCenter();
+        edgeVector.setX(-this.edge.lengthX / this.edge.length);
+        edgeVector.setY(-this.edge.lengthY / this.edge.length);
     }
 
-    var polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.x - otherLocation.x);
-    var polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.y - otherLocation.y);
+    if (angle > 0) {
+        polishingForceVector.setX(edgeVector.getY());
+        polishingForceVector.setY(-edgeVector.getX());
+    } else {
+        polishingForceVector.setX(-edgeVector.getY());
+        polishingForceVector.setY(edgeVector.getX());
+    }
 
-    otherNode.polishingForceX += polishingForceX;
-    otherNode.polishingForceY += polishingForceY;
+    if (Math.abs(angle) < 90) {
+        constant = Math.sin(Math.abs(angle) * Math.PI / 180);
+    }
+
+    var polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getX();
+    var polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getY();
+
+    this.otherNode.polishingForceX += polishingForceX;
+    this.otherNode.polishingForceY += polishingForceY;
     this.node.polishingForceX -= polishingForceX;
     this.node.polishingForceY -= polishingForceY;
 };
@@ -1608,6 +1637,11 @@ var getUserOptions = function getUserOptions(options) {
   // Periods for Phase II
   if (options.edgeShiftingPeriod) CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
   if (options.nodeRotationPeriod) CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
+
+  // Polishing Force
+  if (options.polishingForce) CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
+
+  if (options.groupOneDegreeNodesAcrossPorts) CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
 };
 
 var Layout = function (_ContinuousLayout) {

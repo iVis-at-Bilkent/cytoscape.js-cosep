@@ -7,6 +7,7 @@
  */
 
 // Variables and Constants
+let metrics;
 let selectedEdge;
 let idealEdgeLength = 50;
 let constraints = {};
@@ -33,12 +34,13 @@ document.getElementById("sampleGraphs").selectedIndex = -1;
 document.getElementById("portsPerSide").value = 5;
 document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
-document.getElementById("edgeShiftingPeriod").value = 3;
+document.getElementById("edgeShiftingPeriod").value = 5;
 document.getElementById("edgeShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
 document.getElementById("nodeRotationForceThreshold").value = 20;
 document.getElementById("nodeRotationAngleThreshold").value = 130;
-document.getElementById("polishingForce").value = 0.3;
+document.getElementById("polishingForce").value = 5;
+document.getElementById("oneDegreePortedNodes").checked = true;
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -213,13 +215,19 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
         nodeRotations: nodeRotationsFunc,
-        polishingForce: document.getElementById("polishingForce").value
+        polishingForce: document.getElementById("polishingForce").value,
+        groupOneDegreeNodesAcrossPorts: document.getElementById("oneDegreePortedNodes").checked
     });
 
     if ( document.getElementById("animate").checked )
         layout.promiseOn('layoutstop').then(function( event ){ alert('CoSEP Layout is done!'); });
 
     layout.run();
+
+    // For getting performance metrics
+    metrics = window.cy.layvo('get').generalProperties();
+    document.getElementById("edgeCrossing").innerHTML = metrics.numberOfEdgeCrosses;
+    document.getElementById("nodeOverlap").innerHTML = metrics.numberOfNodeOverlaps;
 });
 
 // Export constraints JSON
@@ -612,17 +620,94 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 document.getElementById("portsPerSide").value = 1;
             });
     } else if( sampleGraphs.value == "sbgn3"){
-    fetch("samples/IGFSignaling.json")
+        fetch("samples/IGFSignaling.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'width' : node.data('bbox').w,
+                        'height' : node.data('bbox').h,
+                        "border-width": node.data('border-width'),
+                        "border-color": node.data('border-color'),
+                        "background-color": node.data('background-color'),
+                        "background-opacity": node.data('background-opacity'),
+                        "background-fit": "cover",
+                        "background-position-x": "50%",
+                        "background-position-y": "50%",
+                        "text-wrap": "wrap",
+                        "font-size": node.data('font-size'),
+                        "color" : node.data('color')
+                    });
+
+                    if( node.data('label') ){
+                        node.style({
+                            'label' : node.data('label')
+                        });
+                    }
+                });
+
+                fetch("samples/IGFSignaling_constraints.json")
+                    .then(response => response.json())
+                    .then(json => {
+                        constraints = json;
+                        fillLogsTableFromConstraints( true );
+                        fillNodeRotationTable();
+                    });
+
+                document.getElementById("portsPerSide").value = 1;
+            });
+    }  else if( sampleGraphs.value == "sbgn4"){
+        fetch("samples/glycolysis.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'width' : node.data('bbox').w,
+                        'height' : node.data('bbox').h,
+                        "border-width": node.data('border-width'),
+                        "border-color": node.data('border-color'),
+                        'background-image' : node.data('background-image'),
+                        "background-color": node.data('background-color'),
+                        "background-opacity": node.data('background-opacity'),
+                        "background-fit": "cover",
+                        "background-position-x": "50%",
+                        "background-position-y": "50%",
+                        "text-wrap": "wrap",
+                        "font-size": node.data('font-size'),
+                        "color" : node.data('color')
+                    });
+
+                    if( node.data('label') ){
+                        node.style({
+                            'label' : node.data('label')
+                        });
+                    }
+                });
+
+                fetch("samples/glycolysis_constraints.json")
+                    .then(response => response.json())
+                    .then(json => {
+                        constraints = json;
+                        fillLogsTableFromConstraints( true );
+                        fillNodeRotationTable();
+                    });
+
+                document.getElementById("portsPerSide").value = 1;
+            });
+    }  else if( sampleGraphs.value == "sbgn5"){
+    fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene.json")
         .then(response => response.json())
         .then(json => {
             window.cy.json(json);
             window.cy.nodes().forEach( function ( node ) {
                 node.style({
-                    'background-image' : node.data('background-image'),
                     'width' : node.data('bbox').w,
                     'height' : node.data('bbox').h,
                     "border-width": node.data('border-width'),
                     "border-color": node.data('border-color'),
+                    'background-image' : node.data('background-image'),
                     "background-color": node.data('background-color'),
                     "background-opacity": node.data('background-opacity'),
                     "background-fit": "cover",
@@ -640,7 +725,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 }
             });
 
-            fetch("samples/IGFSignaling_constraints.json")
+            fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene_constraints.json")
                 .then(response => response.json())
                 .then(json => {
                     constraints = json;
@@ -650,7 +735,8 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
 
             document.getElementById("portsPerSide").value = 1;
         });
-}
+    }
+
     window.cy.endBatch();
 });
 

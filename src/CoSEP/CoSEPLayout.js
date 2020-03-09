@@ -192,11 +192,15 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.calcSpringForces();
     this.calcRepulsionForces();
     this.calcGravitationalForces();
-    if(this.phase === CoSEPLayout.PHASE_POLISHING) this.calcPolishingForces();
+    if(this.phase === CoSEPLayout.PHASE_POLISHING){
+        this.calcPolishingForces();
+    }
     this.moveNodes();
 
     if (this.phase === CoSEPLayout.PHASE_SECOND ) {
-        if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
+        if(this.totalIterations === 50 && CoSEPConstants.GROUP_ONE_DEGREE_NODES)
+            this.groupOneDegreeNodesAcrossPorts();
+        else if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
         } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
             this.checkForEdgeShifting();
@@ -231,6 +235,17 @@ CoSEPLayout.prototype.checkForNodeRotation = function(){
 CoSEPLayout.prototype.calcPolishingForces = function(){
     for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
         this.graphManager.portConstraints[i].calcPolishingForces();
+    }
+};
+
+
+CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function(){
+    for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
+        let portConst = this.graphManager.portConstraints[i];
+        if( portConst.otherNode.getEdges().length === 1 && portConst.otherNode.getChild() == null){
+            let desiredLocation = portConst.getPointOfDesiredLocation();
+            portConst.otherNode.setLocation(desiredLocation.getX(), desiredLocation.getY() );
+        }
     }
 };
 

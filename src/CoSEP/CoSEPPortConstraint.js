@@ -44,6 +44,9 @@ function CoSEPPortConstraint(edge, node) {
     // Holds this edges other port constraint (if any)
     this.otherPortConstraint = null;
 
+    // Hold the other node
+    this.otherNode = this.edge.getOtherEnd(this.node);
+
     // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
     this.correspondingAngle = null;
 
@@ -134,7 +137,7 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
         }
 
         // Find min short distance between ports and other nodes center and assign the port
-        let otherNodeCenter = this.edge.getOtherEnd( this.node ).getCenter();
+        let otherNodeCenter = this.otherNode.getCenter();
         let shortestDistance = Number.MAX_SAFE_INTEGER;
         for( let entry of allFeasibleCornerPorts ){
             let distance = Math.hypot( entry[1][1].getX() - otherNodeCenter.getX(),
@@ -178,25 +181,25 @@ CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, spr
     if( this.portSide == this.sideDirection['Top'] ) {
         this.rotationalForce.add( springForceX );
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( this.calcAngle() );
+            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
             this.node.addRotationalForce(springForceX);
         }
     } else if( this.portSide == this.sideDirection['Bottom'] ){
         this.rotationalForce.add( -springForceX );
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( this.calcAngle() );
+            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
             this.node.addRotationalForce(-springForceX);
         }
     } else if( this.portSide == this.sideDirection['Right'] ){
         this.rotationalForce.add( springForceY );
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( this.calcAngle() );
+            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
             this.node.addRotationalForce(springForceY);
         }
     } else {
         this.rotationalForce.add( -springForceY );
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( this.calcAngle() );
+            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
             this.node.addRotationalForce(-springForceY);
         }
     }
@@ -273,7 +276,7 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
  */
 CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = function( nextSide ){
     let nodeRect = this.node.rect;
-    let otherNodeRect = this.edge.getOtherEnd( this.node ).getCenter();
+    let otherNodeRect = this.otherNode.getCenter();
 
     switch ( this.portSide ) {
         case 0:
@@ -331,7 +334,7 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
  */
 CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = function(){
     let nodeRect = this.node.getCenter();
-    let otherNodeRect = this.edge.getOtherEnd( this.node ).getCenter();
+    let otherNodeRect = this.otherNode.getCenter();
 
     switch ( this.portSide ) {
         case 0:
@@ -373,7 +376,7 @@ CoSEPPortConstraint.prototype.calcAngle = function(){
     if( this.otherPortConstraint )
         otherPoint = this.otherPortConstraint.portLocation;
     else
-        otherPoint = this.edge.getOtherEnd( this.node ).getCenter();
+        otherPoint = this.otherNode.getCenter();
 
     let desired = this.getPointOfDesiredLocation();
 
@@ -389,34 +392,48 @@ CoSEPPortConstraint.prototype.calcAngle = function(){
         / (Math.sqrt(point1.x * point1.x + point1.y * point1.y)
             * Math.sqrt(point2.x * point2.x + point2.y * point2.y));
 
-    // let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
-    // (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
+    let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
+     (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
 
     let absAngle = Math.abs(Math.acos(angleValue)* 180 / Math.PI);
 
-    return absAngle;
-    //return ( leftTest > 0 ) ? -absAngle : absAngle;
+    return ( leftTest > 0 ) ? -absAngle : absAngle;
 };
 
 /**
  * Calculates the polishing force
  */
 CoSEPPortConstraint.prototype.calcPolishingForces = function(){
-    let desired = this.getPointOfDesiredLocation();
-    let otherNode = this.edge.getOtherEnd(this.node);
-    let otherLocation;
+    let edgeVector = new PointD();
+    let polishingForceVector = new PointD();
+    let angle = this.calcAngle();
+    let constant = 1;
 
-    if(this.otherPortConstraint) {
-        otherLocation = this.otherPortConstraint.portLocation;
-    } else {
-        otherLocation = otherNode.getCenter();
+    if( this.edge.getSource() === this.node ){
+        edgeVector.setX(this.edge.lengthX / this.edge.length);
+        edgeVector.setY(this.edge.lengthY / this.edge.length);
+    } else{
+        edgeVector.setX(-this.edge.lengthX / this.edge.length);
+        edgeVector.setY(-this.edge.lengthY / this.edge.length);
     }
 
-    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.x - otherLocation.x);
-    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * (desired.y - otherLocation.y);
+    if( angle > 0 ){
+        polishingForceVector.setX( edgeVector.getY() );
+        polishingForceVector.setY( -edgeVector.getX() );
+    } else{
+        polishingForceVector.setX( -edgeVector.getY() );
+        polishingForceVector.setY( edgeVector.getX() );
+    }
 
-    otherNode.polishingForceX += polishingForceX;
-    otherNode.polishingForceY += polishingForceY;
+    if( Math.abs(angle) < 90 ){
+        constant =  Math.sin(Math.abs(angle)*Math.PI/180);
+    }
+
+    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX();
+    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY();
+
+    this.otherNode.polishingForceX += polishingForceX;
+    this.otherNode.polishingForceY += polishingForceY;
     this.node.polishingForceX -= polishingForceX;
     this.node.polishingForceY -= polishingForceY;
 };

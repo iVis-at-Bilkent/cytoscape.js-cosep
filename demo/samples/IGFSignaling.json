@@ -110,7 +110,7 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#707070",
+          "background-color": "#ffffff",
           "background-opacity": "1",
           "text-wrap": "wrap",
           "background-fit": "cover",
@@ -457,8 +457,8 @@
           "bbox": {
             "x": 314.28735118082807,
             "y": 530.3019097173178,
-            "w": 160.24139409278052,
-            "h": 46.77370911391708
+            "w": 169.24139409278052,
+            "h": 53.26
           },
           "minWidth": 160.24139409278052,
           "minWidthBiasLeft": 50.0000000000002,
@@ -471,7 +471,7 @@
           "statesandinfos": [],
           "parent": "glyph1",
           "language": "PD",
-          "border-width": 0.01,
+          "border-width": 1.25,
           "border-color": "#555555",
           "background-color": "#c6dbef",
           "background-opacity": "1",
@@ -491,159 +491,6 @@
         "position": {
           "x": 314.28735118082807,
           "y": 529.6585950903972
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "glyph16",
-          "bbox": {
-            "x": 271.37278184735214,
-            "y": 534.8357972129285,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "SOS",
-          "statesandinfos": [],
-          "parent": "glyph18",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#9ecae1",
-          "background-opacity": "1",
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "background-fit": "cover",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-image": "http://newteditor.org/color-scheme-images/blue2_gradient.png",
-          "ports": [],
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 271.37278184735214,
-          "y": 534.8357972129285
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5",
-          "bbox": {
-            "x": 357.20192051430405,
-            "y": 534.8357972129285,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "Grb2",
-          "statesandinfos": [
-            {
-              "id": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5_0",
-              "bbox": {
-                "x": 28.783921248284326,
-                "y": -50,
-                "w": 30,
-                "h": 12
-              },
-              "coordType": "relativeToSide",
-              "anchorSide": "top",
-              "isDisplayed": true,
-              "style": {
-                "font-size": 9,
-                "font-family": "Arial",
-                "font-style": "normal",
-                "font-weight": "normal",
-                "font-color": "#0f0f0f",
-                "border-width": 2.25,
-                "border-color": "#555555",
-                "background-color": "#ffffff",
-                "shape-name": "stadium"
-              },
-              "state": {
-                "value": "active"
-              },
-              "clazz": "state variable",
-              "parent": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5"
-            }
-          ],
-          "parent": "glyph18",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#9ecae1",
-          "background-opacity": "1",
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "background-fit": "cover",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-image": "http://newteditor.org/color-scheme-images/blue2_gradient.png",
-          "ports": [],
-          "auxunitlayouts": {
-            "top": {
-              "units": [
-                {
-                  "id": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5_0",
-                  "bbox": {
-                    "x": 28.783921248284326,
-                    "y": -50,
-                    "w": 30,
-                    "h": 12
-                  },
-                  "coordType": "relativeToSide",
-                  "anchorSide": "top",
-                  "isDisplayed": true,
-                  "style": {
-                    "font-size": 9,
-                    "font-family": "Arial",
-                    "font-style": "normal",
-                    "font-weight": "normal",
-                    "font-color": "#0f0f0f",
-                    "border-width": 2.25,
-                    "border-color": "#555555",
-                    "background-color": "#ffffff",
-                    "shape-name": "stadium"
-                  },
-                  "state": {
-                    "value": "active"
-                  },
-                  "clazz": "state variable",
-                  "parent": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5"
-                }
-              ],
-              "location": "top",
-              "alignment": "left",
-              "parentNode": "nwtN_59b63daf-15ae-4a4b-b048-f9dc3b8ed3b5",
-              "renderLengthCache": [],
-              "lengthUsed": 0
-            }
-          }
-        },
-        "position": {
-          "x": 357.20192051430405,
-          "y": 534.8357972129285
         },
         "group": "nodes",
         "removed": false,
@@ -2071,7 +1918,7 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#707070",
+          "background-color": "#ffffff",
           "background-opacity": "1",
           "text-wrap": "wrap",
           "background-fit": "cover",
@@ -2407,8 +2254,8 @@
           "bbox": {
             "x": 380,
             "y": 154.95748928722227,
-            "w": 73.25,
-            "h": 95.84913940927805
+            "w": 83.25,
+            "h": 101
           },
           "minWidth": 73.25,
           "minWidthBiasLeft": 50,
@@ -2420,7 +2267,7 @@
           "label": "IGF",
           "statesandinfos": [],
           "language": "PD",
-          "border-width": 0.01,
+          "border-width": 1.25,
           "border-color": "#555555",
           "background-color": "#c6dbef",
           "background-opacity": "1",
@@ -2443,92 +2290,6 @@
         "position": {
           "x": 380,
           "y": 154.95748928722227
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "glyph3",
-          "bbox": {
-            "x": 380,
-            "y": 130.91497857444438,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "IGF",
-          "statesandinfos": [],
-          "parent": "glyph5",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#9ecae1",
-          "background-opacity": "1",
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "background-fit": "cover",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-image": "http://newteditor.org/color-scheme-images/blue2_gradient.png",
-          "ports": [],
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 380,
-          "y": 130.91497857444438
-        },
-        "group": "nodes",
-        "removed": false,
-        "selected": false,
-        "selectable": true,
-        "locked": false,
-        "grabbable": true,
-        "classes": ""
-      },
-      {
-        "data": {
-          "id": "glyph4",
-          "bbox": {
-            "x": 380,
-            "y": 179,
-            "w": 60,
-            "h": 30
-          },
-          "class": "macromolecule",
-          "label": "IGFR",
-          "statesandinfos": [],
-          "parent": "glyph5",
-          "language": "PD",
-          "border-width": 1.25,
-          "border-color": "#555555",
-          "background-color": "#9ecae1",
-          "background-opacity": "1",
-          "text-wrap": "wrap",
-          "font-size": 11,
-          "font-family": "Helvetica",
-          "font-style": "normal",
-          "font-weight": "normal",
-          "color": "#000",
-          "background-fit": "cover",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
-          "background-image": "http://newteditor.org/color-scheme-images/blue2_gradient.png",
-          "ports": [],
-          "auxunitlayouts": {}
-        },
-        "position": {
-          "x": 380,
-          "y": 179
         },
         "group": "nodes",
         "removed": false,
@@ -3542,14 +3303,14 @@
   "data": {},
   "zoomingEnabled": true,
   "userZoomingEnabled": true,
-  "zoom": 0.6675482660256817,
+  "zoom": 1.035,
   "minZoom": 1e-50,
   "maxZoom": 1e+50,
   "panningEnabled": true,
   "userPanningEnabled": true,
   "pan": {
-    "x": 199.8860721322739,
-    "y": -7.3020546944552605
+    "x": 118.32,
+    "y": -11.69
   },
   "boxSelectionEnabled": true,
   "renderer": {

@@ -149,6 +149,9 @@ let getUserOptions = function (options) {
   // Polishing Force
   if (options.polishingForce)
     CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
+
+  if (options.groupOneDegreeNodesAcrossPorts)
+    CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
 };
 
 class Layout extends ContinuousLayout {

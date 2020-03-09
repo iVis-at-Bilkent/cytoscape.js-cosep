@@ -31,12 +31,25 @@
 	<!-- Demo files -->
 	<script src="demoControl.js" defer></script>
 	<link rel="stylesheet" href="demo.css">
+
+	<!-- For edge detection-->
+	<script src="https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-layvo/unstable/cytoscape-layvo.js"></script>
 </head>
 
 <body>
 <div class="leftOfCytoscape">
 	<button id="coseButton" type="button" class="btn btn-secondary btn-sm">CoSE Bilkent Layout</button>
 	<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
+
+	<div id="house-container" class="text-center">
+		<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;margin-top: 5px">
+			Node Overlaps: <span id="nodeOverlap" class="badge badge-danger" style="font-size: 15px">0</span>
+		</label>
+
+		<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;margin-top: 5px"">
+			Edge Crosses: <span id="edgeCrossing" class="badge badge-warning" style="font-size: 15px" >0</span>
+		</label>
+	</div>
 
 	<div id="optionsCard"  class="card" style="text-align: center">
 		<label><b>Layout Options</b></label>
@@ -81,6 +94,10 @@
 				<td><span>Polishing Force Strength</span></td>
 				<td><input id="polishingForce" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
 			</tr>
+			<tr>
+				<td><span>Group 1-Degree Ported Nodes </span></td>
+				<td style="text-align: center"><input id="oneDegreePortedNodes" class = "checkbox" type="checkbox"></td>
+			</tr>
 		</table>
 
 		<table>
@@ -93,6 +110,8 @@
 						<option value="sbgn1">SBGN-PD Graph 1</option>
 						<option value="sbgn2">SBGN-PD Graph 2</option>
 						<option value="sbgn3">SBGN-PD Graph 3</option>
+						<option value="sbgn4">SBGN-PD Graph 4</option>
+						<option value="sbgn5">SBGN-PD Graph 5</option>
 					</select>
 				</td>
 			</tr>
@@ -103,8 +122,6 @@
 	<input id="file-input" type="file" name="name" style="display: none;" />
 
 	<button id="exportToFile" type="button" class="btn btn-dark btn-sm py-0">Export constraint from file</button>
-
-
 
 	<div id="indicatorCard"  class="card" style="text-align: center">
 		<label><b> Selected Edge </b></label>
