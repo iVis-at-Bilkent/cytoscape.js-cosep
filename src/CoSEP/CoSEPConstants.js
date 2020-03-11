@@ -36,5 +36,6 @@ CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
 // Polishing Force Constant
 CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 5;
 CoSEPConstants.GROUP_ONE_DEGREE_NODES = true;
+CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = 50;
 
 module.exports = CoSEPConstants;

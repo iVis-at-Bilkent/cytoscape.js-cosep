@@ -13,7 +13,7 @@ let tick = function( state ){
     s.firstUpdate = false;
   }
 
-  let duration = Date.now() - s.startTime;
+  s.duration = Date.now() - s.startTime;
 
   return !s.infinite && ( tickIndicatesDone ) // || s.tickIndex >= s.maxIterations || duration >= s.maxSimulationTime );
 };
@@ -40,7 +40,7 @@ let multitick = function( state, onNotDone = nop, onDone = nop ){
     }
   }
   else{
-    for( let i = 0; i < s.refresh; i++ ){
+    for( let i = 0; i < s.maxIterations; i++ ){
       done = !s.running || tick( s );
 
       if( done ){ break; }

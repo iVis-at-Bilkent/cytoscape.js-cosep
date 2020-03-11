@@ -93,7 +93,7 @@
 		{
 			"endpoint": "Source",
 			"portConstraintType": "Absolute",
-			"portConstraintParameter": "3"
+			"portConstraintParameter": "2"
 		}
 	],
 	"nwtE_291d921c-6f42-4d7d-baad-bc934b27e69e": [

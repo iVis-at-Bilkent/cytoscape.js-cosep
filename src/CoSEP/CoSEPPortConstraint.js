@@ -105,6 +105,26 @@ CoSEPPortConstraint.prototype.prevAcrossSideIndex = function() {
 };
 
 // -----------------------------------------------------------------------------
+// Section: Helper Functions
+// -----------------------------------------------------------------------------
+
+// Create a line function going through two given points. Line function returns true if a point is on that line
+function line(x1, y1, x2, y2) {
+    let slope = (y2 - y1) / (x2 - x1);
+    return function (x, y) {
+        return (y - y1) > slope * (x - x1);
+    };
+}
+
+// Checks if the testingPoint is left of the line going through point -> otherPoint
+function leftTest(point, otherPoint, testingPoint){
+    let test = (otherPoint.x - point.x) * (testingPoint.y - point.y) -
+        (otherPoint.y - point.y) * (testingPoint.x - point.x);
+
+    return test > 0;
+}
+
+// -----------------------------------------------------------------------------
 // Section: Methods
 // -----------------------------------------------------------------------------
 
@@ -316,13 +336,6 @@ CoSEPPortConstraint.prototype.additionalRequirementForAdjacentSideChanging = fun
                 return !check( otherNodeRect.x, otherNodeRect.y );
             }
     }
-
-    function line(x1, y1, x2, y2) {
-        let slope = (y2 - y1) / (x2 - x1);
-        return function (x, y) {
-            return (y - y1) > slope * (x - x1);
-        };
-    }
 };
 
 /**
@@ -356,13 +369,13 @@ CoSEPPortConstraint.prototype.additionalRequirementForAcrossSideChanging = funct
 CoSEPPortConstraint.prototype.getPointOfDesiredLocation = function(){
     switch ( this.portSide ) {
         case 0:
-            return new PointD( this.portLocation.x, this.portLocation.y - this.edge.idealLength );
+            return new PointD( this.portLocation.x, this.portLocation.y - this.edge.idealLength - this.otherNode.getHeight() / 2);
         case 1:
-            return new PointD( this.portLocation.x + this.edge.idealLength, this.portLocation.y );
+            return new PointD( this.portLocation.x + this.edge.idealLength + this.otherNode.getWidth() / 2, this.portLocation.y );
         case 2:
-            return new PointD( this.portLocation.x, this.portLocation.y + this.edge.idealLength );
+            return new PointD( this.portLocation.x, this.portLocation.y + this.edge.idealLength  + this.otherNode.getHeight() / 2 );
         case 3:
-            return new PointD( this.portLocation.x - this.edge.idealLength, this.portLocation.y );
+            return new PointD( this.portLocation.x - this.edge.idealLength - this.otherNode.getWidth() / 2, this.portLocation.y );
     }
 };
 
@@ -392,17 +405,56 @@ CoSEPPortConstraint.prototype.calcAngle = function(){
         / (Math.sqrt(point1.x * point1.x + point1.y * point1.y)
             * Math.sqrt(point2.x * point2.x + point2.y * point2.y));
 
-    let leftTest = (otherPoint.x - this.portLocation.x) * (desired.y - this.portLocation.y) -
-     (otherPoint.y - this.portLocation.y) * (desired.x - this.portLocation.x);
-
     let absAngle = Math.abs(Math.acos(angleValue)* 180 / Math.PI);
 
-    return ( leftTest > 0 ) ? -absAngle : absAngle;
+    return ( leftTest(this.portLocation, otherPoint, desired) ) ? -absAngle : absAngle;
 };
 
 /**
  * Calculates the polishing force
  */
+CoSEPPortConstraint.prototype.calcPolishingForces = function(){
+    let edgeVector = new PointD();
+    let polishingForceVector = new PointD();
+
+    let otherPoint;
+    if( this.otherPortConstraint )
+        otherPoint = this.otherPortConstraint.portLocation;
+    else
+        otherPoint = this.otherNode.getCenter();
+
+    let desired = this.getPointOfDesiredLocation();
+
+    // Finding the unit vector of the edge
+    if( this.edge.getSource() === this.node ){
+        edgeVector.setX(this.edge.lengthX / this.edge.length);
+        edgeVector.setY(this.edge.lengthY / this.edge.length);
+    } else{
+        edgeVector.setX(-this.edge.lengthX / this.edge.length);
+        edgeVector.setY(-this.edge.lengthY / this.edge.length);
+    }
+
+    // Finding which ortogonal unit vector is the one we want
+    if( !leftTest(this.portLocation, otherPoint, desired)){
+        polishingForceVector.setX( edgeVector.getY() );
+        polishingForceVector.setY( -edgeVector.getX() );
+    } else{
+        polishingForceVector.setX( -edgeVector.getY() );
+        polishingForceVector.setY( edgeVector.getX() );
+    }
+
+    let distance = Math.hypot( otherPoint.getX() - desired.getX(), otherPoint.getY() - desired.getY() );
+
+    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX() * distance / 2;
+    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY() * distance / 2;
+
+    this.otherNode.polishingForceX += polishingForceX;
+    this.otherNode.polishingForceY += polishingForceY;
+    this.node.polishingForceX -= polishingForceX;
+    this.node.polishingForceY -= polishingForceY;
+};
+
+/*
 CoSEPPortConstraint.prototype.calcPolishingForces = function(){
     let edgeVector = new PointD();
     let polishingForceVector = new PointD();
@@ -429,13 +481,14 @@ CoSEPPortConstraint.prototype.calcPolishingForces = function(){
         constant =  Math.sin(Math.abs(angle)*Math.PI/180);
     }
 
-    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX();
-    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY();
+    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX() * constant;
+    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY() * constant;
 
     this.otherNode.polishingForceX += polishingForceX;
     this.otherNode.polishingForceY += polishingForceY;
     this.node.polishingForceX -= polishingForceX;
     this.node.polishingForceY -= polishingForceY;
 };
+ */
 
 module.exports = CoSEPPortConstraint;

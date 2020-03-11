@@ -39,7 +39,7 @@ document.getElementById("edgeShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
 document.getElementById("nodeRotationForceThreshold").value = 20;
 document.getElementById("nodeRotationAngleThreshold").value = 130;
-document.getElementById("polishingForce").value = 5;
+document.getElementById("polishingForce").value = 0.1;
 document.getElementById("oneDegreePortedNodes").checked = true;
 
 document.addEventListener('DOMContentLoaded', function(){

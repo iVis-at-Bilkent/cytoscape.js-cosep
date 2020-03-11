@@ -147,6 +147,7 @@ CoSEPLayout.prototype.polishingPhaseInit = function(){
     this.totalIterations = 0;
 
     // Node Rotation Related Variables -- No need for rotations
+    // This is for increasing performance in polishing phase
     for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         let node = this.graphManager.nodesWithPorts[i];
         node.canBeRotated = false;
@@ -198,13 +199,15 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     this.moveNodes();
 
     if (this.phase === CoSEPLayout.PHASE_SECOND ) {
-        if(this.totalIterations === 50 && CoSEPConstants.GROUP_ONE_DEGREE_NODES)
-            this.groupOneDegreeNodesAcrossPorts();
-        else if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
+        if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
         } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
             this.checkForEdgeShifting();
         }
+    }
+
+    if(this.phase === CoSEPLayout.PHASE_POLISHING && (this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0) && CoSEPConstants.GROUP_ONE_DEGREE_NODES) {
+        this.groupOneDegreeNodesAcrossPorts();
     }
 
     // If we reached max iterations
@@ -230,7 +233,7 @@ CoSEPLayout.prototype.checkForNodeRotation = function(){
 };
 
 /**
- * Calc polishing forces for ports
+ * Calc polishing forces for ports during phase III (polishing phase)
  */
 CoSEPLayout.prototype.calcPolishingForces = function(){
     for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
@@ -238,10 +241,17 @@ CoSEPLayout.prototype.calcPolishingForces = function(){
     }
 };
 
-
+/**
+ * For one degree nodes incident to port constrained edges, we put them to their desired location if they are not compound nodes
+ * and there is one constraint on the edge.
+ */
 CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function(){
-    for(let i = 0; i < this.graphManager.portConstraints.length; i++) {
-        let portConst = this.graphManager.portConstraints[i];
+    for(let i = 0; i < this.graphManager.edgesWithPorts.length; i++) {
+        let pEdge = this.graphManager.edgesWithPorts[i];
+        if (pEdge.sourceConstraint && pEdge.targetConstraint)
+            continue;
+
+        let portConst = pEdge.sourceConstraint || pEdge.targetConstraint;
         if( portConst.otherNode.getEdges().length === 1 && portConst.otherNode.getChild() == null){
             let desiredLocation = portConst.getPointOfDesiredLocation();
             portConst.otherNode.setLocation(desiredLocation.getX(), desiredLocation.getY() );

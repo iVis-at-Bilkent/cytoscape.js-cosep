@@ -306,6 +306,7 @@ class Layout extends ContinuousLayout {
 
     // Initialize second phase of the algorithm
     this.cosepLayout.secondPhaseInit();
+    this.state.maxIterations = this.cosepLayout.maxIterations * 2;
   }
 
   // Get the top most ones of a list of nodes
@@ -395,11 +396,12 @@ class Layout extends ContinuousLayout {
       s.y = location.getCenterY();
     });
 
-    if( state.animate || state.animate == 'during' )
+    if( state.animateContinuously)
       self.updateCytoscapePortVisualization();
 
     if(isDone && this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND){
       isDone = false;
+      state.phaseIIiterationCount = state.tickIndex;
       this.cosepLayout.polishingPhaseInit();
     }
 
@@ -410,8 +412,12 @@ class Layout extends ContinuousLayout {
   postrun(){
     this.updateCytoscapePortVisualization();
     console.log('***************************************************************************************');
-    console.log('** Done in ' + JSON.stringify(this.cosepLayout.totalIterations) + ' iterations');
-    console.log( '** Graph Manager' );
+    console.log('** Phase II -- iteration count: ' + JSON.stringify(this.state.phaseIIiterationCount));
+    console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.cosepLayout.totalIterations));
+    console.log('** Running time(ms) : ' + JSON.stringify(this.state.duration));
+    console.log('** Max Iterations : ' + JSON.stringify(this.state.maxIterations));
+
+   /* console.log( '** Graph Manager' );
     console.log( this.graphManager );
     console.log( '** idToLNode' );
     console.log( this.idToLNode );
@@ -420,7 +426,7 @@ class Layout extends ContinuousLayout {
     console.log( '** lEdgeToCEdge' );
     console.log( this.lEdgeToCEdge );
     console.log( '** portConstrainedEdges' );
-    console.log( this.portConstrainedEdges );
+    console.log( this.portConstrainedEdges ); */
   }
 
   /**
