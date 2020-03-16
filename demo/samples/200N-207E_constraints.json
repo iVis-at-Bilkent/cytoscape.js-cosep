@@ -1,0 +1,1595 @@
+{
+	"nwtE_de477fbf-8efb-4b8e-aefd-4ec752405004": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_148f1df6-50d5-4fd5-9b7e-f12c734951d3": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_334605a2-73bd-4e52-b0eb-de41efbeda4b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_9db732fa-0625-4c29-a4f7-6146c558c2dc": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_73b945a7-5608-45fd-84c1-8e486c02cfc4": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_5054b0da-c5f1-4ba8-b03b-8f03813e1018": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_17a4c19e-711d-43f7-b79a-9fd8b0885cb3": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_8c7ee891-6257-462b-83d7-9fe84273f2f2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_526babb9-453d-43a9-94b7-3dc0baed829d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_30045159-f2bd-4bea-b6fa-30e246185213": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_f1dcc491-cc7a-457c-a09f-6d3528e76d15": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_34a64b3c-4eb6-4e8a-bc0e-274a40afe630": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_f20091b6-3823-4388-94f0-da0310f7809d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_2c6eacd3-8749-45d8-8828-d6be28c31938": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_22fbad82-b4f8-4913-9405-0756f96eb3ff": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_a141bda1-0d23-4c65-be23-f74c9a82700b": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_93690fe3-cf9c-48e9-927c-cce04ccd8dc5": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"nwtE_ec446baa-ca52-493a-b21a-3bc877c2ddf9": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"nwtE_2fb09005-3b93-4539-90c9-98c42ad07442": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"nwtE_cfc5aa19-a643-443d-bce5-a7ede8c955bf": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"nwtE_0241f9a8-a7ab-4ef2-af20-d95abe9a4830": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"nwtE_86d8aa37-afdd-4da7-b353-d753a117362e": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"nwtE_418a3f25-8d0c-4f92-88a7-01035a2b038d": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"nwtE_0a8fe49f-dc07-4f8a-8989-0788895c00ff": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"nwtE_f90717a8-460d-4580-81df-a39cf32808f7": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"nwtE_f8c8be72-5bf4-4c69-b795-26c5364a6b23": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"nwtE_6043a685-dfff-4e4f-8f93-74710c7f5da5": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_0cbb5f2b-4c57-4860-9511-19403fe08dbb": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_4e577ac4-9b37-4cbc-abd9-b6c01100c48d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_352b757e-8019-4015-8a6d-5c1ac297c2e6": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_36233fec-d687-414e-b4f1-9e83a12f2d3d": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_93129ad3-bff2-47b6-8364-ad69971f6f80": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_80cba596-750d-485a-be37-d36239cfbbae": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_24058ce2-7bbe-4738-b329-f34ef58ac095": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_f0a4a22f-3f83-4c66-9761-32c201f9e5a4": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_46ec4d6f-5c48-4c9d-82f3-c360d4629689": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_d5725e19-4725-4f22-ac12-fedb4c0617ce": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_322c721b-1233-4684-b436-650c81d5db9a": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_bcc1ee58-5c52-4950-b459-ee1ecee3e8a0": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_58fd4bec-8d1f-4867-8874-91365b189283": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_24c51c6e-6bac-4c6e-861a-bd408b9b2899": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_7c2b989d-19de-4d58-b18b-8015bf5fda8d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_c3843f81-5bd6-4417-8645-2df6821e9889": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_5cdbc5f8-5c38-4969-8cb4-4746984e94bf": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_4b8885ae-c709-490e-a477-1bc3f5de2c6e": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_fc5063e2-0b15-4699-942f-b309e0359384": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_dd94f41f-68d7-43e5-839c-480523004d7f": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"c0bc6e60-2c1f-1689-47b3-eabcb36bfcc9": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"5b3d6d86-f6bf-552d-d6a2-2eb5c42b4f34": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"ed4d93fb-7994-c689-532d-bd8b0bf9ad2a": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"b3f6b46b-c112-58ea-eb24-684cbee56a45": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"8e135b03-8ab9-ab27-9f36-fc33fca5bd49": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"05f2c0ee-edba-11df-e214-a784a60a5004": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"c0724acb-9606-aece-490e-50633140cf4d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"0d60baac-76f5-40e5-6c71-39f966973c34": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"472c5dd6-7eea-9d28-fd66-ff1a4b1aa758": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"767d641b-04af-42c3-3ae4-91d71976b98b": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"9eaf2b3e-bc68-c6ab-a7e0-3fdfe7f92658": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"2f47e825-16ab-f01e-263e-6d8c76cf47cd": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_2d870830-47f9-4b23-9496-f8aef39f2145": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"f0f59f0d-84d7-96eb-24c0-ff0fc3eb8aa2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"8ed0625f-58e1-8dd3-86cf-a086f4b70bed": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"6db7cc63-3c81-7235-58d8-194660122d58": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"b3a15600-3ff4-6d67-ec76-38012a56623b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"43486968-3c3b-5c14-0b3f-d57547df46ed": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"nwtE_673a2351-9726-4e37-be7b-befbcbbf7b28": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"04189578-4144-897e-f0c4-60bcb697d97c": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"e7ccde46-4af6-0ba5-975e-e25140255d25": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"a5372fb1-75b8-28bf-a867-4ad66f348d58": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"f3c22a16-5194-659d-b759-834234e50731": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"27bd3a82-c0b7-4861-a5e4-9dff18b0f8d1": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"fc2786c5-dd6e-38e5-48e0-040f75649586": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"dcf54d03-3f0f-0663-b70b-55ed8e373d7e": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"9060a34f-5edc-c49a-0d9f-c174ac0c37ae": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"1628d086-1cd5-7bd4-3a3a-12b070299df7": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"056e77c2-7056-183e-c6ac-d824d1dc0911": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"c94e1ce1-3bed-709a-3e6a-6b685df3fbbc": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"e533163f-c77b-3c74-3d93-27333b5e12b9": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"817f3ebf-73a4-0c54-9518-49e258dbf3e5": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"d77f848d-ea17-94d8-d283-6d4bceaed63b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"nwtE_8d2e58c0-e3a7-4f13-afa4-8d773d8070e6": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"7a25bc37-4ee5-07d6-8d1c-cdf664bb0eb8": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"1bbf6ebc-be6f-5d27-9dad-c30590d974e4": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"234f3c2b-1497-a6f6-3f00-0b626a053d4c": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"d4dade08-528f-0e0b-95af-ba803cdb1ccb": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"6b70ca72-ad8b-037c-5d6a-ac94af7bb7be": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"63861f61-16b8-eef9-90f9-5458ff16fccf": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"0e2ec041-6b58-23e2-a1f2-dfd97f61a627": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"6b7f6ed4-49f1-cc82-032a-189cd5270125": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"191f1dd7-786f-0c07-618c-a35d846e1ba3": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"54f664bc-d649-440d-9771-88c242c21eba": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"fff72708-6077-cce7-f599-77db37986a09": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"3b590adb-7ec5-9a3f-9603-2c3e503f214d": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"a05c7e24-f680-4512-839d-4dff5af07332": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"17459b10-4725-1e87-e491-d4a2bf37436a": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"be944b15-1b44-01d9-dace-a455cbad59f7": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"9699a46d-6b2a-7c44-5884-e5451274e3de": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"3248c43a-af46-a84b-4b8f-2dc24844402f": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"c294b448-fe96-0f40-bf1c-a85e36401665": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"3aeffaf8-c71a-328a-c09b-9d143aa09971": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"27c9eede-b9f1-fa1c-f41b-932acf869bc8": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"51292cd7-3433-9170-cb1a-351da3750fc7": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"9abfd2b1-d848-1a78-c240-5c4289942f29": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"e6ea6f02-8778-cad9-4383-a3f990dee0a0": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"0e60b4a6-25cc-836c-c710-621bdfdb34ec": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"aeadf5f2-e680-d4fe-f521-d67898225ab2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"d15e95cf-6e81-1cce-47b7-ad0ac671fbc8": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"7eb53a6a-2772-dd30-6b90-db8b2d375111": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"2daff2be-747d-3001-65cd-0b0db6623db6": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"2aa30695-ddff-45ce-1b69-613a99fab06a": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"09c4178c-c2f7-dd08-f7f5-36e54823aebc": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"ebd14ddc-90c4-3d31-2d49-b685f89d6fc1": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"ff3b5a60-6841-5eea-e19a-82fb995f6b98": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"1c97e262-f82b-7abe-21a9-b0006edc8c15": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"8361bb9e-a341-11f3-e772-b484577d45f2": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"e4f82207-872a-23e7-a09b-efddf67617a2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"2addb4e7-2eb9-5799-c3a2-6ccf7e71d414": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"0833e043-9c1b-4e02-da25-19c933445844": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"ea6d4c8f-55b9-19f7-f931-67df2d1633dd": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"7a0b8b02-4181-4fab-2e6b-74754d47a3dc": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"c5d8345e-cad1-ed3b-21c5-2e04181f7c85": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"dc461ebf-2cea-913f-d891-ba4a88135a3b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"f89937a9-0ce2-ac40-01c4-83d3acaa4e0d": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"04b378a9-3e50-2717-3d09-09fc0817c851": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"98430ecc-fc4c-292d-116a-e6a0c2049a12": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"8cd257c3-583b-50b7-2952-cd0cafe34770": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"fe53bddd-2a1b-289f-8a17-7d1dd2ac822a": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"ebf05d56-1107-cbd9-2a9d-87f8bc8a53a3": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"b4073de5-2b7a-688e-e84a-c0a88bbf929e": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"103495a0-ca3e-140b-335f-aafc36d593c9": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"1f204243-c058-13dd-b78d-813fa3436dad": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"da4f4980-c20e-06b3-e127-31a47bfbf37b": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"902e16f5-7f0e-699e-b334-54d2930143be": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"cd0c8cd1-7ea5-ca3c-5d01-93ad6776ed9a": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"feb031bb-0268-97f0-9b8a-feb8307d48f2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"bcb2aa77-c32d-0125-f24f-55d01e2f6af5": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"e73a21c3-5959-577d-3fed-9b19583b1eb1": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"dadb3b3f-3f1a-ce71-d03c-9b0731ef67b4": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"e835b11c-0302-90e2-d532-7ea9736edde2": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"d13f3f4f-554e-b2ed-432f-6ed92da72212": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"23ef5153-f93a-0a12-4be5-b7e8cbb3e817": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"nwtE_89b92af8-c4f9-4074-88e5-71907c30795b": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"170279a0-eb48-05c4-f08a-f6fb59d51d1c": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"a05101ce-d4b8-1426-b20b-951f43e9d879": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"a7a11ca1-2a94-bb95-9a0c-81dd90e8c83e": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"416a16fb-0c49-691d-662b-bc0e5c0b1b30": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"39512fbe-f072-44ac-58b3-cc4a496aec38": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"ce2e48e4-a6b7-7e59-edf7-84f24190c167": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"3f15f50a-f3e7-a9a1-5129-851d665f62dd": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"db1f1975-a7f0-31f0-e5f5-58acf717c5cc": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"eb9f6df3-d481-7fa7-b89c-b647ac290981": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"c6224d0c-9f09-671e-caea-030c957840ca": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"6cf3b753-a5ee-4600-9f90-bef6b888598f": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"b19dcb79-6f3b-f960-4e8c-652975bf7cda": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"nwtE_d4aa3db4-ef7e-46b9-97a5-96d4061b11de": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"8130ec72-7768-7226-64b8-4704cb7a6fe8": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"945291b1-577c-efb9-b17c-f2a71da073cf": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"fe92f2d9-cd3b-d9ff-2fb5-1d8f2dc97ead": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"9eec7415-bf32-dda7-6d13-563d7faf46b8": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"1ae69236-f66a-5811-d416-0fab1488f7f1": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"938f17c1-42f1-53c1-f4a5-78b12d83ee86": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"e2044b5f-27cf-34ba-c823-782c92944cf8": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"58c75d5e-0931-dcad-1249-db39306b106b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"c280eaea-8f0b-770f-26c6-c68a672f2d0c": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"d28bc112-5cdf-f765-8510-9c9c53b01c9b": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"6f5a3988-d5b2-80d6-c087-fbfa43f18a28": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"efeed43b-35f8-5fdc-f932-c3fdca15cf50": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"9146fcaf-1dd5-795c-2bb8-14a2e9de86c8": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"e32c9f8b-2923-3406-bab0-fe435f4e3751": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"6c336562-e50c-ca7a-a119-ddddd2505159": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"760b934a-581e-ed0b-a59c-4ddf36d294c1": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"5103480e-ce98-be5e-cf65-ce4396249158": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"895032e3-3dc8-1cb9-31dc-3e31f86f2f51": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"a7ec9825-f7ca-42b9-e8e1-8490e76782d5": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"8511c9ff-edcd-256e-f11f-ce72499ef3c4": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"ffbb648e-d008-e82a-2a7c-b6672f7f0a1e": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"4042429a-af97-d6f1-4f75-146b8d5af384": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"61610a98-0fc0-6aa4-27a3-93bfe5ffe971": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"3cdaacb3-229e-0f0c-721d-2e9a9fc27328": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"6458a9df-7638-e05e-4f2c-95118835ff11": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"655bf1f2-6e94-6d02-aa65-8683cd0a867e": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"506afaa0-0b3d-fff6-ebb9-9e1e2d043737": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"9816bd02-defb-7c41-baa4-66740b4df0f0": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"af51a9fa-d629-3bf9-1712-753b94be8aed": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"d0a9285e-de04-3d0e-4bee-b24e65bd454a": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"49dad3e8-1193-dd81-4c38-661104343391": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"1b297f40-473e-c26c-7e2f-3600dda14d9c": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"1c0fa922-61da-8139-7bca-b6afc4adbb03": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Right",
+				"Left"
+			]
+		}
+	],
+	"e1573215-52f6-c956-027e-8d93c82b044d": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "2"
+		}
+	],
+	"e67a4b6f-a9c8-ba0c-41b0-2deb45b3cc49": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "0"
+		}
+	],
+	"eb088485-5c72-b583-d2c2-9c24032f8a79": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"0fef7b06-57e2-130f-2140-400f72112225": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"4291d8bb-391e-a51f-7ead-887d185905fa": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"fb865f5f-97a4-6702-2729-1c18406df45e": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"0aa69dc7-b727-e6cd-0fbd-4b672364a72f": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"a20558a6-d92b-76ce-6ec0-6202520bdb7b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"06de9d3a-3d78-589b-45ca-cc744cef14aa": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"374a6d81-9e17-49e4-c9d2-e9769b86f495": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"f65e647f-22b3-735f-de00-75a74e61e05b": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"ecbdd643-25f3-2589-cec6-0468f594aeef": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"57f8e4a2-d491-8dd0-06a0-8be02c7e7101": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"b4c1d0f3-ca3d-cdaf-478a-6d73feb6a9a9": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"60e786ba-1a46-ffdf-d056-9b9e5a0ee273": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
+		}
+	],
+	"f1c53fa1-4e26-eba7-a030-6b72502685c9": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"9401018e-1ec2-024c-435a-bc6f93a4091c": [
+		{
+			"endpoint": "Target",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "3"
+		}
+	],
+	"f2c37b91-7483-4540-a651-d6d78f4267eb": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	],
+	"840b88d0-4ffe-1ad6-1604-518c27b39378": [
+		{
+			"endpoint": "Source",
+			"portConstraintType": "Absolute",
+			"portConstraintParameter": "1"
+		}
+	]
+}

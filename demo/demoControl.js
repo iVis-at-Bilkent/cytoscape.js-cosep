@@ -697,7 +697,46 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 document.getElementById("portsPerSide").value = 1;
             });
     }  else if( sampleGraphs.value == "sbgn5"){
-    fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene.json")
+        fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene.json")
+            .then(response => response.json())
+            .then(json => {
+                window.cy.json(json);
+                window.cy.nodes().forEach( function ( node ) {
+                    node.style({
+                        'width' : node.data('bbox').w,
+                        'height' : node.data('bbox').h,
+                        "border-width": node.data('border-width'),
+                        "border-color": node.data('border-color'),
+                        'background-image' : node.data('background-image'),
+                        "background-color": node.data('background-color'),
+                        "background-opacity": node.data('background-opacity'),
+                        "background-fit": "cover",
+                        "background-position-x": "50%",
+                        "background-position-y": "50%",
+                        "text-wrap": "wrap",
+                        "font-size": node.data('font-size'),
+                        "color" : node.data('color')
+                    });
+
+                    if( node.data('label') ){
+                        node.style({
+                            'label' : node.data('label')
+                        });
+                    }
+                });
+
+                fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene_constraints.json")
+                    .then(response => response.json())
+                    .then(json => {
+                        constraints = json;
+                        fillLogsTableFromConstraints( true );
+                        fillNodeRotationTable();
+                    });
+
+                document.getElementById("portsPerSide").value = 1;
+            });
+    } else if( sampleGraphs.value == "sbgn6"){
+    fetch("samples/200N-207E.json")
         .then(response => response.json())
         .then(json => {
             window.cy.json(json);
@@ -725,7 +764,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 }
             });
 
-            fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene_constraints.json")
+            fetch("samples/200N-207E_constraints.json")
                 .then(response => response.json())
                 .then(json => {
                     constraints = json;
@@ -735,7 +774,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
 
             document.getElementById("portsPerSide").value = 1;
         });
-    }
+}
 
     window.cy.endBatch();
 });

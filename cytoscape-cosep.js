@@ -1484,14 +1484,51 @@ CoSEPPortConstraint.prototype.calcPolishingForces = function () {
 
     var distance = Math.hypot(otherPoint.getX() - desired.getX(), otherPoint.getY() - desired.getY());
 
-    var polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getX() * distance;
-    var polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getY() * distance;
+    var polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getX() * distance / 2;
+    var polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH * polishingForceVector.getY() * distance / 2;
 
     this.otherNode.polishingForceX += polishingForceX;
     this.otherNode.polishingForceY += polishingForceY;
     this.node.polishingForceX -= polishingForceX;
     this.node.polishingForceY -= polishingForceY;
 };
+
+/*
+CoSEPPortConstraint.prototype.calcPolishingForces = function(){
+    let edgeVector = new PointD();
+    let polishingForceVector = new PointD();
+    let angle = this.calcAngle();
+    let constant = 1;
+
+    if( this.edge.getSource() === this.node ){
+        edgeVector.setX(this.edge.lengthX / this.edge.length);
+        edgeVector.setY(this.edge.lengthY / this.edge.length);
+    } else{
+        edgeVector.setX(-this.edge.lengthX / this.edge.length);
+        edgeVector.setY(-this.edge.lengthY / this.edge.length);
+    }
+
+    if( angle > 0 ){
+        polishingForceVector.setX( edgeVector.getY() );
+        polishingForceVector.setY( -edgeVector.getX() );
+    } else{
+        polishingForceVector.setX( -edgeVector.getY() );
+        polishingForceVector.setY( edgeVector.getX() );
+    }
+
+    if( Math.abs(angle) < 90 ){
+        constant =  Math.sin(Math.abs(angle)*Math.PI/180);
+    }
+
+    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX() * constant;
+    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY() * constant;
+
+    this.otherNode.polishingForceX += polishingForceX;
+    this.otherNode.polishingForceY += polishingForceY;
+    this.node.polishingForceX -= polishingForceX;
+    this.node.polishingForceY -= polishingForceY;
+};
+ */
 
 module.exports = CoSEPPortConstraint;
 
@@ -1952,7 +1989,6 @@ var Layout = function (_ContinuousLayout) {
       console.log('** Phase II -- iteration count: ' + JSON.stringify(this.state.phaseIIiterationCount));
       console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.cosepLayout.totalIterations));
       console.log('** Running time(ms) : ' + JSON.stringify(this.state.duration));
-      console.log('** Max Iterations : ' + JSON.stringify(this.state.maxIterations));
 
       /* console.log( '** Graph Manager' );
        console.log( this.graphManager );

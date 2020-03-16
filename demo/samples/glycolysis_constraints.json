@@ -329,5 +329,12 @@
       "portConstraintType": "Absolute",
       "portConstraintParameter": "3"
     }
+  ],
+  "nwtE_5cdbc5f8-5c38-4969-8cb4-4746984e94bf" : [
+    {
+      "endpoint": "Source",
+      "portConstraintType": "Absolute",
+      "portConstraintParameter": "1"
+    }
   ]
 }

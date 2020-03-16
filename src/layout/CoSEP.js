@@ -415,7 +415,6 @@ class Layout extends ContinuousLayout {
     console.log('** Phase II -- iteration count: ' + JSON.stringify(this.state.phaseIIiterationCount));
     console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.cosepLayout.totalIterations));
     console.log('** Running time(ms) : ' + JSON.stringify(this.state.duration));
-    console.log('** Max Iterations : ' + JSON.stringify(this.state.maxIterations));
 
    /* console.log( '** Graph Manager' );
     console.log( this.graphManager );
