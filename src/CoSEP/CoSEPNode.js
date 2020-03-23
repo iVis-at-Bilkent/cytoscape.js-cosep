@@ -170,6 +170,10 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
         for( let i = 0; i < this.associatedPortConstraints.length; i++){
             let portConst = this.associatedPortConstraints[i];
 
+            // Don't include one degree nodes to the heuristic
+            if( portConst.otherNode.getEdges().length === 1 )
+                continue;
+
             if( portConst.portSide == portConst.sideDirection['Top'] || portConst.portSide == portConst.sideDirection['Bottom']){
                 topBottomPorts++;
                 if( portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD ){
@@ -183,10 +187,10 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
             }
         }
 
-        if( (topBottomObstruceAngles / topBottomPorts) > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
+        if( (topBottomObstruceAngles / topBottomPorts) >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
             topBottomRotation = true;
 
-        if( (rightLeftObstruceAngles / rightLeftPorts) > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
+        if( (rightLeftObstruceAngles / rightLeftPorts) >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD )
             rightLeftRotation = true;
 
         if( topBottomRotation ){

@@ -41,6 +41,7 @@ document.getElementById("nodeRotationForceThreshold").value = 20;
 document.getElementById("nodeRotationAngleThreshold").value = 130;
 document.getElementById("polishingForce").value = 0.1;
 document.getElementById("oneDegreePortedNodes").checked = true;
+document.getElementById("oneDegreePortedNodesPeriod").value = 50;
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -216,7 +217,8 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
         nodeRotations: nodeRotationsFunc,
         polishingForce: document.getElementById("polishingForce").value,
-        groupOneDegreeNodesAcrossPorts: document.getElementById("oneDegreePortedNodes").checked
+        groupOneDegreeNodesAcrossPorts: document.getElementById("oneDegreePortedNodes").checked,
+        groupOneDegreeNodesAcrossPortsPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
     });
 
     if ( document.getElementById("animate").checked )
@@ -493,6 +495,18 @@ document.getElementById("addConstraint").addEventListener("click",function(){
 });
 
 // Sample File Changer
+let sbgnFileNames = {
+    "sbgn1" : "neuronalMuscleSignaling",
+    "sbgn2" : "CaMCamkDependantSignalingToNucleus",
+    "sbgn3" : "IGFSignaling",
+    "sbgn4" : "glycolysis",
+    "sbgn5" : "activatedSTAT1alphaInductionOfTheIRF1gene",
+    "sca1" : "100N-102E",
+    "sca2" : "200N-207E",
+    "sca3" : "308N-318E",
+    "sca4" : "400N-412E"
+};
+
 document.getElementById("sampleGraphs").addEventListener("change",function(){
     window.cy.startBatch();
     window.cy.style().clear();
@@ -518,33 +532,9 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
 
                 fillNodeRotationTable();
             });
-    } else if(sampleGraphs.value == "sample2" ) {
-        fetch("samples/sample2.json")
-            .then(response => response.json())
-            .then(json => {
-                window.cy.json(json);
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'width': node.data('width'),
-                        'height': node.data('height')
-                    });
-                });
 
-                window.cy.edges().forEach( function ( edge ) {
-                    edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#555555' });
-                });
-
-                fetch("samples/sample2_constraints.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        constraints = json;
-                        fillLogsTableFromConstraints( false );
-                        fillNodeRotationTable();
-                    });
-                document.getElementById("portsPerSide").value = 7;
-            });
-    } else if( sampleGraphs.value == "sbgn1"){
-        fetch("samples/neuronalMuscleSignaling.json")
+    } else if (sbgnFileNames[sampleGraphs.value]) {
+        fetch("samples/" + sbgnFileNames[sampleGraphs.value] + ".json")
             .then(response => response.json())
             .then(json => {
                 window.cy.json(json);
@@ -572,7 +562,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                     }
                 });
 
-                fetch("samples/neuronalMuscleSignaling_constraints.json")
+                fetch("samples/" + sbgnFileNames[sampleGraphs.value] + "_constraints.json")
                     .then(response => response.json())
                     .then(json => {
                         constraints = json;
@@ -581,200 +571,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                     });
                 document.getElementById("portsPerSide").value = 1;
             });
-    } else if( sampleGraphs.value == "sbgn2"){
-        fetch("samples/CaMCamkDependantSignalingToNucleus.json")
-            .then(response => response.json())
-            .then(json => {
-                window.cy.json(json);
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'background-image' : node.data('background-image'),
-                        'width' : node.data('bbox').w,
-                        'height' : node.data('bbox').h,
-                        "border-width": node.data('border-width'),
-                        "border-color": node.data('border-color'),
-                        "background-color": node.data('background-color'),
-                        "background-opacity": node.data('background-opacity'),
-                        "background-fit": "cover",
-                        "background-position-x": "50%",
-                        "background-position-y": "50%",
-                        "text-wrap": "wrap",
-                        "font-size": node.data('font-size'),
-                        "color" : node.data('color')
-                    });
-
-                    if( node.data('label') ){
-                        node.style({
-                            'label' : node.data('label')
-                        });
-                    }
-                });
-
-                fetch("samples/CaMCamkDependantSignalingToNucleus_constraints.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        constraints = json;
-                        fillLogsTableFromConstraints( true );
-                        fillNodeRotationTable();
-                    });
-                document.getElementById("portsPerSide").value = 1;
-            });
-    } else if( sampleGraphs.value == "sbgn3"){
-        fetch("samples/IGFSignaling.json")
-            .then(response => response.json())
-            .then(json => {
-                window.cy.json(json);
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'width' : node.data('bbox').w,
-                        'height' : node.data('bbox').h,
-                        "border-width": node.data('border-width'),
-                        "border-color": node.data('border-color'),
-                        "background-color": node.data('background-color'),
-                        "background-opacity": node.data('background-opacity'),
-                        "background-fit": "cover",
-                        "background-position-x": "50%",
-                        "background-position-y": "50%",
-                        "text-wrap": "wrap",
-                        "font-size": node.data('font-size'),
-                        "color" : node.data('color')
-                    });
-
-                    if( node.data('label') ){
-                        node.style({
-                            'label' : node.data('label')
-                        });
-                    }
-                });
-
-                fetch("samples/IGFSignaling_constraints.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        constraints = json;
-                        fillLogsTableFromConstraints( true );
-                        fillNodeRotationTable();
-                    });
-
-                document.getElementById("portsPerSide").value = 1;
-            });
-    }  else if( sampleGraphs.value == "sbgn4"){
-        fetch("samples/glycolysis.json")
-            .then(response => response.json())
-            .then(json => {
-                window.cy.json(json);
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'width' : node.data('bbox').w,
-                        'height' : node.data('bbox').h,
-                        "border-width": node.data('border-width'),
-                        "border-color": node.data('border-color'),
-                        'background-image' : node.data('background-image'),
-                        "background-color": node.data('background-color'),
-                        "background-opacity": node.data('background-opacity'),
-                        "background-fit": "cover",
-                        "background-position-x": "50%",
-                        "background-position-y": "50%",
-                        "text-wrap": "wrap",
-                        "font-size": node.data('font-size'),
-                        "color" : node.data('color')
-                    });
-
-                    if( node.data('label') ){
-                        node.style({
-                            'label' : node.data('label')
-                        });
-                    }
-                });
-
-                fetch("samples/glycolysis_constraints.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        constraints = json;
-                        fillLogsTableFromConstraints( true );
-                        fillNodeRotationTable();
-                    });
-
-                document.getElementById("portsPerSide").value = 1;
-            });
-    }  else if( sampleGraphs.value == "sbgn5"){
-        fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene.json")
-            .then(response => response.json())
-            .then(json => {
-                window.cy.json(json);
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'width' : node.data('bbox').w,
-                        'height' : node.data('bbox').h,
-                        "border-width": node.data('border-width'),
-                        "border-color": node.data('border-color'),
-                        'background-image' : node.data('background-image'),
-                        "background-color": node.data('background-color'),
-                        "background-opacity": node.data('background-opacity'),
-                        "background-fit": "cover",
-                        "background-position-x": "50%",
-                        "background-position-y": "50%",
-                        "text-wrap": "wrap",
-                        "font-size": node.data('font-size'),
-                        "color" : node.data('color')
-                    });
-
-                    if( node.data('label') ){
-                        node.style({
-                            'label' : node.data('label')
-                        });
-                    }
-                });
-
-                fetch("samples/activatedSTAT1alphaInductionOfTheIRF1gene_constraints.json")
-                    .then(response => response.json())
-                    .then(json => {
-                        constraints = json;
-                        fillLogsTableFromConstraints( true );
-                        fillNodeRotationTable();
-                    });
-
-                document.getElementById("portsPerSide").value = 1;
-            });
-    } else if( sampleGraphs.value == "sbgn6"){
-    fetch("samples/200N-207E.json")
-        .then(response => response.json())
-        .then(json => {
-            window.cy.json(json);
-            window.cy.nodes().forEach( function ( node ) {
-                node.style({
-                    'width' : node.data('bbox').w,
-                    'height' : node.data('bbox').h,
-                    "border-width": node.data('border-width'),
-                    "border-color": node.data('border-color'),
-                    'background-image' : node.data('background-image'),
-                    "background-color": node.data('background-color'),
-                    "background-opacity": node.data('background-opacity'),
-                    "background-fit": "cover",
-                    "background-position-x": "50%",
-                    "background-position-y": "50%",
-                    "text-wrap": "wrap",
-                    "font-size": node.data('font-size'),
-                    "color" : node.data('color')
-                });
-
-                if( node.data('label') ){
-                    node.style({
-                        'label' : node.data('label')
-                    });
-                }
-            });
-
-            fetch("samples/200N-207E_constraints.json")
-                .then(response => response.json())
-                .then(json => {
-                    constraints = json;
-                    fillLogsTableFromConstraints( true );
-                    fillNodeRotationTable();
-                });
-
-            document.getElementById("portsPerSide").value = 1;
-        });
-}
+    }
 
     window.cy.endBatch();
 });

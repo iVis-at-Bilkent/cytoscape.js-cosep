@@ -105,8 +105,12 @@ for (var prop in CoSEConstants) {
   CoSEPConstants[prop] = CoSEConstants[prop];
 }
 
+// Initial cooling factors
 CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR = 0.7;
 CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR = 0.5;
+
+// Prevent layout from finishing too early for both phases
+CoSEPConstants.NOT_TOO_EARLY = 300;
 
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
@@ -118,13 +122,15 @@ CoSEPConstants.EDGE_SHIFTING_PERIOD = 5;
 CoSEPConstants.NODE_ROTATION_PERIOD = 15;
 
 // Thresholds for Phase II
-CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 3;
+CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 1;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
-CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 90;
+CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 130;
 
-// Polishing Force Constant
-CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 5;
+// Polishing (Phase III) Force Constants
+CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.1;
+
+// Group one degree nodes
 CoSEPConstants.GROUP_ONE_DEGREE_NODES = true;
 CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = 50;
 
@@ -322,6 +328,9 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
         for (var i = 0; i < this.associatedPortConstraints.length; i++) {
             var portConst = this.associatedPortConstraints[i];
 
+            // Don't include one degree nodes to the heuristic
+            if (portConst.otherNode.getEdges().length === 1) continue;
+
             if (portConst.portSide == portConst.sideDirection['Top'] || portConst.portSide == portConst.sideDirection['Bottom']) {
                 topBottomPorts++;
                 if (portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
@@ -335,9 +344,9 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
             }
         }
 
-        if (topBottomObstruceAngles / topBottomPorts > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) topBottomRotation = true;
+        if (topBottomObstruceAngles / topBottomPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) topBottomRotation = true;
 
-        if (rightLeftObstruceAngles / rightLeftPorts > CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) rightLeftRotation = true;
+        if (rightLeftObstruceAngles / rightLeftPorts >= CoSEPConstants.ROTATION_180_RATIO_THRESHOLD) rightLeftRotation = true;
 
         if (topBottomRotation) {
             for (var _i = 0; _i < this.associatedPortConstraints.length; _i++) {
@@ -615,6 +624,7 @@ CoSEPEdge.prototype.initialPortConfiguration = function () {
         this.sourceConstraint.otherPortConstraint = this.targetConstraint;
     }
 };
+
 /**
  * Changes the calc of edge length based on ports.
  */
@@ -930,7 +940,8 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
 
     if (this.totalIterations % CoSEPConstants.CONVERGENCE_CHECK_PERIOD === 0) {
         // If the system is converged
-        if (this.isConverged()) {
+        // But not too early
+        if (this.totalIterations >= CoSEPConstants.NOT_TOO_EARLY && this.isConverged()) {
             return true;
         }
 
@@ -961,7 +972,7 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
         }
     }
 
-    if (this.phase === CoSEPLayout.PHASE_POLISHING && this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0 && CoSEPConstants.GROUP_ONE_DEGREE_NODES) {
+    if (CoSEPConstants.GROUP_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0) {
         this.groupOneDegreeNodesAcrossPorts();
     }
 
@@ -1006,7 +1017,7 @@ CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function () {
         if (pEdge.sourceConstraint && pEdge.targetConstraint) continue;
 
         var portConst = pEdge.sourceConstraint || pEdge.targetConstraint;
-        if (portConst.otherNode.getEdges().length === 1 && portConst.otherNode.getChild() == null) {
+        if (portConst.otherNode.getEdges().length === 1) {
             var desiredLocation = portConst.getPointOfDesiredLocation();
             portConst.otherNode.setLocation(desiredLocation.getX(), desiredLocation.getY());
         }
@@ -1704,7 +1715,9 @@ var getUserOptions = function getUserOptions(options) {
   // Polishing Force
   if (options.polishingForce) CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
+  // Grouping 1-Degree Nodes
   if (options.groupOneDegreeNodesAcrossPorts) CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
+  if (options.groupOneDegreeNodesAcrossPortsPeriod) CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
 };
 
 var Layout = function (_ContinuousLayout) {

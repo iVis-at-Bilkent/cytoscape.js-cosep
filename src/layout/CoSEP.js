@@ -150,8 +150,11 @@ let getUserOptions = function (options) {
   if (options.polishingForce)
     CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
+  // Grouping 1-Degree Nodes
   if (options.groupOneDegreeNodesAcrossPorts)
     CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
+  if (options.groupOneDegreeNodesAcrossPortsPeriod)
+    CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
 };
 
 class Layout extends ContinuousLayout {

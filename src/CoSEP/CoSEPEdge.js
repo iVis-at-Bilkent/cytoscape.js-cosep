@@ -67,6 +67,7 @@ CoSEPEdge.prototype.initialPortConfiguration = function(){
         this.sourceConstraint.otherPortConstraint = this.targetConstraint;
     }
 };
+
 /**
  * Changes the calc of edge length based on ports.
  */

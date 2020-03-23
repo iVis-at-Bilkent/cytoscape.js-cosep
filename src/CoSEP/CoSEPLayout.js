@@ -173,7 +173,8 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
 
     if ( (this.totalIterations % CoSEPConstants.CONVERGENCE_CHECK_PERIOD) === 0){
         // If the system is converged
-        if ( this.isConverged() ) {
+        // But not too early
+        if ( this.totalIterations >= CoSEPConstants.NOT_TOO_EARLY && this.isConverged() ) {
             return true;
         }
 
@@ -206,7 +207,7 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
         }
     }
 
-    if(this.phase === CoSEPLayout.PHASE_POLISHING && (this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0) && CoSEPConstants.GROUP_ONE_DEGREE_NODES) {
+    if ( CoSEPConstants.GROUP_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0 ) {
         this.groupOneDegreeNodesAcrossPorts();
     }
 
@@ -252,7 +253,7 @@ CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function(){
             continue;
 
         let portConst = pEdge.sourceConstraint || pEdge.targetConstraint;
-        if( portConst.otherNode.getEdges().length === 1 && portConst.otherNode.getChild() == null){
+        if( portConst.otherNode.getEdges().length === 1 ){
             let desiredLocation = portConst.getPointOfDesiredLocation();
             portConst.otherNode.setLocation(desiredLocation.getX(), desiredLocation.getY() );
         }

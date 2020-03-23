@@ -5,7 +5,7 @@ body {
 
 #cy {
     position: absolute;
-    left: 340px;
+    left: 350px;
     top: 0;
     bottom: 0;
     right: 0;
@@ -13,7 +13,7 @@ body {
 }
 
 .leftOfCytoscape{
-    width: 340px;
+    width: 350px;
     height: 100%;
     z-index: 100;
 }
@@ -21,13 +21,13 @@ body {
 #coseButton{
     position: relative;
     top: 10px;
-    left: 10px;
+    left: 15px;
 }
 
 #cosepButton{
     position: relative;
     top: 10px;
-    left: 70px;
+    left: 75px;
 }
 
 table{
@@ -83,7 +83,7 @@ table td {
 }
 
 #logsCard {
-    margin-top: 30px;
+    margin-top: 5px;
     padding-top: 5px;
     width: inherit;
     height: 385px;
@@ -126,6 +126,7 @@ table td {
 
 #importFromFile{
     margin-top: 4px;
+    margin-left: 5px;
     font-size: 0.8em;
     width: 167px;
 }

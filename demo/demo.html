@@ -32,7 +32,7 @@
 	<script src="demoControl.js" defer></script>
 	<link rel="stylesheet" href="demo.css">
 
-	<!-- For edge detection-->
+	<!-- For edge detection -->
 	<script src="https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-layvo/unstable/cytoscape-layvo.js"></script>
 </head>
 
@@ -98,6 +98,10 @@
 				<td><span>Group 1-Degree Ported Nodes </span></td>
 				<td style="text-align: center"><input id="oneDegreePortedNodes" class = "checkbox" type="checkbox"></td>
 			</tr>
+			<tr>
+				<td><span>Group 1-Degree Period </span></td>
+				<td style="text-align: center"><input id="oneDegreePortedNodesPeriod" class="textField" type="text" maxlength=4 size="2" style="text-align: center"></td>
+			</tr>
 		</table>
 
 		<table>
@@ -106,13 +110,19 @@
 				<td>
 					<select id="sampleGraphs">
 						<option value="sample1">Sandbox Graph</option>
-						<option value="sample2">Flow Graph</option>
-						<option value="sbgn1">SBGN-PD Graph 1</option>
-						<option value="sbgn2">SBGN-PD Graph 2</option>
-						<option value="sbgn3">SBGN-PD Graph 3</option>
-						<option value="sbgn4">SBGN-PD Graph 4</option>
-						<option value="sbgn5">SBGN-PD Graph 5</option>
-						<option value="sbgn6">PD 200N-207E</option>
+						<optgroup label="SBGN-PD">
+							<option value="sbgn1">Graph 1</option>
+							<option value="sbgn2">Graph 2</option>
+							<option value="sbgn3">Graph 3</option>
+							<option value="sbgn4">Graph 4</option>
+							<option value="sbgn5">Graph 5</option>
+						</optgroup>
+						<optgroup label="Scalability">
+							<option value="sca1">PD 100N</option>
+							<option value="sca2">PD 200N</option>
+							<option value="sca3">PD 300N</option>
+							<option value="sca4">PD 400N</option>
+						</optgroup>
 					</select>
 				</td>
 			</tr>
