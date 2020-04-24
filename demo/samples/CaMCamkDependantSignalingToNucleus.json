@@ -6,42 +6,43 @@
           "id": "glyph0",
           "bbox": {
             "x": 727.7495969419266,
-            "y": 770.1095986448931,
-            "w": 958.2491938838532,
-            "h": 1168.9691972897863
+            "y": 767.6095986448931,
+            "w": 948.2491938838532,
+            "h": 1163.9691972897863
           },
-          "minWidth": 958.2491938838532,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 1168.9691972897863,
-          "minHeightBiasTop": 28.615384615384613,
-          "minHeightBiasBottom": 71.38461538461539,
+          "originalW": 976.2491938838532,
+          "originalH": 1191.9691972897863,
           "class": "compartment",
           "label": "neuron",
           "statesandinfos": [],
           "language": "PD",
           "border-width": 18,
           "border-color": "#bfbfbf",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 18,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
-          "auxunitlayouts": {}
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {},
+          "expandcollapseRenderedStartX": 523.0756559324557,
+          "expandcollapseRenderedStartY": 114.86132115290812,
+          "expandcollapseRenderedCueSize": 12
         },
         "position": {
           "x": 727.7495969419266,
-          "y": 770.1095986448931
+          "y": 767.6095986448931
         },
         "group": "nodes",
         "removed": false,
@@ -60,12 +61,8 @@
             "w": 900.2491938838532,
             "h": 659.3441972897863
           },
-          "minWidth": 900.2491938838532,
-          "minWidthBiasLeft": 87.73584905660378,
-          "minWidthBiasRight": 12.264150943396217,
-          "minHeight": 659.3441972897863,
-          "minHeightBiasTop": 83.54430379746836,
-          "minHeightBiasBottom": 16.45569620253164,
+          "originalW": 928.2491938838532,
+          "originalH": 687.3441972897863,
           "class": "compartment",
           "label": "nucleus",
           "statesandinfos": [],
@@ -73,25 +70,24 @@
           "language": "PD",
           "border-width": 18,
           "border-color": "#bfbfbf",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 18,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
-          "auxunitlayouts": {},
-          "expandcollapseRenderedStartX": 530.1063233567879,
-          "expandcollapseRenderedStartY": 366.84175049155806,
-          "expandcollapseRenderedCueSize": 12
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
         },
         "position": {
           "x": 727.7495969419266,
@@ -111,15 +107,11 @@
           "bbox": {
             "x": 365,
             "y": 754.25,
-            "w": 172,
-            "h": 140
+            "w": 151.5,
+            "h": 116
           },
-          "minWidth": 151.5,
-          "minWidthBiasLeft": 21.84873949579832,
-          "minWidthBiasRight": 78.15126050420167,
-          "minHeight": 116,
-          "minHeightBiasTop": 41.509433962264154,
-          "minHeightBiasBottom": 58.490566037735846,
+          "originalW": 171.5,
+          "originalH": 136,
           "class": "complex",
           "label": "Ca/Cam/gCaMKII complex",
           "statesandinfos": [],
@@ -127,26 +119,342 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 365,
           "y": 754.25
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph25",
+          "bbox": {
+            "x": 327.5,
+            "y": 722,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "γCaMKII",
+          "statesandinfos": [
+            {
+              "id": "glyph25_0",
+              "bbox": {
+                "x": 48.873476026291364,
+                "y": 0,
+                "w": 32.9443359375,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "T287"
+              },
+              "clazz": "state variable",
+              "parent": "glyph25"
+            },
+            {
+              "id": "glyph25_1",
+              "bbox": {
+                "x": 50.615014781462264,
+                "y": 100,
+                "w": 33.505859375,
+                "h": 12
+              },
+              "anchorSide": "bottom",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "S334"
+              },
+              "clazz": "state variable",
+              "parent": "glyph25"
+            }
+          ],
+          "parent": "glyph3",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph25_0",
+                  "bbox": {
+                    "x": 48.873476026291364,
+                    "y": 0,
+                    "w": 32.9443359375,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "T287"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph25"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph25",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            },
+            "bottom": {
+              "units": [
+                {
+                  "id": "glyph25_1",
+                  "bbox": {
+                    "x": 50.615014781462264,
+                    "y": 100,
+                    "w": 33.505859375,
+                    "h": 12
+                  },
+                  "anchorSide": "bottom",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "S334"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph25"
+                }
+              ],
+              "location": "bottom",
+              "alignment": "left",
+              "parentNode": "glyph25",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 327.5,
+          "y": 722
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph15",
+          "bbox": {
+            "x": 365,
+            "y": 779,
+            "w": 128.25,
+            "h": 43.25
+          },
+          "originalW": 148.25,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph3",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 365,
+          "y": 779
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph57",
+          "bbox": {
+            "x": 322.5,
+            "y": 779,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph15",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 322.5,
+          "y": 779
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph37",
+          "bbox": {
+            "x": 392.5,
+            "y": 779,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph15",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 392.5,
+          "y": 779
         },
         "group": "nodes",
         "removed": false,
@@ -171,12 +479,11 @@
             {
               "id": "glyph22_0",
               "bbox": {
-                "x": 35.172366878625944,
-                "y": -50,
+                "x": 49.91116628475928,
+                "y": 0,
                 "w": 32.9443359375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -185,9 +492,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -199,12 +505,11 @@
             {
               "id": "glyph22_1",
               "bbox": {
-                "x": 35.453128597375944,
-                "y": 50,
+                "x": 49.91116628475928,
+                "y": 100,
                 "w": 33.505859375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "bottom",
               "isDisplayed": true,
               "style": {
@@ -213,9 +518,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -229,33 +533,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "glyph22_0",
                   "bbox": {
-                    "x": 35.172366878625944,
-                    "y": -50,
+                    "x": 49.91116628475928,
+                    "y": 0,
                     "w": 32.9443359375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -264,9 +569,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -287,12 +591,11 @@
                 {
                   "id": "glyph22_1",
                   "bbox": {
-                    "x": 35.453128597375944,
-                    "y": 50,
+                    "x": 49.91116628475928,
+                    "y": 100,
                     "w": 33.505859375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "bottom",
                   "isDisplayed": true,
                   "style": {
@@ -301,9 +604,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -348,9 +650,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph61.1",
@@ -363,12 +669,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -399,21 +703,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -443,9 +749,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph66.1",
@@ -458,12 +768,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -484,15 +792,11 @@
           "bbox": {
             "x": 994.5,
             "y": 757.5625,
-            "w": 166,
-            "h": 133
+            "w": 145.5,
+            "h": 112.375
           },
-          "minWidth": 145.5,
-          "minWidthBiasLeft": 21.84873949579832,
-          "minWidthBiasRight": 78.15126050420167,
-          "minHeight": 112.375,
-          "minHeightBiasTop": 87.73584905660378,
-          "minHeightBiasBottom": 12.264150943396217,
+          "originalW": 165.5,
+          "originalH": 132.375,
           "class": "complex",
           "label": "Ca/Cam/gCaMKK complex",
           "statesandinfos": [],
@@ -500,25 +804,24 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
-          "auxunitlayouts": {},
-          "expandcollapseRenderedStartX": 859.3656317365637,
-          "expandcollapseRenderedStartY": 378.4185362310945,
-          "expandcollapseRenderedCueSize": 12
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
         },
         "position": {
           "x": 994.5,
@@ -538,15 +841,11 @@
           "bbox": {
             "x": 994.5,
             "y": 734.625,
-            "w": 143.5,
-            "h": 64
+            "w": 122.25,
+            "h": 43.25
           },
-          "minWidth": 122.25,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 43.25,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 142.25,
+          "originalH": 63.25,
           "class": "complex",
           "label": "Ca/CaM complex",
           "statesandinfos": [],
@@ -554,25 +853,121 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 994.5,
+          "y": 734.625
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph45",
+          "bbox": {
+            "x": 1019,
+            "y": 734.625,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph11",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1019,
+          "y": 734.625
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph50",
+          "bbox": {
+            "x": 955,
+            "y": 734.625,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph11",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 955,
           "y": 734.625
         },
         "group": "nodes",
@@ -599,21 +994,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -634,15 +1031,11 @@
           "bbox": {
             "x": 659.136211133063,
             "y": 818.5801787701424,
-            "w": 140,
-            "h": 64
+            "w": 119.24999999999989,
+            "h": 43.25
           },
-          "minWidth": 119.24999999999989,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 43.25,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 139.2499999999999,
+          "originalH": 63.25,
           "class": "complex",
           "label": "Ca/CaM complex",
           "statesandinfos": [],
@@ -650,25 +1043,121 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 659.136211133063,
+          "y": 818.5801787701424
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph49",
+          "bbox": {
+            "x": 621.136211133063,
+            "y": 818.5801787701424,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph17",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 621.136211133063,
+          "y": 818.5801787701424
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph43",
+          "bbox": {
+            "x": 682.1362111330628,
+            "y": 818.5801787701424,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph17",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 682.1362111330628,
           "y": 818.5801787701424
         },
         "group": "nodes",
@@ -694,12 +1183,11 @@
             {
               "id": "glyph33_0",
               "bbox": {
-                "x": 35.014809917452276,
-                "y": 50,
+                "x": 48.72363201668577,
+                "y": 100,
                 "w": 32.9443359375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "bottom",
               "isDisplayed": true,
               "style": {
@@ -708,9 +1196,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -724,33 +1211,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "bottom": {
               "units": [
                 {
                   "id": "glyph33_0",
                   "bbox": {
-                    "x": 35.014809917452276,
-                    "y": 50,
+                    "x": 48.72363201668577,
+                    "y": 100,
                     "w": 32.9443359375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "bottom",
                   "isDisplayed": true,
                   "style": {
@@ -759,9 +1247,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -806,9 +1293,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph59.1",
@@ -821,12 +1312,10 @@
               "y": 100
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -856,12 +1345,11 @@
             {
               "id": "glyph32_0",
               "bbox": {
-                "x": 13.75864917297203,
-                "y": -50,
+                "x": 52.06618216050905,
+                "y": 0,
                 "w": 12,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -870,9 +1358,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {},
@@ -884,33 +1371,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "glyph32_0",
                   "bbox": {
-                    "x": 13.75864917297203,
-                    "y": -50,
+                    "x": 52.06618216050905,
+                    "y": 0,
                     "w": 12,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -919,9 +1407,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {},
@@ -964,12 +1451,11 @@
             {
               "id": "glyph28_0",
               "bbox": {
-                "x": 11.875,
-                "y": -50,
+                "x": 49.72251607491314,
+                "y": 0,
                 "w": 12,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -978,9 +1464,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -994,33 +1479,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "glyph28_0",
                   "bbox": {
-                    "x": 11.875,
-                    "y": -50,
+                    "x": 49.72251607491314,
+                    "y": 0,
                     "w": 12,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1029,9 +1515,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -1077,21 +1562,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1112,15 +1599,11 @@
           "bbox": {
             "x": 659.136211133063,
             "y": 1059.4375,
-            "w": 163.5,
-            "h": 132
+            "w": 142.5,
+            "h": 111.375
           },
-          "minWidth": 142.5,
-          "minWidthBiasLeft": 18.4210526315788,
-          "minWidthBiasRight": 81.5789473684212,
-          "minHeight": 111.375,
-          "minHeightBiasTop": 87.73584905660378,
-          "minHeightBiasBottom": 12.264150943396217,
+          "originalW": 162.5,
+          "originalH": 131.375,
           "class": "complex",
           "label": "Ca/Cam/gCaMKIV complex",
           "statesandinfos": [],
@@ -1128,26 +1611,281 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 659.136211133063,
           "y": 1059.4375
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph14",
+          "bbox": {
+            "x": 659.136211133063,
+            "y": 1037,
+            "w": 119.24999999999989,
+            "h": 43.25
+          },
+          "originalW": 139.2499999999999,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph4",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 659.136211133063,
+          "y": 1037
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph53",
+          "bbox": {
+            "x": 621.136211133063,
+            "y": 1037,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph14",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 621.136211133063,
+          "y": 1037
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph42",
+          "bbox": {
+            "x": 682.1362111330628,
+            "y": 1037,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph14",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 682.1362111330628,
+          "y": 1037
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph34",
+          "bbox": {
+            "x": 625.511211133063,
+            "y": 1096,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaMKIV",
+          "statesandinfos": [
+            {
+              "id": "glyph34_0",
+              "bbox": {
+                "x": 48.0786306693171,
+                "y": 0,
+                "w": 32.9443359375,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "T196"
+              },
+              "clazz": "state variable",
+              "parent": "glyph34"
+            }
+          ],
+          "parent": "glyph4",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph34_0",
+                  "bbox": {
+                    "x": 48.0786306693171,
+                    "y": 0,
+                    "w": 32.9443359375,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "T196"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph34"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph34",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 625.511211133063,
+          "y": 1096
         },
         "group": "nodes",
         "removed": false,
@@ -1172,9 +1910,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph60.1",
@@ -1187,12 +1929,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1213,15 +1953,11 @@
           "bbox": {
             "x": 994.5,
             "y": 1045.5603746770742,
-            "w": 164,
-            "h": 134.375
+            "w": 145.5,
+            "h": 114.375
           },
-          "minWidth": 145.5,
-          "minWidthBiasLeft": 21.84873949579832,
-          "minWidthBiasRight": 78.15126050420167,
-          "minHeight": 114.375,
-          "minHeightBiasTop": 87.73584905660378,
-          "minHeightBiasBottom": 12.264150943396217,
+          "originalW": 165.5,
+          "originalH": 134.375,
           "class": "complex",
           "label": "Ca/Cam/gCaMKIV complex",
           "statesandinfos": [],
@@ -1229,26 +1965,283 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 994.5,
           "y": 1045.5603746770742
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph29",
+          "bbox": {
+            "x": 960,
+            "y": 1083.6228746770742,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaMKIV",
+          "statesandinfos": [
+            {
+              "id": "glyph29_0",
+              "bbox": {
+                "x": 49.160661388532716,
+                "y": 0,
+                "w": 39.6142578125,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "value": "P",
+                "variable": "T196"
+              },
+              "clazz": "state variable",
+              "parent": "glyph29"
+            }
+          ],
+          "parent": "glyph6",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph29_0",
+                  "bbox": {
+                    "x": 49.160661388532716,
+                    "y": 0,
+                    "w": 39.6142578125,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "value": "P",
+                    "variable": "T196"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph29"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph29",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 1083.6228746770742
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph12",
+          "bbox": {
+            "x": 994.5,
+            "y": 1021.6228746770742,
+            "w": 122.25,
+            "h": 43.25
+          },
+          "originalW": 142.25,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph6",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 994.5,
+          "y": 1021.6228746770742
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph51",
+          "bbox": {
+            "x": 955,
+            "y": 1021.6228746770742,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 955,
+          "y": 1021.6228746770742
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph44",
+          "bbox": {
+            "x": 1019,
+            "y": 1021.6228746770742,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1019,
+          "y": 1021.6228746770742
         },
         "group": "nodes",
         "removed": false,
@@ -1273,9 +2266,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "4ba1b666-0578-952d-af1f-df5986a11cc0.1",
@@ -1288,12 +2285,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1324,21 +2319,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1369,21 +2366,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1413,9 +2412,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph63.1",
@@ -1428,12 +2431,10 @@
               "y": 100
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1463,12 +2464,11 @@
             {
               "id": "glyph24_0",
               "bbox": {
-                "x": 34.999268474121955,
-                "y": -50,
+                "x": 48.58633596382788,
+                "y": 0,
                 "w": 32.9443359375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -1477,9 +2477,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -1491,12 +2490,11 @@
             {
               "id": "glyph24_1",
               "bbox": {
-                "x": 35.375031326438894,
-                "y": 50,
+                "x": 52.056604170732534,
+                "y": 100,
                 "w": 40.17578125,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "bottom",
               "isDisplayed": true,
               "style": {
@@ -1505,9 +2503,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "stadium"
               },
               "state": {
@@ -1522,33 +2519,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "glyph24_0",
                   "bbox": {
-                    "x": 34.999268474121955,
-                    "y": -50,
+                    "x": 48.58633596382788,
+                    "y": 0,
                     "w": 32.9443359375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1557,9 +2555,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -1580,12 +2577,11 @@
                 {
                   "id": "glyph24_1",
                   "bbox": {
-                    "x": 35.375031326438894,
-                    "y": 50,
+                    "x": 52.056604170732534,
+                    "y": 100,
                     "w": 40.17578125,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "bottom",
                   "isDisplayed": true,
                   "style": {
@@ -1594,9 +2590,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "stadium"
                   },
                   "state": {
@@ -1633,15 +2628,11 @@
           "bbox": {
             "x": 993.7822632393872,
             "y": 383.2475809530113,
-            "w": 150,
-            "h": 64
+            "w": 128.2500000000001,
+            "h": 43.25
           },
-          "minWidth": 128.2500000000001,
-          "minWidthBiasLeft": 49.99999999999825,
-          "minWidthBiasRight": 50.00000000000175,
-          "minHeight": 43.25,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 148.2500000000001,
+          "originalH": 63.25,
           "class": "complex",
           "label": "Ca/CaM complex",
           "statesandinfos": [],
@@ -1649,25 +2640,121 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 993.7822632393872,
+          "y": 383.2475809530113
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph40",
+          "bbox": {
+            "x": 1021.2822632393872,
+            "y": 383.2475809530113,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph10",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1021.2822632393872,
+          "y": 383.2475809530113
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph56",
+          "bbox": {
+            "x": 951.2822632393871,
+            "y": 383.2475809530113,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph10",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 951.2822632393871,
           "y": 383.2475809530113
         },
         "group": "nodes",
@@ -1693,9 +2780,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph62.2",
@@ -1708,12 +2799,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1744,21 +2833,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1788,9 +2879,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph65.1",
@@ -1803,12 +2898,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1829,15 +2922,11 @@
           "bbox": {
             "x": 365,
             "y": 459.25,
-            "w": 163,
-            "h": 140
+            "w": 142.5,
+            "h": 116
           },
-          "minWidth": 142.5,
-          "minWidthBiasLeft": 21.84873949579832,
-          "minWidthBiasRight": 78.15126050420167,
-          "minHeight": 116,
-          "minHeightBiasTop": 41.509433962264154,
-          "minHeightBiasBottom": 58.490566037735846,
+          "originalW": 162.5,
+          "originalH": 136,
           "class": "complex",
           "label": "Ca/Cam/gCaMKII complex",
           "statesandinfos": [],
@@ -1845,26 +2934,342 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 365,
           "y": 459.25
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph23",
+          "bbox": {
+            "x": 332,
+            "y": 427,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "γCaMKII",
+          "statesandinfos": [
+            {
+              "id": "glyph23_0",
+              "bbox": {
+                "x": 50.07661688486833,
+                "y": 0,
+                "w": 32.9443359375,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "T287"
+              },
+              "clazz": "state variable",
+              "parent": "glyph23"
+            },
+            {
+              "id": "glyph23_1",
+              "bbox": {
+                "x": 50.07661688486833,
+                "y": 100,
+                "w": 33.505859375,
+                "h": 12
+              },
+              "anchorSide": "bottom",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "S334"
+              },
+              "clazz": "state variable",
+              "parent": "glyph23"
+            }
+          ],
+          "parent": "glyph8",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph23_0",
+                  "bbox": {
+                    "x": 50.07661688486833,
+                    "y": 0,
+                    "w": 32.9443359375,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "T287"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph23"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph23",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            },
+            "bottom": {
+              "units": [
+                {
+                  "id": "glyph23_1",
+                  "bbox": {
+                    "x": 50.07661688486833,
+                    "y": 100,
+                    "w": 33.505859375,
+                    "h": 12
+                  },
+                  "anchorSide": "bottom",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "S334"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph23"
+                }
+              ],
+              "location": "bottom",
+              "alignment": "left",
+              "parentNode": "glyph23",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 332,
+          "y": 427
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph13",
+          "bbox": {
+            "x": 365,
+            "y": 484,
+            "w": 119.25,
+            "h": 43.25
+          },
+          "originalW": 139.25,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph8",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 365,
+          "y": 484
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph54",
+          "bbox": {
+            "x": 327,
+            "y": 484,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph13",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 327,
+          "y": 484
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph38",
+          "bbox": {
+            "x": 388,
+            "y": 484,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph13",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 388,
+          "y": 484
         },
         "group": "nodes",
         "removed": false,
@@ -1889,9 +3294,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph58.1",
@@ -1904,12 +3313,10 @@
               "y": 100
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1930,15 +3337,11 @@
           "bbox": {
             "x": 709.5,
             "y": 459.25,
-            "w": 164,
-            "h": 140
+            "w": 143.5,
+            "h": 116
           },
-          "minWidth": 143.5,
-          "minWidthBiasLeft": 26.377508368843504,
-          "minWidthBiasRight": 73.62249163115649,
-          "minHeight": 116,
-          "minHeightBiasTop": 41.509433962264154,
-          "minHeightBiasBottom": 58.490566037735846,
+          "originalW": 163.5,
+          "originalH": 136,
           "class": "complex",
           "label": "Ca/Cam/gCaMKII complex",
           "statesandinfos": [],
@@ -1946,21 +3349,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -1977,19 +3382,331 @@
       },
       {
         "data": {
+          "id": "glyph20",
+          "bbox": {
+            "x": 676.915011642421,
+            "y": 427,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "γCaMKII",
+          "statesandinfos": [
+            {
+              "id": "glyph20_0",
+              "bbox": {
+                "x": 51.8541054510469,
+                "y": 0,
+                "w": 32.9443359375,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "variable": "T287"
+              },
+              "clazz": "state variable",
+              "parent": "glyph20"
+            },
+            {
+              "id": "glyph20_1",
+              "bbox": {
+                "x": 53.58923955449931,
+                "y": 100,
+                "w": 40.17578125,
+                "h": 12
+              },
+              "anchorSide": "bottom",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "value": "P",
+                "variable": "S334"
+              },
+              "clazz": "state variable",
+              "parent": "glyph20"
+            }
+          ],
+          "parent": "glyph5",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph20_0",
+                  "bbox": {
+                    "x": 51.8541054510469,
+                    "y": 0,
+                    "w": 32.9443359375,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "variable": "T287"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph20"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph20",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            },
+            "bottom": {
+              "units": [
+                {
+                  "id": "glyph20_1",
+                  "bbox": {
+                    "x": 53.58923955449931,
+                    "y": 100,
+                    "w": 40.17578125,
+                    "h": 12
+                  },
+                  "anchorSide": "bottom",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "value": "P",
+                    "variable": "S334"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph20"
+                }
+              ],
+              "location": "bottom",
+              "alignment": "left",
+              "parentNode": "glyph20",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 676.915011642421,
+          "y": 427
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph18",
+          "bbox": {
+            "x": 709.5,
+            "y": 484,
+            "w": 120.25,
+            "h": 43.25
+          },
+          "originalW": 140.25,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph5",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 709.5,
+          "y": 484
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph39",
+          "bbox": {
+            "x": 733,
+            "y": 484,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph18",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 733,
+          "y": 484
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph47",
+          "bbox": {
+            "x": 671,
+            "y": 484,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph18",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 671,
+          "y": 484
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
           "id": "glyph7",
           "bbox": {
             "x": 446.5,
             "y": 256.75,
-            "w": 164,
-            "h": 143
+            "w": 143.5,
+            "h": 119
           },
-          "minWidth": 143.5,
-          "minWidthBiasLeft": 21.84873949579832,
-          "minWidthBiasRight": 78.15126050420167,
-          "minHeight": 119,
-          "minHeightBiasTop": 41.509433962264154,
-          "minHeightBiasBottom": 58.490566037735846,
+          "originalW": 163.5,
+          "originalH": 139,
           "class": "complex",
           "label": "Ca/Cam/gCaMKII complex",
           "statesandinfos": [],
@@ -1997,26 +3714,346 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 0.5,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
           "x": 446.5,
           "y": 256.75
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph16",
+          "bbox": {
+            "x": 446.5,
+            "y": 283,
+            "w": 120.25,
+            "h": 43.25
+          },
+          "originalW": 140.25,
+          "originalH": 63.25,
+          "class": "complex",
+          "label": "Ca/CaM complex",
+          "statesandinfos": [],
+          "parent": "glyph7",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg2_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 446.5,
+          "y": 283
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph52",
+          "bbox": {
+            "x": 408,
+            "y": 283,
+            "w": 40,
+            "h": 40
+          },
+          "class": "simple chemical",
+          "label": "Ca++",
+          "statesandinfos": [],
+          "parent": "glyph16",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 408,
+          "y": 283
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph46",
+          "bbox": {
+            "x": 470,
+            "y": 283,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "CaM",
+          "statesandinfos": [],
+          "parent": "glyph16",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 470,
+          "y": 283
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "glyph21",
+          "bbox": {
+            "x": 413,
+            "y": 223,
+            "w": 70,
+            "h": 35
+          },
+          "class": "macromolecule",
+          "label": "γCaMKII",
+          "statesandinfos": [
+            {
+              "id": "glyph21_0",
+              "bbox": {
+                "x": 48.88118199843843,
+                "y": 0,
+                "w": 39.6142578125,
+                "h": 12
+              },
+              "anchorSide": "top",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "value": "P",
+                "variable": "T287"
+              },
+              "clazz": "state variable",
+              "parent": "glyph21"
+            },
+            {
+              "id": "glyph21_1",
+              "bbox": {
+                "x": 48.88118199843843,
+                "y": 100,
+                "w": 40.17578125,
+                "h": 12
+              },
+              "anchorSide": "bottom",
+              "isDisplayed": true,
+              "style": {
+                "font-size": 9,
+                "font-family": "Arial",
+                "font-style": "normal",
+                "font-weight": "normal",
+                "font-color": "#0f0f0f",
+                "border-width": 1,
+                "border-color": "#555555",
+                "shape-name": "stadium"
+              },
+              "state": {
+                "value": "P",
+                "variable": "S334"
+              },
+              "clazz": "state variable",
+              "parent": "glyph21"
+            }
+          ],
+          "parent": "glyph7",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": "1",
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {
+            "top": {
+              "units": [
+                {
+                  "id": "glyph21_0",
+                  "bbox": {
+                    "x": 48.88118199843843,
+                    "y": 0,
+                    "w": 39.6142578125,
+                    "h": 12
+                  },
+                  "anchorSide": "top",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "value": "P",
+                    "variable": "T287"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph21"
+                }
+              ],
+              "location": "top",
+              "alignment": "left",
+              "parentNode": "glyph21",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            },
+            "bottom": {
+              "units": [
+                {
+                  "id": "glyph21_1",
+                  "bbox": {
+                    "x": 48.88118199843843,
+                    "y": 100,
+                    "w": 40.17578125,
+                    "h": 12
+                  },
+                  "anchorSide": "bottom",
+                  "isDisplayed": true,
+                  "style": {
+                    "font-size": 9,
+                    "font-family": "Arial",
+                    "font-style": "normal",
+                    "font-weight": "normal",
+                    "font-color": "#0f0f0f",
+                    "border-width": 1,
+                    "border-color": "#555555",
+                    "shape-name": "stadium"
+                  },
+                  "state": {
+                    "value": "P",
+                    "variable": "S334"
+                  },
+                  "clazz": "state variable",
+                  "parent": "glyph21"
+                }
+              ],
+              "location": "bottom",
+              "alignment": "left",
+              "parentNode": "glyph21",
+              "renderLengthCache": [],
+              "lengthUsed": 0
+            }
+          }
+        },
+        "position": {
+          "x": 413,
+          "y": 223
         },
         "group": "nodes",
         "removed": false,
@@ -2042,21 +4079,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2086,9 +4125,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph68.2",
@@ -2101,12 +4144,10 @@
               "y": -100
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2136,12 +4177,11 @@
             {
               "id": "b6769d7e-7ff6-11a0-2620-b71d9cf91ded_0",
               "bbox": {
-                "x": 17.547363281249936,
-                "y": -50,
+                "x": 0,
+                "y": 0,
                 "w": 23.3447265625,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -2150,9 +4190,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -2165,33 +4204,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "b6769d7e-7ff6-11a0-2620-b71d9cf91ded_0",
                   "bbox": {
-                    "x": 17.547363281249936,
-                    "y": -50,
+                    "x": 0,
+                    "y": 0,
                     "w": 23.3447265625,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -2200,9 +4240,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -2247,21 +4286,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/rb3_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2290,9 +4331,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph67.1",
@@ -2305,12 +4350,10 @@
               "y": 0
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2340,21 +4383,23 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg4_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2384,12 +4429,11 @@
             {
               "id": "364697a4-255c-6c48-1fed-a8e91a24fc67_0",
               "bbox": {
-                "x": 16.998046874999936,
-                "y": -50,
+                "x": 0,
+                "y": 0,
                 "w": 22.24609375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -2398,9 +4442,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -2413,33 +4456,34 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
           "font-style": "normal",
           "font-weight": "normal",
           "color": "#000",
-          "ports": [],
-          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
           "background-fit": "none",
           "background-position-x": "50%",
           "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/pg1_gradient.png",
+          "ports": [],
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "364697a4-255c-6c48-1fed-a8e91a24fc67_0",
                   "bbox": {
-                    "x": 16.998046874999936,
-                    "y": -50,
+                    "x": 0,
+                    "y": 0,
                     "w": 22.24609375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -2448,9 +4492,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -2494,9 +4537,13 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
-          "background-opacity": 1,
+          "background-opacity": "1",
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
           "ports": [
             {
               "id": "glyph69.1",
@@ -2509,12 +4556,10 @@
               "y": 100
             }
           ],
-          "background-image": "http://newteditor.org/color-scheme-images/bw1_gradient.png",
-          "background-fit": "none",
-          "background-position-x": "50%",
-          "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
@@ -2539,6 +4584,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph68",
           "target": "glyph7",
@@ -2562,6 +4612,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph6",
           "target": "4ba1b666-0578-952d-af1f-df5986a11cc0",
@@ -2585,6 +4640,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "364697a4-255c-6c48-1fed-a8e91a24fc67",
           "target": "glyph69",
@@ -2608,6 +4668,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph27",
           "target": "glyph68",
@@ -2631,6 +4696,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph60",
           "target": "glyph6",
@@ -2654,6 +4724,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph4",
           "target": "glyph60",
@@ -2677,6 +4752,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "b6769d7e-7ff6-11a0-2620-b71d9cf91ded",
           "target": "glyph67",
@@ -2700,6 +4780,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph67",
           "target": "364697a4-255c-6c48-1fed-a8e91a24fc67",
@@ -2723,6 +4808,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph19",
           "target": "glyph67",
@@ -2746,6 +4836,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph48",
           "target": "glyph69",
@@ -2769,6 +4864,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph69",
           "target": "glyph55",
@@ -2792,6 +4892,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph55",
           "target": "glyph63",
@@ -2815,6 +4920,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph41",
           "target": "glyph63",
@@ -2838,6 +4948,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph63",
           "target": "glyph10",
@@ -2861,6 +4976,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph24",
           "target": "glyph62",
@@ -2884,6 +5004,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph10",
           "target": "glyph62",
@@ -2907,6 +5032,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph62",
           "target": "glyph5",
@@ -2930,6 +5060,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph65",
           "target": "glyph8",
@@ -2953,6 +5088,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph5",
           "target": "glyph65",
@@ -2976,6 +5116,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph31",
           "target": "glyph65",
@@ -2999,6 +5144,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph8",
           "target": "glyph58",
@@ -3022,6 +5172,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph58",
           "target": "glyph3",
@@ -3045,6 +5200,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph3",
           "target": "glyph61",
@@ -3068,6 +5228,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph61",
           "target": "glyph22",
@@ -3091,6 +5256,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph61",
           "target": "glyph17",
@@ -3114,6 +5284,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph35",
           "target": "glyph66",
@@ -3137,6 +5312,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph17",
           "target": "glyph66",
@@ -3160,6 +5340,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph66",
           "target": "glyph2",
@@ -3183,6 +5368,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph17",
           "target": "glyph59",
@@ -3206,6 +5396,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph33",
           "target": "glyph59",
@@ -3229,6 +5424,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph59",
           "target": "glyph4",
@@ -3252,6 +5452,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph30",
           "target": "glyph60",
@@ -3275,6 +5480,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph32",
           "target": "4ba1b666-0578-952d-af1f-df5986a11cc0",
@@ -3298,6 +5508,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "4ba1b666-0578-952d-af1f-df5986a11cc0",
           "target": "glyph28",
@@ -3321,6 +5536,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph28",
           "target": "glyph9",
@@ -3344,6 +5564,11 @@
           "language": "PD",
           "line-color": "#555555",
           "width": 1.25,
+          "background-fit": "cover",
+          "background-opacity": "1",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
           "cardinality": 0,
           "source": "glyph5",
           "target": "glyph68",
@@ -3368,7 +5593,7 @@
         "shape": "rectangle",
         "text-halign": "center",
         "text-valign": "center",
-        "background-color": "rgb(58,126,207)",
+        "background-color": "#ffffff",
         "opacity": "1"
       }
     },
@@ -3411,7 +5636,7 @@
         "curve-style": "straight",
         "width": "2px",
         "line-color": "rgb(58,126,207)",
-        "opacity": "0.7"
+        "opacity": "1"
       }
     },
     {
@@ -3428,23 +5653,54 @@
         "text-background-opacity": "1",
         "text-background-padding": "2px"
       }
+    },
+    {
+      "selector": "edge[class = 'necessary stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle-cross",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'production']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)"
+      }
+    },
+    {
+      "selector": "edge[class = 'catalysis']",
+      "style": {
+        "target-arrow-shape": "circle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
     }
   ],
-  "data": {},
   "zoomingEnabled": true,
   "userZoomingEnabled": true,
-  "zoom": 0.6675482660256817,
-  "minZoom": 1e-50,
-  "maxZoom": 1e+50,
+  "zoom": 0.693684249747043,
+  "minZoom": 0.125,
+  "maxZoom": 16,
   "panningEnabled": true,
   "userPanningEnabled": true,
   "pan": {
-    "x": 199.8860721322739,
-    "y": -7.3020546944552605
+    "x": 343.6715668416267,
+    "y": -20.84066020385717
   },
   "boxSelectionEnabled": true,
   "renderer": {
     "name": "canvas"
   },
-  "wheelSensitivity": 0.3
+  "wheelSensitivity": 0.1,
+  "motionBlur": true
 }

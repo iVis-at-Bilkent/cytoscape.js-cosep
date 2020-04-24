@@ -9,7 +9,6 @@
  */
 
 const PointD = require('cose-base').layoutBase.PointD;
-const CoSEPRotationalForce = require('./CoSEPRotationalForce');
 const CoSEPConstants = require('./CoSEPConstants');
 
 function CoSEPPortConstraint(edge, node) {
@@ -38,8 +37,9 @@ function CoSEPPortConstraint(edge, node) {
     // Holds the direction of the side the port is on
     this.portSide = null;
 
-    // Holds the rotational force induced to incident node
-    this.rotationalForce = new CoSEPRotationalForce( CoSEPConstants.EDGE_SHIFTING_PERIOD );
+    // Holds the sum of the rotational force induced to incident node
+    // Avg can be manually calculated
+    this.rotationalForce = 0;
 
     // Holds this edges other port constraint (if any)
     this.otherPortConstraint = null;
@@ -47,8 +47,9 @@ function CoSEPPortConstraint(edge, node) {
     // Hold the other node
     this.otherNode = this.edge.getOtherEnd(this.node);
 
-    // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
-    this.correspondingAngle = null;
+    // Holds the sum of the angle wrt to incident node and desired location.
+    // Avg can be manually calculated
+    this.correspondingAngle = 0;
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
@@ -139,6 +140,9 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function(){
     if( this.portConstraintType === this.constraintType['Absolute'] ) {
         this.portIndex = this.portConstraintParameter;
 
+        if( this.portIndex > this.portsPerSide * 4 - 1 )
+            throw "Error: An absolute port has higher index number than total number of ports!";
+
         let temp = this.node.getPortCoordinatesByIndex( this.portIndex );
         this.portSide = temp[0];
         this.portLocation = temp[1];
@@ -199,28 +203,28 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
  */
 CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, springForceY){
     if( this.portSide == this.sideDirection['Top'] ) {
-        this.rotationalForce.add( springForceX );
+        this.rotationalForce += springForceX;
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
-            this.node.addRotationalForce(springForceX);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce += springForceX;
         }
     } else if( this.portSide == this.sideDirection['Bottom'] ){
-        this.rotationalForce.add( -springForceX );
+        this.rotationalForce -= springForceX;
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
-            this.node.addRotationalForce(-springForceX);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce -= springForceX;
         }
     } else if( this.portSide == this.sideDirection['Right'] ){
-        this.rotationalForce.add( springForceY );
+        this.rotationalForce += springForceY;
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
-            this.node.addRotationalForce(springForceY);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce += springForceY;
         }
     } else {
-        this.rotationalForce.add( -springForceY );
+        this.rotationalForce -= springForceY;
         if(this.node.canBeRotated) {
-            this.correspondingAngle.add( Math.abs( this.calcAngle() ) );
-            this.node.addRotationalForce(-springForceY);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce -= springForceY;
         }
     }
 };
@@ -236,7 +240,9 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
         return;
 
     // Exceeds threshold?
-    let rotationalForceAvg = this.rotationalForce.getAverage();
+    // Get AVG and reset the sum
+    let rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_SHIFTING_PERIOD;
+    this.rotationalForce = 0;
     if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD )
         return;
 
@@ -453,42 +459,5 @@ CoSEPPortConstraint.prototype.calcPolishingForces = function(){
     this.node.polishingForceX -= polishingForceX;
     this.node.polishingForceY -= polishingForceY;
 };
-
-/*
-CoSEPPortConstraint.prototype.calcPolishingForces = function(){
-    let edgeVector = new PointD();
-    let polishingForceVector = new PointD();
-    let angle = this.calcAngle();
-    let constant = 1;
-
-    if( this.edge.getSource() === this.node ){
-        edgeVector.setX(this.edge.lengthX / this.edge.length);
-        edgeVector.setY(this.edge.lengthY / this.edge.length);
-    } else{
-        edgeVector.setX(-this.edge.lengthX / this.edge.length);
-        edgeVector.setY(-this.edge.lengthY / this.edge.length);
-    }
-
-    if( angle > 0 ){
-        polishingForceVector.setX( edgeVector.getY() );
-        polishingForceVector.setY( -edgeVector.getX() );
-    } else{
-        polishingForceVector.setX( -edgeVector.getY() );
-        polishingForceVector.setY( edgeVector.getX() );
-    }
-
-    if( Math.abs(angle) < 90 ){
-        constant =  Math.sin(Math.abs(angle)*Math.PI/180);
-    }
-
-    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX() * constant;
-    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY() * constant;
-
-    this.otherNode.polishingForceX += polishingForceX;
-    this.otherNode.polishingForceY += polishingForceY;
-    this.node.polishingForceX -= polishingForceX;
-    this.node.polishingForceY -= polishingForceY;
-};
- */
 
 module.exports = CoSEPPortConstraint;

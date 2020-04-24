@@ -5,8 +5,6 @@
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  */
 
-const PointD = require('cose-base').layoutBase.PointD;
-const DimensionD = require('cose-base').layoutBase.DimensionD;
 const FDLayoutConstants = require('cose-base').layoutBase.FDLayoutConstants;
 const CoSELayout = require('cose-base').CoSELayout;
 const CoSEPConstants = require('./CoSEPConstants');
@@ -14,7 +12,6 @@ const CoSEPGraphManager = require('./CoSEPGraphManager');
 const CoSEPGraph = require('./CoSEPGraph');
 const CoSEPNode = require('./CoSEPNode');
 const CoSEPEdge = require('./CoSEPEdge');
-const CoSEPRotationalForce = require('./CoSEPRotationalForce');
 
 // Constructor
 function CoSEPLayout() {
@@ -90,17 +87,6 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
-
-    // Node Rotation Related Variables
-    for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
-        let node = this.graphManager.nodesWithPorts[i];
-        if(node.canBeRotated) {
-            node.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
-            node.associatedPortConstraints.forEach(function ( port ) {
-                port.correspondingAngle = new CoSEPRotationalForce( CoSEPConstants.NODE_ROTATION_PERIOD );
-            });
-        }
-    }
 
     // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
     this.calcSpringForce = function(edge, idealLength){

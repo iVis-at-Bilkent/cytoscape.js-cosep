@@ -2,8 +2,11 @@
 	"_9886817c-7043-4de9-9895-0cd247f47190-3797d8d2-4f00-4d1f-9d85-ecad1e61746d": [
 		{
 			"endpoint": "Target",
-			"portConstraintType": "Absolute",
-			"portConstraintParameter": "3"
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
 		}
 	],
 	"_3797d8d2-4f00-4d1f-9d85-ecad1e61746d-a083be43-422d-9067-c688-661cec17e472": [
@@ -154,8 +157,11 @@
 	"_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0-d756f4ab-9813-4d55-aa86-c37dc7f3b286": [
 		{
 			"endpoint": "Target",
-			"portConstraintType": "Absolute",
-			"portConstraintParameter": "3"
+			"portConstraintType": "Sided",
+			"portConstraintParameter": [
+				"Top",
+				"Bottom"
+			]
 		}
 	],
 	"d756f4ab-9813-4d55-aa86-c37dc7f3b286-ac2f1b2b-2e6e-4647-84bd-c141925f4d85": [

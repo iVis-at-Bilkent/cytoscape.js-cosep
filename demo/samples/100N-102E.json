@@ -6756,7 +6756,7 @@
         "curve-style": "straight",
         "width": "2px",
         "line-color": "rgb(58,126,207)",
-        "opacity": "0.7"
+        "opacity": "1"
       }
     },
     {
@@ -6772,6 +6772,37 @@
         "text-background-shape": "round-rectangle",
         "text-background-opacity": "1",
         "text-background-padding": "2px"
+      }
+    },
+    {
+      "selector": "edge[class = 'necessary stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle-cross",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'production']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)"
+      }
+    },
+    {
+      "selector": "edge[class = 'catalysis']",
+      "style": {
+        "target-arrow-shape": "circle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
       }
     }
   ],

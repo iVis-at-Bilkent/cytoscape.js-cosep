@@ -5,25 +5,21 @@
         "data": {
           "id": "_82f19e9e-6aa2-42b3-8b5e-8cee17197085",
           "bbox": {
-            "x": 176.2704300738066,
-            "y": 288.2548570393354,
-            "w": 302.3938386692404,
-            "h": 284.0351830586877
+            "x": 206.82935768841583,
+            "y": 293.10831688452424,
+            "w": 288.0675734938809,
+            "h": 287.9878645468844
           },
-          "minWidth": 302.3938386692404,
-          "minWidthBiasLeft": 50.00000000000022,
-          "minWidthBiasRight": 49.99999999999978,
-          "minHeight": 284.0351830586877,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 316.0675734938809,
+          "originalH": 315.9878645468844,
           "class": "compartment",
           "label": "synaptic button",
           "statesandinfos": [],
           "language": "PD",
           "border-width": 0.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 14,
           "font-family": "Helvetica",
@@ -37,11 +33,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 176.2704300738066,
-          "y": 288.2548570393354
+          "x": 206.82935768841583,
+          "y": 293.10831688452424
         },
         "group": "nodes",
         "removed": false,
@@ -55,8 +53,8 @@
         "data": {
           "id": "_66737d5c-5193-43a2-baa6-094aa1c21654",
           "bbox": {
-            "x": 295.8423494084268,
-            "y": 413.64744856867924,
+            "x": 310.63084958388345,
+            "y": 420.4772491579664,
             "w": 60,
             "h": 30
           },
@@ -67,8 +65,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -82,11 +80,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 295.8423494084268,
-          "y": 413.64744856867924
+          "x": 310.63084958388345,
+          "y": 420.4772491579664
         },
         "group": "nodes",
         "removed": false,
@@ -100,8 +100,8 @@
         "data": {
           "id": "be08c23c-dca4-43cd-b8a6-06f6ebdaf710",
           "bbox": {
-            "x": 258.049992895414,
-            "y": 283.62883651233903,
+            "x": 319.2381444353563,
+            "y": 296.1126901621377,
             "w": 60,
             "h": 30
           },
@@ -112,8 +112,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -127,11 +127,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 258.049992895414,
-          "y": 283.62883651233903
+          "x": 319.2381444353563,
+          "y": 296.1126901621377
         },
         "group": "nodes",
         "removed": false,
@@ -145,8 +147,8 @@
         "data": {
           "id": "_96b935d7-083c-468d-8607-d3b70fff10a7",
           "bbox": {
-            "x": 262.3398081738084,
-            "y": 358.1128562700198,
+            "x": 286.7377251744353,
+            "y": 362.7140970980073,
             "w": 20,
             "h": 20
           },
@@ -156,8 +158,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -177,11 +179,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 262.3398081738084,
-          "y": 358.1128562700198
+          "x": 286.7377251744353,
+          "y": 362.7140970980073
         },
         "group": "nodes",
         "removed": false,
@@ -195,17 +199,13 @@
         "data": {
           "id": "_9007194d-c2e6-4939-a795-be71ae35a60d",
           "bbox": {
-            "x": 259.3544767769191,
-            "y": 187.2729215786033,
+            "x": 313.26002448654714,
+            "y": 195.69638059900043,
             "w": 33.25,
             "h": 33.25
           },
-          "minWidth": 33.25,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 33.25,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 61.25,
+          "originalH": 61.25,
           "class": "compartment",
           "label": "synaptic vesicle",
           "statesandinfos": [],
@@ -213,8 +213,8 @@
           "language": "PD",
           "border-width": 0.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 14,
           "font-family": "Helvetica",
@@ -228,11 +228,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 259.3544767769191,
-          "y": 187.2729215786033
+          "x": 313.26002448654714,
+          "y": 195.69638059900043
         },
         "group": "nodes",
         "removed": false,
@@ -246,8 +248,8 @@
         "data": {
           "id": "a083be43-422d-9067-c688-661cec17e472",
           "bbox": {
-            "x": 259.3544767769191,
-            "y": 187.2729215786033,
+            "x": 313.26002448654714,
+            "y": 195.69638059900043,
             "w": 30,
             "h": 30
           },
@@ -258,8 +260,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -273,11 +275,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 259.3544767769191,
-          "y": 187.2729215786033
+          "x": 313.26002448654714,
+          "y": 195.69638059900043
         },
         "group": "nodes",
         "removed": false,
@@ -291,8 +295,8 @@
         "data": {
           "id": "d2531344-d005-4b92-afd2-14dcb7d40965",
           "bbox": {
-            "x": 149.25832614086298,
-            "y": 257.66449925685174,
+            "x": 202.83618423934377,
+            "y": 256.26985535879567,
             "w": 30,
             "h": 30
           },
@@ -303,8 +307,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -318,11 +322,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 149.25832614086298,
-          "y": 257.66449925685174
+          "x": 202.83618423934377,
+          "y": 256.26985535879567
         },
         "group": "nodes",
         "removed": false,
@@ -336,8 +342,8 @@
         "data": {
           "id": "_135e2807-2b5c-4886-bbdf-d3c8bf433ab9",
           "bbox": {
-            "x": 197.77223568907257,
-            "y": 349.67400172377114,
+            "x": 225.57454073863525,
+            "y": 347.51334548303436,
             "w": 30,
             "h": 30
           },
@@ -348,8 +354,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -363,11 +369,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 197.77223568907257,
-          "y": 349.67400172377114
+          "x": 225.57454073863525,
+          "y": 347.51334548303436
         },
         "group": "nodes",
         "removed": false,
@@ -381,8 +389,8 @@
         "data": {
           "id": "ed79ab12-7b79-4a8a-80b3-c65181c076e4",
           "bbox": {
-            "x": 110.58909814567396,
-            "y": 379.64613921842954,
+            "x": 136.54785811409693,
+            "y": 370.4961222627594,
             "w": 30,
             "h": 30
           },
@@ -393,8 +401,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -408,11 +416,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 110.58909814567396,
-          "y": 379.64613921842954
+          "x": 136.54785811409693,
+          "y": 370.4961222627594
         },
         "group": "nodes",
         "removed": false,
@@ -426,8 +436,8 @@
         "data": {
           "id": "_2bdf0056-96f6-4184-a214-8c7cc7da6214",
           "bbox": {
-            "x": 137.1095615801151,
-            "y": 320.5607908442611,
+            "x": 168.97968945954386,
+            "y": 313.4300171941685,
             "w": 20,
             "h": 20
           },
@@ -437,8 +447,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -458,11 +468,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 137.1095615801151,
-          "y": 320.5607908442611
+          "x": 168.97968945954386,
+          "y": 313.4300171941685
         },
         "group": "nodes",
         "removed": false,
@@ -476,8 +488,8 @@
         "data": {
           "id": "ce103257-dbf5-430f-9e6c-1745990341de",
           "bbox": {
-            "x": 56.69851073918643,
-            "y": 308.31342071036784,
+            "x": 94.42057094147538,
+            "y": 288.97879870320736,
             "w": 60,
             "h": 30
           },
@@ -488,8 +500,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -503,11 +515,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 56.69851073918643,
-          "y": 308.31342071036784
+          "x": 94.42057094147538,
+          "y": 288.97879870320736
         },
         "group": "nodes",
         "removed": false,
@@ -521,8 +535,8 @@
         "data": {
           "id": "_9886817c-7043-4de9-9895-0cd247f47190",
           "bbox": {
-            "x": 127.16204703876046,
-            "y": 162.86226550999152,
+            "x": 194.38226813242966,
+            "y": 165.73938461108202,
             "w": 60,
             "h": 30
           },
@@ -533,8 +547,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -548,11 +562,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 127.16204703876046,
-          "y": 162.86226550999152
+          "x": 194.38226813242966,
+          "y": 165.73938461108202
         },
         "group": "nodes",
         "removed": false,
@@ -566,8 +582,8 @@
         "data": {
           "id": "_3797d8d2-4f00-4d1f-9d85-ecad1e61746d",
           "bbox": {
-            "x": 198.50005162039452,
-            "y": 203.44623572385493,
+            "x": 256.46828048659813,
+            "y": 209.34224499443798,
             "w": 20,
             "h": 20
           },
@@ -577,8 +593,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -598,11 +614,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 198.50005162039452,
-          "y": 203.44623572385493
+          "x": 256.46828048659813,
+          "y": 209.34224499443798
         },
         "group": "nodes",
         "removed": false,
@@ -616,25 +634,21 @@
         "data": {
           "id": "e95a1256-8a47-4aaf-b3d8-7d8387d5a31d",
           "bbox": {
-            "x": 530.1806185729938,
-            "y": 298.5854962913073,
-            "w": 193.8683290421913,
-            "h": 167.4032801212396
+            "x": 531.244394366966,
+            "y": 295.00883337498544,
+            "w": 190.00901463861186,
+            "h": 174.01086590823894
           },
-          "minWidth": 193.8683290421913,
-          "minWidthBiasLeft": 50.000000000000874,
-          "minWidthBiasRight": 49.999999999999126,
-          "minHeight": 167.4032801212396,
-          "minHeightBiasTop": 73.3918128654979,
-          "minHeightBiasBottom": 26.608187134502103,
+          "originalW": 218.00901463861186,
+          "originalH": 202.01086590823894,
           "class": "compartment",
           "label": "synaptic cleft",
           "statesandinfos": [],
           "language": "PD",
           "border-width": 0.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 14,
           "font-family": "Helvetica",
@@ -648,14 +662,16 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {},
-          "expandcollapseRenderedStartX": 442.17741405489244,
-          "expandcollapseRenderedStartY": 353.7327998369549,
-          "expandcollapseRenderedCueSize": 12
+          "expandcollapseRenderedStartX": 462.08407243787633,
+          "expandcollapseRenderedStartY": 390.9493452339636,
+          "expandcollapseRenderedCueSize": 14.115849403960992
         },
         "position": {
-          "x": 530.1806185729938,
-          "y": 298.5854962913073
+          "x": 531.244394366966,
+          "y": 295.00883337498544
         },
         "group": "nodes",
         "removed": false,
@@ -669,8 +685,8 @@
         "data": {
           "id": "b88b6460-4172-427f-abbe-d7c0f0a174ce",
           "bbox": {
-            "x": 595.4897830940895,
-            "y": 297.0118666119137,
+            "x": 594.623901686272,
+            "y": 312.71198411602137,
             "w": 60,
             "h": 30
           },
@@ -681,8 +697,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -696,11 +712,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 595.4897830940895,
-          "y": 297.0118666119137
+          "x": 594.623901686272,
+          "y": 312.71198411602137
         },
         "group": "nodes",
         "removed": false,
@@ -714,8 +732,8 @@
         "data": {
           "id": "fb8eb6bc-a39a-4361-b938-026a3b63a9b9",
           "bbox": {
-            "x": 449.8714540518982,
-            "y": 323.55063779267874,
+            "x": 452.86488704766015,
+            "y": 308.9838395208504,
             "w": 30,
             "h": 30
           },
@@ -726,8 +744,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -741,11 +759,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 449.8714540518982,
-          "y": 323.55063779267874
+          "x": 452.86488704766015,
+          "y": 308.9838395208504
         },
         "group": "nodes",
         "removed": false,
@@ -759,8 +779,8 @@
         "data": {
           "id": "_8ba53135-01b4-4a4b-b87d-a5971850cb39",
           "bbox": {
-            "x": 539.4179859887548,
-            "y": 365.66213635192713,
+            "x": 521.9030380054384,
+            "y": 365.38926632910494,
             "w": 30,
             "h": 30
           },
@@ -771,8 +791,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -786,11 +806,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 539.4179859887548,
-          "y": 365.66213635192713
+          "x": 521.9030380054384,
+          "y": 365.38926632910494
         },
         "group": "nodes",
         "removed": false,
@@ -804,8 +826,8 @@
         "data": {
           "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8",
           "bbox": {
-            "x": 514.2533529078593,
-            "y": 306.015269604664,
+            "x": 517.0713915297581,
+            "y": 303.3145282535582,
             "w": 20,
             "h": 20
           },
@@ -815,19 +837,19 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
               "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.1",
-              "x": 0,
-              "y": -70
+              "x": 70,
+              "y": 0
             },
             {
               "id": "_6865aebe-2564-4ff6-a15a-6bd07a3a0ef8.2",
-              "x": 0,
-              "y": 70
+              "x": -70,
+              "y": 0
             }
           ],
           "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
@@ -836,11 +858,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 514.2533529078593,
-          "y": 306.015269604664
+          "x": 517.0713915297581,
+          "y": 303.3145282535582
         },
         "group": "nodes",
         "removed": false,
@@ -854,8 +878,8 @@
         "data": {
           "id": "d9e08f4b-94b8-4285-af36-f4159b56a2fc",
           "bbox": {
-            "x": 452.3149643795609,
-            "y": 226.50885623068754,
+            "x": 488.96706701680165,
+            "y": 219.628400420866,
             "w": 20,
             "h": 20
           },
@@ -865,8 +889,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -886,11 +910,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 452.3149643795609,
-          "y": 226.50885623068754
+          "x": 488.96706701680165,
+          "y": 219.628400420866
         },
         "group": "nodes",
         "removed": false,
@@ -904,8 +930,8 @@
         "data": {
           "id": "_06e41c55-1352-407e-9c4b-604d3f5f616b",
           "bbox": {
-            "x": 517.7666115503043,
-            "y": 242.46765782236366,
+            "x": 548.9835079953723,
+            "y": 244.6074232490132,
             "w": 30,
             "h": 30
           },
@@ -916,8 +942,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -931,11 +957,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 517.7666115503043,
-          "y": 242.46765782236366
+          "x": 548.9835079953723,
+          "y": 244.6074232490132
         },
         "group": "nodes",
         "removed": false,
@@ -949,25 +977,21 @@
         "data": {
           "id": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
           "bbox": {
-            "x": 1114.9302457863675,
-            "y": 284.5609951073539,
-            "w": 725.3810398535437,
-            "h": 425.23497814496966
+            "x": 1082.223929059672,
+            "y": 276.54370679554034,
+            "w": 717.9020162661556,
+            "h": 381.70484179076595
           },
-          "minWidth": 725.3810398535437,
-          "minWidthBiasLeft": 50.000000000001755,
-          "minWidthBiasRight": 49.999999999998245,
-          "minHeight": 425.23497814496966,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 745.9020162661556,
+          "originalH": 409.70484179076595,
           "class": "compartment",
           "label": "muscle cytosol",
           "statesandinfos": [],
           "language": "PD",
           "border-width": 0.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 14,
           "font-family": "Helvetica",
@@ -981,14 +1005,16 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {},
-          "expandcollapseRenderedStartX": 746.8968956068019,
-          "expandcollapseRenderedStartY": 221.6947634625373,
-          "expandcollapseRenderedCueSize": 12
+          "expandcollapseRenderedStartX": 799.726995787632,
+          "expandcollapseRenderedStartY": 252.81969156990436,
+          "expandcollapseRenderedCueSize": 14.115849403960992
         },
         "position": {
-          "x": 1114.9302457863675,
-          "y": 284.5609951073539
+          "x": 1082.223929059672,
+          "y": 276.54370679554034
         },
         "group": "nodes",
         "removed": false,
@@ -1002,8 +1028,8 @@
         "data": {
           "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8",
           "bbox": {
-            "x": 783.8647258595958,
-            "y": 297.7012585846991,
+            "x": 754.8979209265941,
+            "y": 296.98298496426975,
             "w": 60,
             "h": 30
           },
@@ -1013,12 +1039,11 @@
             {
               "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8_0",
               "bbox": {
-                "x": 24.453125,
-                "y": -50,
+                "x": 49.45794619525183,
+                "y": 0,
                 "w": 28.90625,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -1027,9 +1052,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -1043,8 +1067,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1058,18 +1082,19 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "f3ac8950-6d69-4c5b-92dd-3020906ea2c8_0",
                   "bbox": {
-                    "x": 24.453125,
-                    "y": -50,
+                    "x": 49.45794619525183,
+                    "y": 0,
                     "w": 28.90625,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1078,9 +1103,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -1099,8 +1123,8 @@
           }
         },
         "position": {
-          "x": 783.8647258595958,
-          "y": 297.7012585846991
+          "x": 754.8979209265941,
+          "y": 296.98298496426975
         },
         "group": "nodes",
         "removed": false,
@@ -1114,8 +1138,8 @@
         "data": {
           "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0",
           "bbox": {
-            "x": 885.2766403936383,
-            "y": 231.556150753623,
+            "x": 876.1622909231087,
+            "y": 240.61325241554542,
             "w": 60,
             "h": 30
           },
@@ -1125,12 +1149,11 @@
             {
               "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0_0",
               "bbox": {
-                "x": 21.123046875,
-                "y": -50,
+                "x": 47.816028523707814,
+                "y": 0,
                 "w": 22.24609375,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -1139,9 +1162,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -1155,8 +1177,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1170,18 +1192,19 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "_4b4a1add-6cf6-47cb-b952-5ea0ceade9a0_0",
                   "bbox": {
-                    "x": 21.123046875,
-                    "y": -50,
+                    "x": 47.816028523707814,
+                    "y": 0,
                     "w": 22.24609375,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1190,9 +1213,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -1211,8 +1233,8 @@
           }
         },
         "position": {
-          "x": 885.2766403936383,
-          "y": 231.556150753623
+          "x": 876.1622909231087,
+          "y": 240.61325241554542
         },
         "group": "nodes",
         "removed": false,
@@ -1226,8 +1248,8 @@
         "data": {
           "id": "ac2f1b2b-2e6e-4647-84bd-c141925f4d85",
           "bbox": {
-            "x": 1042.3686264385096,
-            "y": 225.90187243064213,
+            "x": 1023.3489781883812,
+            "y": 240.94546167266378,
             "w": 30,
             "h": 30
           },
@@ -1238,8 +1260,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1253,11 +1275,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1042.3686264385096,
-          "y": 225.90187243064213
+          "x": 1023.3489781883812,
+          "y": 240.94546167266378
         },
         "group": "nodes",
         "removed": false,
@@ -1271,8 +1295,8 @@
         "data": {
           "id": "_264a7088-e810-4679-9c92-f06886510f98",
           "bbox": {
-            "x": 799.0843203454035,
-            "y": 238.0076764963991,
+            "x": 795.6389964685825,
+            "y": 243.83161789466618,
             "w": 20,
             "h": 20
           },
@@ -1282,8 +1306,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -1303,11 +1327,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 799.0843203454035,
-          "y": 238.0076764963991
+          "x": 795.6389964685825,
+          "y": 243.83161789466618
         },
         "group": "nodes",
         "removed": false,
@@ -1321,8 +1347,8 @@
         "data": {
           "id": "d756f4ab-9813-4d55-aa86-c37dc7f3b286",
           "bbox": {
-            "x": 972.324772946819,
-            "y": 211.46355524652063,
+            "x": 957.7652100707942,
+            "y": 222.97011466263703,
             "w": 20,
             "h": 20
           },
@@ -1332,8 +1358,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -1353,11 +1379,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 972.324772946819,
-          "y": 211.46355524652063
+          "x": 957.7652100707942,
+          "y": 222.97011466263703
         },
         "group": "nodes",
         "removed": false,
@@ -1371,17 +1399,13 @@
         "data": {
           "id": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
           "bbox": {
-            "x": 1153.7355112995508,
-            "y": 124.45247044730837,
-            "w": 87,
-            "h": 98
+            "x": 1130.8641734843104,
+            "y": 158.5700319987945,
+            "w": 63.25,
+            "h": 76.5
           },
-          "minWidth": 65.75,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 76.7,
-          "minHeightBiasTop": 49.999999999999346,
-          "minHeightBiasBottom": 50.000000000000654,
+          "originalW": 83.25,
+          "originalH": 96.5,
           "class": "complex",
           "label": "myosin",
           "statesandinfos": [],
@@ -1389,8 +1413,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1404,14 +1428,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
-          "auxunitlayouts": {},
-          "expandcollapseRenderedStartX": 1108.5757761368957,
-          "expandcollapseRenderedStartY": 231.51855782126574,
-          "expandcollapseRenderedCueSize": 12
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
         },
         "position": {
-          "x": 1153.7355112995508,
-          "y": 124.45247044730837
+          "x": 1130.8641734843104,
+          "y": 158.5700319987945
         },
         "group": "nodes",
         "removed": false,
@@ -1423,22 +1446,22 @@
       },
       {
         "data": {
-          "id": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "id": "_26a815b4-64c3-4797-9bfd-7dceafb3345d",
           "bbox": {
-            "x": 1195.7708374990975,
-            "y": 242.64263443384425,
+            "x": 1130.8641734843104,
+            "y": 136.9450319987945,
             "w": 60,
             "h": 30
           },
           "class": "macromolecule",
-          "label": "actin",
+          "label": "myosin",
           "statesandinfos": [],
-          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1452,11 +1475,107 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1195.7708374990975,
-          "y": 242.64263443384425
+          "x": 1130.8641734843104,
+          "y": 136.9450319987945
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_5fcbfc9c-92a0-45b2-834b-ad8866d4008b",
+          "bbox": {
+            "x": 1115.8641734843104,
+            "y": 180.1950319987945,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ATP",
+          "statesandinfos": [],
+          "parent": "_1129b8c7-71da-4a6c-8681-3082e6f04a6c",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1115.8641734843104,
+          "y": 180.1950319987945
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_9b7f467a-30eb-4b8e-a966-43692648a46e",
+          "bbox": {
+            "x": 1167.232065433169,
+            "y": 254.1061773642009,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_23d436e2-6633-42f2-98d0-00dbb962ac3d",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1167.232065433169,
+          "y": 254.1061773642009
         },
         "group": "nodes",
         "removed": false,
@@ -1470,8 +1589,8 @@
         "data": {
           "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6",
           "bbox": {
-            "x": 1112.4173672645989,
-            "y": 237.6887897753443,
+            "x": 1089.688388883403,
+            "y": 251.29635026072245,
             "w": 20,
             "h": 20
           },
@@ -1481,8 +1600,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -1493,7 +1612,7 @@
             {
               "id": "_3a96c155-e828-4038-8384-4c25f4f1aaf6.2",
               "x": 0,
-              "y": 70.00000000000105
+              "y": 70.00000000000085
             }
           ],
           "background-image": "http://newteditor.org/color-scheme-images/bw1_3d.png",
@@ -1502,11 +1621,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1112.4173672645989,
-          "y": 237.6887897753443
+          "x": 1089.688388883403,
+          "y": 251.29635026072245
         },
         "group": "nodes",
         "removed": false,
@@ -1520,8 +1641,8 @@
         "data": {
           "id": "_97c2c87b-c5d2-41fb-97f6-a1001075cf08",
           "bbox": {
-            "x": 1276.843536769925,
-            "y": 241.82576244730166,
+            "x": 1242.6834176560862,
+            "y": 245.7282792544105,
             "w": 20,
             "h": 20
           },
@@ -1531,8 +1652,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -1552,11 +1673,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1276.843536769925,
-          "y": 241.82576244730166
+          "x": 1242.6834176560862,
+          "y": 245.7282792544105
         },
         "group": "nodes",
         "removed": false,
@@ -1570,8 +1693,8 @@
         "data": {
           "id": "a0a8dd07-644b-4646-a305-ef249fa67752",
           "bbox": {
-            "x": 1317.540192356423,
-            "y": 187.23589536456083,
+            "x": 1281.5646102761618,
+            "y": 192.42945028801165,
             "w": 60,
             "h": 30
           },
@@ -1582,8 +1705,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1597,11 +1720,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1317.540192356423,
-          "y": 187.23589536456083
+          "x": 1281.5646102761618,
+          "y": 192.42945028801165
         },
         "group": "nodes",
         "removed": false,
@@ -1615,8 +1740,8 @@
         "data": {
           "id": "_20e434c6-e738-4ae5-8a8a-e49f53fe85fb",
           "bbox": {
-            "x": 1316.6393787238735,
-            "y": 88.56850603486907,
+            "x": 1269.267925372915,
+            "y": 102.3162859001574,
             "w": 30,
             "h": 30
           },
@@ -1627,8 +1752,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1642,11 +1767,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1316.6393787238735,
-          "y": 88.56850603486907
+          "x": 1269.267925372915,
+          "y": 102.3162859001574
         },
         "group": "nodes",
         "removed": false,
@@ -1660,29 +1787,24 @@
         "data": {
           "id": "_85682413-94f7-8b3c-e052-59a72cd48e12",
           "bbox": {
-            "x": 1330.2903764007108,
-            "y": 329.2625643462867,
-            "w": 85,
-            "h": 98
+            "x": 1314.63334110702,
+            "y": 327.14209179311297,
+            "w": 63.25,
+            "h": 76.5
           },
-          "minWidth": 63.25,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 76.69999999999999,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 83.25,
+          "originalH": 96.5,
           "class": "complex",
           "label": "tense",
           "statesandinfos": [
             {
               "id": "_85682413-94f7-8b3c-e052-59a72cd48e12_0",
               "bbox": {
-                "x": 22.23144531250007,
-                "y": -50.000000000000036,
+                "x": 51.212564299784425,
+                "y": 0,
                 "w": 24.462890625,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -1691,9 +1813,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -1707,8 +1828,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1722,18 +1843,19 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "_85682413-94f7-8b3c-e052-59a72cd48e12_0",
                   "bbox": {
-                    "x": 22.23144531250007,
-                    "y": -50.000000000000036,
+                    "x": 51.212564299784425,
+                    "y": 0,
                     "w": 24.462890625,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1742,9 +1864,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -1763,8 +1884,102 @@
           }
         },
         "position": {
-          "x": 1330.2903764007108,
-          "y": 329.2625643462867
+          "x": 1314.63334110702,
+          "y": 327.14209179311297
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_1ce3ffae-f9a7-09a1-c91f-bf176708c1d2",
+          "bbox": {
+            "x": 1314.63334110702,
+            "y": 305.51709179311297,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1314.63334110702,
+          "y": 305.51709179311297
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_0fbd0d13-c59b-48ab-240d-c262dd1bc480",
+          "bbox": {
+            "x": 1314.63334110702,
+            "y": 348.76709179311297,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_85682413-94f7-8b3c-e052-59a72cd48e12",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1314.63334110702,
+          "y": 348.76709179311297
         },
         "group": "nodes",
         "removed": false,
@@ -1778,8 +1993,8 @@
         "data": {
           "id": "e889d01c-1eb1-4c83-8bd9-0160e9c2abcb",
           "bbox": {
-            "x": 1445.9957657131395,
-            "y": 422.6732533795157,
+            "x": 1409.5499371927497,
+            "y": 386.00938801464247,
             "w": 60,
             "h": 30
           },
@@ -1790,8 +2005,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1805,11 +2020,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1445.9957657131395,
-          "y": 422.6732533795157
+          "x": 1409.5499371927497,
+          "y": 386.00938801464247
         },
         "group": "nodes",
         "removed": false,
@@ -1823,29 +2040,24 @@
         "data": {
           "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
           "bbox": {
-            "x": 1125.0784373310353,
-            "y": 335.5943664531708,
-            "w": 130,
-            "h": 98
+            "x": 1127.1064740619977,
+            "y": 345.9479552597931,
+            "w": 106.5,
+            "h": 76.5
           },
-          "minWidth": 109.20000000000005,
-          "minWidthBiasLeft": 49.99999999999301,
-          "minWidthBiasRight": 50.00000000000699,
-          "minHeight": 76.69999999999999,
-          "minHeightBiasTop": 50.000000000001755,
-          "minHeightBiasBottom": 49.999999999998245,
+          "originalW": 126.5,
+          "originalH": 96.5,
           "class": "complex",
           "label": "relaxed",
           "statesandinfos": [
             {
               "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27_0",
               "bbox": {
-                "x": 26.398925781249982,
-                "y": -50.000000000000036,
+                "x": 52.43053538131416,
+                "y": 0,
                 "w": 32.7978515625,
                 "h": 12
               },
-              "coordType": "relativeToSide",
               "anchorSide": "top",
               "isDisplayed": true,
               "style": {
@@ -1854,9 +2066,8 @@
                 "font-style": "normal",
                 "font-weight": "normal",
                 "font-color": "#0f0f0f",
-                "border-width": 2.25,
+                "border-width": 1,
                 "border-color": "#555555",
-                "background-color": "#ffffff",
                 "shape-name": "rectangle"
               },
               "label": {
@@ -1870,8 +2081,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -1885,18 +2096,19 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {
             "top": {
               "units": [
                 {
                   "id": "_04ea25d8-dfaa-7912-303f-be00b342fc27_0",
                   "bbox": {
-                    "x": 26.398925781249982,
-                    "y": -50.000000000000036,
+                    "x": 52.43053538131416,
+                    "y": 0,
                     "w": 32.7978515625,
                     "h": 12
                   },
-                  "coordType": "relativeToSide",
                   "anchorSide": "top",
                   "isDisplayed": true,
                   "style": {
@@ -1905,9 +2117,8 @@
                     "font-style": "normal",
                     "font-weight": "normal",
                     "font-color": "#0f0f0f",
-                    "border-width": 2.25,
+                    "border-width": 1,
                     "border-color": "#555555",
-                    "background-color": "#ffffff",
                     "shape-name": "rectangle"
                   },
                   "label": {
@@ -1926,8 +2137,149 @@
           }
         },
         "position": {
-          "x": 1125.0784373310353,
-          "y": 335.5943664531708
+          "x": 1127.1064740619977,
+          "y": 345.9479552597931
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_343e0d0d-eeac-5cf5-acec-bc15975650a3",
+          "bbox": {
+            "x": 1105.4814740619977,
+            "y": 324.3229552597931,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "myosin",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1105.4814740619977,
+          "y": 324.3229552597931
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "_96e17352-dd50-0332-a224-954cd97fc3c2",
+          "bbox": {
+            "x": 1105.4814740619977,
+            "y": 367.5729552597931,
+            "w": 60,
+            "h": 30
+          },
+          "class": "macromolecule",
+          "label": "actin",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb5_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1105.4814740619977,
+          "y": 367.5729552597931
+        },
+        "group": "nodes",
+        "removed": false,
+        "selected": false,
+        "selectable": true,
+        "locked": false,
+        "grabbable": true,
+        "classes": ""
+      },
+      {
+        "data": {
+          "id": "a3f830ac-34e3-466a-62ac-642bc3e51777",
+          "bbox": {
+            "x": 1163.7314740619977,
+            "y": 324.3229552597931,
+            "w": 30,
+            "h": 30
+          },
+          "class": "simple chemical",
+          "label": "ATP",
+          "statesandinfos": [],
+          "parent": "_04ea25d8-dfaa-7912-303f-be00b342fc27",
+          "language": "PD",
+          "border-width": 1.25,
+          "border-color": "#555555",
+          "background-opacity": 1,
+          "background-image-opacity": 1,
+          "text-wrap": "wrap",
+          "font-size": 11,
+          "font-family": "Helvetica",
+          "font-style": "normal",
+          "font-weight": "normal",
+          "color": "#000",
+          "ports": [],
+          "background-image": "http://newteditor.org/color-scheme-images/gb2_3d.png",
+          "background-fit": "none",
+          "background-position-x": "50%",
+          "background-position-y": "50%",
+          "background-width": "100%",
+          "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
+          "auxunitlayouts": {}
+        },
+        "position": {
+          "x": 1163.7314740619977,
+          "y": 324.3229552597931
         },
         "group": "nodes",
         "removed": false,
@@ -1941,8 +2293,8 @@
         "data": {
           "id": "_1e9c2dbf-2a4d-48c9-9d47-de9c0314f5b8",
           "bbox": {
-            "x": 1250.5550896273567,
-            "y": 423.58652636587937,
+            "x": 1235.101962146628,
+            "y": 390.3400417018766,
             "w": 20,
             "h": 20
           },
@@ -1952,8 +2304,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -1973,11 +2325,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1250.5550896273567,
-          "y": 423.58652636587937
+          "x": 1235.101962146628,
+          "y": 390.3400417018766
         },
         "group": "nodes",
         "removed": false,
@@ -1991,8 +2345,8 @@
         "data": {
           "id": "_6259ebd3-e879-4c70-b442-a602e5408989",
           "bbox": {
-            "x": 1218.398156504148,
-            "y": 480.55348417983873,
+            "x": 1218.4940777709794,
+            "y": 450.7711276909233,
             "w": 30,
             "h": 30
           },
@@ -2003,8 +2357,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -2018,11 +2372,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1218.398156504148,
-          "y": 480.55348417983873
+          "x": 1218.4940777709794,
+          "y": 450.7711276909233
         },
         "group": "nodes",
         "removed": false,
@@ -2036,8 +2392,8 @@
         "data": {
           "id": "fb04887c-b0a0-4a2d-8cdd-a70826c659ee",
           "bbox": {
-            "x": 1303.8843823208715,
-            "y": 471.1206679799028,
+            "x": 1290.95234244136,
+            "y": 429.9017615457057,
             "w": 30,
             "h": 30
           },
@@ -2048,8 +2404,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -2063,11 +2419,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1303.8843823208715,
-          "y": 471.1206679799028
+          "x": 1290.95234244136,
+          "y": 429.9017615457057
         },
         "group": "nodes",
         "removed": false,
@@ -2081,17 +2439,13 @@
         "data": {
           "id": "nwtN_d1535aaf-5d91-4108-9331-852d6acb876e",
           "bbox": {
-            "x": 955.9815797057314,
-            "y": 151.5621348675121,
+            "x": 945.4303596831671,
+            "y": 166.67300579840227,
             "w": 33.25,
             "h": 33.25
           },
-          "minWidth": 33.25,
-          "minWidthBiasLeft": 50,
-          "minWidthBiasRight": 50,
-          "minHeight": 33.25,
-          "minHeightBiasTop": 50,
-          "minHeightBiasBottom": 50,
+          "originalW": 61.25,
+          "originalH": 61.25,
           "class": "compartment",
           "label": "ER",
           "statesandinfos": [],
@@ -2099,8 +2453,8 @@
           "language": "PD",
           "border-width": 0.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 0.5,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 14,
           "font-family": "Helvetica",
@@ -2114,11 +2468,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 955.9815797057314,
-          "y": 151.5621348675121
+          "x": 945.4303596831671,
+          "y": 166.67300579840227
         },
         "group": "nodes",
         "removed": false,
@@ -2132,8 +2488,8 @@
         "data": {
           "id": "_8c083cee-7025-4035-9201-1319da22340b",
           "bbox": {
-            "x": 955.9815797057314,
-            "y": 151.5621348675121,
+            "x": 945.4303596831671,
+            "y": 166.67300579840227,
             "w": 30,
             "h": 30
           },
@@ -2144,8 +2500,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "font-size": 11,
           "font-family": "Helvetica",
@@ -2159,11 +2515,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 955.9815797057314,
-          "y": 151.5621348675121
+          "x": 945.4303596831671,
+          "y": 166.67300579840227
         },
         "group": "nodes",
         "removed": false,
@@ -2177,8 +2535,8 @@
         "data": {
           "id": "_00ac7e0a-288f-42e0-b252-9bcb59027572",
           "bbox": {
-            "x": 1264.9926864846466,
-            "y": 137.3471821540386,
+            "x": 1217.7918346430915,
+            "y": 150.71668986491898,
             "w": 20,
             "h": 20
           },
@@ -2188,8 +2546,8 @@
           "language": "PD",
           "border-width": 1.25,
           "border-color": "#555555",
-          "background-color": "#ffffff",
           "background-opacity": 1,
+          "background-image-opacity": 1,
           "text-wrap": "wrap",
           "ports": [
             {
@@ -2209,11 +2567,13 @@
           "background-position-y": "50%",
           "background-width": "100%",
           "background-height": "100%",
+          "expanding": false,
+          "infoboxCalculated": true,
           "auxunitlayouts": {}
         },
         "position": {
-          "x": 1264.9926864846466,
-          "y": 137.3471821540386
+          "x": 1217.7918346430915,
+          "y": 150.71668986491898
         },
         "group": "nodes",
         "removed": false,
@@ -3108,7 +3468,7 @@
         "shape": "rectangle",
         "text-halign": "center",
         "text-valign": "center",
-        "background-color": "rgb(58,126,207)",
+        "background-color": "#ffffff",
         "opacity": "1"
       }
     },
@@ -3151,7 +3511,7 @@
         "curve-style": "straight",
         "width": "2px",
         "line-color": "rgb(58,126,207)",
-        "opacity": "0.7"
+        "opacity": "1"
       }
     },
     {
@@ -3168,23 +3528,54 @@
         "text-background-opacity": "1",
         "text-background-padding": "2px"
       }
+    },
+    {
+      "selector": "edge[class = 'necessary stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle-cross",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'production']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)"
+      }
+    },
+    {
+      "selector": "edge[class = 'catalysis']",
+      "style": {
+        "target-arrow-shape": "circle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
+    },
+    {
+      "selector": "edge[class = 'stimulation']",
+      "style": {
+        "target-arrow-shape": "triangle",
+        "target-arrow-color": "rgb(58,126,207)",
+        "target-arrow-fill": "hollow"
+      }
     }
   ],
-  "data": {},
   "zoomingEnabled": true,
   "userZoomingEnabled": true,
-  "zoom": 0.88,
-  "minZoom": 1e-50,
-  "maxZoom": 1e+50,
+  "zoom": 1.176320783663416,
+  "minZoom": 0.125,
+  "maxZoom": 16,
   "panningEnabled": true,
   "userPanningEnabled": true,
   "pan": {
-    "x": 128,
-    "y": 174
+    "x": -36.07588336755873,
+    "y": 150.69589010508406
   },
   "boxSelectionEnabled": true,
   "renderer": {
     "name": "canvas"
   },
-  "wheelSensitivity": 0.3
+  "wheelSensitivity": 0.1,
+  "motionBlur": false
 }

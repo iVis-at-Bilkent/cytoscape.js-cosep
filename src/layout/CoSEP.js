@@ -1,4 +1,5 @@
 /**
+ * Main file that controls the layout flow
  *
  * @author Alihan Okka
  *
@@ -106,9 +107,11 @@ let getUserOptions = function (options) {
   LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = false;
 
   // Phase I of the algorithm
+  // Draft layout for skeleton
   LayoutConstants.QUALITY = 0;
 
-  // We don't need to animate CoSE-Bilkent part of the algorithm
+  // We don't need to animate CoSE-Bilkent part of the algorithm.
+  // This will change after phase I
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
@@ -127,7 +130,8 @@ let getUserOptions = function (options) {
       = LayoutConstants.DEFAULT_INCREMENTAL
       = false;
 
-  // Tiling is disabled
+  // Tiling is disabled because CoSE Graphmanager is deleting nodes
+  // Do this after CoSE
   CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
   // Thresholds for force in Phase II
@@ -289,27 +293,52 @@ class Layout extends ContinuousLayout {
     cosepLayout.initialPortConfiguration();
 
     // Initialize node rotations
+    // Default: Nodes with ports are allowed to rotate
     this.rotatableNodes = new HashMap();
     if(this.options.nodeRotations !== null && this.options.nodeRotations !== undefined && typeof this.options.nodeRotations === 'function'){
+      // There are nodes that can't rotate
       for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
         let node = cosepLayout.graphManager.nodesWithPorts[i];
         let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
-        if( this.options.nodeRotations( cyNode ) ) {
+        if( this.options.nodeRotations( cyNode ) === false ) {
+          node.canBeRotated = false;
+        }
+        else{
+          // Default option
           node.canBeRotated = true;
           this.rotatableNodes.put(node, cyNode);
         }
-        else{
-          node.canBeRotated = false;
-        }
+      }
+    } else{
+      // All nodes can rotate
+      for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
+        let node = cosepLayout.graphManager.nodesWithPorts[i];
+        let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
+        node.canBeRotated = true;
+        this.rotatableNodes.put(node, cyNode);
       }
     }
 
-    // Update Cytoscape Port Visualizations
-    this.updateCytoscapePortVisualization();
+    // Call tile methods if enabled
+    if( state.tile != null ){
+      CoSEPConstants.TILE = CoSEConstants.TILE = state.tile;
+    } else{
+      CoSEPConstants.TILE = CoSEConstants.TILE = true;
+    }
+
+    // pre-tile methods
+    this.cosepLayout.tilingPreLayout();
+
+    // Don't let tile nodes rotate
+    Object.keys(this.cosepLayout.toBeTiled).forEach(key =>
+    {
+      if (this.cosepLayout.toBeTiled[key])
+        this.idToLNode[key].canBeRotated = false;
+    });
 
     // Initialize second phase of the algorithm
     this.cosepLayout.secondPhaseInit();
-    this.state.maxIterations = this.cosepLayout.maxIterations * 2;
+    this.state.maxIterations = this.cosepLayout.maxIterations * 2; // Does this even matter?
   }
 
   // Get the top most ones of a list of nodes
@@ -392,6 +421,19 @@ class Layout extends ContinuousLayout {
 
     state.tickIndex = this.cosepLayout.totalIterations;
 
+    // For changing Phase from II to III
+    // and post-tile methods if enabled
+    if(isDone){
+      if(this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND) {
+        isDone = false;
+        state.phaseIIiterationCount = state.tickIndex;
+        this.cosepLayout.polishingPhaseInit();
+      } else if(this.cosepLayout.phase === CoSEPLayout.PHASE_POLISHING){
+        this.cosepLayout.tilingPostLayout();
+      }
+    }
+
+    // Update node positions
     this.state.nodes.forEach( n => {
       let s = this.getScratch(n);
       let location = this.idToLNode[n.data('id')];
@@ -399,14 +441,9 @@ class Layout extends ContinuousLayout {
       s.y = location.getCenterY();
     });
 
+    // Update Cytoscape visualization in 'during' layout
     if( state.animateContinuously)
       self.updateCytoscapePortVisualization();
-
-    if(isDone && this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND){
-      isDone = false;
-      state.phaseIIiterationCount = state.tickIndex;
-      this.cosepLayout.polishingPhaseInit();
-    }
 
     return isDone;
   }

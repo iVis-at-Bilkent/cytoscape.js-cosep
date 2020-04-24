@@ -9,7 +9,7 @@
 // Variables and Constants
 let metrics;
 let selectedEdge;
-let idealEdgeLength = 50;
+let unProperly;
 let constraints = {};
 let rotations = {};
 const indicatorTable = document.getElementById("indicTable");
@@ -30,7 +30,7 @@ let nodeRotationsFunc = function( node ){
 // Clear Selections/Options at start
 document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
-document.getElementById("sampleGraphs").selectedIndex = -1;
+document.getElementById("sampleGraphs").selectedIndex = 0;
 document.getElementById("portsPerSide").value = 5;
 document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
@@ -42,6 +42,8 @@ document.getElementById("nodeRotationAngleThreshold").value = 130;
 document.getElementById("polishingForce").value = 0.1;
 document.getElementById("oneDegreePortedNodes").checked = true;
 document.getElementById("oneDegreePortedNodesPeriod").value = 50;
+document.getElementById("idealEdgeLength").value = 50;
+document.getElementById("ratio").style.display = 'none';
 
 document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
@@ -180,12 +182,20 @@ document.getElementById("coseButton").addEventListener("click",function(){
     let layout = window.cy.layout({
         name: 'cose-bilkent',
         refresh:1,
-        tile:false,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked)
     });
 
     layout.run();
+
+    // For getting performance metrics
+    metrics = window.cy.layvo('get').generalProperties();
+    document.getElementById("edgeCrossing").innerHTML = metrics.numberOfEdgeCrosses;
+    document.getElementById("nodeOverlap").innerHTML = metrics.numberOfNodeOverlaps;
+
+    if( document.getElementById("ratio").style.display == 'block') {
+        document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
+    }
 });
 
 // Cosep Button
@@ -195,16 +205,18 @@ document.getElementById("cosepButton").addEventListener("click",function(){
         return;
     }
 
+    cy.startBatch();
     cy.edges().forEach(function ( edge ) {
         edge.style({'source-endpoint': 'outside-to-node'});
         edge.style({'target-endpoint': 'outside-to-node'});
     });
+    cy.endBatch();
 
     let layout = window.cy.layout({
         name: 'cosep',
         refresh:1,
         fit: true,
-        idealEdgeLength: idealEdgeLength,
+        idealEdgeLength: +document.getElementById("idealEdgeLength").value,
         fps: +document.getElementById("FPS").value,
         animate: ( document.getElementById("animate").checked) ? 'during' : false,
         randomize: !(document.getElementById("incremental").checked),
@@ -224,13 +236,70 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     if ( document.getElementById("animate").checked )
         layout.promiseOn('layoutstop').then(function( event ){ alert('CoSEP Layout is done!'); });
 
+    // Duration Time
+    let start = performance.now();
     layout.run();
+    document.getElementById("duration").innerHTML = Math.floor((performance.now() - start) * 100) / 100;
 
     // For getting performance metrics
     metrics = window.cy.layvo('get').generalProperties();
     document.getElementById("edgeCrossing").innerHTML = metrics.numberOfEdgeCrosses;
     document.getElementById("nodeOverlap").innerHTML = metrics.numberOfNodeOverlaps;
+
+    if( document.getElementById("ratio").style.display == 'block') {
+        document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
+    }
 });
+
+// Calculate properly oriented ported edges
+// Only for ports
+function calcProperlyOrientedPortedEdges(){
+    let numberOfPorts = Object.keys(constraints).length;
+    unProperly = 0;
+    let nodes = window.cy.nodes();
+    for(let i = 0; i < nodes.length; i++){
+        let node = nodes[i];
+        let nodeLoc = node.boundingBox();
+
+        let connectedEdges = node.connectedEdges();
+        for(let j = 0; j < connectedEdges.length; j++){
+            let edge = connectedEdges[j];
+
+            // If ported
+            if(constraints[edge.data('id')] && node.data('class') === 'process' ){
+                let edgeLoc = {
+                  x1 : edge.sourceEndpoint().x,
+                  y1 : edge.sourceEndpoint().y,
+                    x2 : edge.targetEndpoint().x,
+                    y2 : edge.targetEndpoint().y
+                };
+                let intersect1 = intersects(nodeLoc.x1, nodeLoc.y1, nodeLoc.x2, nodeLoc.y2,
+                    edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
+
+                let intersect2 = intersects(nodeLoc.x2, nodeLoc.y1, nodeLoc.x1, nodeLoc.y2,
+                    edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
+
+                if(intersect1 || intersect2){
+                    unProperly++;
+                }
+            }
+        }
+    }
+
+    return (numberOfPorts - unProperly) / numberOfPorts;
+}
+
+function intersects(a,b,c,d,p,q,r,s) {
+    let det, gamma, lambda;
+    det = (c - a) * (s - q) - (r - p) * (d - b);
+    if (det === 0) {
+        return false;
+    } else {
+        lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+        gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+        return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
+    }
+};
 
 // Export constraints JSON
 document.getElementById("exportToFile").addEventListener("click",function(){
@@ -262,7 +331,7 @@ document.getElementById('file-input').addEventListener('change', function (evt) 
         window.cy.edges().style({'source-arrow-shape':'none'});
         window.cy.edges().style({'target-arrow-shape':'none'});
 
-        fillLogsTableFromConstraints( true );
+        fillLogsTableFromConstraints( false );
 
         // Clear node rotations
         rotations = {};
@@ -500,7 +569,6 @@ let sbgnFileNames = {
     "sbgn2" : "CaMCamkDependantSignalingToNucleus",
     "sbgn3" : "IGFSignaling",
     "sbgn4" : "glycolysis",
-    "sbgn5" : "activatedSTAT1alphaInductionOfTheIRF1gene",
     "sca1" : "100N-102E",
     "sca2" : "200N-207E",
     "sca3" : "308N-318E",
@@ -519,6 +587,8 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
     clearNodeRotations();
 
     if( sampleGraphs.value == "sample1" ) {
+        document.getElementById("ratio").style.display = 'none';
+
         fetch("samples/sample1.json")
             .then(response => response.json())
             .then(json => {
@@ -534,6 +604,8 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             });
 
     } else if (sbgnFileNames[sampleGraphs.value]) {
+        document.getElementById("ratio").style.display = 'block';
+
         fetch("samples/" + sbgnFileNames[sampleGraphs.value] + ".json")
             .then(response => response.json())
             .then(json => {
@@ -566,7 +638,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                     .then(response => response.json())
                     .then(json => {
                         constraints = json;
-                        fillLogsTableFromConstraints( true );
+                        fillLogsTableFromConstraints( false );
                         fillNodeRotationTable();
                     });
                 document.getElementById("portsPerSide").value = 1;

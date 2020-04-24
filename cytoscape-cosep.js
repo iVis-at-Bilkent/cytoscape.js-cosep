@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -193,11 +193,9 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
 
-    // If the above remains true. CoSEPLayout will assign a CoSEPRotationalForce to this variable
-    this.rotationalForce = null;
-
-    // Stores rotational forces for one iteration. This contributes to above variable.
-    this.oneIterationRotForce = [];
+    // If the above remains true it will hold the sum of the rotational force induced to this node.
+    // Avg can be manually calculated
+    this.rotationalForce = 0;
 
     // This holds the additional force introduced in polishing phase
     this.polishingForceX = 0;
@@ -295,20 +293,6 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
 };
 
 /**
- * Used by ports to add their respective rotational force. Once all edges are done, the sum is added to local storage
- */
-CoSEPNode.prototype.addRotationalForce = function (rotationalForce) {
-    this.oneIterationRotForce.push(rotationalForce);
-
-    if (this.oneIterationRotForce.length === this.associatedPortConstraints.length) {
-        var temp = 0;
-        while (this.oneIterationRotForce.length !== 0) {
-            temp = temp + this.oneIterationRotForce.pop();
-        }this.rotationalForce.add(temp);
-    }
-};
-
-/**
  * Rotating the node if rotational force inflicted upon is greater than threshold.
  * Sometimes a 180 degree rotation is needed when the above metric does not detect a needed rotation.
  */
@@ -316,7 +300,8 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
     if (!this.canBeRotated) return;
 
     // Exceeds threshold? If not then how about 180 degree check
-    var rotationalForceAvg = this.rotationalForce.getAverage();
+    var rotationalForceAvg = this.rotationalForce / CoSEPConstants.NODE_ROTATION_PERIOD / this.associatedPortConstraints.length;
+    this.rotationalForce = 0;
     if (Math.abs(rotationalForceAvg) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD) {
         var topBottomRotation = false;
         var rightLeftRotation = false;
@@ -333,12 +318,16 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
 
             if (portConst.portSide == portConst.sideDirection['Top'] || portConst.portSide == portConst.sideDirection['Bottom']) {
                 topBottomPorts++;
-                if (portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
+                var avgCorrespondingAngle = portConst.correspondingAngle / CoSEPConstants.NODE_ROTATION_PERIOD;
+                portConst.correspondingAngle = 0;
+                if (avgCorrespondingAngle > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
                     topBottomObstruceAngles++;
                 }
             } else {
                 rightLeftPorts++;
-                if (portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
+                var _avgCorrespondingAngle = portConst.correspondingAngle / CoSEPConstants.NODE_ROTATION_PERIOD;
+                portConst.correspondingAngle = 0;
+                if (_avgCorrespondingAngle > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD) {
                     rightLeftObstruceAngles++;
                 }
             }
@@ -495,64 +484,13 @@ module.exports = CoSEPNode;
 
 
 /**
- *
- * This object is data structure holding rotational forces. The size should match the periods of phase 2 in order for
- * this class to work properly.
- *
- * The stored force could be:
- * 1) The force inflicted upon a port by the edge
- * 2) A node's total rotational force done by all of its' edges
- *
- * @author Alihan Okka
- *
- * @copyright i-Vis Research Group, Bilkent University, 2007 - present
- *
- */
-function CoSEPRotationalForce(size) {
-    this.size = size;
-    this.data = new Array(this.size);
-    this.current = 0;
-}
-
-CoSEPRotationalForce.prototype = Object.create(null);
-
-/**
- * Adds a number to the array
- * @param number
- */
-CoSEPRotationalForce.prototype.add = function (number) {
-    this.data[this.current] = number;
-    this.current = ++this.current % this.size;
-};
-
-/**
- * Returns the average of the forces stored.
- * @returns {number}
- */
-CoSEPRotationalForce.prototype.getAverage = function () {
-    var result = 0;
-    for (var i = 0; i < this.size; i++) {
-        result += this.data[i] / this.size;
-    }return result;
-};
-
-module.exports = CoSEPRotationalForce;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
  * Redirection to CoSEP Algorithm
  */
 
-module.exports = __webpack_require__(12);
+module.exports = __webpack_require__(11);
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -689,7 +627,7 @@ CoSEPEdge.prototype.storeRotationalForce = function (springForceX, springForceY)
 module.exports = CoSEPEdge;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -717,7 +655,7 @@ for (var prop in CoSEGraph) {
 module.exports = CoSEPGraph;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -765,7 +703,7 @@ CoSEPGraphManager.prototype.updateBounds = function () {
 module.exports = CoSEPGraphManager;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -778,16 +716,13 @@ module.exports = CoSEPGraphManager;
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  */
 
-var PointD = __webpack_require__(0).layoutBase.PointD;
-var DimensionD = __webpack_require__(0).layoutBase.DimensionD;
 var FDLayoutConstants = __webpack_require__(0).layoutBase.FDLayoutConstants;
 var CoSELayout = __webpack_require__(0).CoSELayout;
 var CoSEPConstants = __webpack_require__(1);
-var CoSEPGraphManager = __webpack_require__(8);
-var CoSEPGraph = __webpack_require__(7);
+var CoSEPGraphManager = __webpack_require__(7);
+var CoSEPGraph = __webpack_require__(6);
 var CoSEPNode = __webpack_require__(3);
-var CoSEPEdge = __webpack_require__(6);
-var CoSEPRotationalForce = __webpack_require__(4);
+var CoSEPEdge = __webpack_require__(5);
 
 // Constructor
 function CoSEPLayout() {
@@ -863,17 +798,6 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
-
-    // Node Rotation Related Variables
-    for (var i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
-        var node = this.graphManager.nodesWithPorts[i];
-        if (node.canBeRotated) {
-            node.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
-            node.associatedPortConstraints.forEach(function (port) {
-                port.correspondingAngle = new CoSEPRotationalForce(CoSEPConstants.NODE_ROTATION_PERIOD);
-            });
-        }
-    }
 
     // Calc of spring forces have to be changes according to ports and stored for edge shifting and rotation
     this.calcSpringForce = function (edge, idealLength) {
@@ -1027,7 +951,7 @@ CoSEPLayout.prototype.groupOneDegreeNodesAcrossPorts = function () {
 module.exports = CoSEPLayout;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1044,7 +968,6 @@ module.exports = CoSEPLayout;
  */
 
 var PointD = __webpack_require__(0).layoutBase.PointD;
-var CoSEPRotationalForce = __webpack_require__(4);
 var CoSEPConstants = __webpack_require__(1);
 
 function CoSEPPortConstraint(edge, node) {
@@ -1073,8 +996,9 @@ function CoSEPPortConstraint(edge, node) {
     // Holds the direction of the side the port is on
     this.portSide = null;
 
-    // Holds the rotational force induced to incident node
-    this.rotationalForce = new CoSEPRotationalForce(CoSEPConstants.EDGE_SHIFTING_PERIOD);
+    // Holds the sum of the rotational force induced to incident node
+    // Avg can be manually calculated
+    this.rotationalForce = 0;
 
     // Holds this edges other port constraint (if any)
     this.otherPortConstraint = null;
@@ -1082,8 +1006,9 @@ function CoSEPPortConstraint(edge, node) {
     // Hold the other node
     this.otherNode = this.edge.getOtherEnd(this.node);
 
-    // Holds the angle wrt to incident node and desired location. This is initialized if node can rotate
-    this.correspondingAngle = null;
+    // Holds the sum of the angle wrt to incident node and desired location.
+    // Avg can be manually calculated
+    this.correspondingAngle = 0;
 
     // Hold how many ports are available to one side
     this.portsPerSide = CoSEPConstants.PORTS_PER_SIDE;
@@ -1170,6 +1095,8 @@ function leftTest(point, otherPoint, testingPoint) {
 CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
     if (this.portConstraintType === this.constraintType['Absolute']) {
         this.portIndex = this.portConstraintParameter;
+
+        if (this.portIndex > this.portsPerSide * 4 - 1) throw "An absolute port has higher index number than total number of ports";
 
         var temp = this.node.getPortCoordinatesByIndex(this.portIndex);
         this.portSide = temp[0];
@@ -1271,28 +1198,28 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
  */
 CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
     if (this.portSide == this.sideDirection['Top']) {
-        this.rotationalForce.add(springForceX);
+        this.rotationalForce += springForceX;
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(Math.abs(this.calcAngle()));
-            this.node.addRotationalForce(springForceX);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce += springForceX;
         }
     } else if (this.portSide == this.sideDirection['Bottom']) {
-        this.rotationalForce.add(-springForceX);
+        this.rotationalForce -= springForceX;
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(Math.abs(this.calcAngle()));
-            this.node.addRotationalForce(-springForceX);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce -= springForceX;
         }
     } else if (this.portSide == this.sideDirection['Right']) {
-        this.rotationalForce.add(springForceY);
+        this.rotationalForce += springForceY;
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(Math.abs(this.calcAngle()));
-            this.node.addRotationalForce(springForceY);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce += springForceY;
         }
     } else {
-        this.rotationalForce.add(-springForceY);
+        this.rotationalForce -= springForceY;
         if (this.node.canBeRotated) {
-            this.correspondingAngle.add(Math.abs(this.calcAngle()));
-            this.node.addRotationalForce(-springForceY);
+            this.correspondingAngle += Math.abs(this.calcAngle());
+            this.node.rotationalForce -= springForceY;
         }
     }
 };
@@ -1307,7 +1234,9 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function () {
     if (this.portConstraintType == this.constraintType['Absolute']) return;
 
     // Exceeds threshold?
-    var rotationalForceAvg = this.rotationalForce.getAverage();
+    // Get AVG and reset the sum
+    var rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_SHIFTING_PERIOD;
+    this.rotationalForce = 0;
     if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD) return;
 
     var newIndex = null;
@@ -1504,53 +1433,16 @@ CoSEPPortConstraint.prototype.calcPolishingForces = function () {
     this.node.polishingForceY -= polishingForceY;
 };
 
-/*
-CoSEPPortConstraint.prototype.calcPolishingForces = function(){
-    let edgeVector = new PointD();
-    let polishingForceVector = new PointD();
-    let angle = this.calcAngle();
-    let constant = 1;
-
-    if( this.edge.getSource() === this.node ){
-        edgeVector.setX(this.edge.lengthX / this.edge.length);
-        edgeVector.setY(this.edge.lengthY / this.edge.length);
-    } else{
-        edgeVector.setX(-this.edge.lengthX / this.edge.length);
-        edgeVector.setY(-this.edge.lengthY / this.edge.length);
-    }
-
-    if( angle > 0 ){
-        polishingForceVector.setX( edgeVector.getY() );
-        polishingForceVector.setY( -edgeVector.getX() );
-    } else{
-        polishingForceVector.setX( -edgeVector.getY() );
-        polishingForceVector.setY( edgeVector.getX() );
-    }
-
-    if( Math.abs(angle) < 90 ){
-        constant =  Math.sin(Math.abs(angle)*Math.PI/180);
-    }
-
-    let polishingForceX = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getX() * constant;
-    let polishingForceY = CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH  * polishingForceVector.getY() * constant;
-
-    this.otherNode.polishingForceX += polishingForceX;
-    this.otherNode.polishingForceY += polishingForceY;
-    this.node.polishingForceX -= polishingForceX;
-    this.node.polishingForceY -= polishingForceY;
-};
- */
-
 module.exports = CoSEPPortConstraint;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var impl = __webpack_require__(5);
+var impl = __webpack_require__(4);
 
 // registers the extension on a cytoscape lib ref
 var register = function register(cytoscape) {
@@ -1569,7 +1461,7 @@ if (typeof cytoscape !== 'undefined') {
 module.exports = register;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1586,6 +1478,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
+ * Main file that controls the layout flow
  *
  * @author Alihan Okka
  *
@@ -1599,11 +1492,11 @@ var LayoutConstants = __webpack_require__(0).layoutBase.LayoutConstants;
 var CoSEPConstants = __webpack_require__(1);
 var CoSEConstants = __webpack_require__(0).CoSEConstants;
 var FDLayoutConstants = __webpack_require__(0).layoutBase.FDLayoutConstants;
-var CoSEPLayout = __webpack_require__(9);
+var CoSEPLayout = __webpack_require__(8);
 var CoSEPNode = __webpack_require__(3);
-var CoSEPPortConstraint = __webpack_require__(10);
+var CoSEPPortConstraint = __webpack_require__(9);
 
-var ContinuousLayout = __webpack_require__(13);
+var ContinuousLayout = __webpack_require__(12);
 var assign = __webpack_require__(2);
 var isFn = function isFn(fn) {
   return typeof fn === 'function';
@@ -1685,9 +1578,11 @@ var getUserOptions = function getUserOptions(options) {
   LayoutConstants.DEFAULT_UNIFORM_LEAF_NODE_SIZES = false;
 
   // Phase I of the algorithm
+  // Draft layout for skeleton
   LayoutConstants.QUALITY = 0;
 
-  // We don't need to animate CoSE-Bilkent part of the algorithm
+  // We don't need to animate CoSE-Bilkent part of the algorithm.
+  // This will change after phase I
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
@@ -1699,7 +1594,8 @@ var getUserOptions = function getUserOptions(options) {
   // Our incremental would be to skip over Phase I
   CoSEPConstants.DEFAULT_INCREMENTAL = CoSEConstants.DEFAULT_INCREMENTAL = FDLayoutConstants.DEFAULT_INCREMENTAL = LayoutConstants.DEFAULT_INCREMENTAL = false;
 
-  // Tiling is disabled
+  // Tiling is disabled because CoSE Graphmanager is deleting nodes
+  // Do this after CoSE
   CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
   // Thresholds for force in Phase II
@@ -1859,6 +1755,7 @@ var Layout = function (_ContinuousLayout) {
       cosepLayout.initialPortConfiguration();
 
       // Initialize node rotations
+      // Default: Nodes with ports are allowed to rotate
       this.rotatableNodes = new HashMap();
       if (this.options.nodeRotations !== null && this.options.nodeRotations !== undefined && typeof this.options.nodeRotations === 'function') {
         var _loop = function _loop(_i) {
@@ -1866,25 +1763,53 @@ var Layout = function (_ContinuousLayout) {
           var cyNode = _this2.state.nodes.filter(function (n) {
             return n.data('id') == node.id;
           });
-          if (_this2.options.nodeRotations(cyNode)) {
+          if (_this2.options.nodeRotations(cyNode) === false) {
+            node.canBeRotated = false;
+          } else {
+            // Default option
             node.canBeRotated = true;
             _this2.rotatableNodes.put(node, cyNode);
-          } else {
-            node.canBeRotated = false;
           }
         };
 
+        // There are nodes that can't rotate
         for (var _i = 0; _i < cosepLayout.graphManager.nodesWithPorts.length; _i++) {
           _loop(_i);
         }
+      } else {
+        var _loop2 = function _loop2(_i2) {
+          var node = cosepLayout.graphManager.nodesWithPorts[_i2];
+          var cyNode = _this2.state.nodes.filter(function (n) {
+            return n.data('id') == node.id;
+          });
+          node.canBeRotated = true;
+          _this2.rotatableNodes.put(node, cyNode);
+        };
+
+        // All nodes can rotate
+        for (var _i2 = 0; _i2 < cosepLayout.graphManager.nodesWithPorts.length; _i2++) {
+          _loop2(_i2);
+        }
       }
 
-      // Update Cytoscape Port Visualizations
-      this.updateCytoscapePortVisualization();
+      // Call tile methods if enabled
+      if (state.tile != null) {
+        CoSEPConstants.TILE = CoSEConstants.TILE = state.tile;
+      } else {
+        CoSEPConstants.TILE = CoSEConstants.TILE = true;
+      }
+
+      // pre-tile methods
+      this.cosepLayout.tilingPreLayout();
+
+      // Don't let tile nodes rotate
+      Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
+        if (_this2.cosepLayout.toBeTiled[key]) _this2.idToLNode[key].canBeRotated = false;
+      });
 
       // Initialize second phase of the algorithm
       this.cosepLayout.secondPhaseInit();
-      this.state.maxIterations = this.cosepLayout.maxIterations * 2;
+      this.state.maxIterations = this.cosepLayout.maxIterations * 2; // Does this even matter?
     }
 
     // Get the top most ones of a list of nodes
@@ -1974,6 +1899,19 @@ var Layout = function (_ContinuousLayout) {
 
       state.tickIndex = this.cosepLayout.totalIterations;
 
+      // For changing Phase from II to III
+      // and post-tile methods if enabled
+      if (isDone) {
+        if (this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND) {
+          isDone = false;
+          state.phaseIIiterationCount = state.tickIndex;
+          this.cosepLayout.polishingPhaseInit();
+        } else if (this.cosepLayout.phase === CoSEPLayout.PHASE_POLISHING) {
+          this.cosepLayout.tilingPostLayout();
+        }
+      }
+
+      // Update node positions
       this.state.nodes.forEach(function (n) {
         var s = _this3.getScratch(n);
         var location = _this3.idToLNode[n.data('id')];
@@ -1981,13 +1919,8 @@ var Layout = function (_ContinuousLayout) {
         s.y = location.getCenterY();
       });
 
+      // Update Cytoscape visualization in 'during' layout
       if (state.animateContinuously) self.updateCytoscapePortVisualization();
-
-      if (isDone && this.cosepLayout.phase === CoSEPLayout.PHASE_SECOND) {
-        isDone = false;
-        state.phaseIIiterationCount = state.tickIndex;
-        this.cosepLayout.polishingPhaseInit();
-      }
 
       return isDone;
     }
@@ -2127,7 +2060,7 @@ var Layout = function (_ContinuousLayout) {
 module.exports = Layout;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2142,14 +2075,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 
 var assign = __webpack_require__(2);
-var makeBoundingBox = __webpack_require__(14);
+var makeBoundingBox = __webpack_require__(13);
 
-var _require = __webpack_require__(15),
+var _require = __webpack_require__(14),
     setInitialPositionState = _require.setInitialPositionState,
     refreshPositions = _require.refreshPositions,
     getNodePositionData = _require.getNodePositionData;
 
-var _require2 = __webpack_require__(16),
+var _require2 = __webpack_require__(15),
     multitick = _require2.multitick;
 
 var Layout = function () {
@@ -2363,7 +2296,7 @@ var Layout = function () {
 module.exports = Layout;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2394,7 +2327,7 @@ module.exports = function (bb, cy) {
 };
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2436,7 +2369,7 @@ var refreshPositions = function refreshPositions(nodes, state) {
 module.exports = { setInitialPositionState: setInitialPositionState, getNodePositionData: getNodePositionData, refreshPositions: refreshPositions };
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

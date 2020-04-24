@@ -42,13 +42,29 @@
 	<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
 
 	<div id="house-container" class="text-center">
-		<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;margin-top: 5px">
-			Node Overlaps: <span id="nodeOverlap" class="badge badge-danger" style="font-size: 15px">0</span>
-		</label>
+		<h6 style="margin-top: 5px" ><b>Layout Results</b></h6>
 
-		<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;margin-top: 5px"">
-			Edge Crosses: <span id="edgeCrossing" class="badge badge-warning" style="font-size: 15px" >0</span>
-		</label>
+		<div>
+			<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;">
+				Node Overlaps: <span id="nodeOverlap" class="badge badge-warning" style="font-size: 15px">0</span>
+			</label>
+
+			<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;">
+				Edge Crosses: <span id="edgeCrossing" class="badge badge-warning" style="font-size: 15px" >0</span>
+			</label>
+		</div>
+
+		<div>
+			<label style="padding: 0 0 0 0; font-size: 15px;width: 100%;margin-bottom: 5px;">
+				Time Duration (ms): <span id="duration" class="badge badge-warning" style="font-size: 15px">0</span>
+			</label>
+		</div>
+
+		<div>
+			<label id="ratio"  style="padding: 0 0 0 0; font-size: 15px;width: 100%;margin-bottom: 5px;">
+				Ratio of Properly Oriented Edges(SBGN): <span id="properlyOrientedEdges" class="badge badge-warning" style="font-size: 15px">0</span>
+			</label>
+		</div>
 	</div>
 
 	<div id="optionsCard"  class="card" style="text-align: center">
@@ -65,6 +81,10 @@
 			<tr>
 				<td><span>Incremental</span></td>
 				<td style="text-align: center"><input id="incremental" class = "checkbox" type="checkbox" ></td>
+			</tr>
+			<tr>
+				<td><span>Ideal Edge Length</span></td>
+				<td><input id="idealEdgeLength" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
 			</tr>
 			<tr>
 				<td><span>Ports Per Node Side</span></td>
@@ -115,7 +135,6 @@
 							<option value="sbgn2">Graph 2</option>
 							<option value="sbgn3">Graph 3</option>
 							<option value="sbgn4">Graph 4</option>
-							<option value="sbgn5">Graph 5</option>
 						</optgroup>
 						<optgroup label="Scalability">
 							<option value="sca1">PD 100N</option>

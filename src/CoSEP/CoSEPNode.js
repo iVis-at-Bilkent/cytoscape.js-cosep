@@ -25,11 +25,9 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
 
-    // If the above remains true. CoSEPLayout will assign a CoSEPRotationalForce to this variable
-    this.rotationalForce = null;
-
-    // Stores rotational forces for one iteration. This contributes to above variable.
-    this.oneIterationRotForce = [];
+    // If the above remains true it will hold the sum of the rotational force induced to this node.
+    // Avg can be manually calculated
+    this.rotationalForce = 0;
 
     // This holds the additional force introduced in polishing phase
     this.polishingForceX = 0;
@@ -135,21 +133,6 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
 };
 
 /**
- * Used by ports to add their respective rotational force. Once all edges are done, the sum is added to local storage
- */
-CoSEPNode.prototype.addRotationalForce = function( rotationalForce ){
-    this.oneIterationRotForce.push(rotationalForce);
-
-    if( this.oneIterationRotForce.length === this.associatedPortConstraints.length ){
-        let temp = 0;
-        while( this.oneIterationRotForce.length !== 0 )
-            temp = temp + this.oneIterationRotForce.pop();
-
-        this.rotationalForce.add(temp);
-    }
-};
-
-/**
  * Rotating the node if rotational force inflicted upon is greater than threshold.
  * Sometimes a 180 degree rotation is needed when the above metric does not detect a needed rotation.
  */
@@ -158,7 +141,8 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
         return;
 
     // Exceeds threshold? If not then how about 180 degree check
-    let rotationalForceAvg = this.rotationalForce.getAverage();
+    let rotationalForceAvg = this.rotationalForce / CoSEPConstants.NODE_ROTATION_PERIOD / this.associatedPortConstraints.length;
+    this.rotationalForce = 0;
     if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD ){
         let topBottomRotation = false;
         let rightLeftRotation = false;
@@ -176,12 +160,16 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
 
             if( portConst.portSide == portConst.sideDirection['Top'] || portConst.portSide == portConst.sideDirection['Bottom']){
                 topBottomPorts++;
-                if( portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD ){
+                let avgCorrespondingAngle = portConst.correspondingAngle / CoSEPConstants.NODE_ROTATION_PERIOD;
+                portConst.correspondingAngle = 0;
+                if( avgCorrespondingAngle > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD ){
                     topBottomObstruceAngles++;
                 }
             } else{
                 rightLeftPorts++;
-                if( portConst.correspondingAngle.getAverage() > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD ){
+                let avgCorrespondingAngle = portConst.correspondingAngle / CoSEPConstants.NODE_ROTATION_PERIOD;
+                portConst.correspondingAngle = 0;
+                if(  avgCorrespondingAngle > CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD ){
                     rightLeftObstruceAngles++;
                 }
             }
