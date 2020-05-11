@@ -1096,7 +1096,7 @@ CoSEPPortConstraint.prototype.initialPortConfiguration = function () {
     if (this.portConstraintType === this.constraintType['Absolute']) {
         this.portIndex = this.portConstraintParameter;
 
-        if (this.portIndex > this.portsPerSide * 4 - 1) throw "An absolute port has higher index number than total number of ports";
+        if (this.portIndex > this.portsPerSide * 4 - 1) throw "Error: An absolute port has higher index number than total number of ports!";
 
         var temp = this.node.getPortCoordinatesByIndex(this.portIndex);
         this.portSide = temp[0];
@@ -2012,15 +2012,12 @@ var Layout = function (_ContinuousLayout) {
       var nodeWPorts = Object.values(this.nodesWithPorts);
       for (var i = 0; i < nodeWPorts.length; i++) {
         var _node = nodeWPorts[i];
-
-        if (_node.canBeRotated) {
-          var _cyNode = this.rotatableNodes.get(_node);
-          if (_cyNode.layoutDimensions().w !== _node.rect.width) {
-            var w = _cyNode.height();
-            var h = _cyNode.width();
-            _cyNode.style({ 'width': w });
-            _cyNode.style({ 'height': h });
-          }
+        var _cyNode = this.rotatableNodes.get(_node);
+        if (_cyNode.layoutDimensions().w !== _node.rect.width) {
+          var w = _cyNode.height();
+          var h = _cyNode.width();
+          _cyNode.style({ 'width': w });
+          _cyNode.style({ 'height': h });
         }
       }
 

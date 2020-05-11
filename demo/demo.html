@@ -3,6 +3,8 @@
 <html>
 
 <head>
+	<meta charset="UTF-8" />
+
 	<title>cytoscape-cosep.js demo</title>
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
@@ -23,8 +25,8 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-	<!-- JS, Popper.js, and jQuery -->
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<!-- JS, Popper.js, Bootstrap and jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -34,221 +36,283 @@
 
 	<!-- For edge detection -->
 	<script src="https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-layvo/unstable/cytoscape-layvo.js"></script>
+
+	<!-- GraphML -->
+	<script src="https://unpkg.com/cytoscape-graphml/cytoscape-graphml.js"></script>
 </head>
 
 <body>
-<div class="leftOfCytoscape">
-	<button id="coseButton" type="button" class="btn btn-secondary btn-sm">CoSE Bilkent Layout</button>
-	<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
 
-	<div id="house-container" class="text-center">
-		<h6 style="margin-top: 5px" ><b>Layout Results</b></h6>
-
-		<div>
-			<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;">
-				Node Overlaps: <span id="nodeOverlap" class="badge badge-warning" style="font-size: 15px">0</span>
-			</label>
-
-			<label style="padding: 0 0 0 0; font-size: 15px;width: 45%;margin-bottom: 5px;">
-				Edge Crosses: <span id="edgeCrossing" class="badge badge-warning" style="font-size: 15px" >0</span>
-			</label>
-		</div>
-
-		<div>
-			<label style="padding: 0 0 0 0; font-size: 15px;width: 100%;margin-bottom: 5px;">
-				Time Duration (ms): <span id="duration" class="badge badge-warning" style="font-size: 15px">0</span>
-			</label>
-		</div>
-
-		<div>
-			<label id="ratio"  style="padding: 0 0 0 0; font-size: 15px;width: 100%;margin-bottom: 5px;">
-				Ratio of Properly Oriented Edges(SBGN): <span id="properlyOrientedEdges" class="badge badge-warning" style="font-size: 15px">0</span>
-			</label>
-		</div>
-	</div>
-
-	<div id="optionsCard"  class="card" style="text-align: center">
-		<label><b>Layout Options</b></label>
+	<div id="portLegend" class="card" style="text-align: center">
+		<label><i><b>Port Legend</b></i></label>
 		<table>
 			<tr>
-				<td><span>Animate</span></td>
-				<td style="text-align: center"><input id="animate" class = "checkbox" type="checkbox"></td>
-			</tr>
-			<tr>
-				<td><span>FPS</span></td>
-				<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Incremental</span></td>
-				<td style="text-align: center"><input id="incremental" class = "checkbox" type="checkbox" ></td>
-			</tr>
-			<tr>
-				<td><span>Ideal Edge Length</span></td>
-				<td><input id="idealEdgeLength" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Ports Per Node Side</span></td>
-				<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Edge Shifting Period</span></td>
-				<td><input id="edgeShiftingPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Edge Shifting Force Threshold</span></td>
-				<td><input id="edgeShiftingForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Node Rotation Period</span></td>
-				<td><input id="nodeRotationPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Node Rotation Force Threshold</span></td>
-				<td><input id="nodeRotationForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Node Rotation(180&#176;) Angle Threshold</span></td>
-				<td><input id="nodeRotationAngleThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Polishing Force Strength</span></td>
-				<td><input id="polishingForce" class="textField" type="text" maxlength=4 size="2" style="text-align: center"></td>
-			</tr>
-			<tr>
-				<td><span>Group 1-Degree Ported Nodes </span></td>
-				<td style="text-align: center"><input id="oneDegreePortedNodes" class = "checkbox" type="checkbox"></td>
-			</tr>
-			<tr>
-				<td><span>Group 1-Degree Period </span></td>
-				<td style="text-align: center"><input id="oneDegreePortedNodesPeriod" class="textField" type="text" maxlength=4 size="2" style="text-align: center"></td>
-			</tr>
-		</table>
-
-		<table>
-			<tr>
-				<td style="color:#000"><span><b>Load Sample Graphs:</b></span></td>
 				<td>
-					<select id="sampleGraphs">
-						<option value="sample1">Sandbox Graph</option>
-						<optgroup label="SBGN-PD">
-							<option value="sbgn1">Graph 1</option>
-							<option value="sbgn2">Graph 2</option>
-							<option value="sbgn3">Graph 3</option>
-							<option value="sbgn4">Graph 4</option>
-						</optgroup>
-						<optgroup label="Scalability">
-							<option value="sca1">PD 100N</option>
-							<option value="sca2">PD 200N</option>
-							<option value="sca3">PD 300N</option>
-							<option value="sca4">PD 400N</option>
-						</optgroup>
-					</select>
+					<img src="legend/freePortEdge.png">
+				</td>
+				<td>
+					<label>Free Port</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="legend/sidedPortEdge.png">
+				</td>
+				<td>
+					<label>Sided Port</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="legend/absolutePortEdge.png">
+				</td>
+				<td>
+					<label>Absolute Port</label>
 				</td>
 			</tr>
 		</table>
 	</div>
 
-	<button id="importFromFile" type="button" class="btn btn-dark btn-sm py-0" onclick="document.getElementById('file-input').click();">Import constraint from file</button>
-	<input id="file-input" type="file" name="name" style="display: none;" />
+	<div id="leftOfCytoscape">
+		<!-- Buttons -->
+		<button id="coseButton" type="button" class="btn btn-dark btn-sm">CoSE Bilkent Layout</button>
+		<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
 
-	<button id="exportToFile" type="button" class="btn btn-dark btn-sm py-0">Export constraint from file</button>
+		<!-- Layout Results -->
+		<div id="house-container" class="text-center">
+			<i><b>Layout Results</b></i>
 
-	<div id="indicatorCard"  class="card" style="text-align: center">
-		<label><b> Selected Edge </b></label>
-		<table id="indicTable">
-			<tr>
-				<td><span><b style="color:#930fcf;"> Source </b></span></td>
-				<td><span><b> &#10230;</b></span></td>
-				<td><span><b style="color:#00c6cf;"> Target </b></span></td>
-			</tr>
-		</table>
-	</div>
+			<div>
+				<label style="padding: 0 0 0 0; font-size: 14px;width: 45%;margin-bottom: 5px;">
+					Node Overlaps: <span id="nodeOverlap" class="badge badge-warning" style="font-size: 14px">0</span>
+				</label>
 
-	<div id="addConsCard"  class="card" style="text-align: center;opacity: 0;display: none">
-		<button class="btn btn-link py-0" type="button" style="font-size: 1em;"
-				data-toggle="collapse" data-target="#collapseExample"
-				aria-expanded="false" aria-controls="collapseExample">
-			Add Port Constraint
-		</button>
-		<div class="collapse" id="collapseExample">
-			<table id="consTable">
+				<label style="padding: 0 0 0 0; font-size: 14px;width: 45%;margin-bottom: 5px;">
+					Edge Crosses: <span id="edgeCrossing" class="badge badge-warning" style="font-size: 14px" >0</span>
+				</label>
+			</div>
+
+			<div>
+				<label style="padding: 0 0 0 0; font-size: 14px;width: 100%;margin-bottom: 5px;">
+					Time Duration (ms): <span id="duration" class="badge badge-warning" style="font-size: 14px">0</span>
+				</label>
+			</div>
+
+			<div>
+				<label id="ratio"  style="padding: 0 0 0 0; font-size: 14px;width: 100%;margin-bottom: 5px;">
+					Ratio of Properly Oriented Ports: <span id="properlyOrientedEdges" class="badge badge-warning" style="font-size: 14px">0</span>
+				</label>
+			</div>
+		</div>
+
+		<!-- Import/Export, Graph Change -->
+		<div id="graphManipulationCard" class="card" style="text-align: center">
+			<label><i><b>Import / Export</b></i></label>
+			<table>
 				<tr>
-					<td><span> Endpoint </span></td>
 					<td>
-						<select id="endpoint">
-							<option value="Source">Source</option>
-							<option value="Target">Target</option>
+						<span>Load Sample Graphs:</span>
+					</td>
+					<td>
+						<select id="sampleGraphs">
+							<option value="sample1">Sandbox Graph</option>
+							<optgroup label="SBGN-PD">
+								<option value="sbgn1">Graph 1</option>
+								<option value="sbgn2">Graph 2</option>
+								<option value="sbgn3">Graph 3</option>
+								<option value="sbgn4">Graph 4</option>
+							</optgroup>
+							<optgroup label="Scalability">
+								<option value="sca1">PD 100N</option>
+								<option value="sca2">PD 200N</option>
+								<option value="sca3">PD 300N</option>
+								<option value="sca4">PD 400N</option>
+							</optgroup>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td><span> Type </span></td>
 					<td>
-						<select id="consType">
-							<option value="Free">Free</option>
-							<option value="Sided">Sided</option>
-							<option value="Absolute">Abs. Position</option>
-						</select>
+						<span>Import Graph from:</span>
+					</td>
+					<td>
+						<button id="importGraphML" type="button" class="btn-dark btn-sm py-0" onclick="document.getElementById('importGraphML-input').click();">GraphML</button>
+						<input id="importGraphML-input" type="file" name="name" style="display: none;" />
 					</td>
 				</tr>
-				<tr id="nodeSidesRow" style="display:none;">
-					<td><span> Node Side(s) </span></td>
-					<td>
-						<select id="nodeSides" multiple>
-							<option value="Top">Top</option>
-							<option value="Right">Right</option>
-							<option value="Bottom">Bottom</option>
-							<option value="Left">Left</option>
-						</select>
-					</td>
+			</table>
+
+			<!-- Constrant Json import/export -->
+			<div>
+				<button id="importFromFile" type="button" class="btn btn-secondary btn-sm py-0" onclick="document.getElementById('file-input').click();">Import constraints from file</button>
+				<input id="file-input" type="file" name="name" style="display: none;" />
+
+				<button id="exportToFile" type="button" class="btn btn-secondary btn-sm py-0">Export constraints to a file</button>
+			</div>
+
+			<div style="text-align: center">
+				<button id="addRandomConstraints" type="button" class="btn-dark btn-sm py-0">Add Random Constraints to Graph</button>
+			</div>
+		</div>
+
+		<!-- Layout Options -->
+		<div id="optionsCard"  class="card" style="text-align: center">
+			<label><i><b>Layout Options</b></i></label>
+			<table>
+				<tr>
+					<td><span>Animate</span></td>
+					<td style="text-align: center"><input id="animate" class = "checkbox" type="checkbox"></td>
 				</tr>
-				<tr id="portIndexRow" style="display:none;">
-					<td><span> Port Index </span></td>
-					<td><input id="portIndex" class="textField" type="text" maxlength=5 size="10" style="text-align: center" ></td>
+				<tr>
+					<td><span>FPS</span></td>
+					<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
 				</tr>
-				<tr >
-					<td><span>  </span></td>
-					<td><button id="addConstraint" type="button" class="btn btn-success btn-sm">Add</button></td>
-					<td><span>  </span></td>
+				<tr>
+					<td><span>Incremental</span></td>
+					<td style="text-align: center"><input id="incremental" class = "checkbox" type="checkbox" ></td>
+				</tr>
+				<tr>
+					<td><span>Ideal Edge Length</span></td>
+					<td><input id="idealEdgeLength" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Ports Per Node Side</span></td>
+					<td><input id="portsPerSide" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Edge Shifting Period</span></td>
+					<td><input id="edgeShiftingPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Edge Shifting Force Threshold</span></td>
+					<td><input id="edgeShiftingForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Node Rotation Period</span></td>
+					<td><input id="nodeRotationPeriod" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Node Rotation Force Threshold</span></td>
+					<td><input id="nodeRotationForceThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Node Rotation(180&#176;) Angle Threshold</span></td>
+					<td><input id="nodeRotationAngleThreshold" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Polishing Force Strength</span></td>
+					<td><input id="polishingForce" class="textField" type="text" maxlength=4 size="2" style="text-align: center"></td>
+				</tr>
+				<tr>
+					<td><span>Group 1-Degree Ported Nodes </span></td>
+					<td style="text-align: center"><input id="oneDegreePortedNodes" class = "checkbox" type="checkbox"></td>
+				</tr>
+				<tr>
+					<td><span>Group 1-Degree Period </span></td>
+					<td style="text-align: center"><input id="oneDegreePortedNodesPeriod" class="textField" type="text" maxlength=4 size="2" style="text-align: center"></td>
 				</tr>
 			</table>
 		</div>
-	</div>
 
-	<div id="logsCard" class="card bg-light" style="text-align: center;">
-		<ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
-			<li class="nav-item ">
-				<a class="nav-link active py-0" id="pills-home-tab" data-toggle="pill" href="#pills-port" role="tab" aria-controls="pills-port" aria-selected="true">Port Info</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link py-0" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false" onclick="fillNodeRotationTable()">Node Rotations</a>
-			</li>
-		</ul>
+		<!-- Indicator of edge -->
+		<div id="indicatorCard"  class="card" style="text-align: center">
+			<label><b> Selected Edge </b></label>
+			<table id="indicTable">
+				<tr>
+					<td><span><b style="color:#930fcf;"> Source </b></span></td>
+					<td><span><b> &#10230;</b></span></td>
+					<td><span><b style="color:#ec650d;"> Target </b></span></td>
+				</tr>
+			</table>
+		</div>
 
-		<div class="tab-content" id="pills-tabContent" style="overflow-y: auto; overflow-x:auto">
-			<div class="tab-pane fade show active" id="pills-port" role="tabpanel" aria-labelledby="pills-port-tab">
-				<table id="logsTable" class="table">
+		<!-- Adding Constraints -->
+		<div id="addConsCard"  class="card" style="text-align: center;opacity: 0;display: none">
+			<button class="btn btn-link py-0" type="button" style="font-size: 1em;"
+					data-toggle="collapse" data-target="#collapseExample"
+					aria-expanded="false" aria-controls="collapseExample">
+				Add Port Constraint
+			</button>
+			<div class="collapse" id="collapseExample">
+				<table id="consTable">
 					<tr>
-						<th style="font-size: 0.9em;text-align: center">ID</th>
-						<th style="font-size: 0.9em;text-align: center">Endpoint</th>
-						<th style="font-size: 0.9em;text-align: center">Type</th>
-						<th style="font-size: 0.9em;text-align: center">Parameter</th>
+						<td><span> Endpoint </span></td>
+						<td>
+							<select id="endpoint">
+								<option value="Source">Source</option>
+								<option value="Target">Target</option>
+							</select>
+						</td>
 					</tr>
-				</table>
-			</div>
-			<div class="tab-pane fade" id="pills-rotation" role="tabpanel" aria-labelledby="pills-rotation-tab">
-				<table id="nodeRotationTable" class="table">
 					<tr>
-						<th style="font-size: 0.9em;text-align: center">Node ID</th>
-						<th style="font-size: 0.9em;text-align: center">Rotation Allowed</th>
+						<td><span> Type </span></td>
+						<td>
+							<select id="consType">
+								<option value="Free">Free</option>
+								<option value="Sided">Sided</option>
+								<option value="Absolute">Abs. Position</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="nodeSidesRow" style="display:none;">
+						<td><span> Node Side(s) </span></td>
+						<td>
+							<select id="nodeSides" multiple>
+								<option value="Top">Top</option>
+								<option value="Right">Right</option>
+								<option value="Bottom">Bottom</option>
+								<option value="Left">Left</option>
+							</select>
+						</td>
+					</tr>
+					<tr id="portIndexRow" style="display:none;">
+						<td><span> Port Index </span></td>
+						<td><input id="portIndex" class="textField" type="text" maxlength=5 size="10" style="text-align: center" ></td>
+					</tr>
+					<tr >
+						<td><span>  </span></td>
+						<td><button id="addConstraint" type="button" class="btn btn-success btn-sm">Add</button></td>
+						<td><span>  </span></td>
 					</tr>
 				</table>
 			</div>
 		</div>
-	</div>
-</div>
 
-<div id="cy"></div>
+		<!-- Port Info / Node Rotations -->
+		<div id="logsCard" class="card bg-light" style="text-align: center;">
+			<ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+				<li class="nav-item ">
+					<a class="nav-link active py-0" id="pills-home-tab" data-toggle="pill" href="#pills-port" role="tab" aria-controls="pills-port" aria-selected="true">Port Info</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link py-0" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false" onclick="fillNodeRotationTable()">Node Rotations</a>
+				</li>
+			</ul>
+
+			<div class="tab-content" id="pills-tabContent" style="overflow-y: auto; overflow-x:auto">
+				<div class="tab-pane fade show active" id="pills-port" role="tabpanel" aria-labelledby="pills-port-tab">
+					<table id="logsTable" class="table">
+						<tr>
+							<th style="font-size: 0.9em;text-align: center;">ID</th>
+							<th style="font-size: 0.9em;text-align: center;">Endpoint</th>
+							<th style="font-size: 0.9em;text-align: center;">Type</th>
+							<th style="font-size: 0.9em;text-align: center;">Parameter</th>
+						</tr>
+					</table>
+				</div>
+				<div class="tab-pane fade" id="pills-rotation" role="tabpanel" aria-labelledby="pills-rotation-tab">
+					<table id="nodeRotationTable" class="table">
+						<tr>
+							<th style="font-size: 0.9em;text-align: center">Node ID</th>
+							<th style="font-size: 0.9em;text-align: center">Rotation Allowed</th>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="cy"></div>
 </body>
 
 </html>

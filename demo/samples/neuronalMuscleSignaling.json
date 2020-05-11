@@ -3563,14 +3563,14 @@
   ],
   "zoomingEnabled": true,
   "userZoomingEnabled": true,
-  "zoom": 1.176320783663416,
+  "zoom": 1,
   "minZoom": 0.125,
   "maxZoom": 16,
   "panningEnabled": true,
   "userPanningEnabled": true,
   "pan": {
-    "x": -36.07588336755873,
-    "y": 150.69589010508406
+    "x": 14.469429000766205,
+    "y": 203.43464111334978
   },
   "boxSelectionEnabled": true,
   "renderer": {

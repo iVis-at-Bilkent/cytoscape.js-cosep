@@ -537,16 +537,14 @@ class Layout extends ContinuousLayout {
     let nodeWPorts = Object.values( this.nodesWithPorts );
     for (let i = 0; i < nodeWPorts.length; i++ ){
       let node = nodeWPorts[i];
-
-      if(node.canBeRotated) {
-        let cyNode = this.rotatableNodes.get(node);
-        if(cyNode.layoutDimensions().w !== node.rect.width) {
-          let w = cyNode.height();
-          let h = cyNode.width();
-          cyNode.style({'width': w});
-          cyNode.style({'height': h});
-        }
+      let cyNode = this.rotatableNodes.get(node);
+      if(cyNode.layoutDimensions().w !== node.rect.width) {
+        let w = cyNode.height();
+        let h = cyNode.width();
+        cyNode.style({'width': w});
+        cyNode.style({'height': h});
       }
+
     }
 
     // Update Edges

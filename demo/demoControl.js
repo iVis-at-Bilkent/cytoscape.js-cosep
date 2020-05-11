@@ -6,51 +6,8 @@
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  */
 
-// Variables and Constants
-let metrics;
-let selectedEdge;
-let unProperly;
-let constraints = {};
-let rotations = {};
-const indicatorTable = document.getElementById("indicTable");
-const consSelector = document.getElementById("consType");
-const logsTable = document.getElementById("logsTable");
-const nodeRotationTable = document.getElementById("nodeRotationTable");
-const sampleGraphs = document.getElementById("sampleGraphs");
-
-// Function to send to CoSEP Layout
-let portConstraintsFunc = function( edge ){
-    return constraints[edge.data('id')];
-};
-
-let nodeRotationsFunc = function( node ){
-    return rotations[node.data('id')];
-};
-
-// Clear Selections/Options at start
-document.getElementById("endpoint").selectedIndex = -1;
-document.getElementById("consType").selectedIndex = -1;
-document.getElementById("sampleGraphs").selectedIndex = 0;
-document.getElementById("portsPerSide").value = 5;
-document.getElementById("FPS").value = 12;
-document.getElementById("FPS").disabled = true;
-document.getElementById("edgeShiftingPeriod").value = 5;
-document.getElementById("edgeShiftingForceThreshold").value = 1;
-document.getElementById("nodeRotationPeriod").value = 15;
-document.getElementById("nodeRotationForceThreshold").value = 20;
-document.getElementById("nodeRotationAngleThreshold").value = 130;
-document.getElementById("polishingForce").value = 0.1;
-document.getElementById("oneDegreePortedNodes").checked = true;
-document.getElementById("oneDegreePortedNodesPeriod").value = 50;
-document.getElementById("idealEdgeLength").value = 50;
-document.getElementById("ratio").style.display = 'none';
-
-document.addEventListener('DOMContentLoaded', function(){
-    fillNodeRotationTable();
-});
-
-// Initial Layout on opening the page
-var cy = window.cy = cytoscape({
+// Initial Layout on opening the page ----------------------------------------------------------------------------------
+let cy = window.cy = cytoscape({
     container: document.getElementById('cy'),
     layout: {
         name: 'cose-bilkent',
@@ -69,31 +26,17 @@ var cy = window.cy = cytoscape({
                 'background-color': '#3a7ecf',
                 'opacity': 0.8,
                 'width': function (node) {
-                    switch (node.data('id')) {
-                        case 'n0':
-                            return 40;
-                        case 'n1':
-                            return 100;
-                        case 'n3':
-                            return 70;
-                        case 'n4':
-                            return 100;
-                        case 'n21':
-                            return 50;
-                        default:
-                            return 30;
+                    if (node.data('width')) {
+                       return node.data('width');
+                    } else{
+                        return 30;
                     }
                 },
                 'height': function (node) {
-                    switch (node.data('id')) {
-                        case 'n0':
-                            return 60;
-                        case 'n3':
-                            return 70;
-                        case 'n21':
-                            return 50;
-                        default:
-                            return 30;
+                    if (node.data('height')) {
+                        return node.data('height');
+                    } else{
+                        return 30;
                     }
                 }
             }
@@ -126,7 +69,8 @@ var cy = window.cy = cytoscape({
                 'curve-style': 'straight',
                 'width': 2,
                 'line-color': '#3a7ecf',
-                'opacity': 0.7
+                'opacity': 0.7,
+                'arrow-scale': 0.75
             }
         },
         {
@@ -146,17 +90,17 @@ var cy = window.cy = cytoscape({
         }
     ],
     elements: [
-        {group: 'nodes', data: {id: 'n0'}},
-        {group: 'nodes', data: {id: 'n1'}},
+        {group: 'nodes', data: {id: 'n0', width: 40, height: 60}},
+        {group: 'nodes', data: {id: 'n1', width: 100}},
         {group: 'nodes', data: {id: 'n2'}},
-        {group: 'nodes', data: {id: 'n3'}},
-        {group: 'nodes', data: {id: 'n4'}},
+        {group: 'nodes', data: {id: 'n3', width: 70, height: 70}},
+        {group: 'nodes', data: {id: 'n4', width: 100}},
         {group: 'nodes', data: {id: 'n5'}},
         {group: 'nodes', data: {id: 'n10'}},
         {group: 'nodes', data: {id: 'n11', parent: 'n10'}},
         {group: 'nodes', data: {id: 'n12', parent: 'n10'}},
         {group: 'nodes', data: {id: 'n20'}},
-        {group: 'nodes', data: {id: 'n21', parent: 'n20'}},
+        {group: 'nodes', data: {id: 'n21', parent: 'n20', width: 50, height: 50}},
         {group: 'nodes', data: {id: 'n22', parent: 'n20'}},
         {group: 'nodes', data: {id: 'n23', parent: 'n20'}},
         {group: 'edges', data: {id: 'e0', source: 'n1', target: 'n2'}},
@@ -173,10 +117,50 @@ var cy = window.cy = cytoscape({
     wheelSensitivity: 0.3
 });
 
-document.getElementById("animate").addEventListener( 'change', function() {
-    document.getElementById("FPS").disabled = !this.checked;
+// Variables and Constants ---------------------------------------------------------------------------------------------
+let metrics;
+let selectedEdge;
+let unProperly;
+let numberOfPorts;
+let constraints = {};
+let rotations = {};
+const indicatorTable = document.getElementById("indicTable");
+const consSelector = document.getElementById("consType");
+const logsTable = document.getElementById("logsTable");
+const nodeRotationTable = document.getElementById("nodeRotationTable");
+const sampleGraphs = document.getElementById("sampleGraphs");
+
+// Function to send to CoSEP Layout
+let portConstraintsFunc = function( edge ){
+    return constraints[edge.data('id')];
+};
+
+let nodeRotationsFunc = function( node ){
+    return rotations[node.data('id')];
+};
+
+// Clear Selections / Options at start ---------------------------------------------------------------------------------
+document.getElementById("endpoint").selectedIndex = -1;
+document.getElementById("consType").selectedIndex = -1;
+document.getElementById("sampleGraphs").selectedIndex = 0;
+document.getElementById("portsPerSide").value = 5;
+document.getElementById("FPS").value = 12;
+document.getElementById("FPS").disabled = true;
+document.getElementById("edgeShiftingPeriod").value = 5;
+document.getElementById("edgeShiftingForceThreshold").value = 1;
+document.getElementById("nodeRotationPeriod").value = 15;
+document.getElementById("nodeRotationForceThreshold").value = 20;
+document.getElementById("nodeRotationAngleThreshold").value = 130;
+document.getElementById("polishingForce").value = 0.1;
+document.getElementById("oneDegreePortedNodes").checked = true;
+document.getElementById("oneDegreePortedNodesPeriod").value = 50;
+document.getElementById("idealEdgeLength").value = 50;
+
+document.addEventListener('DOMContentLoaded', function(){
+    fillNodeRotationTable();
 });
 
+// Buttons -------------------------------------------------------------------------------------------------------------
 // CoSE Core Button
 document.getElementById("coseButton").addEventListener("click",function(){
     let layout = window.cy.layout({
@@ -186,16 +170,16 @@ document.getElementById("coseButton").addEventListener("click",function(){
         randomize: !(document.getElementById("incremental").checked)
     });
 
+    // Duration Time
+    let start = performance.now();
     layout.run();
+    document.getElementById("duration").innerHTML = Math.floor((performance.now() - start) * 100) / 100;
 
     // For getting performance metrics
     metrics = window.cy.layvo('get').generalProperties();
     document.getElementById("edgeCrossing").innerHTML = metrics.numberOfEdgeCrosses;
     document.getElementById("nodeOverlap").innerHTML = metrics.numberOfNodeOverlaps;
-
-    if( document.getElementById("ratio").style.display == 'block') {
-        document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
-    }
+    document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
 });
 
 // Cosep Button
@@ -245,16 +229,17 @@ document.getElementById("cosepButton").addEventListener("click",function(){
     metrics = window.cy.layvo('get').generalProperties();
     document.getElementById("edgeCrossing").innerHTML = metrics.numberOfEdgeCrosses;
     document.getElementById("nodeOverlap").innerHTML = metrics.numberOfNodeOverlaps;
-
-    if( document.getElementById("ratio").style.display == 'block') {
-        document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
-    }
+    document.getElementById("properlyOrientedEdges").innerHTML = '%' + Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
 });
 
-// Calculate properly oriented ported edges
-// Only for ports
+// Calculate properly oriented ported edges ----------------------------------------------------------------------------
 function calcProperlyOrientedPortedEdges(){
-    let numberOfPorts = Object.keys(constraints).length;
+    numberOfPorts = 0;
+
+    Object.keys(constraints).forEach( id =>{
+        numberOfPorts += constraints[id].length;
+    });
+
     unProperly = 0;
     let nodes = window.cy.nodes();
     for(let i = 0; i < nodes.length; i++){
@@ -266,21 +251,32 @@ function calcProperlyOrientedPortedEdges(){
             let edge = connectedEdges[j];
 
             // If ported
-            if(constraints[edge.data('id')] && node.data('class') === 'process' ){
-                let edgeLoc = {
-                  x1 : edge.sourceEndpoint().x,
-                  y1 : edge.sourceEndpoint().y,
-                    x2 : edge.targetEndpoint().x,
-                    y2 : edge.targetEndpoint().y
-                };
-                let intersect1 = intersects(nodeLoc.x1, nodeLoc.y1, nodeLoc.x2, nodeLoc.y2,
-                    edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
+            let con = constraints[edge.data('id')];
+            if(con){
+                // Related port?
+                let bool = false;
+                con.forEach( c => {
+                    if(c.endpoint == 'Target' && edge.target() == node || c.endpoint == 'Source' && edge.source() == node){
+                        bool = true;
+                    }
+                });
 
-                let intersect2 = intersects(nodeLoc.x2, nodeLoc.y1, nodeLoc.x1, nodeLoc.y2,
-                    edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
+                if(bool) {
+                    let edgeLoc = {
+                        x1: edge.sourceEndpoint().x,
+                        y1: edge.sourceEndpoint().y,
+                        x2: edge.targetEndpoint().x,
+                        y2: edge.targetEndpoint().y
+                    };
+                    let intersect1 = intersects(nodeLoc.x1, nodeLoc.y1, nodeLoc.x2, nodeLoc.y2,
+                        edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
 
-                if(intersect1 || intersect2){
-                    unProperly++;
+                    let intersect2 = intersects(nodeLoc.x2, nodeLoc.y1, nodeLoc.x1, nodeLoc.y2,
+                        edgeLoc.x1, edgeLoc.y1, edgeLoc.x2, edgeLoc.y2);
+
+                    if (intersect1 || intersect2) {
+                        unProperly++;
+                    }
                 }
             }
         }
@@ -289,7 +285,7 @@ function calcProperlyOrientedPortedEdges(){
     return (numberOfPorts - unProperly) / numberOfPorts;
 }
 
-function intersects(a,b,c,d,p,q,r,s) {
+function intersects(a, b, c, d, p, q, r, s) {
     let det, gamma, lambda;
     det = (c - a) * (s - q) - (r - p) * (d - b);
     if (det === 0) {
@@ -299,7 +295,7 @@ function intersects(a,b,c,d,p,q,r,s) {
         gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
         return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
     }
-};
+}
 
 // Export constraints JSON
 document.getElementById("exportToFile").addEventListener("click",function(){
@@ -352,7 +348,7 @@ function fillLogsTableFromConstraints( arrowShape ) {
                 cons.portConstraintParameter );
 
             if( arrowShape )
-            changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
+                changeArrowShape( window.cy.edges("[id = '" + edgeID + "']"), cons.endpoint, cons.portConstraintType );
         });
     });
 }
@@ -587,8 +583,6 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
     clearNodeRotations();
 
     if( sampleGraphs.value == "sample1" ) {
-        document.getElementById("ratio").style.display = 'none';
-
         fetch("samples/sample1.json")
             .then(response => response.json())
             .then(json => {
@@ -604,8 +598,6 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             });
 
     } else if (sbgnFileNames[sampleGraphs.value]) {
-        document.getElementById("ratio").style.display = 'block';
-
         fetch("samples/" + sbgnFileNames[sampleGraphs.value] + ".json")
             .then(response => response.json())
             .then(json => {
@@ -655,19 +647,19 @@ function changeArrowShape( edge, endpoint, portConstraintType ) {
             if( endpoint == 'Source' )
                 edge.style({ 'source-arrow-shape': 'vee', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#00c6cf' });
+                edge.style({ 'target-arrow-shape': 'vee', 'target-arrow-color': '#ec650d' });
             break;
         case 'Sided':
             if( endpoint == 'Source' )
                 edge.style({ 'source-arrow-shape': 'triangle-tee', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'triangle-tee', 'target-arrow-color': '#00c6cf' });
+                edge.style({ 'target-arrow-shape': 'triangle-tee', 'target-arrow-color': '#e85d04' });
             break;
         case 'Absolute':
             if( endpoint == 'Source' )
                 edge.style({ 'source-arrow-shape': 'circle', 'source-arrow-color': '#930fcf' });
             else
-                edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#00c6cf' });
+                edge.style({ 'target-arrow-shape': 'circle', 'target-arrow-color': '#e85d04' });
             break;
     }
 }
@@ -675,7 +667,7 @@ function changeArrowShape( edge, endpoint, portConstraintType ) {
 // Add to history
 function addToHistory( edge, endpoint, portConstraintType, portConstraintParameter ) {
     let row = logsTable.insertRow();
-    row.onclick = function(event){ if(event.ctrlKey) deleteRowElements(row); };
+    row.onclick = function(event){ if(event.ctrlKey || event.altKey || event.metaKey) deleteRowElements(row); };
     let cell4 = row.insertCell(0);
     let cell3 = row.insertCell(0);
     let cell2 = row.insertCell(0);
@@ -769,7 +761,7 @@ function fillNodeRotationTable() {
     }
 }
 
-// Change Node Rotation 
+// Change Node Rotation
 function changeNodeRotation( row ) {
     let nodeId = row.cells[0].innerHTML;
 
@@ -780,4 +772,178 @@ function changeNodeRotation( row ) {
         row.cells[1].innerHTML = 'Yes';
         rotations[nodeId] = true;
     }
+}
+
+// GraphML Reader ------------------------------------------------------------------------------------------------------
+// Read File
+document.getElementById('importGraphML-input').addEventListener('change', function (evt) {
+    document.getElementById("sampleGraphs").selectedIndex = -1;
+
+    let files = evt.target.files;
+    let reader = new FileReader();
+    let contents;
+    reader.readAsText(files[0]);
+    reader.onload = function (event) {
+        // Contents is a string of the graphml
+        contents = event.target.result;
+
+        // Update Cytoscape
+        window.cy.startBatch();
+        window.cy.style().clear();
+        window.cy.remove('nodes');
+        window.cy.remove('edges');
+        window.cy.graphml({layoutBy: "circle"});
+        window.cy.graphml(contents);
+        window.cy.endBatch();
+
+        window.cy.style()
+            .selector('node').style({
+                'content': 'data(id)',
+                'text-halign': 'center',
+                'text-valign': 'center',
+                'background-color': '#3a7ecf',
+                'opacity': 0.8,
+                'width': 'data(width)',
+                'height': 'data(height)',
+                'shape': 'rectangle'
+            })
+            .selector('node:selected').style({
+                'background-color': '#ff0000'
+            })
+            .selector('node:parent').style({
+                'background-opacity': 0.333,
+                'border-color': '#3a7ecf',
+                'text-halign': 'center',
+                'text-valign': 'center'
+            })
+            .selector('node:parent:selected').style({
+                'background-opacity': 0.65,
+                'border-color': '#ff0000'
+            })
+            .selector('edge').style({
+                'curve-style': 'straight',
+                'width': 2,
+                'line-color': '#3a7ecf',
+                'opacity': 0.7,
+                'arrow-scale': 0.75
+            })
+            .selector('edge:selected').style({
+                'line-color': '#ff0000',
+                'label' : 'data(id)',
+                'font-size' : 13,
+                'text-opacity': 1,
+                'text-rotation': 'autorotate',
+                'color' : '#ff0000',
+                'font-weight' : 'bold',
+                'text-background-shape' : 'round-rectangle',
+                'text-background-opacity' : 1,
+                'text-background-padding' : 2
+            })
+
+            .update();
+    };
+});
+
+// Adding Random Constraints -------------------------------------------------------------------------------------------
+document.getElementById("addRandomConstraints").addEventListener("click",function() {
+    let edges = window.cy.edges();
+    let numberOfPorts = edges.length * 2;
+    let eightyPercent = Math.floor(numberOfPorts * 8 / 10);
+
+    // Lets put edge endpoints in this array and shuffle it
+    let randomEdgeArray = [];
+    for(let i = 0; i < edges.length; i++){
+        let edge = edges[i];
+        randomEdgeArray.push([edge, 'Source']);
+        randomEdgeArray.push([edge, 'Target']);
+    }
+
+    // Shuffle the array for randomness
+    shuffleArray(randomEdgeArray);
+
+    // Assign random ports
+    for(let i = 0; i < eightyPercent; i++){
+        let temp = randomEdgeArray.pop();
+        makeRandomPort(temp[0], temp[1]);
+    }
+
+    // Assign free ports
+    while(randomEdgeArray.length > 0){
+        let temp = randomEdgeArray.pop();
+        makeFreePort(temp[0], temp[1]);
+    }
+});
+
+// Randomize array in-place using Durstenfeld shuffle algorithm
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+function makeRandomPort(edge, endpoint){
+    selectedEdge = edge;
+
+    // Source or Target
+    if( endpoint === 'Source' ){
+        document.getElementById("endpoint").selectedIndex = 0;
+    }else{
+        document.getElementById("endpoint").selectedIndex = 1;
+    }
+
+    // Port type 1:Sided, 2:Absolute
+    let portType = Math.ceil(Math.random() * 2);
+    if(portType === 1){
+        let temp = Math.floor(Math.random() * 6);
+
+        let nodeSides = document.getElementById("nodeSides").options;
+        nodeSides[0].selected = false;
+        nodeSides[1].selected = false;
+        nodeSides[2].selected = false;
+        nodeSides[3].selected = false;
+        switch (temp) {
+            case 0:
+                nodeSides[0].selected = true;
+                break;
+            case 1:
+                nodeSides[1].selected = true;
+                break;
+            case 2:
+                nodeSides[2].selected = true;
+                break;
+            case 3:
+                nodeSides[3].selected = true;
+                break;
+            case 4:
+                nodeSides[0].selected = true;
+                nodeSides[2].selected = true;
+                break;
+            case 5:
+                nodeSides[1].selected = true;
+                nodeSides[3].selected = true;
+                break;
+        }
+    }else{
+        document.getElementById("portIndex").value = Math.floor(Math.random() * 4 * +document.getElementById("portsPerSide").value );
+    }
+
+    document.getElementById("consType").selectedIndex = portType;
+    document.getElementById("addConstraint").click();
+}
+
+function makeFreePort(edge, endpoint) {
+    selectedEdge = edge;
+
+    // SOurce or Target
+    if( endpoint === 'Source' ){
+        document.getElementById("endpoint").selectedIndex = 0;
+    }else{
+        document.getElementById("endpoint").selectedIndex = 1;
+    }
+
+    document.getElementById("consType").selectedIndex = 0;
+    document.getElementById("addConstraint").click();
 }
