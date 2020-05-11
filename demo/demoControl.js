@@ -667,7 +667,7 @@ function changeArrowShape( edge, endpoint, portConstraintType ) {
 // Add to history
 function addToHistory( edge, endpoint, portConstraintType, portConstraintParameter ) {
     let row = logsTable.insertRow();
-    row.onclick = function(event){ if(event.ctrlKey || event.altKey || event.metaKey) deleteRowElements(row); };
+    let cell5 = row.insertCell(0);
     let cell4 = row.insertCell(0);
     let cell3 = row.insertCell(0);
     let cell2 = row.insertCell(0);
@@ -676,6 +676,28 @@ function addToHistory( edge, endpoint, portConstraintType, portConstraintParamet
     cell2.innerHTML = endpoint;
     cell3.innerHTML = portConstraintType;
     cell4.innerHTML = (portConstraintParameter) ? portConstraintParameter : 'N/A';
+
+    // 'Delete' symbol
+    let button = document.createElement('button');
+    button.setAttribute('class','close');
+    button.setAttribute('aria-label', 'Close');
+    button.onclick = function(event){ deleteRowElements(row); };
+    let xSymbol = document.createElement('span');
+    xSymbol.setAttribute('aria-hidden', 'true');
+    xSymbol.style.color = "red";
+    xSymbol.innerHTML = '&times';
+    button.appendChild(xSymbol);
+    cell5.appendChild(button);
+
+    // Some fancy coloring
+    button.addEventListener("mouseenter", function () {
+        button.style.backgroundColor = 'red';
+        xSymbol.style.color = 'white';
+    });
+    button.addEventListener("mouseleave", function () {
+        button.style.backgroundColor = 'transparent';
+        xSymbol.style.color = 'red';
+    });
 }
 
 // Add ports that should be free
@@ -750,11 +772,34 @@ function fillNodeRotationTable() {
     if( nodeRotationTable.rows.length == 1){
         cy.nodes().forEach(function ( node ) {
             let row = nodeRotationTable.insertRow();
-            row.onclick = function(event){ changeNodeRotation(row); };
+            let cell3 = row.insertCell(0);
             let cell2 = row.insertCell(0);
             let cell1 = row.insertCell(0);
             cell1.innerHTML = node.data('id');
             cell2.innerHTML = 'Yes';
+            cell2.style.color = 'green';
+
+            // 'Change' node rotation symbol
+            let button = document.createElement('button');
+            button.setAttribute('class','close');
+            button.setAttribute('aria-label', 'Close');
+            button.onclick = function(event){ changeNodeRotation(row); };
+            let xSymbol = document.createElement('span');
+            xSymbol.setAttribute('aria-hidden', 'true');
+            xSymbol.style.color = "red";
+            xSymbol.innerHTML = '&crarr;';
+            button.appendChild(xSymbol);
+            cell3.appendChild(button);
+
+            // Some fancy coloring
+            button.addEventListener("mouseenter", function () {
+                button.style.backgroundColor = 'red';
+                xSymbol.style.color = 'white';
+            });
+            button.addEventListener("mouseleave", function () {
+                button.style.backgroundColor = 'transparent';
+                xSymbol.style.color = 'red';
+            });
 
             rotations[node.data('id')] = true;
         });
@@ -768,9 +813,11 @@ function changeNodeRotation( row ) {
     if( rotations[nodeId] ){
         row.cells[1].innerHTML = 'No';
         rotations[nodeId] = false;
+        row.cells[1].style.color = 'red';
     }else{
         row.cells[1].innerHTML = 'Yes';
         rotations[nodeId] = true;
+        row.cells[1].style.color = 'green';
     }
 }
 
@@ -848,7 +895,7 @@ document.getElementById('importGraphML-input').addEventListener('change', functi
 document.getElementById("addRandomConstraints").addEventListener("click",function() {
     let edges = window.cy.edges();
     let numberOfPorts = edges.length * 2;
-    let eightyPercent = Math.floor(numberOfPorts * 8 / 10);
+    let eightyPercent = Math.floor(numberOfPorts * 2 / 10);
 
     // Lets put edge endpoints in this array and shuffle it
     let randomEdgeArray = [];
