@@ -826,6 +826,10 @@ function changeNodeRotation( row ) {
 document.getElementById('importGraphML-input').addEventListener('change', function (evt) {
     document.getElementById("sampleGraphs").selectedIndex = -1;
 
+    // Remove logs and node rotation info
+    clearLogsTable();
+    clearNodeRotations();
+
     let files = evt.target.files;
     let reader = new FileReader();
     let contents;
@@ -889,29 +893,117 @@ document.getElementById('importGraphML-input').addEventListener('change', functi
 
             .update();
     };
+
+    // Refill node rotations
+    fillNodeRotationTable();
 });
 
 // Adding Random Constraints -------------------------------------------------------------------------------------------
+// The button on main menu
 document.getElementById("addRandomConstraints").addEventListener("click",function() {
-    let edges = window.cy.edges();
-    let numberOfPorts = edges.length * 2;
-    let eightyPercent = Math.floor(numberOfPorts * 2 / 10);
+    //Update node/edge number
+    document.getElementById("modalNumberofNodes").innerText = window.cy.nodes().length;
+    document.getElementById("modalNumberofEdges").innerText = window.cy.edges().length;
+    document.getElementById("modalPortedNodesNumber").innerHTML = Math.floor(document.getElementById("modalPortedNodesSlider").value *  window.cy.nodes().length / 100);
+});
+
+// Sliders -----
+document.getElementById("modalPortedNodesSlider").oninput = function() {
+    document.getElementById("modalPortedNodesPercent").innerHTML = document.getElementById("modalPortedNodesSlider").value;
+    document.getElementById("modalPortedNodesNumber").innerHTML = Math.floor(document.getElementById("modalPortedNodesSlider").value * window.cy.nodes().length / 100);
+};
+
+let freePercent = document.getElementById('modalFreePercent');
+let sidedPortsSlider = document.getElementById("modalSidedPortsSlider");
+let sidedPortsPercent = document.getElementById("modalSidedPortsPercent");
+let absolutePortsSlider = document.getElementById("modalAbsolutePortsSlider");
+let absolutePortsPercent = document.getElementById("modalAbsolutePortsPercent");
+let distSidedPorts = sidedPortsSlider.value;
+let distAbsolutePorts = absolutePortsSlider.value;
+
+sidedPortsSlider.oninput = function() {
+    sidedPortsPercent.innerHTML = sidedPortsSlider.value;
+};
+
+sidedPortsSlider.onchange = function() {
+    freePercent.value = (+freePercent.value) - ((+sidedPortsSlider.value) - (+distSidedPorts));
+    if((+freePercent.value) < 0){
+        absolutePortsSlider.value = (+absolutePortsSlider.value) + (+freePercent.value);
+        absolutePortsPercent.innerHTML = absolutePortsSlider.value;
+        distAbsolutePorts = +absolutePortsSlider.value;
+        freePercent.value = 0;
+    }
+
+    distSidedPorts = sidedPortsSlider.value;
+};
+
+absolutePortsSlider.oninput = function() {
+    absolutePortsPercent.innerHTML = absolutePortsSlider.value;
+};
+
+absolutePortsSlider.onchange = function() {
+    freePercent.value = (+freePercent.value) - ((+absolutePortsSlider.value) - (+distAbsolutePorts));
+    if((+freePercent.value) < 0){
+        sidedPortsSlider.value = (+sidedPortsSlider.value) + (+freePercent.value);
+        sidedPortsPercent.innerHTML = sidedPortsSlider.value;
+        distSidedPorts = sidedPortsSlider.value;
+        freePercent.value = 0;
+    }
+
+    distAbsolutePorts = absolutePortsSlider.value;
+};
+
+// ------
+document.getElementById("modalAddRandomConstraints").addEventListener("click",function() {
+    constraints = {};
+    clearLogsTable();
+    cy.startBatch();
+    cy.edges().forEach(function ( edge ) {
+        edge.style({'source-endpoint': 'outside-to-node'});
+        edge.style({'target-endpoint': 'outside-to-node'});
+        edge.style({'source-arrow-shape':'none'});
+        edge.style({'target-arrow-shape':'none'});
+    });
+    cy.endBatch();
+
+    let nodes = window.cy.nodes();
+    shuffleArray(nodes);
 
     // Lets put edge endpoints in this array and shuffle it
     let randomEdgeArray = [];
-    for(let i = 0; i < edges.length; i++){
-        let edge = edges[i];
-        randomEdgeArray.push([edge, 'Source']);
-        randomEdgeArray.push([edge, 'Target']);
+    for(let i = 0; i < +document.getElementById("modalPortedNodesNumber").innerText; i++){
+        nodes[i].connectedEdges().forEach(function (e) {
+            if(e.source() === nodes[i]){
+                randomEdgeArray.push([e, 'Source']);
+            }else{
+                randomEdgeArray.push([e, 'Target']);
+            }
+        });
     }
 
     // Shuffle the array for randomness
     shuffleArray(randomEdgeArray);
 
+    // The port info
+    let modalSInfo = Math.floor(randomEdgeArray.length * sidedPortsPercent.innerText / 100);
+    let modalAInfo = Math.floor(randomEdgeArray.length * absolutePortsPercent.innerText / 100);
+    let modalFInfo = randomEdgeArray.length - modalAInfo - modalSInfo;
+
     // Assign random ports
-    for(let i = 0; i < eightyPercent; i++){
+    let tempS = modalSInfo;
+    let tempA = modalAInfo;
+    let tempSA = tempS + tempA;
+    let random = true;
+    for(let i = 0; i < tempSA; i++){
         let temp = randomEdgeArray.pop();
-        makeRandomPort(temp[0], temp[1]);
+
+        if(tempS > 0){
+            tempS--;
+            makeSidedPort(temp[0], temp[1]);
+            continue;
+        }
+
+        makeAbsolutePort(temp[0], temp[1]);
     }
 
     // Assign free ports
@@ -919,6 +1011,10 @@ document.getElementById("addRandomConstraints").addEventListener("click",functio
         let temp = randomEdgeArray.pop();
         makeFreePort(temp[0], temp[1]);
     }
+
+    // Add modal ports info
+    document.getElementById("modalPortsInfo").innerText = "Added " + modalSInfo + " Sided, "
+        + modalAInfo + " Absolute, " + modalFInfo + " Free ports";
 });
 
 // Randomize array in-place using Durstenfeld shuffle algorithm
@@ -931,7 +1027,7 @@ function shuffleArray(array) {
     }
 }
 
-function makeRandomPort(edge, endpoint){
+function makeSidedPort(edge, endpoint) {
     selectedEdge = edge;
 
     // Source or Target
@@ -941,56 +1037,81 @@ function makeRandomPort(edge, endpoint){
         document.getElementById("endpoint").selectedIndex = 1;
     }
 
-    // Port type 1:Sided, 2:Absolute
-    let portType = Math.ceil(Math.random() * 2);
-    if(portType === 1){
-        let temp = Math.floor(Math.random() * 6);
+    let temp = Math.floor(Math.random() * 6);
 
-        let nodeSides = document.getElementById("nodeSides").options;
-        nodeSides[0].selected = false;
-        nodeSides[1].selected = false;
-        nodeSides[2].selected = false;
-        nodeSides[3].selected = false;
-        switch (temp) {
-            case 0:
-                nodeSides[0].selected = true;
-                break;
-            case 1:
-                nodeSides[1].selected = true;
-                break;
-            case 2:
-                nodeSides[2].selected = true;
-                break;
-            case 3:
-                nodeSides[3].selected = true;
-                break;
-            case 4:
-                nodeSides[0].selected = true;
-                nodeSides[2].selected = true;
-                break;
-            case 5:
-                nodeSides[1].selected = true;
-                nodeSides[3].selected = true;
-                break;
-        }
-    }else{
-        document.getElementById("portIndex").value = Math.floor(Math.random() * 4 * +document.getElementById("portsPerSide").value );
+    let nodeSides = document.getElementById("nodeSides").options;
+    nodeSides[0].selected = false;
+    nodeSides[1].selected = false;
+    nodeSides[2].selected = false;
+    nodeSides[3].selected = false;
+    switch (temp) {
+        case 0:
+            nodeSides[0].selected = true;
+            break;
+        case 1:
+            nodeSides[1].selected = true;
+            break;
+        case 2:
+            nodeSides[2].selected = true;
+            break;
+        case 3:
+            nodeSides[3].selected = true;
+            break;
+        case 4:
+            nodeSides[0].selected = true;
+            nodeSides[2].selected = true;
+            break;
+        case 5:
+            nodeSides[1].selected = true;
+            nodeSides[3].selected = true;
+            break;
     }
 
-    document.getElementById("consType").selectedIndex = portType;
+    document.getElementById("consType").selectedIndex = 1;
     document.getElementById("addConstraint").click();
 }
 
-function makeFreePort(edge, endpoint) {
+function makeAbsolutePort(edge, endpoint) {
     selectedEdge = edge;
 
-    // SOurce or Target
+    // Source or Target
     if( endpoint === 'Source' ){
         document.getElementById("endpoint").selectedIndex = 0;
     }else{
         document.getElementById("endpoint").selectedIndex = 1;
     }
 
+    document.getElementById("portIndex").value = Math.floor(Math.random() * 4 * +document.getElementById("portsPerSide").value );
+    document.getElementById("consType").selectedIndex = 2;
+    document.getElementById("addConstraint").click();
+}
+
+function makeFreePort(edge, endpoint) {
+    selectedEdge = edge;
+
+    // Source or Target
+    if (endpoint === 'Source') {
+        document.getElementById("endpoint").selectedIndex = 0;
+    } else {
+        document.getElementById("endpoint").selectedIndex = 1;
+    }
+
     document.getElementById("consType").selectedIndex = 0;
     document.getElementById("addConstraint").click();
 }
+
+// Randomize Node dimension --
+document.getElementById("modalRandomizeNodeDimensions").addEventListener("click",function() {
+    let dimensions = document.getElementById("modalNodeDimensions").value;
+    dimensions = dimensions.split(' ').join('').split(',');
+
+    cy.startBatch();
+    window.cy.nodes().forEach(function (node) {
+        let w = dimensions[Math.floor( Math.random()* dimensions.length )];
+        let h = dimensions[Math.floor( Math.random()* dimensions.length )];
+        node.style({'width': w});
+        node.style({'height': h});
+    });
+    cy.endBatch();
+});
+

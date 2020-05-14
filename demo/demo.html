@@ -151,7 +151,7 @@
 			</div>
 
 			<div style="text-align: center">
-				<button id="addRandomConstraints" type="button" class="btn-dark btn-sm py-0">Add Random Constraints to Graph</button>
+				<button id="addRandomConstraints" type="button" class="btn-dark btn-sm py-0" data-toggle="modal" data-target="#addingRandomConstraintsModal">Add Random Constraints to Graph</button>
 			</div>
 		</div>
 
@@ -309,6 +309,84 @@
 							<th style="font-size: 0.9em;text-align: center"></th>
 						</tr>
 					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal for adding random constraints -->
+	<div class="modal fade .modal-lg" id="addingRandomConstraintsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document"><
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Adding Random Constraints to Graph</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Randomize node dimension with:
+					<input id="modalNodeDimensions" class="textField" type="text" maxlength=20 size="10" value="30,40,50,60" style="text-align: center;">
+					<button type="button" id="modalRandomizeNodeDimensions" class="btn btn-secondary btn-sm" style="padding: 2px 2px 2px 2px">Randomize</button>
+					<p></p>
+
+					This graph has: <i><b><label id="modalNumberofNodes"></label></b> nodes</i> and <i><b><label id="modalNumberofEdges"></label></b> edges</i>
+
+					<table style="margin: 0 0 0 0">
+						<tr>
+							<td style="padding-left: 0px">
+								Nodes with ported edges:
+							</td>
+							<td>
+								<input type="range" min="0" max="100" value="80" class="slider" id="modalPortedNodesSlider"/>
+							</td>
+							<td>
+								<b><label id="modalPortedNodesPercent">80</label></b>% &nbsp;|&nbsp; (<b><label id="modalPortedNodesNumber"></label></b> N)
+							</td>
+						</tr>
+					</table>
+
+					<br>The distribution of port constraints:
+
+					<table style="margin: 0 0 0 0">
+						<tr>
+							<td style="padding-left: 0px">
+								Sided ports:
+							</td>
+							<td>
+								<input type="range" min="0" max="100" value="25" class="slider" style="width: 200px" id="modalSidedPortsSlider"/>
+							</td>
+							<td>
+								<b><label id="modalSidedPortsPercent">25</label></b>%
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-left: 0px">
+								Absolute ports:
+							</td>
+							<td>
+								<input type="range" min="0" max="100" value="25" class="slider" style="width: 200px" id="modalAbsolutePortsSlider"/>
+							</td>
+							<td>
+								<b><label id="modalAbsolutePortsPercent">25</label></b>%
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-left: 0px">
+								Free ports:
+							</td>
+							<td></td>
+							<td>
+								<input id="modalFreePercent" class="textField" type="text" maxlength=3 size="3" value="50" style="text-align: center" disabled>%
+							</td>
+						</tr>
+					</table>
+
+				</div>
+				<div class="modal-footer">
+					<label id="modalPortsInfo" style="font-size: 12px; "></label>
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary btn-sm" id = "modalAddRandomConstraints">Add ports</button>
 				</div>
 			</div>
 		</div>
