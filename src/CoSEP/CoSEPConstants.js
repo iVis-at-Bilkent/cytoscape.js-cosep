@@ -19,8 +19,13 @@ for (let prop in CoSEConstants) {
 CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR = 0.7;
 CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR = 0.5;
 
+// Max iterations for each phase
+CoSEPConstants.PHASE1_MAX_ITERATIONS = 2500;
+CoSEPConstants.PHASE2_MAX_ITERATIONS = 2500;
+CoSEPConstants.PHASE3_MAX_ITERATIONS = 2500;
+
 // Prevent layout from finishing too early for both phases
-CoSEPConstants.NOT_TOO_EARLY = 300;
+CoSEPConstants.NOT_TOO_EARLY = 200;
 
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;

@@ -19,6 +19,9 @@
 	<!-- CoSE Bilkent Layout -->
 	<script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script>
 
+	<!-- This is for testing CoSE -->
+	<script src="forTestingCose/cytoscape-cosep-port.js"></script>
+
 	<!-- Cosep Layout -->
 	<script src="../cytoscape-cosep.js"></script>
 
@@ -75,7 +78,7 @@
 
 	<div id="leftOfCytoscape">
 		<!-- Buttons -->
-		<button id="coseButton" type="button" class="btn btn-dark btn-sm">CoSE Bilkent Layout</button>
+		<button id="coseButton" type="button" class="btn btn-dark btn-sm">CoSE Layout</button>
 		<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
 
 		<!-- Layout Results -->
@@ -136,7 +139,7 @@
 						<span>Import Graph from:</span>
 					</td>
 					<td>
-						<button id="importGraphML" type="button" class="btn-dark btn-sm py-0" onclick="document.getElementById('importGraphML-input').click();">GraphML</button>
+						<button id="importGraphML" type="button" class="btn-dark btn-sm py-0" onclick="document.getElementById('importGraphML-input').click();">GraphML / JSON</button>
 						<input id="importGraphML-input" type="file" name="name" style="display: none;" />
 					</td>
 				</tr>
@@ -144,15 +147,17 @@
 
 			<!-- Constrant Json import/export -->
 			<div>
-				<button id="importFromFile" type="button" class="btn btn-secondary btn-sm py-0" onclick="document.getElementById('file-input').click();">Import constraints from file</button>
+				<button id="importFromFile" type="button" class="btn btn-secondary btn-sm py-0" onclick="document.getElementById('file-input').click();">Import Constraints</button>
 				<input id="file-input" type="file" name="name" style="display: none;" />
 
-				<button id="exportToFile" type="button" class="btn btn-secondary btn-sm py-0">Export constraints to a file</button>
+				<button id="exportToFile" type="button" class="btn btn-secondary btn-sm py-0">Export Constraints</button>
 			</div>
 
 			<div style="text-align: center">
 				<button id="addRandomConstraints" type="button" class="btn-dark btn-sm py-0" data-toggle="modal" data-target="#addingRandomConstraintsModal">Add Random Constraints to Graph</button>
 			</div>
+
+			<label style="text-align: center">Click on an edge and follow instructions</label>
 		</div>
 
 		<!-- Layout Options -->
@@ -306,7 +311,9 @@
 						<tr>
 							<th style="font-size: 0.9em;text-align: center">Node ID</th>
 							<th style="font-size: 0.9em;text-align: center">Rotation Allowed</th>
-							<th style="font-size: 0.9em;text-align: center"></th>
+							<th style="font-size: 0.9em;text-align: center">
+								<button type="button" id="changeAllNodeRotations">&crarr;</button>
+							</th>
 						</tr>
 					</table>
 				</div>
@@ -385,8 +392,8 @@
 				</div>
 				<div class="modal-footer">
 					<label id="modalPortsInfo" style="font-size: 12px; "></label>
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary btn-sm" id = "modalAddRandomConstraints">Add ports</button>
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="modalClose">Close</button>
+					<button type="button" class="btn btn-primary btn-sm" id="modalAddRandomConstraints">Add Ports</button>
 				</div>
 			</div>
 		</div>

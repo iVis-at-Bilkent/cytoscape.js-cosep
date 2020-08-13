@@ -21,9 +21,9 @@ const ContinuousLayout = require('./continuous-base');
 const assign = require('../assign');
 const isFn = fn => typeof fn === 'function';
 
-const optFn = ( opt, ele ) => {
-  if( isFn( opt ) ){
-    return opt( ele );
+const optFn = (opt, ele) => {
+  if(isFn(opt)){
+    return opt(ele);
   } else {
     return opt;
   }
@@ -37,7 +37,7 @@ let defaults = {
   refresh: 10, // number of ticks per frame; higher is faster but more jerky
   fps: 24, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
-  //maxSimulationTime: 5000, // max length in ms to run the layout
+  maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
   fit: true, // on every layout reposition of nodes, fit the viewport
   padding: 30, // padding around the simulation
@@ -115,7 +115,7 @@ let getUserOptions = function (options) {
   CoSEPConstants.ANIMATE = CoSEConstants.ANIMATE = FDLayoutConstants.ANIMATE = LayoutConstants.ANIMATE = 'end';
 
   // # of ports on a node's side
-  if( options.portsPerNodeSide != null )
+  if(options.portsPerNodeSide != null)
     CoSEPConstants.PORTS_PER_SIDE = +options.portsPerNodeSide;
 
   // Labels are ignored
@@ -145,25 +145,25 @@ let getUserOptions = function (options) {
     CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
-  if (options.edgeShiftingPeriod)
+  if (options.edgeShiftingPeriod != null)
     CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
-  if (options.nodeRotationPeriod)
+  if (options.nodeRotationPeriod != null)
     CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
 
   // Polishing Force
-  if (options.polishingForce)
+  if (options.polishingForce != null)
     CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
-  // Grouping 1-Degree Nodes
-  if (options.groupOneDegreeNodesAcrossPorts)
+  // Grouping 1-Degree Nodes Across Ports
+  if (options.groupOneDegreeNodesAcrossPorts != null)
     CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
-  if (options.groupOneDegreeNodesAcrossPortsPeriod)
+  if (options.groupOneDegreeNodesAcrossPortsPeriod != null)
     CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
 };
 
 class Layout extends ContinuousLayout {
-  constructor( options ){
-    options = assign( {}, defaults, options );
+  constructor(options){
+    options = assign({}, defaults, options);
     super(options);
 
     getUserOptions(options);
@@ -176,22 +176,22 @@ class Layout extends ContinuousLayout {
     // Get graph information from Cytoscape
     let nodes = state.nodes;
     let edges = state.edges;
-    let idToLNode = this.idToLNode = {};
+    this.idToLNode = {};
 
     // Used to update Cytoscape port visualization
     // lEdge -> Cytoscape edge
-    let lEdgeToCEdge = this.lEdgeToCEdge = new HashMap();
+    this.lEdgeToCEdge = new HashMap();
 
     // Holds edges with ports
     // id -> LEdge
-    let portConstrainedEdges = this.portConstrainedEdges = {};
+    this.portConstrainedEdges = {};
 
     // Hold the Lnodes that have port constrained edges
-    let nodesWithPorts = this.nodesWithPorts = {};
+    this.nodesWithPorts = {};
 
     // Get port information from the options
     let portConstraints;
-    if( this.options.portConstraints != null && this.options.portConstraints != undefined && typeof this.options.portConstraints === 'function')
+    if(this.options.portConstraints != null && this.options.portConstraints != undefined && typeof this.options.portConstraints === 'function')
       portConstraints = this.options.portConstraints;
     else
       throw "There are no port constraints defined as a function named 'portConstraints'";
@@ -199,7 +199,7 @@ class Layout extends ContinuousLayout {
     // Initialize CoSEP elements
     let cosepLayout = this.cosepLayout = new CoSEPLayout();
     let graphManager = this.graphManager = cosepLayout.newGraphManager();
-    let root = this.root = graphManager.addRoot();
+    this.root = graphManager.addRoot();
 
     // Establishing node relations in the GraphManager object
     this.processChildrenList(this.root, this.getTopMostNodes(nodes), cosepLayout);
@@ -221,29 +221,29 @@ class Layout extends ContinuousLayout {
 
           // Save the references
           this.portConstrainedEdges[ edge.data('id') ] = gmEdge;
-          this.lEdgeToCEdge.put( gmEdge, edge );
-          this.graphManager.edgesWithPorts.push( gmEdge );
+          this.lEdgeToCEdge.put(gmEdge, edge);
+          this.graphManager.edgesWithPorts.push(gmEdge);
 
           edgePortInfos.forEach(function (portInfo) {
             let constraint;
             // If the info is about source
-            if(portInfo.endpoint == 'Source') {
-              constraint = new CoSEPPortConstraint( gmEdge, gmEdge.source );
+            if(portInfo.endpoint === 'Source') {
+              constraint = new CoSEPPortConstraint(gmEdge, gmEdge.source);
               gmEdge.sourceConstraint = constraint;
 
               self.nodesWithPorts[ gmEdge.getSource().id ] =  gmEdge.getSource();
             }
             else{ // or target
-              constraint = new CoSEPPortConstraint( gmEdge, gmEdge.target );
+              constraint = new CoSEPPortConstraint(gmEdge, gmEdge.target);
               gmEdge.targetConstraint = constraint;
 
               self.nodesWithPorts[ gmEdge.getTarget().id ] =  gmEdge.getTarget();
             }
 
             // Type of the constraint is defined
-            constraint.portConstraintType = constraint.constraintType[ portInfo.portConstraintType ];
+            constraint.portConstraintType = constraint.constraintType[portInfo.portConstraintType];
 
-            switch( constraint.portConstraintType ){
+            switch(constraint.portConstraintType){
               case 0: // Free, add all directions via enum
                 constraint.portConstraintParameter = [
                   constraint.sideDirection[ 'Top' ],
@@ -254,8 +254,8 @@ class Layout extends ContinuousLayout {
                 break;
               case 1: // Need to enum directions
                 constraint.portConstraintParameter = [];
-                portInfo.portConstraintParameter.forEach( function ( direction ) {
-                  constraint.portConstraintParameter.push( constraint.sideDirection[ direction ] );
+                portInfo.portConstraintParameter.forEach(function (direction) {
+                  constraint.portConstraintParameter.push(constraint.sideDirection[ direction ]);
                 });
                 break;
               case 2: // Getting absolute position
@@ -268,11 +268,11 @@ class Layout extends ContinuousLayout {
     }
 
     // Saving the references
-    this.graphManager.nodesWithPorts = Object.values( this.nodesWithPorts );
+    this.graphManager.nodesWithPorts = Object.values(this.nodesWithPorts);
 
     // First phase of the algorithm
     // If incremental is true, skip over Phase I
-    if ( state.randomize ) {
+    if (state.randomize) {
       this.cosepLayout.runLayout();
     } else{
       this.cosepLayout.initParameters();
@@ -299,8 +299,8 @@ class Layout extends ContinuousLayout {
       // There are nodes that can't rotate
       for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
         let node = cosepLayout.graphManager.nodesWithPorts[i];
-        let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
-        if( this.options.nodeRotations( cyNode ) === false ) {
+        let cyNode = this.state.nodes.filter(n => n.data('id') == node.id);
+        if(this.options.nodeRotations(cyNode) === false) {
           node.canBeRotated = false;
         }
         else{
@@ -313,28 +313,30 @@ class Layout extends ContinuousLayout {
       // All nodes can rotate
       for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
         let node = cosepLayout.graphManager.nodesWithPorts[i];
-        let cyNode = this.state.nodes.filter( n => n.data('id') == node.id);
+        let cyNode = this.state.nodes.filter(n => n.data('id') == node.id);
         node.canBeRotated = true;
         this.rotatableNodes.put(node, cyNode);
       }
     }
 
-    // Call tile methods if enabled
-    if( state.tile != null ){
+    // Specifying tile option
+    if(state.tile != null){
       CoSEPConstants.TILE = CoSEConstants.TILE = state.tile;
     } else{
       CoSEPConstants.TILE = CoSEConstants.TILE = true;
     }
 
-    // pre-tile methods
+    // Pre-tile methods
+    // CoSE-Base does nothing if CoSEConstants.TILE is false
     this.cosepLayout.tilingPreLayout();
 
-    // Don't let tile nodes rotate
-    Object.keys(this.cosepLayout.toBeTiled).forEach(key =>
-    {
-      if (this.cosepLayout.toBeTiled[key])
-        this.idToLNode[key].canBeRotated = false;
-    });
+    // Don't let tiled nodes rotate
+    if(this.cosepLayout.toBeTiled) {
+      Object.keys(this.cosepLayout.toBeTiled).forEach(key => {
+        if (this.cosepLayout.toBeTiled[key])
+          this.idToLNode[key].canBeRotated = false;
+      });
+    }
 
     // Initialize second phase of the algorithm
     this.cosepLayout.secondPhaseInit();
@@ -343,7 +345,7 @@ class Layout extends ContinuousLayout {
 
   // Get the top most ones of a list of nodes
   // Note: Taken from CoSE-Bilkent !!
-  getTopMostNodes( nodes ) {
+  getTopMostNodes(nodes) {
     let nodesMap = {};
     for (let i = 0; i < nodes.length; i++) {
       nodesMap[nodes[i].id()] = true;
@@ -365,7 +367,7 @@ class Layout extends ContinuousLayout {
 
   // Note: Taken from CoSE-Bilkent !!
   // MODIFIED TO NOT TAKE LABEL INFO/DIMENSIONS
-  processChildrenList ( parent, children, layout ) {
+  processChildrenList (parent, children, layout) {
     let size = children.length;
     for (let i = 0; i < size; i++) {
       let theChild = children[i];
@@ -389,10 +391,10 @@ class Layout extends ContinuousLayout {
       theNode.id = theChild.data("id");
 
       // Attach the paddings of cy node to layout node
-      theNode.paddingLeft = parseInt( theChild.css('padding') );
-      theNode.paddingTop = parseInt( theChild.css('padding') );
-      theNode.paddingRight = parseInt( theChild.css('padding') );
-      theNode.paddingBottom = parseInt( theChild.css('padding') );
+      theNode.paddingLeft = parseInt(theChild.css('padding'));
+      theNode.paddingTop = parseInt(theChild.css('padding'));
+      theNode.paddingRight = parseInt(theChild.css('padding'));
+      theNode.paddingBottom = parseInt(theChild.css('padding'));
 
       // Map the layout node
       this.idToLNode[theChild.data("id")] = theNode;
@@ -429,12 +431,13 @@ class Layout extends ContinuousLayout {
         state.phaseIIiterationCount = state.tickIndex;
         this.cosepLayout.polishingPhaseInit();
       } else if(this.cosepLayout.phase === CoSEPLayout.PHASE_POLISHING){
+        state.phaseIIIiterationCount = state.tickIndex;
         this.cosepLayout.tilingPostLayout();
       }
     }
 
     // Update node positions
-    this.state.nodes.forEach( n => {
+    this.state.nodes.forEach(n => {
       let s = this.getScratch(n);
       let location = this.idToLNode[n.data('id')];
       s.x = location.getCenterX();
@@ -442,7 +445,7 @@ class Layout extends ContinuousLayout {
     });
 
     // Update Cytoscape visualization in 'during' layout
-    if( state.animateContinuously)
+    if(state.animateContinuously)
       self.updateCytoscapePortVisualization();
 
     return isDone;
@@ -451,21 +454,22 @@ class Layout extends ContinuousLayout {
   // run this function after the layout is done ticking
   postrun(){
     this.updateCytoscapePortVisualization();
+
+    /*
     console.log('***************************************************************************************');
     console.log('** Phase II -- iteration count: ' + JSON.stringify(this.state.phaseIIiterationCount));
-    console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.cosepLayout.totalIterations));
+    console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.state.phaseIIIiterationCount));
     console.log('** Running time(ms) : ' + JSON.stringify(this.state.duration));
-
-   /* console.log( '** Graph Manager' );
-    console.log( this.graphManager );
-    console.log( '** idToLNode' );
-    console.log( this.idToLNode );
-    console.log( '** Nodes with ports' );
-    console.log( this.nodesWithPorts );
-    console.log( '** lEdgeToCEdge' );
-    console.log( this.lEdgeToCEdge );
-    console.log( '** portConstrainedEdges' );
-    console.log( this.portConstrainedEdges ); */
+    console.log('** Graph Manager');
+    console.log(this.graphManager);
+    console.log('** idToLNode');
+    console.log(this.idToLNode);
+    console.log('** Nodes with ports');
+    console.log(this.nodesWithPorts);
+    console.log('** lEdgeToCEdge');
+    console.log(this.lEdgeToCEdge);
+    console.log('** portConstrainedEdges');
+    console.log(this.portConstrainedEdges); */
   }
 
   /**
@@ -474,17 +478,17 @@ class Layout extends ContinuousLayout {
    */
   addImplicitPortConstraints(){
     let self = this;
-    Object.keys(this.nodesWithPorts).forEach(function( key ) {
+    Object.keys(this.nodesWithPorts).forEach(function(key) {
       let lNode = self.idToLNode[ key ];
-      for( let i = 0; i < lNode.getEdges().length; i++ ){
+      for(let i = 0; i < lNode.getEdges().length; i++){
         let lEdge = lNode.getEdges()[i];
 
         // If the node is the 'source' of edge
-        if ( lEdge.getSource().id == lNode.id ){
+        if (lEdge.getSource().id == lNode.id){
           // If there is already a port constraint
-          if ( !lEdge.getSourceConstraint() ){
+          if (!lEdge.getSourceConstraint()){
             // Create port constraint
-            let constraint = new CoSEPPortConstraint( lEdge, lEdge.source );
+            let constraint = new CoSEPPortConstraint(lEdge, lEdge.source);
             lEdge.sourceConstraint = constraint;
 
             constraint.portConstraintType = constraint.constraintType[ 'Free' ];
@@ -497,15 +501,15 @@ class Layout extends ContinuousLayout {
             ];
 
             // Adding references
-            self.lEdgeToCEdge.put( lEdge, self.state.cy.getElementById( lEdge.id ) );
+            self.lEdgeToCEdge.put(lEdge, self.state.cy.getElementById(lEdge.id));
             self.portConstrainedEdges[ lEdge.id ] = lEdge;
-            self.graphManager.edgesWithPorts.push( lEdge );
+            self.graphManager.edgesWithPorts.push(lEdge);
           }
         }
         else{
-          if ( !lEdge.getTargetConstraint() ){
+          if (!lEdge.getTargetConstraint()){
             // Create port constraint
-            let constraint = new CoSEPPortConstraint( lEdge, lEdge.target );
+            let constraint = new CoSEPPortConstraint(lEdge, lEdge.target);
             lEdge.targetConstraint = constraint;
 
             constraint.portConstraintType = constraint.constraintType[ 'Free' ];
@@ -518,9 +522,9 @@ class Layout extends ContinuousLayout {
             ];
 
             // Adding references
-            self.lEdgeToCEdge.put( lEdge, self.state.cy.getElementById( lEdge.id ) );
+            self.lEdgeToCEdge.put(lEdge, self.state.cy.getElementById(lEdge.id));
             self.portConstrainedEdges[ lEdge.id ] = lEdge;
-            self.graphManager.edgesWithPorts.push( lEdge );
+            self.graphManager.edgesWithPorts.push(lEdge);
           }
         }
       }
@@ -534,32 +538,31 @@ class Layout extends ContinuousLayout {
     let self = this;
 
     // Update Nodes
-    let nodeWPorts = Object.values( this.nodesWithPorts );
-    for (let i = 0; i < nodeWPorts.length; i++ ){
+    let nodeWPorts = Object.values(this.nodesWithPorts);
+    for (let i = 0; i < nodeWPorts.length; i++){
       let node = nodeWPorts[i];
       let cyNode = this.rotatableNodes.get(node);
-      if(cyNode.layoutDimensions().w !== node.rect.width) {
+      if(cyNode) {
         let w = cyNode.height();
         let h = cyNode.width();
         cyNode.style({'width': w});
         cyNode.style({'height': h});
       }
-
     }
 
     // Update Edges
-    Object.keys(this.portConstrainedEdges).forEach(function( key ) {
+    Object.keys(this.portConstrainedEdges).forEach(function(key) {
       let lEdge = self.portConstrainedEdges[key];
-      let cytoEdge = self.lEdgeToCEdge.get( lEdge );
+      let cytoEdge = self.lEdgeToCEdge.get(lEdge);
 
       let sourceConstraint = lEdge.getSourceConstraint();
-      if( sourceConstraint ){
+      if(sourceConstraint){
         let relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
         cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
       }
 
       let targetConstraint = lEdge.getTargetConstraint();
-      if( targetConstraint ){
+      if(targetConstraint){
         let relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
         cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
       }

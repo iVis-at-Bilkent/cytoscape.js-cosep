@@ -59,6 +59,29 @@ CoSEPLayout.prototype.newEdge = function (vEdge) {
 };
 
 // -----------------------------------------------------------------------------
+// Section: Limit Phase I CoSE to Specified maxIterations
+// -----------------------------------------------------------------------------
+CoSEPLayout.prototype.initSpringEmbedder = function () {
+    var s = this.getAllNodes().length;
+    if(s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT){
+        this.coolingFactor = Math.max(FDLayoutConstants.COOLING_ADAPTATION_FACTOR, 1.0 -
+            (s-FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT)/(FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT-FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT)*(1-FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+    }
+    else {
+        this.coolingFactor = 1.0;
+    }
+    this.initialCoolingFactor = this.coolingFactor;
+    this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT;
+
+    this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
+
+    this.totalDisplacementThreshold =
+        this.displacementThresholdPerNode * this.getAllNodes().length;
+
+    this.repulsionRange = this.calcRepulsionRange();
+};
+
+// -----------------------------------------------------------------------------
 // Section: Other Methods
 // -----------------------------------------------------------------------------
 
@@ -80,6 +103,8 @@ CoSEPLayout.prototype.initialPortConfiguration = function(){
 CoSEPLayout.prototype.secondPhaseInit = function(){
     this.phase = CoSEPLayout.PHASE_SECOND;
     this.totalIterations = 0;
+    this.maxIterations = CoSEPConstants.PHASE2_MAX_ITERATIONS;
+    //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE2_MAX_ITERATIONS);
 
     // Reset variables for cooling
     this.initialCoolingFactor = CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR;
@@ -131,6 +156,8 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
 CoSEPLayout.prototype.polishingPhaseInit = function(){
     this.phase = CoSEPLayout.PHASE_POLISHING;
     this.totalIterations = 0;
+    this.maxIterations = CoSEPConstants.PHASE3_MAX_ITERATIONS;
+    //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE3_MAX_ITERATIONS);
 
     // Node Rotation Related Variables -- No need for rotations
     // This is for increasing performance in polishing phase
@@ -146,7 +173,6 @@ CoSEPLayout.prototype.polishingPhaseInit = function(){
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
 };
-
 
 /**
  * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
@@ -185,7 +211,7 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     }
     this.moveNodes();
 
-    if (this.phase === CoSEPLayout.PHASE_SECOND ) {
+    if (this.phase === CoSEPLayout.PHASE_SECOND ){
         if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
         } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {

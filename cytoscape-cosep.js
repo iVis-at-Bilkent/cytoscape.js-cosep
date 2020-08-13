@@ -109,8 +109,13 @@ for (var prop in CoSEConstants) {
 CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR = 0.7;
 CoSEPConstants.PHASE3_INITIAL_COOLING_FACTOR = 0.5;
 
+// Max iterations for each phase
+CoSEPConstants.PHASE1_MAX_ITERATIONS = 2500;
+CoSEPConstants.PHASE2_MAX_ITERATIONS = 2500;
+CoSEPConstants.PHASE3_MAX_ITERATIONS = 2500;
+
 // Prevent layout from finishing too early for both phases
-CoSEPConstants.NOT_TOO_EARLY = 300;
+CoSEPConstants.NOT_TOO_EARLY = 200;
 
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
@@ -770,6 +775,26 @@ CoSEPLayout.prototype.newEdge = function (vEdge) {
 };
 
 // -----------------------------------------------------------------------------
+// Section: Limit Phase I CoSE to Specified maxIterations
+// -----------------------------------------------------------------------------
+CoSEPLayout.prototype.initSpringEmbedder = function () {
+    var s = this.getAllNodes().length;
+    if (s > FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) {
+        this.coolingFactor = Math.max(FDLayoutConstants.COOLING_ADAPTATION_FACTOR, 1.0 - (s - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) / (FDLayoutConstants.ADAPTATION_UPPER_NODE_LIMIT - FDLayoutConstants.ADAPTATION_LOWER_NODE_LIMIT) * (1 - FDLayoutConstants.COOLING_ADAPTATION_FACTOR));
+    } else {
+        this.coolingFactor = 1.0;
+    }
+    this.initialCoolingFactor = this.coolingFactor;
+    this.maxNodeDisplacement = FDLayoutConstants.MAX_NODE_DISPLACEMENT;
+
+    this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
+
+    this.totalDisplacementThreshold = this.displacementThresholdPerNode * this.getAllNodes().length;
+
+    this.repulsionRange = this.calcRepulsionRange();
+};
+
+// -----------------------------------------------------------------------------
 // Section: Other Methods
 // -----------------------------------------------------------------------------
 
@@ -791,6 +816,8 @@ CoSEPLayout.prototype.initialPortConfiguration = function () {
 CoSEPLayout.prototype.secondPhaseInit = function () {
     this.phase = CoSEPLayout.PHASE_SECOND;
     this.totalIterations = 0;
+    this.maxIterations = CoSEPConstants.PHASE2_MAX_ITERATIONS;
+    //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE2_MAX_ITERATIONS);
 
     // Reset variables for cooling
     this.initialCoolingFactor = CoSEPConstants.PHASE2_INITIAL_COOLING_FACTOR;
@@ -837,6 +864,8 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
 CoSEPLayout.prototype.polishingPhaseInit = function () {
     this.phase = CoSEPLayout.PHASE_POLISHING;
     this.totalIterations = 0;
+    this.maxIterations = CoSEPConstants.PHASE3_MAX_ITERATIONS;
+    //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE3_MAX_ITERATIONS);
 
     // Node Rotation Related Variables -- No need for rotations
     // This is for increasing performance in polishing phase
@@ -1518,7 +1547,7 @@ var defaults = {
   refresh: 10, // number of ticks per frame; higher is faster but more jerky
   fps: 24, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
-  //maxSimulationTime: 5000, // max length in ms to run the layout
+  maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
   fit: true, // on every layout reposition of nodes, fit the viewport
   padding: 30, // padding around the simulation
@@ -1605,15 +1634,15 @@ var getUserOptions = function getUserOptions(options) {
   if (options.rotation180AngleThreshold != null) CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
-  if (options.edgeShiftingPeriod) CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
-  if (options.nodeRotationPeriod) CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
+  if (options.edgeShiftingPeriod != null) CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
+  if (options.nodeRotationPeriod != null) CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
 
   // Polishing Force
-  if (options.polishingForce) CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
+  if (options.polishingForce != null) CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
-  // Grouping 1-Degree Nodes
-  if (options.groupOneDegreeNodesAcrossPorts) CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
-  if (options.groupOneDegreeNodesAcrossPortsPeriod) CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
+  // Grouping 1-Degree Nodes Across Ports
+  if (options.groupOneDegreeNodesAcrossPorts != null) CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
+  if (options.groupOneDegreeNodesAcrossPortsPeriod != null) CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
 };
 
 var Layout = function (_ContinuousLayout) {
@@ -1641,18 +1670,18 @@ var Layout = function (_ContinuousLayout) {
       // Get graph information from Cytoscape
       var nodes = state.nodes;
       var edges = state.edges;
-      var idToLNode = this.idToLNode = {};
+      this.idToLNode = {};
 
       // Used to update Cytoscape port visualization
       // lEdge -> Cytoscape edge
-      var lEdgeToCEdge = this.lEdgeToCEdge = new HashMap();
+      this.lEdgeToCEdge = new HashMap();
 
       // Holds edges with ports
       // id -> LEdge
-      var portConstrainedEdges = this.portConstrainedEdges = {};
+      this.portConstrainedEdges = {};
 
       // Hold the Lnodes that have port constrained edges
-      var nodesWithPorts = this.nodesWithPorts = {};
+      this.nodesWithPorts = {};
 
       // Get port information from the options
       var portConstraints = void 0;
@@ -1661,7 +1690,7 @@ var Layout = function (_ContinuousLayout) {
       // Initialize CoSEP elements
       var cosepLayout = this.cosepLayout = new CoSEPLayout();
       var graphManager = this.graphManager = cosepLayout.newGraphManager();
-      var root = this.root = graphManager.addRoot();
+      this.root = graphManager.addRoot();
 
       // Establishing node relations in the GraphManager object
       this.processChildrenList(this.root, this.getTopMostNodes(nodes), cosepLayout);
@@ -1690,7 +1719,7 @@ var Layout = function (_ContinuousLayout) {
               edgePortInfos.forEach(function (portInfo) {
                 var constraint = void 0;
                 // If the info is about source
-                if (portInfo.endpoint == 'Source') {
+                if (portInfo.endpoint === 'Source') {
                   constraint = new CoSEPPortConstraint(gmEdge, gmEdge.source);
                   gmEdge.sourceConstraint = constraint;
 
@@ -1792,20 +1821,23 @@ var Layout = function (_ContinuousLayout) {
         }
       }
 
-      // Call tile methods if enabled
+      // Specifying tile option
       if (state.tile != null) {
         CoSEPConstants.TILE = CoSEConstants.TILE = state.tile;
       } else {
         CoSEPConstants.TILE = CoSEConstants.TILE = true;
       }
 
-      // pre-tile methods
+      // Pre-tile methods
+      // CoSE-Base does nothing if CoSEConstants.TILE is false
       this.cosepLayout.tilingPreLayout();
 
-      // Don't let tile nodes rotate
-      Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
-        if (_this2.cosepLayout.toBeTiled[key]) _this2.idToLNode[key].canBeRotated = false;
-      });
+      // Don't let tiled nodes rotate
+      if (this.cosepLayout.toBeTiled) {
+        Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
+          if (_this2.cosepLayout.toBeTiled[key]) _this2.idToLNode[key].canBeRotated = false;
+        });
+      }
 
       // Initialize second phase of the algorithm
       this.cosepLayout.secondPhaseInit();
@@ -1907,6 +1939,7 @@ var Layout = function (_ContinuousLayout) {
           state.phaseIIiterationCount = state.tickIndex;
           this.cosepLayout.polishingPhaseInit();
         } else if (this.cosepLayout.phase === CoSEPLayout.PHASE_POLISHING) {
+          state.phaseIIIiterationCount = state.tickIndex;
           this.cosepLayout.tilingPostLayout();
         }
       }
@@ -1931,21 +1964,22 @@ var Layout = function (_ContinuousLayout) {
     key: 'postrun',
     value: function postrun() {
       this.updateCytoscapePortVisualization();
+
+      /*
       console.log('***************************************************************************************');
       console.log('** Phase II -- iteration count: ' + JSON.stringify(this.state.phaseIIiterationCount));
-      console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.cosepLayout.totalIterations));
+      console.log('** Phase Polishing -- iteration count: ' + JSON.stringify(this.state.phaseIIIiterationCount));
       console.log('** Running time(ms) : ' + JSON.stringify(this.state.duration));
-
-      /* console.log( '** Graph Manager' );
-       console.log( this.graphManager );
-       console.log( '** idToLNode' );
-       console.log( this.idToLNode );
-       console.log( '** Nodes with ports' );
-       console.log( this.nodesWithPorts );
-       console.log( '** lEdgeToCEdge' );
-       console.log( this.lEdgeToCEdge );
-       console.log( '** portConstrainedEdges' );
-       console.log( this.portConstrainedEdges ); */
+      console.log('** Graph Manager');
+      console.log(this.graphManager);
+      console.log('** idToLNode');
+      console.log(this.idToLNode);
+      console.log('** Nodes with ports');
+      console.log(this.nodesWithPorts);
+      console.log('** lEdgeToCEdge');
+      console.log(this.lEdgeToCEdge);
+      console.log('** portConstrainedEdges');
+      console.log(this.portConstrainedEdges); */
     }
 
     /**
@@ -2013,7 +2047,7 @@ var Layout = function (_ContinuousLayout) {
       for (var i = 0; i < nodeWPorts.length; i++) {
         var _node = nodeWPorts[i];
         var _cyNode = this.rotatableNodes.get(_node);
-        if (_cyNode.layoutDimensions().w !== _node.rect.width) {
+        if (_cyNode) {
           var w = _cyNode.height();
           var h = _cyNode.width();
           _cyNode.style({ 'width': w });
@@ -2390,7 +2424,7 @@ var tick = function tick(state) {
 
   s.duration = Date.now() - s.startTime;
 
-  return !s.infinite && tickIndicatesDone; // || s.tickIndex >= s.maxIterations || duration >= s.maxSimulationTime );
+  return !s.infinite && tickIndicatesDone || s.duration >= s.maxSimulationTime;
 };
 
 var multitick = function multitick(state) {

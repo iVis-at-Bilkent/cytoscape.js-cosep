@@ -73,18 +73,16 @@ table td {
 }
 
 #exportToFile{
-    float: right;
+
     position: relative;
-    margin-right: 10px;
     margin-bottom: 5px;
-    width: 160px;
+    width: 130px;
     font-size: 0.8em;
 }
 
 #importFromFile{
-    margin-left: 10px;
     margin-bottom: 5px;
-    width: 160px;
+    width: 130px;
     font-size: 0.8em;
 }
 
