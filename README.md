@@ -7,8 +7,7 @@ based on the [CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cyto
 support port constraints on compound graphs. Further improvements are achieved by various heuristics such as shifting port constrained 
 edges around the node and by rotating nodes.
 
-The algorithm is implemented as a Cytoscape.js extension by [i-Vis Lab](http://cs.bilkent.edu.tr/~ivis/) in
- Bilkent University ([demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html)).
+Here is a ([demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html)) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented ports* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
 
 ## Dependencies
 
@@ -19,17 +18,17 @@ The algorithm is implemented as a Cytoscape.js extension by [i-Vis Lab](http://c
 
 Port constraints are associated with edges and can have two port constraints defined on each of its
 endpoints. When an edge endpoint does not have a specified port constraint, it is assumed that it connects 
-the center of the source/target node (the edge is typically rendered w.r.t. to the source/target node 
-shape’s center however). 
+to the center of the source/target node (the edge is typically rendered w.r.t. to the source/target node 
+shape’s boundaries however). 
 
 The ports are realized as discrete points distributed evenly around a node. The ports then can be indexed 
 clock-wise as {0, 1, 2, … , 4k-1} starting at the top-left where k > 0 is the number of 
 ports on each side, specified by the user.
 
 Various degrees of port constraints can be defined on edge endpoints:
- * Free: The edge can be placed at any vacant port.
- * Fixed Side(s): A set s of directions can be assigned to an edge in which s ⊆ {top, left, bottom, right}.
- * Absolute Position: Using the indices of ports, edges can be assigned static positions.
+ * **Free**: The edge can be placed at any vacant port.
+ * **Fixed Side(s)**: A set s of directions from {top, left, bottom, right} can be assigned to an edge end.
+ * **Absolute Position**: Using the indices of ports, edge ends can be assigned to specific / static positions.
  
 ## Usage instructions
 
