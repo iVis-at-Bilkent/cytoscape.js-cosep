@@ -2,12 +2,12 @@
 
 ## Description
 
-Compound Spring Embedder with Ports (CoSEP) is force-directed layout algorithm 
+Compound Spring Embedder with Ports (CoSEP) is a force-directed layout algorithm 
 based on the [CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cytoscape.js-cose-bilkent) to 
 support port constraints on compound graphs. Further improvements are achieved by various heuristics such as shifting port constrained 
 edges around the node and by rotating nodes.
 
-Here is a ([demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html)) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
+Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
 
 ## Dependencies
 
@@ -25,7 +25,7 @@ The ports are realized as discrete points distributed evenly around a node. The 
 clock-wise as {0, 1, 2, … , 4k-1} starting at the top-left where k > 0 is the number of 
 ports on each side, specified by the user. For instance, ports are distributed as follows when k = 5: 
 
-<p align="center"><img src="demo/demo-fig-port-example.png" width="245" height="186"></p>
+<p align="center"><img src="demo/demo-fig-port-example.png" width="180"></p>
 
 Various degrees of port constraints can be defined on edge endpoints:
  * **Free**: The specified end of the edge can be placed at any port of the associated node
