@@ -214,12 +214,12 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     if (this.phase === CoSEPLayout.PHASE_SECOND ){
         if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
-        } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        } else if (this.totalIterations % CoSEPConstants.EDGE_END_SHIFTING_PERIOD === 0) {
             this.checkForEdgeShifting();
         }
     }
 
-    if ( CoSEPConstants.GROUP_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0 ) {
+    if ( CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD === 0 ) {
         this.groupOneDegreeNodesAcrossPorts();
     }
 

@@ -120,10 +120,10 @@ let cy = window.cy = cytoscape({
 // Variables and Constants ---------------------------------------------------------------------------------------------
 let numberOfEdgeCrosses;
 let numberOfNodeOverlaps;
-let percentOfProperlyOrientedEdges;
+let percentOfProperlyOrientedEdgeEnds;
 let selectedEdge;
 let unProperly;
-let numberOfPorts;
+let numberOfEdgeEnds;
 let constraints = {};
 let rotations = {};
 const consSelector = document.getElementById("consType");
@@ -133,7 +133,7 @@ const nodeRotationTable = document.getElementById("nodeRotationTable");
 const sampleGraphs = document.getElementById("sampleGraphs");
 const edgeCrossings = document.getElementById("edgeCrossing");
 const nodeOverlaps = document.getElementById("nodeOverlap");
-const properlyOrientedEdges = document.getElementById("properlyOrientedEdges");
+const properlyOrientedEdgeEnds = document.getElementById("properlyOrientedEdges");
 const duration = document.getElementById("duration");
 
 // Functions to send to CoSEP Layout
@@ -152,8 +152,8 @@ document.getElementById("sampleGraphs").selectedIndex = 0;
 document.getElementById("portsPerSide").value = 5;
 document.getElementById("FPS").value = 12;
 document.getElementById("FPS").disabled = true;
-document.getElementById("edgeShiftingPeriod").value = 5;
-document.getElementById("edgeShiftingForceThreshold").value = 1;
+document.getElementById("edgeEndShiftingPeriod").value = 5;
+document.getElementById("edgeEndShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
 document.getElementById("nodeRotationForceThreshold").value = 20;
 document.getElementById("nodeRotationAngleThreshold").value = 130;
@@ -219,15 +219,15 @@ document.getElementById("cosepButton").addEventListener("click", function() {
         randomize: !(document.getElementById("incremental").checked),
         portConstraints: portConstraintsFunc,
         portsPerNodeSide: document.getElementById("portsPerSide").value,
-        edgeShiftingPeriod: +document.getElementById("edgeShiftingPeriod").value,
-        edgeShiftingForceThreshold: +document.getElementById("edgeShiftingForceThreshold").value,
+        edgeEndShiftingPeriod: +document.getElementById("edgeEndShiftingPeriod").value,
+        edgeEndShiftingForceThreshold: +document.getElementById("edgeEndShiftingForceThreshold").value,
         nodeRotationPeriod: +document.getElementById("nodeRotationPeriod").value,
         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
         nodeRotations: nodeRotationsFunc,
         polishingForce: document.getElementById("polishingForce").value,
-        groupOneDegreeNodesAcrossPorts: document.getElementById("oneDegreePortedNodes").checked,
-        groupOneDegreeNodesAcrossPortsPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
+        furtherHandlingOneDegreeNodes: document.getElementById("oneDegreePortedNodes").checked,
+        furtherHandlingOneDegreeNodesPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
     });
 
     if ( document.getElementById("animate").checked )
@@ -247,11 +247,11 @@ function calcPerformanceMetrics(){
    // metrics = window.cy.layvo('get').generalProperties();
     numberOfEdgeCrosses = findNumberOfCrosses(window.cy);
     numberOfNodeOverlaps = findNumberOfOverlappingNodes(window.cy);
-    percentOfProperlyOrientedEdges = Math.floor((calcProperlyOrientedPortedEdges()) * 10000) / 100;
+    percentOfProperlyOrientedEdgeEnds = Math.floor((calcProperlyOrientedPortedEdgeEnds()) * 10000) / 100;
 
     edgeCrossings.innerHTML = numberOfEdgeCrosses;
     nodeOverlaps.innerHTML = numberOfNodeOverlaps;
-    properlyOrientedEdges.innerHTML = '%' + percentOfProperlyOrientedEdges;
+    properlyOrientedEdgeEnds.innerHTML = '%' + percentOfProperlyOrientedEdgeEnds;
 }
 
 let findNumberOfCrosses = function(cy) {
@@ -310,12 +310,12 @@ let findNumberOfOverlappingNodes = function(cy) {
     return overlaps;
 };
 
-// Calculate properly oriented ported edges
-function calcProperlyOrientedPortedEdges(){
-    numberOfPorts = 0;
+// Calculate properly oriented ported edge ends
+function calcProperlyOrientedPortedEdgeEnds(){
+    numberOfEdgeEnds = 0;
 
     Object.keys(constraints).forEach( id =>{
-        numberOfPorts += constraints[id].length;
+        numberOfEdgeEnds += constraints[id].length;
     });
 
     unProperly = 0;
@@ -360,7 +360,7 @@ function calcProperlyOrientedPortedEdges(){
         }
     }
 
-    return (numberOfPorts - unProperly) / numberOfPorts;
+    return (numberOfEdgeEnds - unProperly) / numberOfEdgeEnds;
 }
 
 // Calc if node and edge is intersecting
@@ -462,24 +462,35 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 window.cy.json(json);
                 window.cy.nodes().forEach( function ( node ) {
                     node.style({
-                        'background-image' : node.data('background-image'),
                         'width' : node.data('bbox').w,
                         'height' : node.data('bbox').h,
                         "border-width": node.data('border-width'),
                         "border-color": node.data('border-color'),
-                        "background-color": node.data('background-color'),
-                        "background-opacity": node.data('background-opacity'),
-                        "background-fit": "cover",
-                        "background-position-x": "50%",
-                        "background-position-y": "50%",
-                        "text-wrap": "wrap",
-                        "font-size": node.data('font-size'),
-                        "color" : node.data('color')
+
                     });
 
-                    if( node.data('label') ){
+                    if(node.data('class') === 'process' || node.data('class') === 'association' || node.data('class') === "dissociation"){
                         node.style({
-                            'label' : node.data('label')
+                            'background-color': node.data('background-color'),
+                            'background-opacity': 0.3
+                        });
+                    } else{
+                        node.style({
+                            'background-image' : node.data('background-image'),
+                            'background-color': node.data('background-color'),
+                            'background-opacity': node.data('background-opacity'),
+                            'background-fit': 'cover',
+                            'background-position-x': '50%',
+                            'background-position-y': '50%',
+                        });
+                    }
+
+                    if(node.data('label')){
+                        node.style({
+                            'label' : node.data('label'),
+                            'text-wrap': 'wrap',
+                            'font-size': node.data('font-size'),
+                            'color' : node.data('color')
                         });
                     }
                 });

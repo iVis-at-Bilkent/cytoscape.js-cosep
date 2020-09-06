@@ -7,12 +7,12 @@ based on the [CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cyto
 support port constraints on compound graphs. Further improvements are achieved by various heuristics such as shifting port constrained 
 edges around the node and by rotating nodes.
 
-Here is a ([demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html)) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented ports* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
+Here is a ([demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html)) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
 
 ## Dependencies
 
  * Cytoscape.js: ^3.2.0
- * cose-base ^1.0.1
+ * cose-base ^1.0.3
 
 ## Documentation
 
@@ -165,21 +165,21 @@ var options = {
     gravityRange: 3.8,
     
     // Thresholds for force in Phase II
-    edgeShiftingForceThreshold: 1,
+    edgeEndShiftingForceThreshold: 1,
     nodeRotationForceThreshold: 20,
     rotation180RatioThreshold: 0.5,
     rotation180AngleThreshold: 130,
 
     // Periods for Phase II
-    edgeShiftingPeriod: 5,
+    edgeEndShiftingPeriod: 5,
     nodeRotationPeriod: 15,
 
     // Polishing Force
     polishingForce: 0.1,
 
     // Grouping 1-Degree Nodes Across Ports
-    groupOneDegreeNodesAcrossPorts: true,
-    groupOneDegreeNodesAcrossPortsPeriod: 50,
+    furtherHandlingOneDegreeNodes: true,
+    furtherHandlingOneDegreeNodesPeriod: 50,
     
     // layout event callbacks
     ready: function(){}, // on layoutready

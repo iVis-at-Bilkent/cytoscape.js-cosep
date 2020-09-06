@@ -120,14 +120,14 @@ CoSEPConstants.NOT_TOO_EARLY = 200;
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
 
-// # of iterations to check for edge shifting
-CoSEPConstants.EDGE_SHIFTING_PERIOD = 5;
+// # of iterations to check for edge end shifting
+CoSEPConstants.EDGE_END_SHIFTING_PERIOD = 5;
 
 // # of iterations to check for node rotation
 CoSEPConstants.NODE_ROTATION_PERIOD = 15;
 
 // Thresholds for Phase II
-CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 1;
+CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD = 1;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
 CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 130;
@@ -135,9 +135,9 @@ CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 130;
 // Polishing (Phase III) Force Constants
 CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.1;
 
-// Group one degree nodes
-CoSEPConstants.GROUP_ONE_DEGREE_NODES = true;
-CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = 50;
+// Further Handling of 1-Degree Nodes
+CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES = true;
+CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD = 50;
 
 module.exports = CoSEPConstants;
 
@@ -920,12 +920,12 @@ CoSEPLayout.prototype.runSpringEmbedderTick = function () {
     if (this.phase === CoSEPLayout.PHASE_SECOND) {
         if (this.totalIterations % CoSEPConstants.NODE_ROTATION_PERIOD === 0) {
             this.checkForNodeRotation();
-        } else if (this.totalIterations % CoSEPConstants.EDGE_SHIFTING_PERIOD === 0) {
+        } else if (this.totalIterations % CoSEPConstants.EDGE_END_SHIFTING_PERIOD === 0) {
             this.checkForEdgeShifting();
         }
     }
 
-    if (CoSEPConstants.GROUP_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD === 0) {
+    if (CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES && this.totalIterations % CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD === 0) {
         this.groupOneDegreeNodesAcrossPorts();
     }
 
@@ -1264,9 +1264,9 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function () {
 
     // Exceeds threshold?
     // Get AVG and reset the sum
-    var rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_SHIFTING_PERIOD;
+    var rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_END_SHIFTING_PERIOD;
     this.rotationalForce = 0;
-    if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD) return;
+    if (Math.abs(rotationalForceAvg) < CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD) return;
 
     var newIndex = null;
     // If the edge wants to go clockwise or counter-clockwise
@@ -1628,21 +1628,21 @@ var getUserOptions = function getUserOptions(options) {
   CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
   // Thresholds for force in Phase II
-  if (options.edgeShiftingForceThreshold != null) CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = options.edgeShiftingForceThreshold;
+  if (options.edgeEndShiftingForceThreshold != null) CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD = options.edgeEndShiftingForceThreshold;
   if (options.nodeRotationForceThreshold != null) CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = options.nodeRotationForceThreshold;
   if (options.rotation180RatioThreshold != null) CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = options.rotation180RatioThreshold;
   if (options.rotation180AngleThreshold != null) CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
-  if (options.edgeShiftingPeriod != null) CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
+  if (options.edgeEndShiftingPeriod != null) CoSEPConstants.EDGE_END_SHIFTING_PERIOD = options.edgeEndShiftingPeriod;
   if (options.nodeRotationPeriod != null) CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
 
   // Polishing Force
   if (options.polishingForce != null) CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
-  // Grouping 1-Degree Nodes Across Ports
-  if (options.groupOneDegreeNodesAcrossPorts != null) CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
-  if (options.groupOneDegreeNodesAcrossPortsPeriod != null) CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
+  // Further Handling of 1-Degree Nodes
+  if (options.furtherHandlingOneDegreeNodes != null) CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES = options.furtherHandlingOneDegreeNodes;
+  if (options.furtherHandlingOneDegreeNodesPeriod != null) CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD = options.furtherHandlingOneDegreeNodesPeriod;
 };
 
 var Layout = function (_ContinuousLayout) {

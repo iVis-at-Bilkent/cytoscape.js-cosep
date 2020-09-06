@@ -30,14 +30,14 @@ CoSEPConstants.NOT_TOO_EARLY = 200;
 // Default number of ports on one side of a node
 CoSEPConstants.PORTS_PER_SIDE = 5;
 
-// # of iterations to check for edge shifting
-CoSEPConstants.EDGE_SHIFTING_PERIOD = 5;
+// # of iterations to check for edge end shifting
+CoSEPConstants.EDGE_END_SHIFTING_PERIOD = 5;
 
 // # of iterations to check for node rotation
 CoSEPConstants.NODE_ROTATION_PERIOD = 15;
 
 // Thresholds for Phase II
-CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = 1;
+CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD = 1;
 CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = 20;
 CoSEPConstants.ROTATION_180_RATIO_THRESHOLD = 0.5;
 CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 130;
@@ -45,8 +45,8 @@ CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = 130;
 // Polishing (Phase III) Force Constants
 CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = 0.1;
 
-// Group one degree nodes
-CoSEPConstants.GROUP_ONE_DEGREE_NODES = true;
-CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = 50;
+// Further Handling of 1-Degree Nodes
+CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES = true;
+CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD = 50;
 
 module.exports = CoSEPConstants;

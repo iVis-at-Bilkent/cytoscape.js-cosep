@@ -241,9 +241,9 @@ CoSEPPortConstraint.prototype.checkForEdgeShifting = function(){
 
     // Exceeds threshold?
     // Get AVG and reset the sum
-    let rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_SHIFTING_PERIOD;
+    let rotationalForceAvg = this.rotationalForce / CoSEPConstants.EDGE_END_SHIFTING_PERIOD;
     this.rotationalForce = 0;
-    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD )
+    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD )
         return;
 
     let newIndex = null;

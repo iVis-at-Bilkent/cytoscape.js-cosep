@@ -135,8 +135,8 @@ let getUserOptions = function (options) {
   CoSEPConstants.TILE = CoSEConstants.TILE = false;
 
   // Thresholds for force in Phase II
-  if (options.edgeShiftingForceThreshold != null)
-    CoSEPConstants.EDGE_SHIFTING_FORCE_THRESHOLD = options.edgeShiftingForceThreshold;
+  if (options.edgeEndShiftingForceThreshold != null)
+    CoSEPConstants.EDGE_END_SHIFTING_FORCE_THRESHOLD = options.edgeEndShiftingForceThreshold;
   if (options.nodeRotationForceThreshold != null)
     CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD = options.nodeRotationForceThreshold;
   if (options.rotation180RatioThreshold != null)
@@ -145,8 +145,8 @@ let getUserOptions = function (options) {
     CoSEPConstants.ROTATION_180_ANGLE_THRESHOLD = options.rotation180AngleThreshold;
 
   // Periods for Phase II
-  if (options.edgeShiftingPeriod != null)
-    CoSEPConstants.EDGE_SHIFTING_PERIOD = options.edgeShiftingPeriod;
+  if (options.edgeEndShiftingPeriod != null)
+    CoSEPConstants.EDGE_END_SHIFTING_PERIOD = options.edgeEndShiftingPeriod;
   if (options.nodeRotationPeriod != null)
     CoSEPConstants.NODE_ROTATION_PERIOD = options.nodeRotationPeriod;
 
@@ -154,11 +154,11 @@ let getUserOptions = function (options) {
   if (options.polishingForce != null)
     CoSEPConstants.DEFAULT_POLISHING_FORCE_STRENGTH = options.polishingForce;
 
-  // Grouping 1-Degree Nodes Across Ports
-  if (options.groupOneDegreeNodesAcrossPorts != null)
-    CoSEPConstants.GROUP_ONE_DEGREE_NODES = options.groupOneDegreeNodesAcrossPorts;
-  if (options.groupOneDegreeNodesAcrossPortsPeriod != null)
-    CoSEPConstants.GROUP_ONE_DEGREE_NODES_PERIOD = options.groupOneDegreeNodesAcrossPortsPeriod;
+  // Further Handling of 1-Degree Nodes
+  if (options.furtherHandlingOneDegreeNodes != null)
+    CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES = options.furtherHandlingOneDegreeNodes;
+  if (options.furtherHandlingOneDegreeNodesPeriod != null)
+    CoSEPConstants.FURTHER_HANDLING_ONE_DEGREE_NODES_PERIOD = options.furtherHandlingOneDegreeNodesPeriod;
 };
 
 class Layout extends ContinuousLayout {
