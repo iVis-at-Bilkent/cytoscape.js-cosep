@@ -330,10 +330,26 @@ class Layout extends ContinuousLayout {
     // CoSE-Base does nothing if CoSEConstants.TILE is false
     this.cosepLayout.tilingPreLayout();
 
-    // Don't let tiled nodes rotate
+
     if(this.cosepLayout.toBeTiled) {
+      // Reset the graphManager settings
+      this.graphManager.resetAllNodesToApplyGravitation();
+      this.cosepLayout.initParameters();
+      this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
+      this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
+      this.cosepLayout.calcNoOfChildrenForAllNodes();
+      this.graphManager.calcLowestCommonAncestors();
+      this.graphManager.calcInclusionTreeDepths();
+      this.graphManager.getRoot().calcEstimatedSize();
+      this.cosepLayout.calcIdealEdgeLengths();
+      this.graphManager.updateBounds();
+      this.cosepLayout.level = 0;
+      this.cosepLayout.initSpringEmbedder();
+
+      // Don't let tiled nodes rotate
+      // Does it matter?
       Object.keys(this.cosepLayout.toBeTiled).forEach(key => {
-        if (this.cosepLayout.toBeTiled[key])
+        if (this.cosepLayout.toBeTiled[key] && this.idToLNode[key])
           this.idToLNode[key].canBeRotated = false;
       });
     }

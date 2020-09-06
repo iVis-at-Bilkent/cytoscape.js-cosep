@@ -1834,8 +1834,21 @@ var Layout = function (_ContinuousLayout) {
 
       // Don't let tiled nodes rotate
       if (this.cosepLayout.toBeTiled) {
+        this.graphManager.resetAllNodesToApplyGravitation();
+        this.cosepLayout.initParameters();
+        this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
+        this.graphManager.setAllNodesToApplyGravitation(this.cosepLayout.nodesWithGravity);
+        this.cosepLayout.calcNoOfChildrenForAllNodes();
+        this.graphManager.calcLowestCommonAncestors();
+        this.graphManager.calcInclusionTreeDepths();
+        this.graphManager.getRoot().calcEstimatedSize();
+        this.cosepLayout.calcIdealEdgeLengths();
+        this.graphManager.updateBounds();
+        this.cosepLayout.level = 0;
+        this.cosepLayout.initSpringEmbedder();
+
         Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
-          if (_this2.cosepLayout.toBeTiled[key]) _this2.idToLNode[key].canBeRotated = false;
+          if (_this2.cosepLayout.toBeTiled[key] && _this2.idToLNode[key]) _this2.idToLNode[key].canBeRotated = false;
         });
       }
 
