@@ -23,12 +23,14 @@ shape’s boundaries however).
 
 The ports are realized as discrete points distributed evenly around a node. The ports then can be indexed 
 clock-wise as {0, 1, 2, … , 4k-1} starting at the top-left where k > 0 is the number of 
-ports on each side, specified by the user.
+ports on each side, specified by the user. For instance, ports are distributed as follows when k = 5: 
+
+<p align="center"><img src="demo/demo-fig-port-example.png" width="245" height="186"></p>
 
 Various degrees of port constraints can be defined on edge endpoints:
- * **Free**: The edge can be placed at any vacant port.
- * **Fixed Side(s)**: A set s of directions from {top, left, bottom, right} can be assigned to an edge end.
- * **Absolute Position**: Using the indices of ports, edge ends can be assigned to specific / static positions.
+ * **Free**: The specified end of the edge can be placed at any port of the associated node
+ * **Fixed Side(s)**: A set *s* of directions from {top, left, bottom, right} can be assigned to an edge end
+ * **Absolute Position**: Using the indices of ports, edge ends can be assigned to specific / static positions
  
 ## Usage instructions
 
