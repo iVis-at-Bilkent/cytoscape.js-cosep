@@ -4,7 +4,7 @@
   "main": "cytoscape-cosep.js",
   "dependencies": {
     "cytoscape": "^3.2.0",
-    "cose-base": "^1.0.0"
+    "cose-base": "^1.0.3"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,9 @@
   ],
   "keywords": [
     "cytoscape",
-    "cytoscape-extension"
+    "cytoscape-extension",
+	"port",
+	"constraint"
   ],
   "license": "MIT"
 }

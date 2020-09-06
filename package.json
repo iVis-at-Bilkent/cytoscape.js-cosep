@@ -27,7 +27,9 @@
   },
   "keywords": [
     "cytoscape",
-    "cytoscape-extension"
+    "cytoscape-extension",
+	"port",
+	"constraint"
   ],
   "license": "MIT",
   "bugs": {
