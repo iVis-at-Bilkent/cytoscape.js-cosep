@@ -1,0 +1,25 @@
+{
+  "name": "cytoscape-cosep",
+  "description": "Compound Spring Embedder with Ports (CoSEP)",
+  "main": "cytoscape-cosep.js",
+  "dependencies": {
+    "cytoscape": "^3.2.0",
+    "cose-base": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i-Vis-at-Bilkent/cytoscape-cosep.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "keywords": [
+    "cytoscape",
+    "cytoscape-extension"
+  ],
+  "license": "MIT"
+}
