@@ -479,6 +479,28 @@ CoSEPNode.prototype.move = function () {
     this.displacementY = 0;
 };
 
+/**
+ * Overriden here to its old format again 
+ * to avoid possible effects of the changes done in cose-level
+ * 
+ * @param dX
+ * @param dY
+ */
+CoSEPNode.prototype.propogateDisplacementToChildren = function (dX, dY) {
+    var nodes = this.getChild().getNodes();
+    var node;
+    for (var i = 0; i < nodes.length; i++) {
+        node = nodes[i];
+        if (node.getChild() == null) {
+            node.moveBy(dX, dY);
+            node.displacementX += dX;
+            node.displacementY += dY;
+        } else {
+            node.propogateDisplacementToChildren(dX, dY);
+        }
+    }
+};
+
 module.exports = CoSEPNode;
 
 /***/ }),
@@ -880,6 +902,21 @@ CoSEPLayout.prototype.polishingPhaseInit = function () {
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+};
+
+/**
+ * Here we override the moveNodes method to its FD format again because CoSEP is written 
+ * before the changes on the moveNodes method in cose-level are done.
+ * So, let's keep its original format to avoid possible effects of the cose-level change.
+ */
+CoSEPLayout.prototype.moveNodes = function () {
+    var lNodes = this.getAllNodes();
+    var node;
+
+    for (var i = 0; i < lNodes.length; i++) {
+        node = lNodes[i];
+        node.move();
+    }
 };
 
 /**
@@ -1832,8 +1869,8 @@ var Layout = function (_ContinuousLayout) {
       // CoSE-Base does nothing if CoSEConstants.TILE is false
       this.cosepLayout.tilingPreLayout();
 
-      // Don't let tiled nodes rotate
       if (this.cosepLayout.toBeTiled) {
+        // Reset the graphManager settings
         this.graphManager.resetAllNodesToApplyGravitation();
         this.cosepLayout.initParameters();
         this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
@@ -1847,6 +1884,8 @@ var Layout = function (_ContinuousLayout) {
         this.cosepLayout.level = 0;
         this.cosepLayout.initSpringEmbedder();
 
+        // Don't let tiled nodes rotate
+        // Does it matter?
         Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
           if (_this2.cosepLayout.toBeTiled[key] && _this2.idToLNode[key]) _this2.idToLNode[key].canBeRotated = false;
         });

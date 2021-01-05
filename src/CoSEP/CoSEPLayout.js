@@ -175,6 +175,22 @@ CoSEPLayout.prototype.polishingPhaseInit = function(){
 };
 
 /**
+ * Here we override the moveNodes method to its FD format again because CoSEP is written 
+ * before the changes on the moveNodes method in cose-level are done.
+ * So, let's keep its original format to avoid possible effects of the cose-level change.
+ */
+CoSEPLayout.prototype.moveNodes = function () {
+  var lNodes = this.getAllNodes();
+  var node;
+
+  for (var i = 0; i < lNodes.length; i++)
+  {
+    node = lNodes[i];
+    node.move();
+  }
+};
+
+/**
  * This method implements a spring embedder used by Phase 2 and 3 (polishing) with
  * potentially different parameters.
  *

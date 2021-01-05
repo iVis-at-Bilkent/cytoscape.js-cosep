@@ -333,4 +333,31 @@ CoSEPNode.prototype.move = function(){
     this.displacementY = 0;
 };
 
+/**
+ * Overriden here to its old format again 
+ * to avoid possible effects of the changes done in cose-level
+ * 
+ * @param dX
+ * @param dY
+ */
+CoSEPNode.prototype.propogateDisplacementToChildren = function (dX, dY)
+{
+  var nodes = this.getChild().getNodes();
+  var node;
+  for (var i = 0; i < nodes.length; i++)
+  {
+    node = nodes[i];
+    if (node.getChild() == null)
+    {
+      node.moveBy(dX, dY);
+      node.displacementX += dX;
+      node.displacementY += dY;
+    }
+    else
+    {
+      node.propogateDisplacementToChildren(dX, dY);
+    }
+  }
+};
+
 module.exports = CoSEPNode;
