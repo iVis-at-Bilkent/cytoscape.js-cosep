@@ -149,6 +149,9 @@ var options = {
     // Gravity force (constant)
     gravity: 0.25,
     
+    // Whether to tile disconnected nodes
+    tile: true,
+    
     // Represents the amount of the vertical space to put between the zero degree members during the tiling operation
     // Can also be a function
     tilingPaddingVertical: 10,
