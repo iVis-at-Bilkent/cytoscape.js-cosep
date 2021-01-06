@@ -75,6 +75,8 @@ CoSEPLayout.prototype.initSpringEmbedder = function () {
 
     this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
 
+    // Reassign this attribute by using new constant value
+    this.displacementThresholdPerNode = (3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH) / 100;
     this.totalDisplacementThreshold =
         this.displacementThresholdPerNode * this.getAllNodes().length;
 
@@ -133,7 +135,7 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
             return;
 
         // Calculate spring forces
-        let springForce = this.springConstant * (length - idealLength);
+        let springForce = edge.edgeElasticity * (length - idealLength);
 
         // Project force onto x and y axes
         let springForceX = springForce * (edge.lengthX / length);

@@ -811,6 +811,8 @@ CoSEPLayout.prototype.initSpringEmbedder = function () {
 
     this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
 
+    // Reassign this attribute by using new constant value
+    this.displacementThresholdPerNode = 3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
     this.totalDisplacementThreshold = this.displacementThresholdPerNode * this.getAllNodes().length;
 
     this.repulsionRange = this.calcRepulsionRange();
@@ -863,7 +865,7 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
         if (length == 0) return;
 
         // Calculate spring forces
-        var springForce = this.springConstant * (length - idealLength);
+        var springForce = edge.edgeElasticity * (length - idealLength);
 
         // Project force onto x and y axes
         var springForceX = springForce * (edge.lengthX / length);
@@ -1601,15 +1603,23 @@ var defaults = {
   // Include labels in node dimensions
   nodeDimensionsIncludeLabels: false,
   // Node repulsion (non overlapping) multiplier
-  nodeRepulsion: 4500,
+  nodeRepulsion: function nodeRepulsion(node) {
+    return 4500;
+  },
   // Ideal edge (non nested) length
-  idealEdgeLength: 50,
+  idealEdgeLength: function idealEdgeLength(edge) {
+    return 50;
+  },
   // Divisor to compute edge forces
-  edgeElasticity: 0.45,
+  edgeElasticity: function edgeElasticity(edge) {
+    return 0.45;
+  },
   // Nesting factor (multiplier) to compute ideal edge length for nested edges
   nestingFactor: 0.1,
   // Gravity force (constant)
   gravity: 0.25,
+  // For enabling tiling
+  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -1629,9 +1639,6 @@ var defaults = {
  * @param options
  */
 var getUserOptions = function getUserOptions(options) {
-  if (options.nodeRepulsion != null) CoSEPConstants.DEFAULT_REPULSION_STRENGTH = CoSEConstants.DEFAULT_REPULSION_STRENGTH = FDLayoutConstants.DEFAULT_REPULSION_STRENGTH = options.nodeRepulsion;
-  if (options.idealEdgeLength != null) CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = options.idealEdgeLength;
-  if (options.edgeElasticity != null) CoSEPConstants.DEFAULT_SPRING_STRENGTH = CoSEConstants.DEFAULT_SPRING_STRENGTH = FDLayoutConstants.DEFAULT_SPRING_STRENGTH = options.edgeElasticity;
   if (options.nestingFactor != null) CoSEPConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = CoSEConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = options.nestingFactor;
   if (options.gravity != null) CoSEPConstants.DEFAULT_GRAVITY_STRENGTH = CoSEConstants.DEFAULT_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = options.gravity;
   if (options.gravityRange != null) CoSEPConstants.DEFAULT_GRAVITY_RANGE_FACTOR = CoSEConstants.DEFAULT_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = options.gravityRange;
@@ -1733,6 +1740,8 @@ var Layout = function (_ContinuousLayout) {
       this.processChildrenList(this.root, this.getTopMostNodes(nodes), cosepLayout);
 
       // Adding edges to GraphManager
+      var idealLengthTotal = 0;
+      var edgeCount = 0;
       for (var i = 0; i < edges.length; i++) {
         var edge = edges[i];
         var sourceNode = this.idToLNode[edge.data("source")];
@@ -1741,6 +1750,10 @@ var Layout = function (_ContinuousLayout) {
           (function () {
             var gmEdge = graphManager.add(cosepLayout.newEdge(), sourceNode, targetNode);
             gmEdge.id = edge.id();
+            gmEdge.idealLength = optFn(_this2.options.idealEdgeLength, edge);
+            gmEdge.edgeElasticity = optFn(_this2.options.edgeElasticity, edge);
+            idealLengthTotal += gmEdge.idealLength;
+            edgeCount++;
 
             /**
              *  Setting variables related to port constraints
@@ -1793,6 +1806,17 @@ var Layout = function (_ContinuousLayout) {
             }
           })();
         }
+      }
+
+      // We need to update the ideal edge length constant with the avg. ideal length value after processing edges
+      // in case there is no edge, use other options
+      if (this.options.idealEdgeLength != null) {
+        if (edges.length > 0) CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = idealLengthTotal / edgeCount;else if (!isFn(this.options.idealEdgeLength)) // in case there is no edge, but option gives a value to use
+          CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = this.options.idealEdgeLength;else // in case there is no edge and we cannot get a value from option (because it's a function)
+          CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+        // we need to update these constant values based on the ideal edge length constant
+        CoSEPConstants.MIN_REPULSION_DIST = CoSEConstants.MIN_REPULSION_DIST = FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10.0;
+        CoSEPConstants.DEFAULT_RADIAL_SEPARATION = CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
       }
 
       // Saving the references
@@ -1879,7 +1903,9 @@ var Layout = function (_ContinuousLayout) {
         this.graphManager.calcLowestCommonAncestors();
         this.graphManager.calcInclusionTreeDepths();
         this.graphManager.getRoot().calcEstimatedSize();
-        this.cosepLayout.calcIdealEdgeLengths();
+        //      Ideal edge lengths should be calculated once and it's done above,
+        //      this is because calcIdealEdgeLengths doesn't calculate ideal lengths from a constant anymore 
+        //      this.cosepLayout.calcIdealEdgeLengths();  
         this.graphManager.updateBounds();
         this.cosepLayout.level = 0;
         this.cosepLayout.initSpringEmbedder();
@@ -1942,8 +1968,9 @@ var Layout = function (_ContinuousLayout) {
         } else {
           theNode = parent.add(new CoSEPNode(this.graphManager));
         }
-        // Attach id to the layout node
+        // Attach id and repulsion value to the layout node
         theNode.id = theChild.data("id");
+        theNode.nodeRepulsion = optFn(this.options.nodeRepulsion, theChild);
 
         // Attach the paddings of cy node to layout node
         theNode.paddingLeft = parseInt(theChild.css('padding'));
