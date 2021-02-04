@@ -28,8 +28,8 @@
   "keywords": [
     "cytoscape",
     "cytoscape-extension",
-	"port",
-	"constraint"
+    "port",
+    "constraint"
   ],
   "license": "MIT",
   "bugs": {
@@ -58,6 +58,6 @@
     "cytoscape": "^3.2.0"
   },
   "dependencies": {
-    "cose-base": "*"
+    "cose-base": "^2.0.0"
   }
 }

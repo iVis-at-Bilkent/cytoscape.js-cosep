@@ -1583,20 +1583,16 @@ var optFn = function optFn(opt, ele) {
  */
 var defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
-  refresh: 10, // number of ticks per frame; higher is faster but more jerky
-  fps: 24, // Used to slow down time in animation:'during'
+  refresh: 30, // number of ticks per frame; higher is faster but more jerky
+  fps: 30, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
-  maxSimulationTime: 5000, // max length in ms to run the layout
+  //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
   fit: true, // on every layout reposition of nodes, fit the viewport
   padding: 30, // padding around the simulation
   boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
   // infinite layout options
   infinite: false, // overrides all other options for a forces-all-the-time mode
-
-  // layout event callbacks
-  ready: function ready() {}, // on layoutready
-  stop: function stop() {}, // on layoutstop
 
   // positioning options
   randomize: true, // use random node positions at beginning of layout
@@ -1629,7 +1625,30 @@ var defaults = {
   // Gravity force (constant) for compounds
   gravityCompound: 1.0,
   // Gravity range (constant)
-  gravityRange: 3.8
+  gravityRange: 3.8,
+
+  // port support related options
+  // the number of ports on one node's side
+  portsPerNodeSide: 3,
+  // port constraints information
+  portConstraints: portInfo,
+  // Thresholds for force in Phase II
+  edgeEndShiftingForceThreshold: 1,
+  nodeRotationForceThreshold: 20,
+  rotation180RatioThreshold: 0.5,
+  rotation180AngleThreshold: 130,
+  // Periods for Phase II
+  edgeEndShiftingPeriod: 5,
+  nodeRotationPeriod: 15,
+  // Polishing Force
+  polishingForce: 0.1,
+  // Grouping 1-Degree Nodes Across Ports
+  furtherHandlingOneDegreeNodes: true,
+  furtherHandlingOneDegreeNodesPeriod: 50,
+
+  // layout event callbacks
+  ready: function ready() {}, // on layoutready
+  stop: function stop() {} // on layoutstop  
 };
 
 /**
@@ -2503,7 +2522,7 @@ var tick = function tick(state) {
 
   s.duration = Date.now() - s.startTime;
 
-  return !s.infinite && tickIndicatesDone || s.duration >= s.maxSimulationTime;
+  return !s.infinite && tickIndicatesDone;
 };
 
 var multitick = function multitick(state) {

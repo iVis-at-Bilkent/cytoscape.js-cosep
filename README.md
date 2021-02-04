@@ -79,7 +79,7 @@ var options = {
     
     // This is the number specifying the number of ports on one node's side. If three is given, there would be 
     // twelve ports around one node.
-    portsPerSide: 3,
+    portsPerNodeSide: 3,
         
     // Port constraints information has to be given as a function.
     // For the fcn, it would be given a Cytoscape node and is expected to return constraint info about that edge.
@@ -114,13 +114,10 @@ var options = {
     animate: false,
     
     // number of ticks per frame; higher is faster but more jerky
-    refresh: 10,
+    refresh: 30,
     
     // Used to slow down time in animation:'during'
-    fps: 24, 
-    
-    // max length in ms to run the layout
-    maxSimulationTime: 5000, 
+    fps: 30, 
     
     // so you can't drag nodes during layout
     ungrabifyWhileSimulating: false, 
@@ -189,6 +186,7 @@ var options = {
     // layout event callbacks
     ready: function(){}, // on layoutready
     stop: function(){}, // on layoutstop
+}
  ```
 
 ## Build targets
