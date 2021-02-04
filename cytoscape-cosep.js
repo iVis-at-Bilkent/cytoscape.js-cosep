@@ -1631,7 +1631,9 @@ var defaults = {
   // the number of ports on one node's side
   portsPerNodeSide: 3,
   // port constraints information
-  portConstraints: portInfo,
+  portConstraints: function portConstraints(edge) {
+    return null;
+  },
   // Thresholds for force in Phase II
   edgeEndShiftingForceThreshold: 1,
   nodeRotationForceThreshold: 20,

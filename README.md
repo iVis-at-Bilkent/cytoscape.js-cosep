@@ -12,7 +12,7 @@ Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unst
 ## Dependencies
 
  * Cytoscape.js: ^3.2.0
- * cose-base ^1.0.3
+ * cose-base ^2.0.0
 
 ## Documentation
 
@@ -82,7 +82,7 @@ var options = {
     portsPerNodeSide: 3,
         
     // Port constraints information has to be given as a function.
-    // For the fcn, it would be given a Cytoscape node and is expected to return constraint info about that edge.
+    // For the fcn, it would be given a Cytoscape edge and is expected to return constraint info about that edge.
     // Since both endpoints of an edge can have port constraints, this fcn returns an array. (See below)
     portConstraints: portInfo,
     
