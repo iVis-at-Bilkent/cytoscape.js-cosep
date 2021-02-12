@@ -1634,6 +1634,9 @@ var defaults = {
   portConstraints: function portConstraints(edge) {
     return null;
   },
+  nodeRotations: function nodeRotations(node) {
+    return true;
+  },
   // Thresholds for force in Phase II
   edgeEndShiftingForceThreshold: 1,
   nodeRotationForceThreshold: 20,
@@ -2148,8 +2151,8 @@ var Layout = function (_ContinuousLayout) {
         var _node = nodeWPorts[i];
         var _cyNode = this.rotatableNodes.get(_node);
         if (_cyNode) {
-          var w = _cyNode.height();
-          var h = _cyNode.width();
+          var w = _node.getWidth();
+          var h = _node.getHeight();
           _cyNode.style({ 'width': w });
           _cyNode.style({ 'height': h });
         }

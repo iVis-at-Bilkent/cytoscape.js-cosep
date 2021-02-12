@@ -165,6 +165,9 @@ var options = {
     
     // Gravity range (constant)
     gravityRange: 3.8,
+
+    // Whether a node can be rotated/swapped
+    nodeRotations: node => true,
     
     // Thresholds for force in Phase II
     edgeEndShiftingForceThreshold: 1,

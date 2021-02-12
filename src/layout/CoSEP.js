@@ -77,6 +77,7 @@ let defaults = {
   portsPerNodeSide: 3,
   // port constraints information
   portConstraints: edge => null,
+  nodeRotations: node => true,
   // Thresholds for force in Phase II
   edgeEndShiftingForceThreshold: 1,
   nodeRotationForceThreshold: 20,
@@ -597,8 +598,8 @@ class Layout extends ContinuousLayout {
       let node = nodeWPorts[i];
       let cyNode = this.rotatableNodes.get(node);
       if(cyNode) {
-        let w = cyNode.height();
-        let h = cyNode.width();
+        let w = node.getWidth();
+        let h = node.getHeight();
         cyNode.style({'width': w});
         cyNode.style({'height': h});
       }
