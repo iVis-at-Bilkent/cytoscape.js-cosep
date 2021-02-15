@@ -598,10 +598,13 @@ class Layout extends ContinuousLayout {
       let node = nodeWPorts[i];
       let cyNode = this.rotatableNodes.get(node);
       if(cyNode) {
-        let w = node.getWidth();
-        let h = node.getHeight();
-        cyNode.style({'width': w});
-        cyNode.style({'height': h});
+        let dimensions = cyNode.layoutDimensions({nodeDimensionsIncludeLabels: false});
+        if(parseFloat(dimensions.w) !== node.rect.width) {
+          let w = cyNode.height();
+          let h = cyNode.width();
+          cyNode.style({'width': w});
+          cyNode.style({'height': h});
+        }
       }
     }
 

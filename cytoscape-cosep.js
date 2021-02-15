@@ -2151,10 +2151,13 @@ var Layout = function (_ContinuousLayout) {
         var _node = nodeWPorts[i];
         var _cyNode = this.rotatableNodes.get(_node);
         if (_cyNode) {
-          var w = _node.getWidth();
-          var h = _node.getHeight();
-          _cyNode.style({ 'width': w });
-          _cyNode.style({ 'height': h });
+          var dimensions = _cyNode.layoutDimensions({ nodeDimensionsIncludeLabels: false });
+          if (parseFloat(dimensions.w) !== _node.rect.width) {
+            var w = _cyNode.height();
+            var h = _cyNode.width();
+            _cyNode.style({ 'width': w });
+            _cyNode.style({ 'height': h });
+          }
         }
       }
 
