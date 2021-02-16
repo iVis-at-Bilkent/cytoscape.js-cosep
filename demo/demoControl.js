@@ -47,7 +47,7 @@ let cy = window.cy = cytoscape({
                 'background-opacity': 0.333,
                 'border-color': '#3a7ecf',
                 'text-halign': 'center',
-                'text-valign': 'center'
+                'text-valign': 'bottom'
             }
         },
         {
@@ -96,23 +96,23 @@ let cy = window.cy = cytoscape({
         {group: 'nodes', data: {id: 'n3', width: 70, height: 70}},
         {group: 'nodes', data: {id: 'n4', width: 100}},
         {group: 'nodes', data: {id: 'n5'}},
-        {group: 'nodes', data: {id: 'n10'}},
-        {group: 'nodes', data: {id: 'n11', parent: 'n10'}},
-        {group: 'nodes', data: {id: 'n12', parent: 'n10'}},
-        {group: 'nodes', data: {id: 'n20'}},
-        {group: 'nodes', data: {id: 'n21', parent: 'n20', width: 50, height: 50}},
-        {group: 'nodes', data: {id: 'n22', parent: 'n20'}},
-        {group: 'nodes', data: {id: 'n23', parent: 'n20'}},
+        {group: 'nodes', data: {id: 'n6', parent: 'n8'}},
+        {group: 'nodes', data: {id: 'n7', parent: 'n8'}},
+        {group: 'nodes', data: {id: 'n8'}},        
+        {group: 'nodes', data: {id: 'n12'}},
+        {group: 'nodes', data: {id: 'n9', parent: 'n12', width: 50, height: 50}},
+        {group: 'nodes', data: {id: 'n10', parent: 'n12'}},
+        {group: 'nodes', data: {id: 'n11', parent: 'n12'}},
         {group: 'edges', data: {id: 'e0', source: 'n1', target: 'n2'}},
         {group: 'edges', data: {id: 'e1', source: 'n2', target: 'n3'}},
-        {group: 'edges', data: {id: 'e2', source: 'n3', target: 'n21'}},
-        {group: 'edges', data: {id: 'e3', source: 'n1', target: 'n10'}},
-        {group: 'edges', data: {id: 'e4', source: 'n4', target: 'n20'}},
-        {group: 'edges', data: {id: 'e5', source: 'n21', target: 'n23'}},
-        {group: 'edges', data: {id: 'e6', source: 'n0', target: 'n10'}},
-        {group: 'edges', data: {id: 'e7', source: 'n0', target: 'n20'}},
+        {group: 'edges', data: {id: 'e2', source: 'n3', target: 'n9'}},
+        {group: 'edges', data: {id: 'e3', source: 'n1', target: 'n8'}},
+        {group: 'edges', data: {id: 'e4', source: 'n4', target: 'n12'}},
+        {group: 'edges', data: {id: 'e5', source: 'n9', target: 'n11'}},
+        {group: 'edges', data: {id: 'e6', source: 'n0', target: 'n8'}},
+        {group: 'edges', data: {id: 'e7', source: 'n0', target: 'n12'}},
         {group: 'edges', data: {id: 'e8', source: 'n2', target: 'n0'}},
-        {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n10'}}
+        {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n8'}}
     ],
     wheelSensitivity: 0.3
 });
@@ -121,6 +121,8 @@ let cy = window.cy = cytoscape({
 let numberOfEdgeCrosses;
 let numberOfNodeOverlaps;
 let percentOfProperlyOrientedEdgeEnds;
+let avgEdgeLength;
+let totalArea;
 let selectedEdge;
 let unProperly;
 let numberOfEdgeEnds;
@@ -247,6 +249,8 @@ function calcPerformanceMetrics(){
     numberOfEdgeCrosses = findNumberOfCrosses(window.cy);
     numberOfNodeOverlaps = findNumberOfOverlappingNodes(window.cy);
     percentOfProperlyOrientedEdgeEnds = Math.floor((calcProperlyOrientedPortedEdgeEnds()) * 10000) / 100;
+    avgEdgeLength = Math.round(getAverageEdgeLength(window.cy)*100)/100;
+    totalArea = Math.round(getTotalArea(window.cy)*100)/100;
 
     edgeCrossings.innerHTML = numberOfEdgeCrosses;
     nodeOverlaps.innerHTML = numberOfNodeOverlaps;
@@ -307,6 +311,31 @@ let findNumberOfOverlappingNodes = function(cy) {
         }
     }
     return overlaps;
+};
+
+let getTotalArea = function(cy) {
+	let bb = cy.elements().boundingBox();
+	return bb.w * bb.h;
+};
+
+let getTotalEdgeLength = function(cy) {
+	let getDistance = function(p, q) {
+		let dx = q.x - p.x, dy = q.y - p.y;
+		return Math.sqrt(dx * dx + dy * dy);
+	};
+
+	let totalLength = 0;
+	let edgeArray = cy.edges().toArray();
+
+	for (let edge of edgeArray) {
+		let p = edge.sourceEndpoint(), q = edge.targetEndpoint();
+		totalLength += getDistance(p, q);
+	}
+	return totalLength;
+};
+
+let getAverageEdgeLength = function(cy) {
+	return getTotalEdgeLength(cy) / cy.edges().length;
 };
 
 // Calculate properly oriented ported edge ends
@@ -444,14 +473,28 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             .then(response => response.json())
             .then(json => {
                 window.cy.json(json);
+                cy.layout({name: "random"}).run();
                 window.cy.nodes().forEach( function ( node ) {
                     node.style({
                         'width': node.data('width'),
                         'height': node.data('height')
                     });
                 });
+                window.cy.nodes(":parent").forEach( function ( node ) {
+                    node.style({
+                      'text-valign': 'bottom'
+                    });
+                });                
 
                 fillNodeRotationTable();
+                cy.layout({name: "cose-bilkent", animate: true}).run();
+                layout = window.cy.layout({
+                    name: 'coseport',
+                    portConstraints: portConstraintsFunc,
+                    portsPerNodeSide: document.getElementById("portsPerSide").value
+                });
+                layout.run();
+                calcPerformanceMetrics();
             });
 
     } else if (sbgnFileNames[sampleGraphs.value]) {
@@ -459,6 +502,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             .then(response => response.json())
             .then(json => {
                 window.cy.json(json);
+                cy.layout({name: "random"}).run();
                 window.cy.nodes().forEach( function ( node ) {
                     node.style({
                         'width' : node.data('bbox').w,
@@ -492,7 +536,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                             'color' : node.data('color')
                         });
                     }
-                });
+                });                              
 
                 fetch("samples/" + sbgnFileNames[sampleGraphs.value] + "_constraints.json")
                     .then(response => response.json())
@@ -500,8 +544,16 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         constraints = json;
                         fillLogsTableFromConstraints( false );
                         fillNodeRotationTable();
+                        cy.layout({name: "cose-bilkent", animate: true}).run();
+                        layout = window.cy.layout({
+                            name: 'coseport',
+                            portConstraints: portConstraintsFunc,
+                            portsPerNodeSide: document.getElementById("portsPerSide").value
+                        });
+                        layout.run();
+                        calcPerformanceMetrics();
                     });
-                document.getElementById("portsPerSide").value = 1;
+                document.getElementById("portsPerSide").value = 1;                
             });
     }
     window.cy.endBatch();
@@ -979,7 +1031,7 @@ document.getElementById('importGraphML-input').addEventListener('change', functi
                 'background-opacity': 0.333,
                 'border-color': '#3a7ecf',
                 'text-halign': 'center',
-                'text-valign': 'center'
+                'text-valign': 'bottom'
             })
             .selector('node:parent:selected').style({
                 'background-opacity': 0.65,
@@ -1236,158 +1288,508 @@ document.getElementById("modalRandomizeNodeDimensions").addEventListener("click"
 /*
 let testFileNames = [
     "g_00010_01.json",
+    "g_00010_02.json",
+    "g_00010_03.json",
     "g_00010_04.json",
+    "g_00010_05.json",
     "g_00010_06.json",
+    "g_00010_07.json",
+    "g_00010_08.json",
+    "g_00010_09.json",
+    "g_00010_10.json",
+    "g_00020_01.json",
+    "g_00020_02.json",
+    "g_00020_03.json",
     "g_00020_04.json",
     "g_00020_05.json",
+    "g_00020_06.json",
+    "g_00020_07.json",
     "g_00020_08.json",
+    "g_00020_09.json",
+    "g_00020_10.json",
+    "g_00030_01.json",
+    "g_00030_02.json",
+    "g_00030_03.json",
+    "g_00030_04.json",
     "g_00030_05.json",
+    "g_00030_06.json",
     "g_00030_07.json",
+    "g_00030_08.json",
     "g_00030_09.json",
+    "g_00030_10.json",
     "g_00040_01.json",
+    "g_00040_02.json",
+    "g_00040_03.json",
+    "g_00040_04.json",
     "g_00040_05.json",
+    "g_00040_06.json",
+    "g_00040_07.json",
     "g_00040_08.json",
+    "g_00040_09.json",
+    "g_00040_10.json",
+    "g_00050_01.json",
+    "g_00050_02.json",
+    "g_00050_03.json",
     "g_00050_04.json",
     "g_00050_05.json",
+    "g_00050_06.json",
     "g_00050_07.json",
+    "g_00050_08.json",
+    "g_00050_09.json",
+    "g_00050_10.json",
     "g_00060_01.json",
     "g_00060_02.json",
+    "g_00060_03.json",
+    "g_00060_04.json",
+    "g_00060_05.json",
+    "g_00060_06.json",
+    "g_00060_07.json",
     "g_00060_08.json",
+    "g_00060_09.json",
+    "g_00060_10.json",
+    "g_00070_01.json",
+    "g_00070_02.json",
     "g_00070_03.json",
+    "g_00070_04.json",
+    "g_00070_05.json",
+    "g_00070_06.json",
     "g_00070_07.json",
+    "g_00070_08.json",
+    "g_00070_09.json",
     "g_00070_10.json",
     "g_00080_01.json",
     "g_00080_02.json",
+    "g_00080_03.json",
+    "g_00080_04.json",
     "g_00080_05.json",
+    "g_00080_06.json",
+    "g_00080_07.json",
+    "g_00080_08.json",
+    "g_00080_09.json",
+    "g_00080_10.json",
+    "g_00090_01.json",
     "g_00090_02.json",
+    "g_00090_03.json",
+    "g_00090_04.json",
     "g_00090_05.json",
+    "g_00090_06.json",
+    "g_00090_07.json",
+    "g_00090_08.json",
     "g_00090_09.json",
-    "g_00100_04.json",
-    "g_00100_07.json",
+    "g_00090_10.json",
+    "g_00100_01.json",
     "g_00100_02.json",
-    "g_00110_02.json",
+    "g_00100_03.json",
+    "g_00100_04.json",
+    "g_00100_05.json",
+    "g_00100_06.json",
+    "g_00100_07.json",
+    "g_00100_08.json",
+    "g_00100_09.json",
+    "g_00100_10.json",
     "g_00110_01.json",
+    "g_00110_02.json",
+    "g_00110_03.json",
     "g_00110_04.json",
+    "g_00110_05.json",
+    "g_00110_06.json",
+    "g_00110_07.json",
+    "g_00110_08.json",
+    "g_00110_09.json",
+    "g_00110_10.json",
     "g_00120_01.json",
+    "g_00120_02.json",
+    "g_00120_03.json",
+    "g_00120_04.json",
     "g_00120_05.json",
+    "g_00120_06.json",
+    "g_00120_07.json",
+    "g_00120_08.json",
     "g_00120_09.json",
+    "g_00120_10.json",
     "g_00130_01.json",
-    "g_00130_05.json",
     "g_00130_02.json",
-    "g_00140_10.json",
-    "g_00140_09.json",
+    "g_00130_03.json",
+    "g_00130_04.json",
+    "g_00130_05.json",
+    "g_00130_06.json",
+    "g_00130_07.json",
+    "g_00130_08.json",
+    "g_00130_09.json",
+    "g_00130_10.json",
+    "g_00140_01.json",
+    "g_00140_02.json",
     "g_00140_03.json",
-    "g_00150_09.json",
+    "g_00140_04.json",
+    "g_00140_05.json",
+    "g_00140_06.json",
+    "g_00140_07.json",
+    "g_00140_08.json",
+    "g_00140_09.json",
+    "g_00140_10.json",
+    "g_00150_01.json",
     "g_00150_02.json",
+    "g_00150_03.json",
+    "g_00150_04.json",
+    "g_00150_05.json",
+    "g_00150_06.json",
+    "g_00150_07.json",
     "g_00150_08.json",
+    "g_00150_09.json",
+    "g_00150_10.json",
+    "g_00160_01.json",
+    "g_00160_02.json",
+    "g_00160_03.json",
     "g_00160_04.json",
-    "g_00160_09.json",
+    "g_00160_05.json",
+    "g_00160_06.json",
     "g_00160_07.json",
-    "g_00170_07.json",
-    "g_00170_09.json",
+    "g_00160_08.json",
+    "g_00160_09.json",
+    "g_00160_10.json",
+    "g_00170_01.json",
+    "g_00170_02.json",
     "g_00170_03.json",
+    "g_00170_04.json",
+    "g_00170_05.json",
+    "g_00170_06.json",
+    "g_00170_07.json",
+    "g_00170_08.json",
+    "g_00170_09.json",
+    "g_00170_10.json",
+    "g_00180_01.json",
     "g_00180_02.json",
+    "g_00180_03.json",
+    "g_00180_04.json",
+    "g_00180_05.json",
+    "g_00180_06.json",
+    "g_00180_07.json",
     "g_00180_08.json",
+    "g_00180_09.json",
     "g_00180_10.json",
     "g_00190_01.json",
+    "g_00190_02.json",
+    "g_00190_03.json",
+    "g_00190_04.json",
     "g_00190_05.json",
+    "g_00190_06.json",
+    "g_00190_07.json",
+    "g_00190_08.json",
     "g_00190_09.json",
-    "g_00200_10.json",
-    "g_00200_06.json",
+    "g_00190_10.json",
+    "g_00200_01.json",
+    "g_00200_01.json",
     "g_00200_03.json",
-    "g_00210_06.json",
-    "g_00210_09.json",
+    "g_00200_04.json",
+    "g_00200_05.json",
+    "g_00200_06.json",
+    "g_00200_07.json",
+    "g_00200_08.json",
+    "g_00200_09.json",
+    "g_00200_10.json",
     "g_00210_01.json",
+    "g_00210_02.json",
+    "g_00210_03.json",
+    "g_00210_04.json",
+    "g_00210_05.json",
+    "g_00210_06.json",
+    "g_00210_07.json",
+    "g_00210_08.json",
+    "g_00210_09.json",
+    "g_00210_10.json",
+    "g_00220_01.json",
+    "g_00220_02.json",
     "g_00220_03.json",
-    "g_00220_06.json",
     "g_00220_04.json",
-    "g_00230_07.json",
-    "g_00230_06.json",
+    "g_00220_05.json",
+    "g_00220_06.json",
+    "g_00220_07.json",
+    "g_00220_08.json",
+    "g_00220_09.json",
+    "g_00220_10.json",
     "g_00230_01.json",
+    "g_00230_02.json",
+    "g_00230_03.json",
+    "g_00230_04.json",
+    "g_00230_05.json",
+    "g_00230_06.json",
+    "g_00230_07.json",
+    "g_00230_08.json",
+    "g_00230_09.json",
+    "g_00230_10.json",
+    "g_00240_01.json",
     "g_00240_02.json",
-    "g_00240_07.json",
+    "g_00240_03.json",
+    "g_00240_04.json",
+    "g_00240_05.json",
     "g_00240_06.json",
+    "g_00240_07.json",
+    "g_00240_08.json",
+    "g_00240_09.json",
+    "g_00240_10.json",
+    "g_00250_01.json",
     "g_00250_02.json",
     "g_00250_03.json",
+    "g_00250_04.json",
+    "g_00250_05.json",
+    "g_00250_06.json",
+    "g_00250_07.json",
+    "g_00250_08.json",
+    "g_00250_09.json",
     "g_00250_10.json",
     "g_00260_01.json",
+    "g_00260_02.json",
+    "g_00260_03.json",
     "g_00260_04.json",
+    "g_00260_05.json",
+    "g_00260_06.json",
     "g_00260_07.json",
+    "g_00260_08.json",
+    "g_00260_09.json",
+    "g_00260_10.json",
+    "g_00270_01.json",
+    "g_00270_02.json",
     "g_00270_03.json",
-    "g_00270_09.json",
     "g_00270_04.json",
+    "g_00270_05.json",
+    "g_00270_06.json",
+    "g_00270_07.json",
+    "g_00270_08.json",
+    "g_00270_09.json",
+    "g_00270_10.json",
+    "g_00280_01.json",
     "g_00280_02.json",
+    "g_00280_03.json",
+    "g_00280_04.json",
+    "g_00280_05.json",
     "g_00280_06.json",
+    "g_00280_07.json",
+    "g_00280_08.json",
+    "g_00280_09.json",
     "g_00280_10.json",
     "g_00290_01.json",
     "g_00290_02.json",
+    "g_00290_03.json",
+    "g_00290_04.json",
+    "g_00290_05.json",
+    "g_00290_06.json",
+    "g_00290_07.json",
+    "g_00290_08.json",
+    "g_00290_09.json",
     "g_00290_10.json",
+    "g_00300_01.json",
+    "g_00300_01.json",
+    "g_00300_03.json",
     "g_00300_04.json",
-    "g_00300_10.json",
+    "g_00300_05.json",
+    "g_00300_06.json",
+    "g_00300_07.json",
+    "g_00300_08.json",
     "g_00300_09.json",
-    "g_00310_10.json",
+    "g_00300_10.json",
+    "g_00310_01.json",
     "g_00310_02.json",
+    "g_00310_03.json",
+    "g_00310_04.json",
+    "g_00310_05.json",
+    "g_00310_06.json",
+    "g_00310_07.json",
+    "g_00310_08.json",
     "g_00310_09.json",
-    "g_00320_02.json",
+    "g_00310_10.json",
     "g_00320_01.json",
+    "g_00320_02.json",
+    "g_00320_03.json",
+    "g_00320_04.json",
+    "g_00320_05.json",
+    "g_00320_06.json",
+    "g_00320_07.json",
+    "g_00320_08.json",
     "g_00320_09.json",
-    "g_00330_07.json",
-    "g_00330_02.json",
+    "g_00320_10.json",
     "g_00330_01.json",
+    "g_00330_02.json",
+    "g_00330_03.json",
+    "g_00330_04.json",
+    "g_00330_05.json",
+    "g_00330_06.json",
+    "g_00330_07.json",
+    "g_00330_08.json",
+    "g_00330_09.json",
+    "g_00330_10.json",
     "g_00340_01.json",
+    "g_00340_02.json",
     "g_00340_03.json",
+    "g_00340_04.json",
+    "g_00340_05.json",
+    "g_00340_06.json",
     "g_00340_07.json",
+    "g_00340_08.json",
+    "g_00340_09.json",
+    "g_00340_10.json",
     "g_00350_01.json",
+    "g_00350_02.json",
     "g_00350_03.json",
     "g_00350_04.json",
-    "g_00360_09.json",
-    "g_00360_08.json",
+    "g_00350_05.json",
+    "g_00350_06.json",
+    "g_00350_07.json",
+    "g_00350_08.json",
+    "g_00350_09.json",
+    "g_00350_10.json",
+    "g_00360_01.json",
+    "g_00360_02.json",
     "g_00360_03.json",
+    "g_00360_04.json",
+    "g_00360_05.json",
+    "g_00360_06.json",
+    "g_00360_07.json",
+    "g_00360_08.json",
+    "g_00360_09.json",
+    "g_00360_10.json",
+    "g_00370_01.json",
     "g_00370_02.json",
+    "g_00370_03.json",
+    "g_00370_04.json",
+    "g_00370_05.json",
+    "g_00370_06.json",
+    "g_00370_07.json",
     "g_00370_08.json",
     "g_00370_09.json",
-    "g_00380_04.json",
-    "g_00380_08.json",
+    "g_00370_10.json",
     "g_00380_01.json",
+    "g_00380_02.json",
+    "g_00380_03.json",
+    "g_00380_04.json",
+    "g_00380_05.json",
+    "g_00380_06.json",
+    "g_00380_07.json",
+    "g_00380_08.json",
+    "g_00380_09.json",
+    "g_00380_10.json",
+    "g_00390_01.json",
+    "g_00390_02.json",
+    "g_00390_03.json",
+    "g_00390_04.json",
+    "g_00390_05.json",
+    "g_00390_06.json",
+    "g_00390_07.json",
+    "g_00390_08.json",
     "g_00390_09.json",
     "g_00390_10.json",
-    "g_00390_02.json",
+    "g_00400_01.json",
+    "g_00400_01.json",
+    "g_00400_03.json",
+    "g_00400_04.json",
     "g_00400_05.json",
+    "g_00400_06.json",
+    "g_00400_07.json",
     "g_00400_08.json",
     "g_00400_09.json",
-    "g_00410_07.json",
+    "g_00400_10.json",
+    "g_00410_01.json",
+    "g_00410_02.json",
     "g_00410_03.json",
     "g_00410_04.json",
-    "g_00420_10.json",
-    "g_00420_03.json",
+    "g_00410_05.json",
+    "g_00410_06.json",
+    "g_00410_07.json",
+    "g_00410_08.json",
+    "g_00410_09.json",
+    "g_00410_10.json",
+    "g_00420_01.json",
     "g_00420_02.json",
+    "g_00420_03.json",
+    "g_00420_04.json",
+    "g_00420_05.json",
+    "g_00420_06.json",
+    "g_00420_07.json",
+    "g_00420_08.json",
+    "g_00420_09.json",
+    "g_00420_10.json",
     "g_00430_01.json",
     "g_00430_02.json",
+    "g_00430_03.json",
+    "g_00430_04.json",
+    "g_00430_05.json",
+    "g_00430_06.json",
+    "g_00430_07.json",
     "g_00430_08.json",
+    "g_00430_09.json",
+    "g_00430_10.json",
     "g_00440_01.json",
+    "g_00440_02.json",
     "g_00440_03.json",
+    "g_00440_04.json",
     "g_00440_05.json",
+    "g_00440_06.json",
+    "g_00440_07.json",
+    "g_00440_08.json",
+    "g_00440_09.json",
+    "g_00440_10.json",
+    "g_00450_01.json",
+    "g_00450_02.json",
+    "g_00450_03.json",
+    "g_00450_04.json",
+    "g_00450_05.json",
+    "g_00450_06.json",
     "g_00450_07.json",
+    "g_00450_08.json",
     "g_00450_09.json",
     "g_00450_10.json",
+    "g_00460_01.json",
+    "g_00460_02.json",
     "g_00460_03.json",
+    "g_00460_04.json",
+    "g_00460_05.json",
+    "g_00460_06.json",
     "g_00460_07.json",
     "g_00460_08.json",
+    "g_00460_09.json",
+    "g_00460_10.json",
     "g_00470_01.json",
     "g_00470_02.json",
+    "g_00470_03.json",
+    "g_00470_04.json",
+    "g_00470_05.json",
     "g_00470_06.json",
-    "g_00480_07.json",
+    "g_00470_07.json",
+    "g_00470_08.json",
+    "g_00470_09.json",
+    "g_00470_10.json",
+    "g_00480_01.json",
     "g_00480_02.json",
+    "g_00480_03.json",
     "g_00480_04.json",
+    "g_00480_05.json",
+    "g_00480_06.json",
+    "g_00480_07.json",
+    "g_00480_08.json",
+    "g_00480_09.json",
+    "g_00480_10.json",
+    "g_00490_01.json",
     "g_00490_02.json",
-    "g_00490_05.json",
+    "g_00490_03.json",
     "g_00490_04.json",
+    "g_00490_05.json",
+    "g_00490_06.json",
+    "g_00490_07.json",
+    "g_00490_08.json",
+    "g_00490_09.json",
+    "g_00490_10.json",
+    "g_00500_01.json",
     "g_00500_01.json",
     "g_00500_03.json",
-    "g_00500_07.json"
+    "g_00500_04.json",
+    "g_00500_05.json",
+    "g_00500_06.json",
+    "g_00500_07.json",
+    "g_00500_08.json",
+    "g_00500_09.json",
+    "g_00500_10.json"
 ];
 
-let numberOfTests = 8;
+let numberOfTests = 5;
 
 let testResultDuration_CoSEP = new Array(testFileNames.length);
 for(let i = 0; i < testFileNames.length; i++) testResultDuration_CoSEP[i] = new Array(numberOfTests + 1);
@@ -1401,6 +1803,12 @@ for(let i = 0; i < testFileNames.length; i++) testResultProperly_CoSEP[i] = new 
 let testResultNodeOverlaps_CoSEP = new Array(testFileNames.length);
 for(let i = 0; i < testFileNames.length; i++) testResultNodeOverlaps_CoSEP[i] = new Array(numberOfTests + 1);
 
+let testResultAvgEdgeLength_CoSEP = new Array(testFileNames.length);
+for(let i = 0; i < testFileNames.length; i++) testResultAvgEdgeLength_CoSEP[i] = new Array(numberOfTests + 1);
+
+let testResultTotalArea_CoSEP = new Array(testFileNames.length);
+for(let i = 0; i < testFileNames.length; i++) testResultTotalArea_CoSEP[i] = new Array(numberOfTests + 1);
+
 let testResultDuration_CoSE = new Array(testFileNames.length);
 for(let i = 0; i < testFileNames.length; i++) testResultDuration_CoSE[i] = new Array(numberOfTests + 1);
 
@@ -1409,6 +1817,12 @@ for(let i = 0; i < testFileNames.length; i++) testResultEdgeCrossing_CoSE[i] = n
 
 let testResultNodeOverlaps_CoSE = new Array(testFileNames.length);
 for(let i = 0; i < testFileNames.length; i++) testResultNodeOverlaps_CoSE[i] = new Array(numberOfTests + 1);
+
+let testResultAvgEdgeLength_CoSE = new Array(testFileNames.length);
+for(let i = 0; i < testFileNames.length; i++) testResultAvgEdgeLength_CoSE[i] = new Array(numberOfTests + 1);
+
+let testResultTotalArea_CoSE = new Array(testFileNames.length);
+for(let i = 0; i < testFileNames.length; i++) testResultTotalArea_CoSE[i] = new Array(numberOfTests + 1);
 
 let testResultProperly_CoSE = new Array(testFileNames.length);
 for(let i = 0; i < testFileNames.length; i++) testResultProperly_CoSE[i] = new Array(numberOfTests + 1);
@@ -1427,10 +1841,14 @@ function testRomeGraphs(){
         testResultEdgeCrossing_CoSEP[index][0] = testFileNames[index];
         testResultProperly_CoSEP[index][0] = testFileNames[index];
         testResultNodeOverlaps_CoSEP[index][0] = testFileNames[index];
+        testResultAvgEdgeLength_CoSEP[index][0] = testFileNames[index];
+        testResultTotalArea_CoSEP[index][0] = testFileNames[index];         
         testResultDuration_CoSE[index][0] = testFileNames[index];
         testResultEdgeCrossing_CoSE[index][0] = testFileNames[index];
         testResultProperly_CoSE[index][0] = testFileNames[index];
         testResultNodeOverlaps_CoSE[index][0] = testFileNames[index];
+        testResultAvgEdgeLength_CoSE[index][0] = testFileNames[index];
+        testResultTotalArea_CoSE[index][0] = testFileNames[index];        
 
         fetch(fileName)
             .then(response => response.text())
@@ -1462,8 +1880,8 @@ function testRomeGraphs(){
                         randomize: !(document.getElementById("incremental").checked),
                         portConstraints: portConstraintsFunc,
                         portsPerNodeSide: document.getElementById("portsPerSide").value,
-                        edgeShiftingPeriod: +document.getElementById("edgeShiftingPeriod").value,
-                        edgeShiftingForceThreshold: +document.getElementById("edgeShiftingForceThreshold").value,
+                        edgeEndShiftingPeriod: +document.getElementById("edgeEndShiftingPeriod").value,
+                        edgeEndShiftingForceThreshold: +document.getElementById("edgeEndShiftingForceThreshold").value,
                         nodeRotationPeriod: +document.getElementById("nodeRotationPeriod").value,
                         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
                         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
@@ -1479,13 +1897,15 @@ function testRomeGraphs(){
                     let tempDur = Math.floor((performance.now() - start) * 100) / 100;
 
 
-                    //calcPerformanceMetrics();
+                    calcPerformanceMetrics();
 
                     if(ranTwice || tempDur < 1500) {
                         testResultDuration_CoSEP[index][run] = tempDur;
-                      //  testResultEdgeCrossing_CoSEP[index][run] = numberOfEdgeCrosses;
-                        // testResultProperly_CoSEP[index][run] = percentOfProperlyOrientedEdges;
-                       // testResultNodeOverlaps_CoSEP[index][run] = numberOfNodeOverlaps;
+                        testResultEdgeCrossing_CoSEP[index][run] = numberOfEdgeCrosses;
+                        testResultProperly_CoSEP[index][run] = percentOfProperlyOrientedEdgeEnds;
+                        testResultNodeOverlaps_CoSEP[index][run] = numberOfNodeOverlaps;
+                        testResultAvgEdgeLength_CoSEP[index][run] = avgEdgeLength;
+                        testResultTotalArea_CoSEP[index][run] = totalArea;
 
                         run++;
                     }else{
@@ -1518,8 +1938,10 @@ function testRomeGraphs(){
                     if(tempDur < 1500) {
                         testResultDuration_CoSE[index][run] = tempDur;
                         testResultEdgeCrossing_CoSE[index][run] = numberOfEdgeCrosses;
-                        testResultProperly_CoSE[index][run] = percentOfProperlyOrientedEdges;
+                        testResultProperly_CoSE[index][run] = percentOfProperlyOrientedEdgeEnds;
                         testResultNodeOverlaps_CoSE[index][run] = numberOfNodeOverlaps;
+                        testResultAvgEdgeLength_CoSE[index][run] = avgEdgeLength;
+                        testResultTotalArea_CoSE[index][run] = totalArea;
 
                         run++;
                     }else{
@@ -1536,14 +1958,18 @@ function testRomeGraphs(){
 
 // Doesn't work like this :/ . But copy-pasting it into the browser works
 function downloadTestResults() {
-    exportToCsv('testResultDuration_CoSE', testResultDuration_CoSE);
-    exportToCsv('testResultDuration_CoSEP', testResultDuration_CoSEP);
-    exportToCsv('testResultEdgeCrossing_CoSE', testResultEdgeCrossing_CoSE);
-    exportToCsv('testResultEdgeCrossing_CoSEP', testResultEdgeCrossing_CoSEP);
-    exportToCsv('testResultProperly_CoSE', testResultProperly_CoSE);
-    exportToCsv('testResultProperly_CoSEP', testResultProperly_CoSEP);
-    exportToCsv('testResultNodeOverlaps_CoSE', testResultNodeOverlaps_CoSE);
-    exportToCsv('testResultNodeOverlaps_CoSEP', testResultNodeOverlaps_CoSEP);
+    exportToCsv('testResultDuration_CoSE.csv', testResultDuration_CoSE);
+    exportToCsv('testResultDuration_CoSEP.csv', testResultDuration_CoSEP);
+    exportToCsv('testResultEdgeCrossing_CoSE.csv', testResultEdgeCrossing_CoSE);
+    exportToCsv('testResultEdgeCrossing_CoSEP.csv', testResultEdgeCrossing_CoSEP);
+    exportToCsv('testResultProperly_CoSE.csv', testResultProperly_CoSE);
+    exportToCsv('testResultProperly_CoSEP.csv', testResultProperly_CoSEP);
+    exportToCsv('testResultNodeOverlaps_CoSE.csv', testResultNodeOverlaps_CoSE);
+    exportToCsv('testResultNodeOverlaps_CoSEP.csv', testResultNodeOverlaps_CoSEP);
+    exportToCsv('testResultAvgEdgeLength_CoSE.csv', testResultAvgEdgeLength_CoSE);
+    exportToCsv('testResultAvgEdgeLength_CoSEP.csv', testResultAvgEdgeLength_CoSEP);
+    exportToCsv('testResultTotalArea_CoSE.csv', testResultTotalArea_CoSE);
+    exportToCsv('testResultTotalArea_CoSEP.csv', testResultTotalArea_CoSEP);
 }
 
 // Export to CSV file -----------------------------------------
