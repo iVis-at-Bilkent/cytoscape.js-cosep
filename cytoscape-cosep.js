@@ -198,6 +198,9 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
 
+    // Keep rotation history of the node, values to be added: clockwise, counterclockwise, topbottom, rightleft
+    this.rotationList = [];
+
     // If the above remains true it will hold the sum of the rotational force induced to this node.
     // Avg can be manually calculated
     this.rotationalForce = 0;
@@ -368,6 +371,7 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
                     }
                 }
             }
+            this.rotationList.push("topbottom");
         } else if (rightLeftRotation) {
             for (var _i4 = 0; _i4 < this.associatedPortConstraints.length; _i4++) {
                 var _portConst2 = this.associatedPortConstraints[_i4];
@@ -396,6 +400,7 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
                     }
                 }
             }
+            this.rotationList.push("rightleft");
         }
 
         return;
@@ -409,6 +414,12 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
     var height = this.getHeight();
     this.setWidth(height);
     this.setHeight(width);
+
+    if (clockwise) {
+        this.rotationList.push("clockwise");
+    } else {
+        this.rotationList.push("counterclockwise");
+    }
 
     // Change port locations
     for (var _i7 = 0; _i7 < this.associatedPortConstraints.length; _i7++) {
@@ -2151,33 +2162,83 @@ var Layout = function (_ContinuousLayout) {
         var _node = nodeWPorts[i];
         var _cyNode = this.rotatableNodes.get(_node);
         if (_cyNode) {
-          var dimensions = _cyNode.layoutDimensions({ nodeDimensionsIncludeLabels: false });
-          if (parseFloat(dimensions.w) !== _node.rect.width) {
-            var w = _cyNode.height();
-            var h = _cyNode.width();
-            _cyNode.style({ 'width': w });
-            _cyNode.style({ 'height': h });
+          var w = _cyNode.width();
+          var h = _cyNode.height();
+          var orientation = 0;
+
+          for (var j = 0; j < _node.rotationList.length; j++) {
+            if (_node.rotationList[j] == "clockwise") {
+              var temp = w;
+              w = h;
+              h = temp;
+
+              if (orientation == 0) orientation = 1;else if (orientation == 1) orientation = 2;else if (orientation == 2) orientation = 3;else orientation = 0;
+            } else if (_node.rotationList[j] == "counterclockwise") {
+              var _temp = w;
+              w = h;
+              h = _temp;
+
+              if (orientation == 0) orientation = 3;else if (orientation == 1) orientation = 0;else if (orientation == 2) orientation = 1;else orientation = 2;
+            }
           }
+
+          _cyNode.style({ 'width': w });
+          _cyNode.style({ 'height': h });
+          if (orientation > 0) this.refreshBackgroundImage(_cyNode, orientation);
         }
+
+        // Update Edges
+        Object.keys(this.portConstrainedEdges).forEach(function (key) {
+          var lEdge = self.portConstrainedEdges[key];
+          var cytoEdge = self.lEdgeToCEdge.get(lEdge);
+
+          var sourceConstraint = lEdge.getSourceConstraint();
+          if (sourceConstraint) {
+            var relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
+            cytoEdge.style({ 'source-endpoint': +relativePos.x + "% " + +relativePos.y + '%' });
+          }
+
+          var targetConstraint = lEdge.getTargetConstraint();
+          if (targetConstraint) {
+            var _relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
+            cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
+          }
+        });
       }
-
-      // Update Edges
-      Object.keys(this.portConstrainedEdges).forEach(function (key) {
-        var lEdge = self.portConstrainedEdges[key];
-        var cytoEdge = self.lEdgeToCEdge.get(lEdge);
-
-        var sourceConstraint = lEdge.getSourceConstraint();
-        if (sourceConstraint) {
-          var relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
-          cytoEdge.style({ 'source-endpoint': +relativePos.x + "% " + +relativePos.y + '%' });
+    }
+  }, {
+    key: 'refreshBackgroundImage',
+    value: function refreshBackgroundImage(cyNode, orientation) {
+      var img = new Image();
+      img.src = cyNode.style('background-image');
+      var canvas = document.createElement("canvas");
+      img.onload = function () {
+        if (orientation == 1) {
+          var ctx = canvas.getContext("2d");
+          canvas.width = img.height;
+          canvas.height = img.width;
+          canvas.style.position = "absolute";
+          ctx.rotate(Math.PI / 2);
+          ctx.drawImage(img, 0, -img.height);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
+        } else if (orientation == 2) {
+          var _ctx = canvas.getContext("2d");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          canvas.style.position = "absolute";
+          _ctx.rotate(Math.PI);
+          _ctx.drawImage(img, -img.width, -img.height);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
+        } else {
+          var _ctx2 = canvas.getContext("2d");
+          canvas.width = img.height;
+          canvas.height = img.width;
+          canvas.style.position = "absolute";
+          _ctx2.rotate(3 * Math.PI / 2);
+          _ctx2.drawImage(img, -img.width, 0);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
         }
-
-        var targetConstraint = lEdge.getTargetConstraint();
-        if (targetConstraint) {
-          var _relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
-          cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
-        }
-      });
+      };
     }
 
     // clean up any object refs that could prevent garbage collection, etc.

@@ -22,9 +22,11 @@ let cy = window.cy = cytoscape({
                 'shape' : 'rectangle',
                 'label' : 'data(id)',
                 'text-halign': 'center',
-                'text-valign': 'center',
-                'background-color': '#3a7ecf',
-                'opacity': 0.8,
+                'text-valign': 'bottom',
+                'opacity': 1,
+                'background-color': '#ecf3ff',
+                'border-color': '#3a7ecf',
+                'border-width': '0.5px',                
                 'width': function (node) {
                     if (node.data('width')) {
                        return node.data('width');
@@ -38,29 +40,31 @@ let cy = window.cy = cytoscape({
                     } else{
                         return 30;
                     }
-                }
+                },
+                'background-image': 'bgImage.svg',
+                'background-fit': 'contain',
             }
         },
         {
             selector: ':parent',
             style: {
-                'background-opacity': 0.333,
+                'background-color': '#ecf3ff',
                 'border-color': '#3a7ecf',
                 'text-halign': 'center',
-                'text-valign': 'bottom'
+                'text-valign': 'bottom',
+                'background-image-opacity': 0.2                 
             }
         },
         {
             selector: ':parent:selected',
             style: {
-                'background-opacity': 0.65,
                 'border-color': '#ff0000'
             }
         },
         {
             selector: 'node:selected',
             style: {
-                'background-color': '#ff0000'
+                'border-color': '#ff0000'
             }
         },
         {
@@ -152,8 +156,8 @@ document.getElementById("endpoint").selectedIndex = -1;
 document.getElementById("consType").selectedIndex = -1;
 document.getElementById("sampleGraphs").selectedIndex = 0;
 document.getElementById("portsPerSide").value = 5;
-document.getElementById("FPS").value = 12;
-document.getElementById("FPS").disabled = true;
+//document.getElementById("FPS").value = 12;
+//document.getElementById("FPS").disabled = true;
 document.getElementById("edgeEndShiftingPeriod").value = 5;
 document.getElementById("edgeEndShiftingForceThreshold").value = 1;
 document.getElementById("nodeRotationPeriod").value = 15;
@@ -168,9 +172,9 @@ document.addEventListener('DOMContentLoaded', function(){
     fillNodeRotationTable();
 });
 
-document.getElementById("animate").addEventListener( 'change', function() {
-    document.getElementById("FPS").disabled = !this.checked;
-});
+//document.getElementById("animate").addEventListener( 'change', function() {
+//    document.getElementById("FPS").disabled = !this.checked;
+//});
 
 // CoSE and CoSEP Buttons ----------------------------------------------------------------------------------------------
 // CoSE Core Button
@@ -178,7 +182,7 @@ document.getElementById("coseButton").addEventListener("click", function(){
     let layout = window.cy.layout({
         name: 'cose-bilkent',
         refresh:1,
-        animate: ( document.getElementById("animate").checked) ? 'during' : false,
+        animate: false,
         randomize: !(document.getElementById("incremental").checked)
     });
 
@@ -216,8 +220,8 @@ document.getElementById("cosepButton").addEventListener("click", function() {
         refresh: 1,
         fit: true,
         idealEdgeLength: +document.getElementById("idealEdgeLength").value,
-        fps: +document.getElementById("FPS").value,
-        animate: ( document.getElementById("animate").checked) ? 'during' : false,
+//        fps: +document.getElementById("FPS").value,
+        animate: false,
         randomize: !(document.getElementById("incremental").checked),
         portConstraints: portConstraintsFunc,
         portsPerNodeSide: document.getElementById("portsPerSide").value,
@@ -232,8 +236,8 @@ document.getElementById("cosepButton").addEventListener("click", function() {
         furtherHandlingOneDegreeNodesPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
     });
 
-    if ( document.getElementById("animate").checked )
-        layout.promiseOn('layoutstop').then(function( event ){ alert('CoSEP Layout is done!'); });
+//    if ( document.getElementById("animate").checked )
+//        layout.promiseOn('layoutstop').then(function( event ){ alert('CoSEP Layout is done!'); });
 
     // Duration Time
     let start = performance.now();
@@ -474,17 +478,57 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
             .then(json => {
                 window.cy.json(json);
                 cy.layout({name: "random"}).run();
-                window.cy.nodes().forEach( function ( node ) {
-                    node.style({
-                        'width': node.data('width'),
-                        'height': node.data('height')
-                    });
-                });
-                window.cy.nodes(":parent").forEach( function ( node ) {
-                    node.style({
-                      'text-valign': 'bottom'
-                    });
-                });                
+                
+                window.cy.style()
+                    .selector('node').style({
+                        'shape' : 'rectangle',
+                        'label' : 'data(id)',
+                        'text-halign': 'center',
+                        'text-valign': 'bottom',
+                        'opacity': 1,
+                        'background-color': '#ecf3ff',
+                        'border-color': '#3a7ecf',
+                        'border-width': '0.5px', 
+                        'width': 'data(width)',
+                        'height': 'data(height)',
+                        'shape': 'rectangle',
+                        'background-image': 'bgImage.svg',
+                        'background-fit': 'contain',                        
+                    })
+                    .selector(':selected').style({
+                        'border-color': '#ff0000'
+                    })
+                    .selector(':parent').style({
+                        'background-color': '#ecf3ff',
+                        'border-color': '#3a7ecf',
+                        'text-halign': 'center',
+                        'text-valign': 'bottom',
+                        'background-image-opacity': 0.2 ,
+                        'background-opacity': 1
+                    })
+                    .selector('node:parent:selected').style({
+                        'border-color': '#ff0000'
+                    })
+                    .selector('edge').style({
+                        'curve-style': 'straight',
+                        'width': 2,
+                        'line-color': '#3a7ecf',
+                        'opacity': 0.7,
+                        'arrow-scale': 0.75
+                    })
+                    .selector('edge:selected').style({
+                        'line-color': '#ff0000',
+                        'label' : 'data(id)',
+                        'font-size' : 13,
+                        'text-opacity': 1,
+                        'text-rotation': 'autorotate',
+                        'color' : '#ff0000',
+                        'font-weight' : 'bold',
+                        'text-background-shape' : 'round-rectangle',
+                        'text-background-opacity' : 1,
+                        'text-background-padding' : 2
+                    })
+                    .update();                               
 
                 fillNodeRotationTable();
                 cy.layout({name: "cose-bilkent", animate: true}).run();
@@ -1017,7 +1061,7 @@ document.getElementById('importGraphML-input').addEventListener('change', functi
             .selector('node').style({
                 'content': 'data(id)',
                 'text-halign': 'center',
-                'text-valign': 'center',
+                'text-valign': 'bottom',
                 'background-color': '#3a7ecf',
                 'opacity': 0.8,
                 'width': (n) => {if(n.data('width')){ return n.data('width');} else {return 30;}},
@@ -1876,7 +1920,7 @@ function testRomeGraphs(){
                     let layout = window.cy.layout({
                         name: 'cosep',
                         idealEdgeLength: +document.getElementById("idealEdgeLength").value,
-                        fps: +document.getElementById("FPS").value,
+                        //fps: +document.getElementById("FPS").value,
                         randomize: !(document.getElementById("incremental").checked),
                         portConstraints: portConstraintsFunc,
                         portsPerNodeSide: document.getElementById("portsPerSide").value,

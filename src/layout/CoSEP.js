@@ -598,34 +598,89 @@ class Layout extends ContinuousLayout {
       let node = nodeWPorts[i];
       let cyNode = this.rotatableNodes.get(node);
       if(cyNode) {
-        let dimensions = cyNode.layoutDimensions({nodeDimensionsIncludeLabels: false});
-        if(parseFloat(dimensions.w) !== node.rect.width) {
-          let w = cyNode.height();
-          let h = cyNode.width();
-          cyNode.style({'width': w});
-          cyNode.style({'height': h});
+        let w = cyNode.width();
+        let h = cyNode.height();
+        let orientation = 0;
+      
+        for (let j = 0; j < node.rotationList.length; j++){
+          if(node.rotationList[j] == "clockwise") {
+            let temp = w;
+            w = h;
+            h = temp;
+            
+            if(orientation == 0) orientation = 1; else if(orientation == 1) orientation = 2;
+            else if(orientation == 2) orientation = 3; else orientation = 0;          
+          }
+          else if (node.rotationList[j] == "counterclockwise") {
+            let temp = w;
+            w = h;
+            h = temp;
+            
+            if(orientation == 0) orientation = 3; else if(orientation == 1) orientation = 0;
+            else if(orientation == 2) orientation = 1; else orientation = 2;                      
+          }                   
         }
+
+        cyNode.style({'width': w});
+        cyNode.style({'height': h});
+        if(orientation > 0)
+          this.refreshBackgroundImage(cyNode, orientation);      
       }
+
+      // Update Edges
+      Object.keys(this.portConstrainedEdges).forEach(function(key) {
+        let lEdge = self.portConstrainedEdges[key];
+        let cytoEdge = self.lEdgeToCEdge.get(lEdge);
+
+        let sourceConstraint = lEdge.getSourceConstraint();
+        if(sourceConstraint){
+          let relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
+        }
+
+        let targetConstraint = lEdge.getTargetConstraint();
+        if(targetConstraint){
+          let relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
+        }
+      });
     }
-
-    // Update Edges
-    Object.keys(this.portConstrainedEdges).forEach(function(key) {
-      let lEdge = self.portConstrainedEdges[key];
-      let cytoEdge = self.lEdgeToCEdge.get(lEdge);
-
-      let sourceConstraint = lEdge.getSourceConstraint();
-      if(sourceConstraint){
-        let relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
-        cytoEdge.style({ 'source-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
-      }
-
-      let targetConstraint = lEdge.getTargetConstraint();
-      if(targetConstraint){
-        let relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
-        cytoEdge.style({ 'target-endpoint': +relativePos.x + "% "+ +relativePos.y + '%' });
-      }
-    });
   }
+ 
+ refreshBackgroundImage(cyNode, orientation) {
+    let img = new Image();
+    img.src = cyNode.style('background-image');
+    let canvas = document.createElement("canvas");
+    img.onload = function(){
+      if(orientation == 1) {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.height;
+        canvas.height = img.width;
+        canvas.style.position = "absolute";
+        ctx.rotate(Math.PI/2);
+        ctx.drawImage(img, 0, -img.height);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+      else if(orientation == 2) {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.style.position = "absolute";
+        ctx.rotate(Math.PI);
+        ctx.drawImage(img, -img.width, -img.height);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+      else {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.height;
+        canvas.height = img.width;
+        canvas.style.position = "absolute";
+        ctx.rotate(3*Math.PI/2);
+        ctx.drawImage(img, -img.width, 0);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+    };
+  }  
 
   // clean up any object refs that could prevent garbage collection, etc.
   destroy(){

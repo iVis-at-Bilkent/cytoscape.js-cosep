@@ -207,3 +207,24 @@ table td {
     background: #4CAF50;
     cursor: pointer;
 }
+
+.tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: #ecf3ff;
+/*  color: #fff;*/
+  border-width: thin;
+  border-color: black;
+  text-align: justify;
+  border-radius: 6px;
+  padding: 10px 10px;
+  margin-left: 10px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1000;
+}
+
+.tooltip2:hover .tooltiptext {
+  visibility: visible;
+}

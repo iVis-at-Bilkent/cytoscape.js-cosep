@@ -162,14 +162,6 @@
 			<label><i><b>Layout Options</b></i></label>
 			<table>
 				<tr>
-					<td><span>Animate</span></td>
-					<td style="text-align: center"><input id="animate" class = "checkbox" type="checkbox"></td>
-				</tr>
-				<tr>
-					<td><span>FPS</span></td>
-					<td><input id="FPS" class="textField" type="text" maxlength=3 size="2" style="text-align: center"></td>
-				</tr>
-				<tr>
 					<td><span>Incremental</span></td>
 					<td style="text-align: center"><input id="incremental" class = "checkbox" type="checkbox" ></td>
 				</tr>
@@ -289,6 +281,7 @@
 				<li class="nav-item">
 					<a class="nav-link py-0" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false" onclick="fillNodeRotationTable()">Node Rotations/Swaps</a>
 				</li>
+        <li class="tooltip2"><img class="infoImg" src="information-button.png" style="display: inline-block; margin-left: 15px" width="18" height="18"/><span class="tooltiptext">Upon applying CoSEP layout, a node may be rotated to better accommodate port constraints. Upon a rotation associated background image is also rotated. However, note that when left-right or top-bottom sides are swapped, the other sides remain as is and associated background image will stay in the same orientation. When CoSEP layout is applied <b>again</b>, the defined constraints will be based on the <b>current</b> orientation of nodes (which might have rotated background images due to a previous layout), where for instance <i>left</i> means the <i>left</i> of the current orientation.</span></li>        
 			</ul>
 
 			<div class="tab-content" id="pills-tabContent" style="overflow-y: auto; overflow-x:auto">
