@@ -215,6 +215,10 @@ This project is set up to automatically be published to npm and bower.  To publi
 1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-cosep https://github.com/iVis-at-Bilkent/cytoscape.js-cosep.git`
 1. [Make a new release](https://github.com/iVis-at-Bilkent/cytoscape.js-cosep/releases/new) for Zenodo.
 
+## Credits
+
+Icons in the demo made by [Freepik](http://www.freepik.com).
+
 ## Team
 
-  * [Alihan Okka](https://github.com/alihanokka) and [Ugur Dogrusoz](https://github.com/ugurdogrusoz) of [i-Vis at Bilkent University](http://www.cs.bilkent.edu.tr/~ivis)
+  * [Alihan Okka](https://github.com/alihanokka), [Hasan Balci](https://github.com/hasanbalci) and [Ugur Dogrusoz](https://github.com/ugurdogrusoz) of [i-Vis at Bilkent University](http://www.cs.bilkent.edu.tr/~ivis)
