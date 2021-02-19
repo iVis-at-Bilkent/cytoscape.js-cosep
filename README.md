@@ -2,12 +2,26 @@
 
 ## Description
 
-Compound Spring Embedder with Ports (CoSEP) is a force-directed layout algorithm 
-based on the [CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cytoscape.js-cose-bilkent) to 
-support port constraints on compound graphs. Further improvements are achieved by various heuristics such as shifting port constrained 
-edges around the node and by rotating nodes.
+Compound Spring Embedder with Ports (CoSEP) is a force-directed layout algorithm based on the 
+[CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cytoscape.js-cose-bilkent) to support 
+port constraints on compound graphs. Further improvements are achieved by various heuristics such as 
+shifting port constrained edges around the node and by rotating nodes. Below is an example where the 
+same graph is laid out without (left) paying attention to port constraints on edge ends and when 
+(right) paying attention to these constraints using CoSEP.
 
-Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
+<p align="center">
+ <img src="demo/phase2.png" width="416"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="demo/phase4.png" width="340">
+ <br><br>
+ <img src="demo/port_legend.png" width="600">
+</p>
+
+Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html) 
+illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph 
+in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality 
+metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* 
+if its edge does not intersect with its end node.) and edge-edge crossing count are provided after 
+layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, 
+are exposed to the user to fine tune the algorithm.
 
 ## Dependencies
 
@@ -217,7 +231,7 @@ This project is set up to automatically be published to npm and bower.  To publi
 
 ## Credits
 
-Icons in the demo made by [Freepik](http://www.freepik.com).
+Icons in the demo are by [Freepik](http://www.freepik.com).
 
 ## Team
 
