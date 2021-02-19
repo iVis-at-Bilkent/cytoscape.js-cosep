@@ -2,17 +2,31 @@
 
 ## Description
 
-Compound Spring Embedder with Ports (CoSEP) is a force-directed layout algorithm 
-based on the [CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cytoscape.js-cose-bilkent) to 
-support port constraints on compound graphs. Further improvements are achieved by various heuristics such as shifting port constrained 
-edges around the node and by rotating nodes.
+Compound Spring Embedder with Ports (CoSEP) is a force-directed layout algorithm based on the 
+[CoSE (Compound Spring Embedder)](https://github.com/cytoscape/cytoscape.js-cose-bilkent) to support 
+port constraints on compound graphs. Further improvements are achieved by various heuristics such as 
+shifting port constrained edges around the node and by rotating nodes. Below is an example where the 
+same graph is laid out without (left) paying attention to port constraints on edge ends and when 
+(right) paying attention to these constraints using CoSEP.
 
-Here is a [demo](https://ivis-at-bilkent.github.io/cytoscape.js-cosep/demo/demo.html) illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* if its edge does not intersect with its end node.) and edge-edge crossing count are provided after layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, are exposed to the user to fine tune the algorithm.
+<p align="center">
+ <img src="demo/phase2.png" width="416"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="demo/phase4.png" width="340">
+ <br><br>
+ <img src="demo/port_legend.png" width="600">
+</p>
+
+Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html) 
+illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph 
+in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality 
+metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* 
+if its edge does not intersect with its end node.) and edge-edge crossing count are provided after 
+layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, 
+are exposed to the user to fine tune the algorithm.
 
 ## Dependencies
 
  * Cytoscape.js: ^3.2.0
- * cose-base ^1.0.3
+ * cose-base ^2.0.0
 
 ## Documentation
 
@@ -79,10 +93,10 @@ var options = {
     
     // This is the number specifying the number of ports on one node's side. If three is given, there would be 
     // twelve ports around one node.
-    portsPerSide: 3,
+    portsPerNodeSide: 3,
         
     // Port constraints information has to be given as a function.
-    // For the fcn, it would be given a Cytoscape node and is expected to return constraint info about that edge.
+    // For the fcn, it would be given a Cytoscape edge and is expected to return constraint info about that edge.
     // Since both endpoints of an edge can have port constraints, this fcn returns an array. (See below)
     portConstraints: portInfo,
     
@@ -114,13 +128,10 @@ var options = {
     animate: false,
     
     // number of ticks per frame; higher is faster but more jerky
-    refresh: 10,
+    refresh: 30,
     
     // Used to slow down time in animation:'during'
-    fps: 24, 
-    
-    // max length in ms to run the layout
-    maxSimulationTime: 5000, 
+    fps: 30, 
     
     // so you can't drag nodes during layout
     ungrabifyWhileSimulating: false, 
@@ -135,19 +146,22 @@ var options = {
     randomize: true, // use random node positions at beginning of layout
     
     // Node repulsion (non overlapping) multiplier
-    nodeRepulsion: 4500,
+    nodeRepulsion: node => 4500,
     
     // Ideal edge (non nested) length
-    idealEdgeLength: 50,
+    idealEdgeLength: edge => 50,
     
     // Divisor to compute edge forces
-    edgeElasticity: 0.45,
+    edgeElasticity: edge => 0.45,
     
     // Nesting factor (multiplier) to compute ideal edge length for nested edges
     nestingFactor: 0.1,
     
     // Gravity force (constant)
     gravity: 0.25,
+    
+    // Whether to tile disconnected nodes
+    tile: true,
     
     // Represents the amount of the vertical space to put between the zero degree members during the tiling operation
     // Can also be a function
@@ -165,6 +179,9 @@ var options = {
     
     // Gravity range (constant)
     gravityRange: 3.8,
+
+    // Whether a node can be rotated/swapped
+    nodeRotations: node => true,
     
     // Thresholds for force in Phase II
     edgeEndShiftingForceThreshold: 1,
@@ -186,6 +203,7 @@ var options = {
     // layout event callbacks
     ready: function(){}, // on layoutready
     stop: function(){}, // on layoutstop
+}
  ```
 
 ## Build targets
@@ -211,6 +229,10 @@ This project is set up to automatically be published to npm and bower.  To publi
 1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-cosep https://github.com/iVis-at-Bilkent/cytoscape.js-cosep.git`
 1. [Make a new release](https://github.com/iVis-at-Bilkent/cytoscape.js-cosep/releases/new) for Zenodo.
 
+## Credits
+
+Icons in the demo are by [Freepik](http://www.freepik.com).
+
 ## Team
 
-  * [Alihan Okka](https://github.com/alihanokka) and [Ugur Dogrusoz](https://github.com/ugurdogrusoz) of [i-Vis at Bilkent University](http://www.cs.bilkent.edu.tr/~ivis)
+  * [Alihan Okka](https://github.com/alihanokka), [Hasan Balci](https://github.com/hasanbalci) and [Ugur Dogrusoz](https://github.com/ugurdogrusoz) of [i-Vis at Bilkent University](http://www.cs.bilkent.edu.tr/~ivis)

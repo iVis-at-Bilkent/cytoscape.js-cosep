@@ -34,10 +34,10 @@ const optFn = (opt, ele) => {
  */
 let defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
-  refresh: 10, // number of ticks per frame; higher is faster but more jerky
-  fps: 24, // Used to slow down time in animation:'during'
+  refresh: 30, // number of ticks per frame; higher is faster but more jerky
+  fps: 30, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
-  maxSimulationTime: 5000, // max length in ms to run the layout
+  //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
   fit: true, // on every layout reposition of nodes, fit the viewport
   padding: 30, // padding around the simulation
@@ -45,24 +45,22 @@ let defaults = {
   // infinite layout options
   infinite: false, // overrides all other options for a forces-all-the-time mode
 
-  // layout event callbacks
-  ready: function(){}, // on layoutready
-  stop: function(){}, // on layoutstop
-
   // positioning options
   randomize: true, // use random node positions at beginning of layout
   // Include labels in node dimensions
   nodeDimensionsIncludeLabels: false,
   // Node repulsion (non overlapping) multiplier
-  nodeRepulsion: 4500,
+  nodeRepulsion: node => 4500,
   // Ideal edge (non nested) length
-  idealEdgeLength: 50,
+  idealEdgeLength: edge => 50,
   // Divisor to compute edge forces
-  edgeElasticity: 0.45,
+  edgeElasticity: edge => 0.45,
   // Nesting factor (multiplier) to compute ideal edge length for nested edges
   nestingFactor: 0.1,
   // Gravity force (constant)
   gravity: 0.25,
+  // For enabling tiling
+  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -72,7 +70,31 @@ let defaults = {
   // Gravity force (constant) for compounds
   gravityCompound: 1.0,
   // Gravity range (constant)
-  gravityRange: 3.8
+  gravityRange: 3.8,
+  
+  // port support related options
+  // the number of ports on one node's side
+  portsPerNodeSide: 3,
+  // port constraints information
+  portConstraints: edge => null,
+  nodeRotations: node => true,
+  // Thresholds for force in Phase II
+  edgeEndShiftingForceThreshold: 1,
+  nodeRotationForceThreshold: 20,
+  rotation180RatioThreshold: 0.5,
+  rotation180AngleThreshold: 130,
+  // Periods for Phase II
+  edgeEndShiftingPeriod: 5,
+  nodeRotationPeriod: 15,
+  // Polishing Force
+  polishingForce: 0.1,
+  // Grouping 1-Degree Nodes Across Ports
+  furtherHandlingOneDegreeNodes: true,
+  furtherHandlingOneDegreeNodesPeriod: 50,
+  
+  // layout event callbacks
+  ready: function(){}, // on layoutready
+  stop: function(){} // on layoutstop  
 };
 
 /**
@@ -82,12 +104,6 @@ let defaults = {
  * @param options
  */
 let getUserOptions = function (options) {
-  if (options.nodeRepulsion != null)
-    CoSEPConstants.DEFAULT_REPULSION_STRENGTH = CoSEConstants.DEFAULT_REPULSION_STRENGTH = FDLayoutConstants.DEFAULT_REPULSION_STRENGTH = options.nodeRepulsion;
-  if (options.idealEdgeLength != null)
-    CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = options.idealEdgeLength;
-  if (options.edgeElasticity != null)
-    CoSEPConstants.DEFAULT_SPRING_STRENGTH = CoSEConstants.DEFAULT_SPRING_STRENGTH = FDLayoutConstants.DEFAULT_SPRING_STRENGTH = options.edgeElasticity;
   if (options.nestingFactor != null)
     CoSEPConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = CoSEConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = options.nestingFactor;
   if (options.gravity != null)
@@ -205,6 +221,8 @@ class Layout extends ContinuousLayout {
     this.processChildrenList(this.root, this.getTopMostNodes(nodes), cosepLayout);
 
     // Adding edges to GraphManager
+    let idealLengthTotal = 0;
+    let edgeCount = 0;    
     for (let i = 0; i < edges.length; i++) {
       let edge = edges[i];
       let sourceNode = this.idToLNode[edge.data("source")];
@@ -212,6 +230,10 @@ class Layout extends ContinuousLayout {
       if(sourceNode !== targetNode && sourceNode.getEdgesBetween(targetNode).length === 0){
         let gmEdge = graphManager.add(cosepLayout.newEdge(), sourceNode, targetNode);
         gmEdge.id = edge.id();
+        gmEdge.idealLength = optFn(this.options.idealEdgeLength, edge);
+        gmEdge.edgeElasticity = optFn(this.options.edgeElasticity, edge);        
+        idealLengthTotal += gmEdge.idealLength;
+        edgeCount++;        
 
         /**
          *  Setting variables related to port constraints
@@ -266,6 +288,20 @@ class Layout extends ContinuousLayout {
         }
       }
     }
+    
+    // We need to update the ideal edge length constant with the avg. ideal length value after processing edges
+    // in case there is no edge, use other options
+    if (this.options.idealEdgeLength != null){
+      if (edges.length > 0)
+        CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = idealLengthTotal / edgeCount;
+      else if(!isFn(this.options.idealEdgeLength)) // in case there is no edge, but option gives a value to use
+        CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = this.options.idealEdgeLength;
+      else  // in case there is no edge and we cannot get a value from option (because it's a function)
+        CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+      // we need to update these constant values based on the ideal edge length constant
+      CoSEPConstants.MIN_REPULSION_DIST = CoSEConstants.MIN_REPULSION_DIST = FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10.0;
+      CoSEPConstants.DEFAULT_RADIAL_SEPARATION = CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
+    }    
 
     // Saving the references
     this.graphManager.nodesWithPorts = Object.values(this.nodesWithPorts);
@@ -341,7 +377,9 @@ class Layout extends ContinuousLayout {
       this.graphManager.calcLowestCommonAncestors();
       this.graphManager.calcInclusionTreeDepths();
       this.graphManager.getRoot().calcEstimatedSize();
-      this.cosepLayout.calcIdealEdgeLengths();
+//      Ideal edge lengths should be calculated once and it's done above,
+//      this is because calcIdealEdgeLengths doesn't calculate ideal lengths from a constant anymore 
+//      this.cosepLayout.calcIdealEdgeLengths();  
       this.graphManager.updateBounds();
       this.cosepLayout.level = 0;
       this.cosepLayout.initSpringEmbedder();
@@ -403,8 +441,9 @@ class Layout extends ContinuousLayout {
       else {
         theNode = parent.add(new CoSEPNode(this.graphManager));
       }
-      // Attach id to the layout node
+      // Attach id and repulsion value to the layout node
       theNode.id = theChild.data("id");
+      theNode.nodeRepulsion = optFn(this.options.nodeRepulsion, theChild);
 
       // Attach the paddings of cy node to layout node
       theNode.paddingLeft = parseInt(theChild.css('padding'));
@@ -559,13 +598,36 @@ class Layout extends ContinuousLayout {
       let node = nodeWPorts[i];
       let cyNode = this.rotatableNodes.get(node);
       if(cyNode) {
-        let w = cyNode.height();
-        let h = cyNode.width();
+        let w = cyNode.width();
+        let h = cyNode.height();
+        let orientation = 0;
+      
+        for (let j = 0; j < node.rotationList.length; j++){
+          if(node.rotationList[j] == "clockwise") {
+            let temp = w;
+            w = h;
+            h = temp;
+            
+            if(orientation == 0) orientation = 1; else if(orientation == 1) orientation = 2;
+            else if(orientation == 2) orientation = 3; else orientation = 0;          
+          }
+          else if (node.rotationList[j] == "counterclockwise") {
+            let temp = w;
+            w = h;
+            h = temp;
+            
+            if(orientation == 0) orientation = 3; else if(orientation == 1) orientation = 0;
+            else if(orientation == 2) orientation = 1; else orientation = 2;                      
+          }                   
+        }
+
         cyNode.style({'width': w});
         cyNode.style({'height': h});
+        if(orientation > 0)
+          this.refreshBackgroundImage(cyNode, orientation);      
       }
     }
-
+    
     // Update Edges
     Object.keys(this.portConstrainedEdges).forEach(function(key) {
       let lEdge = self.portConstrainedEdges[key];
@@ -584,6 +646,41 @@ class Layout extends ContinuousLayout {
       }
     });
   }
+ 
+ refreshBackgroundImage(cyNode, orientation) {
+    let img = new Image();
+    img.src = cyNode.style('background-image');
+    let canvas = document.createElement("canvas");
+    img.onload = function(){
+      if(orientation == 1) {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.height;
+        canvas.height = img.width;
+        canvas.style.position = "absolute";
+        ctx.rotate(Math.PI/2);
+        ctx.drawImage(img, 0, -img.height);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+      else if(orientation == 2) {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.style.position = "absolute";
+        ctx.rotate(Math.PI);
+        ctx.drawImage(img, -img.width, -img.height);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+      else {
+        let ctx = canvas.getContext("2d");
+        canvas.width = img.height;
+        canvas.height = img.width;
+        canvas.style.position = "absolute";
+        ctx.rotate(3*Math.PI/2);
+        ctx.drawImage(img, -img.width, 0);
+        cyNode.css('background-image', canvas.toDataURL("image/png"));
+      }
+    };
+  }  
 
   // clean up any object refs that could prevent garbage collection, etc.
   destroy(){

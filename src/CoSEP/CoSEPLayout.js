@@ -75,6 +75,8 @@ CoSEPLayout.prototype.initSpringEmbedder = function () {
 
     this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
 
+    // Reassign this attribute by using new constant value
+    this.displacementThresholdPerNode = (3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH) / 100;
     this.totalDisplacementThreshold =
         this.displacementThresholdPerNode * this.getAllNodes().length;
 
@@ -133,7 +135,7 @@ CoSEPLayout.prototype.secondPhaseInit = function(){
             return;
 
         // Calculate spring forces
-        let springForce = this.springConstant * (length - idealLength);
+        let springForce = edge.edgeElasticity * (length - idealLength);
 
         // Project force onto x and y axes
         let springForceX = springForce * (edge.lengthX / length);
@@ -172,6 +174,22 @@ CoSEPLayout.prototype.polishingPhaseInit = function(){
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+};
+
+/**
+ * Here we override the moveNodes method to its FD format again because CoSEP is written 
+ * before the changes on the moveNodes method in cose-level are done.
+ * So, let's keep its original format to avoid possible effects of the cose-level change.
+ */
+CoSEPLayout.prototype.moveNodes = function () {
+  var lNodes = this.getAllNodes();
+  var node;
+
+  for (var i = 0; i < lNodes.length; i++)
+  {
+    node = lNodes[i];
+    node.move();
+  }
 };
 
 /**

@@ -22,17 +22,18 @@ body {
     position: relative;
     top: 5px;
     left: 5px;
-    width: 160px;
+    width: 140px;
     padding-top: 2px;
     padding-bottom: 2px;
 }
 
 #cosepButton{
-    float: right;
+/*    float: right;*/
     position: relative;
     top: 5px;
     right: 5px;
-    width: 160px;
+    width: 140px;
+    margin-left: 20px;
     padding-top: 2px;
     padding-bottom: 2px;
 }
@@ -147,6 +148,7 @@ table td {
 #logsTable td{
     padding: 2px 2px 2px 2px;
     text-align: center;
+    vertical-align: middle;
 }
 
 #nodeRotationTable{
@@ -158,6 +160,7 @@ table td {
 #nodeRotationTable td{
     padding: 2px 2px 2px 2px;
     text-align: center;
+    vertical-align: middle;
 }
 
 .nav-pills {
@@ -206,4 +209,25 @@ table td {
     border-radius: 50%;
     background: #4CAF50;
     cursor: pointer;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: #ecf3ff;
+/*  color: #fff;*/
+  border-width: thin;
+  border-color: black;
+  text-align: justify;
+  border-radius: 6px;
+  padding: 10px 10px;
+  margin-left: 10px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1000;
+}
+
+.tooltip2:hover .tooltiptext {
+  visibility: visible;
 }

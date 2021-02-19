@@ -198,6 +198,9 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
 
+    // Keep rotation history of the node, values to be added: clockwise, counterclockwise, topbottom, rightleft
+    this.rotationList = [];
+
     // If the above remains true it will hold the sum of the rotational force induced to this node.
     // Avg can be manually calculated
     this.rotationalForce = 0;
@@ -368,6 +371,7 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
                     }
                 }
             }
+            this.rotationList.push("topbottom");
         } else if (rightLeftRotation) {
             for (var _i4 = 0; _i4 < this.associatedPortConstraints.length; _i4++) {
                 var _portConst2 = this.associatedPortConstraints[_i4];
@@ -396,6 +400,7 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
                     }
                 }
             }
+            this.rotationList.push("rightleft");
         }
 
         return;
@@ -409,6 +414,12 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
     var height = this.getHeight();
     this.setWidth(height);
     this.setHeight(width);
+
+    if (clockwise) {
+        this.rotationList.push("clockwise");
+    } else {
+        this.rotationList.push("counterclockwise");
+    }
 
     // Change port locations
     for (var _i7 = 0; _i7 < this.associatedPortConstraints.length; _i7++) {
@@ -477,6 +488,28 @@ CoSEPNode.prototype.move = function () {
     this.polishingForceY = 0;
     this.displacementX = 0;
     this.displacementY = 0;
+};
+
+/**
+ * Overriden here to its old format again 
+ * to avoid possible effects of the changes done in cose-level
+ * 
+ * @param dX
+ * @param dY
+ */
+CoSEPNode.prototype.propogateDisplacementToChildren = function (dX, dY) {
+    var nodes = this.getChild().getNodes();
+    var node;
+    for (var i = 0; i < nodes.length; i++) {
+        node = nodes[i];
+        if (node.getChild() == null) {
+            node.moveBy(dX, dY);
+            node.displacementX += dX;
+            node.displacementY += dY;
+        } else {
+            node.propogateDisplacementToChildren(dX, dY);
+        }
+    }
 };
 
 module.exports = CoSEPNode;
@@ -789,6 +822,8 @@ CoSEPLayout.prototype.initSpringEmbedder = function () {
 
     this.maxIterations = CoSEPConstants.PHASE1_MAX_ITERATIONS;
 
+    // Reassign this attribute by using new constant value
+    this.displacementThresholdPerNode = 3.0 * FDLayoutConstants.DEFAULT_EDGE_LENGTH / 100;
     this.totalDisplacementThreshold = this.displacementThresholdPerNode * this.getAllNodes().length;
 
     this.repulsionRange = this.calcRepulsionRange();
@@ -841,7 +876,7 @@ CoSEPLayout.prototype.secondPhaseInit = function () {
         if (length == 0) return;
 
         // Calculate spring forces
-        var springForce = this.springConstant * (length - idealLength);
+        var springForce = edge.edgeElasticity * (length - idealLength);
 
         // Project force onto x and y axes
         var springForceX = springForce * (edge.lengthX / length);
@@ -880,6 +915,21 @@ CoSEPLayout.prototype.polishingPhaseInit = function () {
     this.maxCoolingCycle = this.maxIterations / FDLayoutConstants.CONVERGENCE_CHECK_PERIOD;
     this.finalTemperature = FDLayoutConstants.CONVERGENCE_CHECK_PERIOD / this.maxIterations;
     this.coolingAdjuster = 1;
+};
+
+/**
+ * Here we override the moveNodes method to its FD format again because CoSEP is written 
+ * before the changes on the moveNodes method in cose-level are done.
+ * So, let's keep its original format to avoid possible effects of the cose-level change.
+ */
+CoSEPLayout.prototype.moveNodes = function () {
+    var lNodes = this.getAllNodes();
+    var node;
+
+    for (var i = 0; i < lNodes.length; i++) {
+        node = lNodes[i];
+        node.move();
+    }
 };
 
 /**
@@ -1544,10 +1594,10 @@ var optFn = function optFn(opt, ele) {
  */
 var defaults = {
   animate: false, // whether to show the layout as it's running; special 'end' value makes the layout animate like a discrete layout
-  refresh: 10, // number of ticks per frame; higher is faster but more jerky
-  fps: 24, // Used to slow down time in animation:'during'
+  refresh: 30, // number of ticks per frame; higher is faster but more jerky
+  fps: 30, // Used to slow down time in animation:'during'
   //maxIterations: 2500, // max iterations before the layout will bail out
-  maxSimulationTime: 5000, // max length in ms to run the layout
+  //maxSimulationTime: 5000, // max length in ms to run the layout
   ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
   fit: true, // on every layout reposition of nodes, fit the viewport
   padding: 30, // padding around the simulation
@@ -1555,24 +1605,28 @@ var defaults = {
   // infinite layout options
   infinite: false, // overrides all other options for a forces-all-the-time mode
 
-  // layout event callbacks
-  ready: function ready() {}, // on layoutready
-  stop: function stop() {}, // on layoutstop
-
   // positioning options
   randomize: true, // use random node positions at beginning of layout
   // Include labels in node dimensions
   nodeDimensionsIncludeLabels: false,
   // Node repulsion (non overlapping) multiplier
-  nodeRepulsion: 4500,
+  nodeRepulsion: function nodeRepulsion(node) {
+    return 4500;
+  },
   // Ideal edge (non nested) length
-  idealEdgeLength: 50,
+  idealEdgeLength: function idealEdgeLength(edge) {
+    return 50;
+  },
   // Divisor to compute edge forces
-  edgeElasticity: 0.45,
+  edgeElasticity: function edgeElasticity(edge) {
+    return 0.45;
+  },
   // Nesting factor (multiplier) to compute ideal edge length for nested edges
   nestingFactor: 0.1,
   // Gravity force (constant)
   gravity: 0.25,
+  // For enabling tiling
+  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -1582,7 +1636,35 @@ var defaults = {
   // Gravity force (constant) for compounds
   gravityCompound: 1.0,
   // Gravity range (constant)
-  gravityRange: 3.8
+  gravityRange: 3.8,
+
+  // port support related options
+  // the number of ports on one node's side
+  portsPerNodeSide: 3,
+  // port constraints information
+  portConstraints: function portConstraints(edge) {
+    return null;
+  },
+  nodeRotations: function nodeRotations(node) {
+    return true;
+  },
+  // Thresholds for force in Phase II
+  edgeEndShiftingForceThreshold: 1,
+  nodeRotationForceThreshold: 20,
+  rotation180RatioThreshold: 0.5,
+  rotation180AngleThreshold: 130,
+  // Periods for Phase II
+  edgeEndShiftingPeriod: 5,
+  nodeRotationPeriod: 15,
+  // Polishing Force
+  polishingForce: 0.1,
+  // Grouping 1-Degree Nodes Across Ports
+  furtherHandlingOneDegreeNodes: true,
+  furtherHandlingOneDegreeNodesPeriod: 50,
+
+  // layout event callbacks
+  ready: function ready() {}, // on layoutready
+  stop: function stop() {} // on layoutstop  
 };
 
 /**
@@ -1592,9 +1674,6 @@ var defaults = {
  * @param options
  */
 var getUserOptions = function getUserOptions(options) {
-  if (options.nodeRepulsion != null) CoSEPConstants.DEFAULT_REPULSION_STRENGTH = CoSEConstants.DEFAULT_REPULSION_STRENGTH = FDLayoutConstants.DEFAULT_REPULSION_STRENGTH = options.nodeRepulsion;
-  if (options.idealEdgeLength != null) CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = options.idealEdgeLength;
-  if (options.edgeElasticity != null) CoSEPConstants.DEFAULT_SPRING_STRENGTH = CoSEConstants.DEFAULT_SPRING_STRENGTH = FDLayoutConstants.DEFAULT_SPRING_STRENGTH = options.edgeElasticity;
   if (options.nestingFactor != null) CoSEPConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = CoSEConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = FDLayoutConstants.PER_LEVEL_IDEAL_EDGE_LENGTH_FACTOR = options.nestingFactor;
   if (options.gravity != null) CoSEPConstants.DEFAULT_GRAVITY_STRENGTH = CoSEConstants.DEFAULT_GRAVITY_STRENGTH = FDLayoutConstants.DEFAULT_GRAVITY_STRENGTH = options.gravity;
   if (options.gravityRange != null) CoSEPConstants.DEFAULT_GRAVITY_RANGE_FACTOR = CoSEConstants.DEFAULT_GRAVITY_RANGE_FACTOR = FDLayoutConstants.DEFAULT_GRAVITY_RANGE_FACTOR = options.gravityRange;
@@ -1696,6 +1775,8 @@ var Layout = function (_ContinuousLayout) {
       this.processChildrenList(this.root, this.getTopMostNodes(nodes), cosepLayout);
 
       // Adding edges to GraphManager
+      var idealLengthTotal = 0;
+      var edgeCount = 0;
       for (var i = 0; i < edges.length; i++) {
         var edge = edges[i];
         var sourceNode = this.idToLNode[edge.data("source")];
@@ -1704,6 +1785,10 @@ var Layout = function (_ContinuousLayout) {
           (function () {
             var gmEdge = graphManager.add(cosepLayout.newEdge(), sourceNode, targetNode);
             gmEdge.id = edge.id();
+            gmEdge.idealLength = optFn(_this2.options.idealEdgeLength, edge);
+            gmEdge.edgeElasticity = optFn(_this2.options.edgeElasticity, edge);
+            idealLengthTotal += gmEdge.idealLength;
+            edgeCount++;
 
             /**
              *  Setting variables related to port constraints
@@ -1756,6 +1841,17 @@ var Layout = function (_ContinuousLayout) {
             }
           })();
         }
+      }
+
+      // We need to update the ideal edge length constant with the avg. ideal length value after processing edges
+      // in case there is no edge, use other options
+      if (this.options.idealEdgeLength != null) {
+        if (edges.length > 0) CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = idealLengthTotal / edgeCount;else if (!isFn(this.options.idealEdgeLength)) // in case there is no edge, but option gives a value to use
+          CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = this.options.idealEdgeLength;else // in case there is no edge and we cannot get a value from option (because it's a function)
+          CoSEPConstants.DEFAULT_EDGE_LENGTH = CoSEConstants.DEFAULT_EDGE_LENGTH = FDLayoutConstants.DEFAULT_EDGE_LENGTH = 50;
+        // we need to update these constant values based on the ideal edge length constant
+        CoSEPConstants.MIN_REPULSION_DIST = CoSEConstants.MIN_REPULSION_DIST = FDLayoutConstants.MIN_REPULSION_DIST = FDLayoutConstants.DEFAULT_EDGE_LENGTH / 10.0;
+        CoSEPConstants.DEFAULT_RADIAL_SEPARATION = CoSEConstants.DEFAULT_RADIAL_SEPARATION = FDLayoutConstants.DEFAULT_EDGE_LENGTH;
       }
 
       // Saving the references
@@ -1832,8 +1928,8 @@ var Layout = function (_ContinuousLayout) {
       // CoSE-Base does nothing if CoSEConstants.TILE is false
       this.cosepLayout.tilingPreLayout();
 
-      // Don't let tiled nodes rotate
       if (this.cosepLayout.toBeTiled) {
+        // Reset the graphManager settings
         this.graphManager.resetAllNodesToApplyGravitation();
         this.cosepLayout.initParameters();
         this.cosepLayout.nodesWithGravity = this.cosepLayout.calculateNodesToApplyGravitationTo();
@@ -1842,11 +1938,15 @@ var Layout = function (_ContinuousLayout) {
         this.graphManager.calcLowestCommonAncestors();
         this.graphManager.calcInclusionTreeDepths();
         this.graphManager.getRoot().calcEstimatedSize();
-        this.cosepLayout.calcIdealEdgeLengths();
+        //      Ideal edge lengths should be calculated once and it's done above,
+        //      this is because calcIdealEdgeLengths doesn't calculate ideal lengths from a constant anymore 
+        //      this.cosepLayout.calcIdealEdgeLengths();  
         this.graphManager.updateBounds();
         this.cosepLayout.level = 0;
         this.cosepLayout.initSpringEmbedder();
 
+        // Don't let tiled nodes rotate
+        // Does it matter?
         Object.keys(this.cosepLayout.toBeTiled).forEach(function (key) {
           if (_this2.cosepLayout.toBeTiled[key] && _this2.idToLNode[key]) _this2.idToLNode[key].canBeRotated = false;
         });
@@ -1903,8 +2003,9 @@ var Layout = function (_ContinuousLayout) {
         } else {
           theNode = parent.add(new CoSEPNode(this.graphManager));
         }
-        // Attach id to the layout node
+        // Attach id and repulsion value to the layout node
         theNode.id = theChild.data("id");
+        theNode.nodeRepulsion = optFn(this.options.nodeRepulsion, theChild);
 
         // Attach the paddings of cy node to layout node
         theNode.paddingLeft = parseInt(theChild.css('padding'));
@@ -2061,10 +2162,29 @@ var Layout = function (_ContinuousLayout) {
         var _node = nodeWPorts[i];
         var _cyNode = this.rotatableNodes.get(_node);
         if (_cyNode) {
-          var w = _cyNode.height();
-          var h = _cyNode.width();
+          var w = _cyNode.width();
+          var h = _cyNode.height();
+          var orientation = 0;
+
+          for (var j = 0; j < _node.rotationList.length; j++) {
+            if (_node.rotationList[j] == "clockwise") {
+              var temp = w;
+              w = h;
+              h = temp;
+
+              if (orientation == 0) orientation = 1;else if (orientation == 1) orientation = 2;else if (orientation == 2) orientation = 3;else orientation = 0;
+            } else if (_node.rotationList[j] == "counterclockwise") {
+              var _temp = w;
+              w = h;
+              h = _temp;
+
+              if (orientation == 0) orientation = 3;else if (orientation == 1) orientation = 0;else if (orientation == 2) orientation = 1;else orientation = 2;
+            }
+          }
+
           _cyNode.style({ 'width': w });
           _cyNode.style({ 'height': h });
+          if (orientation > 0) this.refreshBackgroundImage(_cyNode, orientation);
         }
       }
 
@@ -2085,6 +2205,40 @@ var Layout = function (_ContinuousLayout) {
           cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
         }
       });
+    }
+  }, {
+    key: 'refreshBackgroundImage',
+    value: function refreshBackgroundImage(cyNode, orientation) {
+      var img = new Image();
+      img.src = cyNode.style('background-image');
+      var canvas = document.createElement("canvas");
+      img.onload = function () {
+        if (orientation == 1) {
+          var ctx = canvas.getContext("2d");
+          canvas.width = img.height;
+          canvas.height = img.width;
+          canvas.style.position = "absolute";
+          ctx.rotate(Math.PI / 2);
+          ctx.drawImage(img, 0, -img.height);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
+        } else if (orientation == 2) {
+          var _ctx = canvas.getContext("2d");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          canvas.style.position = "absolute";
+          _ctx.rotate(Math.PI);
+          _ctx.drawImage(img, -img.width, -img.height);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
+        } else {
+          var _ctx2 = canvas.getContext("2d");
+          canvas.width = img.height;
+          canvas.height = img.width;
+          canvas.style.position = "absolute";
+          _ctx2.rotate(3 * Math.PI / 2);
+          _ctx2.drawImage(img, -img.width, 0);
+          cyNode.css('background-image', canvas.toDataURL("image/png"));
+        }
+      };
     }
 
     // clean up any object refs that could prevent garbage collection, etc.
@@ -2437,7 +2591,7 @@ var tick = function tick(state) {
 
   s.duration = Date.now() - s.startTime;
 
-  return !s.infinite && tickIndicatesDone || s.duration >= s.maxSimulationTime;
+  return !s.infinite && tickIndicatesDone;
 };
 
 var multitick = function multitick(state) {
