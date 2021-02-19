@@ -15,7 +15,7 @@ same graph is laid out without (left) paying attention to port constraints on ed
  <img src="demo/port_legend.png" width="600">
 </p>
 
-Here is a [demo](https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-cosep/unstable/demo/demo.html) 
+Here is a [demo](https://ivis-at-bilkent.github.io/cytoscape.js-cosep/demo/demo.html) 
 illustrating CoSEP's capabilities. You may use samples available for testing or upload your own graph 
 in [GraphML](https://en.wikipedia.org/wiki/GraphML) format and add constraints manually. Quality 
 metrics such as *ratio of properly oriented edge ends* (an edge end is deemed as *properly oriented* 
