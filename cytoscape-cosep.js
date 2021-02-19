@@ -2186,25 +2186,25 @@ var Layout = function (_ContinuousLayout) {
           _cyNode.style({ 'height': h });
           if (orientation > 0) this.refreshBackgroundImage(_cyNode, orientation);
         }
-
-        // Update Edges
-        Object.keys(this.portConstrainedEdges).forEach(function (key) {
-          var lEdge = self.portConstrainedEdges[key];
-          var cytoEdge = self.lEdgeToCEdge.get(lEdge);
-
-          var sourceConstraint = lEdge.getSourceConstraint();
-          if (sourceConstraint) {
-            var relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
-            cytoEdge.style({ 'source-endpoint': +relativePos.x + "% " + +relativePos.y + '%' });
-          }
-
-          var targetConstraint = lEdge.getTargetConstraint();
-          if (targetConstraint) {
-            var _relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
-            cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
-          }
-        });
       }
+
+      // Update Edges
+      Object.keys(this.portConstrainedEdges).forEach(function (key) {
+        var lEdge = self.portConstrainedEdges[key];
+        var cytoEdge = self.lEdgeToCEdge.get(lEdge);
+
+        var sourceConstraint = lEdge.getSourceConstraint();
+        if (sourceConstraint) {
+          var relativePos = sourceConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'source-endpoint': +relativePos.x + "% " + +relativePos.y + '%' });
+        }
+
+        var targetConstraint = lEdge.getTargetConstraint();
+        if (targetConstraint) {
+          var _relativePos = targetConstraint.getRelativeRatiotoNodeCenter();
+          cytoEdge.style({ 'target-endpoint': +_relativePos.x + "% " + +_relativePos.y + '%' });
+        }
+      });
     }
   }, {
     key: 'refreshBackgroundImage',

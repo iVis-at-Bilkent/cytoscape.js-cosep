@@ -42,7 +42,8 @@ let cy = window.cy = cytoscape({
                     }
                 },
                 'background-image': 'bgImage.svg',
-                'background-fit': 'contain',
+                'background-height': '100%',
+                'background-width': '100%'
             }
         },
         {
@@ -52,7 +53,9 @@ let cy = window.cy = cytoscape({
                 'border-color': '#3a7ecf',
                 'text-halign': 'center',
                 'text-valign': 'bottom',
-                'background-image-opacity': 0.2                 
+                'background-image-opacity': 0.2,
+                'background-height': '100%',
+                'background-width': '100%'
             }
         },
         {
@@ -493,7 +496,8 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         'height': 'data(height)',
                         'shape': 'rectangle',
                         'background-image': 'bgImage.svg',
-                        'background-fit': 'contain',                        
+                        'background-height': '100%',
+                        'background-width': '100%'                      
                     })
                     .selector(':selected').style({
                         'border-color': '#ff0000'
@@ -504,7 +508,9 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         'text-halign': 'center',
                         'text-valign': 'bottom',
                         'background-image-opacity': 0.2 ,
-                        'background-opacity': 1
+                        'background-opacity': 1,
+                        'background-height': '100%',
+                        'background-width': '100%'                        
                     })
                     .selector('node:parent:selected').style({
                         'border-color': '#ff0000'
@@ -540,6 +546,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                 layout.run();
                 calcPerformanceMetrics();
             });
+            document.getElementById("portsPerSide").value = 5;
 
     } else if (sbgnFileNames[sampleGraphs.value]) {
         fetch("samples/" + sbgnFileNames[sampleGraphs.value] + ".json")

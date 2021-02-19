@@ -77,6 +77,15 @@
 		<!-- Buttons -->
 		<button id="coseButton" type="button" class="btn btn-dark btn-sm">CoSE Layout</button>
 		<button id="cosepButton" type="button" class="btn btn-info btn-sm">CoSEP Layout</button>
+    <a class="tooltip2"><img class="infoImg" src="information-button.png" style="display: inline-block; margin-left: 10px; margin-top: 10px;" width="18" height="18"/>
+      <span class="tooltiptext"><h5>CoSEP Demo Help</h5>
+        This CoSEP demo starts with a sandbox graph without any port constraints, laid out using CoSE. Click on “CoSEP” to perform CoSEP layout.<br>
+        &bull; To put constraints on edge ends, you may either click "Add Random Constraints to Graph" or select an edge and add an associated constraint using the dialog provided. Source and target ends of an edge are distinctly color-coded.<br>
+        &bull; To load another graph, either select a sample graph from the dropdown list or import from files in GraphML or JSON formats using "GraphML/JSON".<br>
+        &bull; Layout may be tailored using "Layout Options". Refer to README for option help.<br>
+        &bull; Individual nodes may be disabled to rotate/swap sides using the "Node Rotations/Swaps" tab at the bottom.<br>
+        &bull; Constructed port constraints are listed at the bottom under "Port Info" tab. When a node is selected, its associated constraints, if any, are highlighted in this list.
+      </span></a>        
 
 		<!-- Layout Results -->
 		<div id="house-container" class="text-center">
@@ -281,7 +290,7 @@
 				<li class="nav-item">
 					<a class="nav-link py-0" id="pills-profile-tab" data-toggle="pill" href="#pills-rotation" role="tab" aria-controls="pills-rotation" aria-selected="false" onclick="fillNodeRotationTable()">Node Rotations/Swaps</a>
 				</li>
-        <li class="tooltip2"><img class="infoImg" src="information-button.png" style="display: inline-block; margin-left: 15px" width="18" height="18"/><span class="tooltiptext">Upon applying CoSEP layout, a node may be rotated to better accommodate port constraints. Upon a rotation associated background image is also rotated. However, note that when left-right or top-bottom sides are swapped, the other sides remain as is and associated background image will stay in the same orientation. When CoSEP layout is applied <b>again</b>, the defined constraints will be based on the <b>current</b> orientation of nodes (which might have rotated background images due to a previous layout), where for instance <i>left</i> means the <i>left</i> of the current orientation.</span></li>        
+        <li class="tooltip2"><img class="infoImg" src="information-button.png" style="display: inline-block; margin-left: 20px" width="18" height="18"/><span class="tooltiptext">Upon applying CoSEP layout, a node may be rotated to better accommodate port constraints. Upon a rotation associated background image is also rotated. However, note that when left-right or top-bottom sides are swapped, the other sides remain as is and associated background image will stay in the same orientation. When CoSEP layout is applied <b>again</b>, the defined constraints will be based on the <b>current</b> orientation of nodes (which might have rotated background images due to a previous layout), where for instance <i>left</i> means the <i>left</i> of the current orientation.</span></li>        
 			</ul>
 
 			<div class="tab-content" id="pills-tabContent" style="overflow-y: auto; overflow-x:auto">
