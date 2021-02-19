@@ -42,6 +42,7 @@ let cy = window.cy = cytoscape({
                     }
                 },
                 'background-image': 'bgImage.svg',
+                'background-image-opacity': 0.6,
                 'background-height': '100%',
                 'background-width': '100%'
             }
@@ -495,6 +496,7 @@ document.getElementById("sampleGraphs").addEventListener("change",function(){
                         'width': 'data(width)',
                         'height': 'data(height)',
                         'shape': 'rectangle',
+                        'background-image-opacity': 0.6,
                         'background-image': 'bgImage.svg',
                         'background-height': '100%',
                         'background-width': '100%'                      
