@@ -204,25 +204,25 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function(){
 CoSEPPortConstraint.prototype.storeRotationalForce = function( springForceX, springForceY){
     if( this.portSide == this.sideDirection['Top'] ) {
         this.rotationalForce += springForceX;
-        if(this.node.canBeRotated) {
+        if(this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce += springForceX;
         }
     } else if( this.portSide == this.sideDirection['Bottom'] ){
         this.rotationalForce -= springForceX;
-        if(this.node.canBeRotated) {
+        if(this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce -= springForceX;
         }
     } else if( this.portSide == this.sideDirection['Right'] ){
         this.rotationalForce += springForceY;
-        if(this.node.canBeRotated) {
+        if(this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce += springForceY;
         }
     } else {
         this.rotationalForce -= springForceY;
-        if(this.node.canBeRotated) {
+        if(this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce -= springForceY;
         }

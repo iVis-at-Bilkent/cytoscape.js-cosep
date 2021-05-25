@@ -161,11 +161,12 @@ CoSEPLayout.prototype.polishingPhaseInit = function(){
     this.maxIterations = CoSEPConstants.PHASE3_MAX_ITERATIONS;
     //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE3_MAX_ITERATIONS);
 
-    // Node Rotation Related Variables -- No need for rotations
+    // Node Rotation Related Variables -- No need for rotations/swaps
     // This is for increasing performance in polishing phase
     for(let i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         let node = this.graphManager.nodesWithPorts[i];
         node.canBeRotated = false;
+        node.canBeSwapped = false;
     }
 
     // Reset variables for cooling

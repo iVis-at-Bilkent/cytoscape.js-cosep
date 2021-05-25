@@ -198,7 +198,11 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
 
+    // In phase II, we will allow nodes with port constrained edges to swap
+    this.canBeSwapped = true;
+
     // Keep rotation history of the node, values to be added: clockwise, counterclockwise, topbottom, rightleft
+    // Edit: node rotation and swap are separated later but we continue to use rotationList jointly for both operation
     this.rotationList = [];
 
     // If the above remains true it will hold the sum of the rotational force induced to this node.
@@ -305,12 +309,12 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
  * Sometimes a 180 degree rotation is needed when the above metric does not detect a needed rotation.
  */
 CoSEPNode.prototype.checkForNodeRotation = function () {
-    if (!this.canBeRotated) return;
+    if (!this.canBeRotated && !this.canBeSwapped) return;
 
-    // Exceeds threshold? If not then how about 180 degree check
+    // Exceeds threshold? If not then how about 180 degree check for swap (node should also be marked as canBeSwapped)
     var rotationalForceAvg = this.rotationalForce / CoSEPConstants.NODE_ROTATION_PERIOD / this.associatedPortConstraints.length;
     this.rotationalForce = 0;
-    if (Math.abs(rotationalForceAvg) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD) {
+    if (Math.abs(rotationalForceAvg) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD && this.canBeSwapped) {
         var topBottomRotation = false;
         var rightLeftRotation = false;
         var topBottomPorts = 0;
@@ -406,43 +410,46 @@ CoSEPNode.prototype.checkForNodeRotation = function () {
         return;
     }
 
-    // If this is to be rotated clockwise or counter-clockwise
-    var clockwise = Math.sign(rotationalForceAvg) == 1;
+    // Exceeds threshold? If yes then rotate node (node should also be marked as canBeRotated)
+    if (Math.abs(rotationalForceAvg) >= CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD && this.canBeRotated) {
+        // If this is to be rotated clockwise or counter-clockwise
+        var clockwise = Math.sign(rotationalForceAvg) == 1;
 
-    // Change dimension of the node
-    var width = this.getWidth();
-    var height = this.getHeight();
-    this.setWidth(height);
-    this.setHeight(width);
-
-    if (clockwise) {
-        this.rotationList.push("clockwise");
-    } else {
-        this.rotationList.push("counterclockwise");
-    }
-
-    // Change port locations
-    for (var _i7 = 0; _i7 < this.associatedPortConstraints.length; _i7++) {
-        var _portConst3 = this.associatedPortConstraints[_i7];
+        // Change dimension of the node
+        var width = this.getWidth();
+        var height = this.getHeight();
+        this.setWidth(height);
+        this.setHeight(width);
 
         if (clockwise) {
-            _portConst3.portIndex = (_portConst3.portIndex + this.portsPerSide) % (4 * this.portsPerSide);
-
-            if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i8 = 0; _i8 < _portConst3.portConstraintParameter.length; _i8++) {
-                _portConst3.portConstraintParameter[_i8] = (_portConst3.portConstraintParameter[_i8] + 1) % 4;
-            }
+            this.rotationList.push("clockwise");
         } else {
-            _portConst3.portIndex = _portConst3.portIndex - this.portsPerSide;
-            if (_portConst3.portIndex < 0) _portConst3.portIndex = 4 * this.portsPerSide + _portConst3.portIndex;
-
-            if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i9 = 0; _i9 < _portConst3.portConstraintParameter.length; _i9++) {
-                if (--_portConst3.portConstraintParameter[_i9] < 0) _portConst3.portConstraintParameter[_i9] = 3;
-            }
+            this.rotationList.push("counterclockwise");
         }
 
-        var _temp4 = this.getPortCoordinatesByIndex(_portConst3.portIndex);
-        _portConst3.portSide = _temp4[0];
-        _portConst3.portLocation = _temp4[1];
+        // Change port locations
+        for (var _i7 = 0; _i7 < this.associatedPortConstraints.length; _i7++) {
+            var _portConst3 = this.associatedPortConstraints[_i7];
+
+            if (clockwise) {
+                _portConst3.portIndex = (_portConst3.portIndex + this.portsPerSide) % (4 * this.portsPerSide);
+
+                if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i8 = 0; _i8 < _portConst3.portConstraintParameter.length; _i8++) {
+                    _portConst3.portConstraintParameter[_i8] = (_portConst3.portConstraintParameter[_i8] + 1) % 4;
+                }
+            } else {
+                _portConst3.portIndex = _portConst3.portIndex - this.portsPerSide;
+                if (_portConst3.portIndex < 0) _portConst3.portIndex = 4 * this.portsPerSide + _portConst3.portIndex;
+
+                if (_portConst3.portConstraintType === _portConst3.constraintType['Sided']) for (var _i9 = 0; _i9 < _portConst3.portConstraintParameter.length; _i9++) {
+                    if (--_portConst3.portConstraintParameter[_i9] < 0) _portConst3.portConstraintParameter[_i9] = 3;
+                }
+            }
+
+            var _temp4 = this.getPortCoordinatesByIndex(_portConst3.portIndex);
+            _portConst3.portSide = _temp4[0];
+            _portConst3.portLocation = _temp4[1];
+        }
     }
 };
 
@@ -902,11 +909,12 @@ CoSEPLayout.prototype.polishingPhaseInit = function () {
     this.maxIterations = CoSEPConstants.PHASE3_MAX_ITERATIONS;
     //this.maxIterations = Math.max(this.getAllNodes().length * 5, CoSEPConstants.PHASE3_MAX_ITERATIONS);
 
-    // Node Rotation Related Variables -- No need for rotations
+    // Node Rotation Related Variables -- No need for rotations/swaps
     // This is for increasing performance in polishing phase
     for (var i = 0; i < this.graphManager.nodesWithPorts.length; i++) {
         var node = this.graphManager.nodesWithPorts[i];
         node.canBeRotated = false;
+        node.canBeSwapped = false;
     }
 
     // Reset variables for cooling
@@ -1278,25 +1286,25 @@ CoSEPPortConstraint.prototype.getRelativeRatiotoNodeCenter = function () {
 CoSEPPortConstraint.prototype.storeRotationalForce = function (springForceX, springForceY) {
     if (this.portSide == this.sideDirection['Top']) {
         this.rotationalForce += springForceX;
-        if (this.node.canBeRotated) {
+        if (this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce += springForceX;
         }
     } else if (this.portSide == this.sideDirection['Bottom']) {
         this.rotationalForce -= springForceX;
-        if (this.node.canBeRotated) {
+        if (this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce -= springForceX;
         }
     } else if (this.portSide == this.sideDirection['Right']) {
         this.rotationalForce += springForceY;
-        if (this.node.canBeRotated) {
+        if (this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce += springForceY;
         }
     } else {
         this.rotationalForce -= springForceY;
-        if (this.node.canBeRotated) {
+        if (this.node.canBeRotated || this.node.canBeSwapped) {
             this.correspondingAngle += Math.abs(this.calcAngle());
             this.node.rotationalForce -= springForceY;
         }
@@ -1648,6 +1656,9 @@ var defaults = {
   nodeRotations: function nodeRotations(node) {
     return true;
   },
+  nodeSwaps: function nodeSwaps(node) {
+    return true;
+  },
   // Thresholds for force in Phase II
   edgeEndShiftingForceThreshold: 1,
   nodeRotationForceThreshold: 20,
@@ -1914,6 +1925,43 @@ var Layout = function (_ContinuousLayout) {
         // All nodes can rotate
         for (var _i2 = 0; _i2 < cosepLayout.graphManager.nodesWithPorts.length; _i2++) {
           _loop2(_i2);
+        }
+      }
+
+      // Initialize node swaps - swap and rotate are separated here, but we use rotatableNodes map jointly 
+      // Default: Nodes with ports are allowed to swap
+      if (this.options.nodeSwaps !== null && this.options.nodeSwaps !== undefined && typeof this.options.nodeSwaps === 'function') {
+        var _loop3 = function _loop3(_i3) {
+          var node = cosepLayout.graphManager.nodesWithPorts[_i3];
+          var cyNode = _this2.state.nodes.filter(function (n) {
+            return n.data('id') == node.id;
+          });
+          if (_this2.options.nodeSwaps(cyNode) === false) {
+            node.canBeSwapped = false;
+          } else {
+            // Default option
+            node.canBeSwapped = true;
+            _this2.rotatableNodes.put(node, cyNode);
+          }
+        };
+
+        // There are nodes that can't swap
+        for (var _i3 = 0; _i3 < cosepLayout.graphManager.nodesWithPorts.length; _i3++) {
+          _loop3(_i3);
+        }
+      } else {
+        var _loop4 = function _loop4(_i4) {
+          var node = cosepLayout.graphManager.nodesWithPorts[_i4];
+          var cyNode = _this2.state.nodes.filter(function (n) {
+            return n.data('id') == node.id;
+          });
+          node.canBeSwapped = true;
+          _this2.rotatableNodes.put(node, cyNode);
+        };
+
+        // All nodes can swap
+        for (var _i4 = 0; _i4 < cosepLayout.graphManager.nodesWithPorts.length; _i4++) {
+          _loop4(_i4);
         }
       }
 

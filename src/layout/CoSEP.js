@@ -78,6 +78,7 @@ let defaults = {
   // port constraints information
   portConstraints: edge => null,
   nodeRotations: node => true,
+  nodeSwaps: node => true,
   // Thresholds for force in Phase II
   edgeEndShiftingForceThreshold: 1,
   nodeRotationForceThreshold: 20,
@@ -351,6 +352,32 @@ class Layout extends ContinuousLayout {
         let node = cosepLayout.graphManager.nodesWithPorts[i];
         let cyNode = this.state.nodes.filter(n => n.data('id') == node.id);
         node.canBeRotated = true;
+        this.rotatableNodes.put(node, cyNode);
+      }
+    }
+
+    // Initialize node swaps - swap and rotate are separated here, but we use rotatableNodes map jointly 
+    // Default: Nodes with ports are allowed to swap
+    if(this.options.nodeSwaps !== null && this.options.nodeSwaps !== undefined && typeof this.options.nodeSwaps === 'function'){
+      // There are nodes that can't swap
+      for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
+        let node = cosepLayout.graphManager.nodesWithPorts[i];
+        let cyNode = this.state.nodes.filter(n => n.data('id') == node.id);
+        if(this.options.nodeSwaps(cyNode) === false) {
+          node.canBeSwapped = false;
+        }
+        else{
+          // Default option
+          node.canBeSwapped = true;
+          this.rotatableNodes.put(node, cyNode);
+        }
+      }
+    } else{
+      // All nodes can swap
+      for(let i = 0; i < cosepLayout.graphManager.nodesWithPorts.length; i++){
+        let node = cosepLayout.graphManager.nodesWithPorts[i];
+        let cyNode = this.state.nodes.filter(n => n.data('id') == node.id);
+        node.canBeSwapped = true;
         this.rotatableNodes.put(node, cyNode);
       }
     }

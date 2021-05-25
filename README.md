@@ -89,7 +89,7 @@ When calling the layout, e.g. `cy.layout({ name: 'cosep', ... })`, the following
 ``` js
 var options = {
     // -------- Mandatory parameters --------
-    name = 'cosep',
+    name: 'cosep',
     
     // This is the number specifying the number of ports on one node's side. If three is given, there would be 
     // twelve ports around one node.
@@ -180,8 +180,11 @@ var options = {
     // Gravity range (constant)
     gravityRange: 3.8,
 
-    // Whether a node can be rotated/swapped
+    // Whether a node can be rotated
     nodeRotations: node => true,
+
+    // Whether a node can be swapped
+    nodeSwaps: node => true,
     
     // Thresholds for force in Phase II
     edgeEndShiftingForceThreshold: 1,

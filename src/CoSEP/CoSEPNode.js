@@ -25,7 +25,11 @@ function CoSEPNode(gm, loc, size, vNode) {
     // In phase II, we will allow nodes with port constrained edges to rotate
     this.canBeRotated = true;
     
+    // In phase II, we will allow nodes with port constrained edges to swap
+    this.canBeSwapped = true;
+    
     // Keep rotation history of the node, values to be added: clockwise, counterclockwise, topbottom, rightleft
+    // Edit: node rotation and swap are separated later but we continue to use rotationList jointly for both operation
     this.rotationList = [];    
 
     // If the above remains true it will hold the sum of the rotational force induced to this node.
@@ -140,13 +144,13 @@ CoSEPNode.prototype.moveBy = function (dx, dy) {
  * Sometimes a 180 degree rotation is needed when the above metric does not detect a needed rotation.
  */
 CoSEPNode.prototype.checkForNodeRotation = function(){
-    if( !this.canBeRotated )
+    if( !this.canBeRotated && !this.canBeSwapped)
         return;
 
-    // Exceeds threshold? If not then how about 180 degree check
+    // Exceeds threshold? If not then how about 180 degree check for swap (node should also be marked as canBeSwapped)
     let rotationalForceAvg = this.rotationalForce / CoSEPConstants.NODE_ROTATION_PERIOD / this.associatedPortConstraints.length;
     this.rotationalForce = 0;
-    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD ){
+    if ( Math.abs( rotationalForceAvg ) < CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD && this.canBeSwapped){
         let topBottomRotation = false;
         let rightLeftRotation = false;
         let topBottomPorts = 0;
@@ -247,46 +251,49 @@ CoSEPNode.prototype.checkForNodeRotation = function(){
 
         return;
     }
-
-    // If this is to be rotated clockwise or counter-clockwise
-    let clockwise = Math.sign(rotationalForceAvg) == 1;
-
-    // Change dimension of the node
-    let width = this.getWidth();
-    let height = this.getHeight();
-    this.setWidth( height );
-    this.setHeight( width );
     
-    if( clockwise ) {
-      this.rotationList.push("clockwise");
-    }
-    else {
-      this.rotationList.push("counterclockwise");
-    }
+    // Exceeds threshold? If yes then rotate node (node should also be marked as canBeRotated)
+    if ( Math.abs( rotationalForceAvg ) >= CoSEPConstants.NODE_ROTATION_FORCE_THRESHOLD && this.canBeRotated) {
+        // If this is to be rotated clockwise or counter-clockwise
+        let clockwise = Math.sign(rotationalForceAvg) == 1;
 
-    // Change port locations
-    for( let i = 0; i < this.associatedPortConstraints.length; i++){
-        let portConst = this.associatedPortConstraints[i];
+        // Change dimension of the node
+        let width = this.getWidth();
+        let height = this.getHeight();
+        this.setWidth( height );
+        this.setHeight( width );
 
         if( clockwise ) {
-            portConst.portIndex = (portConst.portIndex + this.portsPerSide) % (4 * this.portsPerSide);            
-
-            if( portConst.portConstraintType === portConst.constraintType['Sided'] )
-                for(let i = 0; i < portConst.portConstraintParameter.length; i++)
-                    portConst.portConstraintParameter[i] = (portConst.portConstraintParameter[i] + 1) % 4 ;
+          this.rotationList.push("clockwise");
         }
         else {
-            portConst.portIndex = (portConst.portIndex - this.portsPerSide);
-            if( portConst.portIndex < 0 ) portConst.portIndex = 4 * this.portsPerSide + portConst.portIndex;            
-
-            if( portConst.portConstraintType === portConst.constraintType['Sided'] )
-                for(let i = 0; i < portConst.portConstraintParameter.length; i++)
-                    if (--portConst.portConstraintParameter[i] < 0) portConst.portConstraintParameter[i] = 3;
+          this.rotationList.push("counterclockwise");
         }
 
-        let temp =  this.getPortCoordinatesByIndex( portConst.portIndex );
-        portConst.portSide = temp[0];
-        portConst.portLocation = temp[1];
+        // Change port locations
+        for( let i = 0; i < this.associatedPortConstraints.length; i++){
+            let portConst = this.associatedPortConstraints[i];
+
+            if( clockwise ) {
+                portConst.portIndex = (portConst.portIndex + this.portsPerSide) % (4 * this.portsPerSide);            
+
+                if( portConst.portConstraintType === portConst.constraintType['Sided'] )
+                    for(let i = 0; i < portConst.portConstraintParameter.length; i++)
+                        portConst.portConstraintParameter[i] = (portConst.portConstraintParameter[i] + 1) % 4 ;
+            }
+            else {
+                portConst.portIndex = (portConst.portIndex - this.portsPerSide);
+                if( portConst.portIndex < 0 ) portConst.portIndex = 4 * this.portsPerSide + portConst.portIndex;            
+
+                if( portConst.portConstraintType === portConst.constraintType['Sided'] )
+                    for(let i = 0; i < portConst.portConstraintParameter.length; i++)
+                        if (--portConst.portConstraintParameter[i] < 0) portConst.portConstraintParameter[i] = 3;
+            }
+
+            let temp =  this.getPortCoordinatesByIndex( portConst.portIndex );
+            portConst.portSide = temp[0];
+            portConst.portLocation = temp[1];
+        }
     }
 };
 

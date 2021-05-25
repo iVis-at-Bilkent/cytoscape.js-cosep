@@ -235,6 +235,7 @@ document.getElementById("cosepButton").addEventListener("click", function() {
         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
         nodeRotations: nodeRotationsFunc,
+        nodeSwaps: nodeRotationsFunc,
         polishingForce: document.getElementById("polishingForce").value,
         furtherHandlingOneDegreeNodes: document.getElementById("oneDegreePortedNodes").checked,
         furtherHandlingOneDegreeNodesPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
@@ -1939,6 +1940,7 @@ function testRomeGraphs(){
                         nodeRotationForceThreshold: +document.getElementById("nodeRotationForceThreshold").value,
                         nodeRotationAngleThreshold: +document.getElementById("nodeRotationAngleThreshold").value,
                         nodeRotations: nodeRotationsFunc,
+                        nodeSwaps: nodeRotationsFunc,
                         polishingForce: document.getElementById("polishingForce").value,
                         groupOneDegreeNodesAcrossPorts: document.getElementById("oneDegreePortedNodes").checked,
                         groupOneDegreeNodesAcrossPortsPeriod: document.getElementById("oneDegreePortedNodesPeriod").value
