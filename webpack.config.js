@@ -23,11 +23,11 @@ let config = {
     ]
   },
   externals: PROD ? {
-    'cose-base': {
-      commonjs2: 'cose-base',
-      commonjs: 'cose-base',
-      amd: 'cose-base',
-      root: 'coseBase'
+    'cosep-base': {
+      commonjs2: 'cosep-base',
+      commonjs: 'cosep-base',
+      amd: 'cosep-base',
+      root: 'cosepBase'
     }
   } : {},
   plugins: MIN ? [

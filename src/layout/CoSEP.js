@@ -6,16 +6,16 @@
  * @copyright i-Vis Research Group, Bilkent University, 2007 - present
  */
 
-const HashMap = require('cose-base').layoutBase.HashMap;
-const PointD = require('cose-base').layoutBase.PointD;
-const DimensionD = require('cose-base').layoutBase.DimensionD;
-let LayoutConstants = require('cose-base').layoutBase.LayoutConstants;
-let CoSEPConstants = require('../CoSEP/CoSEPConstants');
-let CoSEConstants = require('cose-base').CoSEConstants;
-let FDLayoutConstants = require('cose-base').layoutBase.FDLayoutConstants;
-const CoSEPLayout = require('../CoSEP/CoSEPLayout');
-const CoSEPNode = require('../CoSEP/CoSEPNode');
-const CoSEPPortConstraint = require('../CoSEP/CoSEPPortConstraint');
+const HashMap = require('cosep-base').coseBase.layoutBase.HashMap;
+const PointD = require('cosep-base').coseBase.layoutBase.PointD;
+const DimensionD = require('cosep-base').coseBase.layoutBase.DimensionD;
+let LayoutConstants = require('cosep-base').coseBase.layoutBase.LayoutConstants;
+let CoSEPConstants = require('cosep-base').CoSEPConstants;
+let CoSEConstants = require('cosep-base').coseBase.CoSEConstants;
+let FDLayoutConstants = require('cosep-base').coseBase.layoutBase.FDLayoutConstants;
+const CoSEPLayout = require('cosep-base').CoSEPLayout;
+const CoSEPNode = require('cosep-base').CoSEPNode;
+const CoSEPPortConstraint = require('cosep-base').CoSEPPortConstraint;
 
 const ContinuousLayout = require('./continuous-base');
 const assign = require('../assign');

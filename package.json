@@ -58,6 +58,6 @@
     "cytoscape": "^3.2.0"
   },
   "dependencies": {
-    "cose-base": "^2.0.0"
+    "cosep-base": "https://github.com/iVis-at-Bilkent/cosep-base#unstable"
   }
 }
