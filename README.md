@@ -23,6 +23,10 @@ if its edge does not intersect with its end node.) and edge-edge crossing count 
 layout as well as the total running time. Many options, some inherited from CoSEP's predecessor CoSE, 
 are exposed to the user to fine tune the algorithm.
 
+Please cite the following when you use this layout:
+
+Alihan Okka, Hasan Balci, and Ugur Dogrusoz, "CoSEP: a compound spring embedder layout algorithm with support for ports", Information Visualization, to appear.
+
 ## Dependencies
 
  * Cytoscape.js: ^3.2.0
