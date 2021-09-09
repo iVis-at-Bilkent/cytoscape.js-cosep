@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Okka"
+  given-names: "Alihan"
+  orcid: "https://orcid.org/0000-0002-4402-5993"
+- family-names: "Dogrusoz"
+  given-names: "Ugur"
+  orcid: "https://orcid.org/0000-0002-7153-0784"
+- family-names: "Balci"
+  given-names: "Hasan"
+  orcid: "https://orcid.org/0000-0001-8319-7758"  
+title: "cytoscape.js-cosep"
+version: 1.0.0
+date-released: 2021-02-19
+url: "https://github.com/iVis-at-Bilkent/cytoscape.js-cosep"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Okka"
+    given-names: "Alihan"
+    orcid: "https://orcid.org/0000-0002-4402-5993"
+  - family-names: "Dogrusoz"
+    given-names: "Ugur"
+    orcid: "https://orcid.org/0000-0002-7153-0784"
+  - family-names: "Balci"
+    given-names: "Hasan"
+    orcid: "https://orcid.org/0000-0001-8319-7758"
+  doi: "10.1177/14738716211028136"
+  journal: "Information Visualization"
+  month: 7
+  start: 151 # First page number
+  end: 169 # Last page number
+  title: "CoSEP: A compound spring embedder layout algorithm with support for ports"
+  issue: 2-3
+  volume: 20
+  year: 2021
