@@ -228,7 +228,7 @@ class Layout extends ContinuousLayout {
       let edge = edges[i];
       let sourceNode = this.idToLNode[edge.data("source")];
       let targetNode = this.idToLNode[edge.data("target")];
-      if(sourceNode !== targetNode && sourceNode.getEdgesBetween(targetNode).length === 0){
+      if(sourceNode !== targetNode){
         let gmEdge = graphManager.add(cosepLayout.newEdge(), sourceNode, targetNode);
         gmEdge.id = edge.id();
         gmEdge.idealLength = optFn(this.options.idealEdgeLength, edge);

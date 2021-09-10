@@ -388,7 +388,7 @@ var Layout = function (_ContinuousLayout) {
         var edge = edges[i];
         var sourceNode = this.idToLNode[edge.data("source")];
         var targetNode = this.idToLNode[edge.data("target")];
-        if (sourceNode !== targetNode && sourceNode.getEdgesBetween(targetNode).length === 0) {
+        if (sourceNode !== targetNode) {
           (function () {
             var gmEdge = graphManager.add(cosepLayout.newEdge(), sourceNode, targetNode);
             gmEdge.id = edge.id();
